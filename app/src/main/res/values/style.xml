@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="plantoplate">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">#231F20</item>
+    </style>
+    <style name="logowanie">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">#231F20</item>
+    </style>
+    <style name="rejestracja">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">#231F20</item>
+    </style>
+</resources>
