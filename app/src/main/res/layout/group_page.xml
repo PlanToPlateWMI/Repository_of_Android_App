@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_0"
+    tools:context=".Group">
+
+    <!-- PlanToPlate -->
+    <TextView
+        android:id="@+id/plantoplate"
+        android:layout_width="182dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="134dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginBottom="626dp"
+        android:gravity="top"
+        android:text="@string/plantoplate"
+        android:textAppearance="@style/plantoplate"
+        android:textColor="@color/black_gray"
+        android:fontFamily="@font/Quicksand_SemiBold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+    <!-- Pomyślnie zarejestrowano -->
+    <TextView
+        android:id="@+id/pomy_lnie_z"
+        android:layout_width="324dp"
+        android:layout_height="33dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="19dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="19dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="219dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="548dp"
+        android:text="@string/pomy_lnie_z"
+        android:textAppearance="@style/pomy_lnie_z"
+        android:fontFamily="@font/Quicksand_Medium"
+        android:gravity="top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <!-- Wprowadź kod zaproszeniowy: -->
+    <TextView
+        android:id="@+id/wprowad_kod"
+        android:layout_width="176dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="87dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="97dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="297dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="443dp"
+        android:text="@string/wprowad_kod"
+        android:textAppearance="@style/wprowad_kod"
+        android:fontFamily="@font/Quicksand_Medium"
+        android:gravity="center_horizontal|top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--    app:layout_constraintEnd_toEndOf="parent"-->
+    <!--    app:layout_constraintStart_toStartOf="parent"-->
+    <!--    app:layout_constraintTop_toTopOf="parent"-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    tools:context=".Register">
+    tools:context=".Email_confirmation">
 
     <!-- PlanToPlate -->
     <TextView
@@ -30,22 +30,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-
-    <!-- Rejestracja -->
+    <!-- Potwierdzenie e-maila -->
     <TextView
-        android:id="@+id/rejestracja"
-        android:layout_width="140dp"
+        android:id="@+id/potwierdzen"
+        android:layout_width="273dp"
         android:layout_height="33dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="113dp"
+        android:layout_marginLeft="44dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="108dp"
+        android:layout_marginRight="45dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="219dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="548dp"
-        android:text="@string/rejestracja"
-        android:textAppearance="@style/rejestracja"
+        android:text="@string/potwierdzen"
+        android:textAppearance="@style/potwierdzen"
         android:fontFamily="@font/Quicksand_Medium"
         android:gravity="top"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,89 +53,51 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <!-- Wyrażam zgodę na przetwarzanie danych osobowych -->
+    <!-- Skorzystaj z linku w wiadomości e-mail, aby zweryfikować swój adres e-mail -->
     <TextView
-        android:id="@+id/wyra_am_zgo"
+        android:id="@+id/skorzystaj_"
+        android:layout_width="271dp"
+        android:layout_height="120dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="44dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="297dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="383dp"
+        android:text="@string/skorzystaj_"
+        android:textAppearance="@style/skorzystaj_"
+        android:fontFamily="@font/Quicksand_Medium"
+        android:gravity="center_horizontal|top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <!-- Uwaga! Do czasu potwierdzenia maila wejście nie będzie możliwe! -->
+    <TextView
+        android:id="@+id/uwaga_do_cz"
         android:layout_width="255dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="62dp"
-        android:layout_marginTop="602dp"
-        android:layout_marginRight="43dp"
-        android:layout_marginBottom="158dp"
+        android:layout_marginLeft="53dp"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="53dp"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="536dp"
         android:layout_alignParentBottom="true"
-        android:text="@string/wyra_am_zgo"
-        android:textAppearance="@style/wyra_am_zgo"
-        android:gravity="top"
+        android:layout_marginBottom="224dp"
+        android:text="@string/uwaga_do_cz"
+        android:textAppearance="@style/uwaga_do_cz"
+        android:fontFamily="@font/Quicksand_Regular"
+        android:gravity="center_horizontal|top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
-
-    <!-- Masz konto? -->
-    <TextView
-        android:id="@+id/masz_konto_"
-        android:layout_width="93dp"
-        android:layout_height="20dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="87dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="180dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="742dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="38dp"
-        android:text="@string/masz_konto_"
-        android:textAppearance="@style/masz_konto_"
-        android:gravity="center_horizontal|center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-<!--    &lt;!&ndash; Text field &ndash;&gt;-->
-<!--    <RelativeLayout-->
-<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--        android:id="@+id/text_field"-->
-<!--        android:layout_width="236dp"-->
-<!--        android:layout_height="54dp"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_marginLeft="62dp"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_marginTop="297dp"-->
-<!--        android:background="@drawable/text_field"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        />-->
-
-
-<!--    &lt;!&ndash; button_zaloz_konto &ndash;&gt;-->
-<!--    <RelativeLayout-->
-<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--        android:id="@+id/button_zalo"-->
-<!--        android:layout_width="236dp"-->
-<!--        android:layout_height="56dp"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_marginLeft="62dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginBottom="36dp"-->
-<!--        android:background="@drawable/button_zalo"-->
-<!--        />-->
-
-    <!--    <EditText-->
-<!--        android:id="@+id/editTextTextEmailAddress"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:ems="10"-->
-<!--        android:inputType="textEmailAddress"-->
-<!--        tools:layout_editor_absoluteX="58dp"-->
-<!--        tools:layout_editor_absoluteY="348dp" />-->
 
     <!--    app:layout_constraintBottom_toBottomOf="parent"-->
     <!--    app:layout_constraintEnd_toEndOf="parent"-->
