@@ -51,9 +51,6 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-        setContentView(R.layout.register_activity);
-=======
 
         // Inflate the layout using the View Binding Library
         register_view = RegisterActivityBinding.inflate(getLayoutInflater());
@@ -68,7 +65,6 @@ public class Register extends AppCompatActivity {
 
         // Set the click listener for the register button
         register_button.setOnClickListener(this::validateUserInfo);
->>>>>>> 404e1de47e59331723cbf61f54c2ac904c8e6264
     }
 
     /**
