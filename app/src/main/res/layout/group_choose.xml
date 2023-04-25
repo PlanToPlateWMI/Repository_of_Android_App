@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_0"
+    tools:context=".Group_Choose">
+
+    <!-- PlanToPlate -->
+    <TextView
+        android:id="@+id/plantoplate"
+        android:layout_width="182dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/quicksand_semibold"
+        android:gravity="top"
+        android:text="@string/plantoplate"
+        android:textAppearance="@style/plantoplate"
+        android:textColor="@color/black_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.15" />
+
+
+    <!-- Pomyslnie zarejestrowano -->
+    <TextView
+        android:id="@+id/pom_zarejestrowano"
+        android:layout_width="324dp"
+        android:layout_height="33dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="top"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="@string/pomy_lnie_z"
+        android:textAppearance="@style/pomy_lnie_z"
+        android:textColor="@color/black_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plantoplate"
+        app:layout_constraintVertical_bias="0.077" />
+
+    <!-- Wybierz jedną z opcji: -->
+    <TextView
+        android:id="@+id/wybierz_opcje"
+        android:layout_width="270dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="center_horizontal|top"
+        android:text="Wybierz jedną z opcji:"
+        android:textAppearance="@style/wprowad_kod"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pom_zarejestrowano"
+        app:layout_constraintVertical_bias="0.095" />
+
+    <!--Zatwierdz button -->
+    <Button
+        android:id="@+id/button_mam_zaproszenie"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="250dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Mam zaproszenie do grupy"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wybierz_opcje"
+        app:layout_constraintVertical_bias="0.587"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:rippleColor="@color/blue_1" />
+
+    <!--Swoja gruppa button -->
+    <Button
+        android:id="@+id/button_swoja_grupa"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Chcę założyć własną grupę"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_mam_zaproszenie"
+        app:layout_constraintVertical_bias="0.647"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:rippleColor="@color/blue_1" />
+
+    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--    app:layout_constraintEnd_toEndOf="parent"-->
+    <!--    app:layout_constraintStart_toStartOf="parent"-->
+    <!--    app:layout_constraintTop_toTopOf="parent"-->
+</androidx.constraintlayout.widget.ConstraintLayout>
