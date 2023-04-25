@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    tools:context=".Group_Choose">
+    tools:context=".Choice_adult_or_child">
 
     <!-- PlanToPlate -->
     <TextView
@@ -28,76 +28,75 @@
         app:layout_constraintVertical_bias="0.15" />
 
 
-    <!-- Pomyslnie zarejestrowano -->
-
-    <!-- Wybierz jedną z opcji: -->
+    <!-- Code generation -->
     <TextView
-        android:id="@+id/pom_zarejestrowano"
-        android:layout_width="324dp"
+        android:id="@+id/code_generation"
+        android:layout_width="265dp"
         android:layout_height="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:fontFamily="@font/quicksand_medium"
         android:gravity="top"
-        android:text="@string/pomy_lnie_z"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="@string/wygenerowanie_kodu"
         android:textAppearance="@style/pomy_lnie_z"
         android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
-        app:layout_constraintVertical_bias="0.075" />
+        app:layout_constraintVertical_bias="0.077" />
 
+    <!-- Choose one of the option -->
     <TextView
-        android:id="@+id/wybierz_opcje"
+        android:id="@+id/choose_an_option"
         android:layout_width="270dp"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="center_horizontal|top"
-        android:text="Wybierz jedną z opcji:"
+        android:text="@string/wybierz_opcje"
         android:textAppearance="@style/wprowad_kod"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pom_zarejestrowano"
+        app:layout_constraintTop_toBottomOf="@+id/code_generation"
         app:layout_constraintVertical_bias="0.095" />
 
-    <!--Zatwierdz button -->
+    <!--Code for adult -->
     <Button
-        android:id="@+id/button_mam_zaproszenie"
+        android:id="@+id/code_for_adult"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="300dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
         android:fontFamily="@font/quicksand_medium"
-        android:text="Mam zaproszenie do grupy"
+        android:text="@string/kod_dla_osoby_doroslej"
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wybierz_opcje"
+        app:layout_constraintTop_toBottomOf="@+id/choose_an_option"
         app:layout_constraintVertical_bias="0.587"
-        app:layout_constraintHorizontal_bias="0.497"
         app:rippleColor="@color/blue_1" />
 
-    <!--Swoja gruppa button -->
+    <!--Kod for child-->
     <Button
-        android:id="@+id/button_swoja_grupa"
+        android:id="@+id/code_for_child"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_alignParentLeft="true"
@@ -108,20 +107,45 @@
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
         android:fontFamily="@font/quicksand_medium"
-        android:text="Chcę założyć własną grupę"
+        android:text="@string/kod_dla_dziecka"
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_mam_zaproszenie"
-        app:layout_constraintVertical_bias="0.647"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintTop_toBottomOf="@+id/code_for_adult"
+        app:layout_constraintVertical_bias="0.325"
         app:rippleColor="@color/blue_1" />
+
+
+    <!--Uwaga! -->
+    <TextView
+        android:id="@+id/uwaga"
+        android:layout_width="255dp"
+        android:layout_height="180dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+
+        android:fontFamily="@font/quicksand_regular"
+
+        android:gravity="top"
+        android:text="@string/uwaga"
+        android:textAppearance="@style/uwaga_do_cz"
+        android:textColor="@color/black_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/code_for_child" />
+
 
     <!--    app:layout_constraintBottom_toBottomOf="parent"-->
     <!--    app:layout_constraintEnd_toEndOf="parent"-->
     <!--    app:layout_constraintStart_toStartOf="parent"-->
     <!--    app:layout_constraintTop_toTopOf="parent"-->
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
