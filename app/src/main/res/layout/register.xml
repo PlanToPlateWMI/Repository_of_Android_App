@@ -8,137 +8,288 @@
     tools:context=".Register">
 
     <!-- PlanToPlate -->
+    <!-- android:fontFamily="@font/quicksand_semibold" -->
     <TextView
         android:id="@+id/plantoplate"
         android:layout_width="182dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="90dp"
-        android:layout_marginTop="134dp"
-        android:layout_marginRight="90dp"
-        android:layout_marginBottom="626dp"
+
+        android:fontFamily="@font/quicksand_semibold"
+
         android:gravity="top"
         android:text="@string/plantoplate"
         android:textAppearance="@style/plantoplate"
         android:textColor="@color/black_gray"
-        android:fontFamily="@font/Quicksand_SemiBold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.15" />
 
 
     <!-- Rejestracja -->
+    <!-- android:fontFamily="@font/quicksand_medium" -->
     <TextView
         android:id="@+id/rejestracja"
         android:layout_width="140dp"
         android:layout_height="33dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="113dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="108dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="219dp"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="548dp"
+        android:gravity="top"
+
+        android:fontFamily="@font/quicksand_medium"
+
         android:text="@string/rejestracja"
         android:textAppearance="@style/rejestracja"
-        android:fontFamily="@font/Quicksand_Medium"
-        android:gravity="top"
+        android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/plantoplate"
+        app:layout_constraintVertical_bias="0.077" />
 
-    <!-- Wyrażam zgodę na przetwarzanie danych osobowych -->
-    <TextView
-        android:id="@+id/wyra_am_zgo"
-        android:layout_width="255dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="62dp"
-        android:layout_marginTop="602dp"
-        android:layout_marginRight="43dp"
-        android:layout_marginBottom="158dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
+
+    <!-- Wprowadz imie -->
+    <!--android:fontFamily="@font/quicksand_regular"-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wprowadz_imie"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="236dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="28dp"
+
+        android:fontFamily="@font/quicksand_regular"
+
+        android:hint="@string/wprowadz_imie"
+        android:textColorHint="@color/black_gray"
+
+        app:boxBackgroundMode="outline"
+
+        app:boxStrokeColor="@color/blue_2"
+
+        app:hintTextColor="@color/black_gray"
+
+        app:layout_constraintBottom_toTopOf="@+id/checkbox_wyrazam_zgode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rejestracja"
+        app:layout_constraintVertical_bias="0.058">
+
+        <!--android:fontFamily="@font/quicksand_regular"-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="236dp"
+            android:layout_height="56dp"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            android:textColor="@color/black_gray"
+
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="321dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- Wprowadz e-mail -->
+    <!--android:fontFamily="@font/quicksand_regular"-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wprowadz_mail"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="236dp"
+        android:layout_height="65dp"
+
+        android:hint="@string/wprowadz_email"
+        android:textColorHint="@color/black_gray"
+
+        android:fontFamily="@font/quicksand_regular"
+
+        app:boxBackgroundMode="outline"
+
+        app:boxStrokeColor="@color/blue_2"
+
+        app:hintTextColor="@color/black_gray"
+        app:layout_constraintBottom_toTopOf="@+id/checkbox_wyrazam_zgode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_imie"
+        app:layout_constraintVertical_bias="0.183">
+
+        <!--android:fontFamily="@font/quicksand_regular"-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="236dp"
+            android:layout_height="56dp"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            android:textColor="@color/black_gray"
+
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="321dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- Wprowadz haslo -->
+    <!--android:fontFamily="@font/quicksand_regular"-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wprowadz_haslo"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="236dp"
+        android:layout_height="65dp"
+        android:hint="@string/wprowadz_haslo"
+        android:textColorHint="@color/black_gray"
+
+        android:fontFamily="@font/quicksand_regular"
+
+        app:boxBackgroundMode="outline"
+
+        app:boxStrokeColor="@color/blue_2"
+        app:endIconMode="password_toggle"
+
+        app:endIconTint="@color/black_gray"
+
+        app:hintTextColor="@color/black_gray"
+
+        app:layout_constraintBottom_toTopOf="@+id/checkbox_wyrazam_zgode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_mail"
+        app:layout_constraintVertical_bias="0.441">
+
+        <!--android:fontFamily="@font/quicksand_regular"-->
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="236dp"
+            android:layout_height="56dp"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            android:textColor="@color/black_gray"
+
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="321dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Checkbox potwierdzenie danych osobowych -->
+    <!--android:fontFamily="@font/quicksand_regular"-->
+    <CheckBox
+        android:id="@+id/checkbox_wyrazam_zgode"
+        android:layout_width="300dp"
+        android:layout_height="42dp"
+        android:shadowColor="@color/blue_0"
+
+        android:fontFamily="@font/quicksand_regular"
+
         android:text="@string/wyra_am_zgo"
         android:textAppearance="@style/wyra_am_zgo"
-        android:gravity="top"
+        android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/plantoplate"
+        app:layout_constraintVertical_bias="0.654"
+        tools:ignore="MissingConstraints" />
 
-    <!-- Masz konto? -->
+
+    <!--Zalogowanie sie button -->
+    <!--android:fontFamily="@font/quicksand_medium"-->
+    <Button
+        android:id="@+id/button_zaloguj_sie"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="#00FFFFFF"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/zalogowanie"
+        android:textAllCaps="true"
+        android:textAppearance="@style/masz_konto_"
+        android:textColor="@color/blue_3"
+        android:textColorHighlight="#00FFFFFF"
+        android:textColorHint="#00FFFFFF"
+        android:textColorLink="#00FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/masz_konto_"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.909"
+        tools:visibility="visible" />
+
+
+    <!--Masz konto? -->
+    <!--android:fontFamily="@font/quicksand_medium"-->
     <TextView
         android:id="@+id/masz_konto_"
-        android:layout_width="93dp"
-        android:layout_height="20dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="87dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="180dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="742dp"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="38dp"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/masz_konto_"
         android:textAppearance="@style/masz_konto_"
-        android:gravity="center_horizontal|center_vertical"
+        android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
-
-<!--    &lt;!&ndash; Text field &ndash;&gt;-->
-<!--    <RelativeLayout-->
-<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--        android:id="@+id/text_field"-->
-<!--        android:layout_width="236dp"-->
-<!--        android:layout_height="54dp"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_marginLeft="62dp"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_marginTop="297dp"-->
-<!--        android:background="@drawable/text_field"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        />-->
+        app:layout_constraintVertical_bias="0.909" />
 
 
-<!--    &lt;!&ndash; button_zaloz_konto &ndash;&gt;-->
-<!--    <RelativeLayout-->
-<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--        android:id="@+id/button_zalo"-->
-<!--        android:layout_width="236dp"-->
-<!--        android:layout_height="56dp"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_marginLeft="62dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginBottom="36dp"-->
-<!--        android:background="@drawable/button_zalo"-->
-<!--        />-->
+    <!--Zaloz konto button -->
+    <!--android:fontFamily="@font/quicksand_medium"-->
+    <Button
+        android:id="@+id/button_zaloz_konto"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
 
-    <!--    <EditText-->
-<!--        android:id="@+id/editTextTextEmailAddress"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:ems="10"-->
-<!--        android:inputType="textEmailAddress"-->
-<!--        tools:layout_editor_absoluteX="58dp"-->
-<!--        tools:layout_editor_absoluteY="348dp" />-->
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
 
-    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
+        android:fontFamily="@font/quicksand_medium"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:text="@string/zaloz_konto"
+
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_wyrazam_zgode"
+        app:layout_constraintVertical_bias="0.162"
+        app:rippleColor="@color/blue_1" />
+
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
     <!--    app:layout_constraintEnd_toEndOf="parent"-->
     <!--    app:layout_constraintStart_toStartOf="parent"-->
     <!--    app:layout_constraintTop_toTopOf="parent"-->

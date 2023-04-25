@@ -10,4 +10,11 @@
     <string name="uwaga_do_cz">Uwaga! Do czasu potwierdzenia maila wejście nie będzie możliwe!</string>
     <string name="wyra_am_zgo">Wyrażam zgodę na przetwarzanie danych osobowych</string>
     <string name="masz_konto_">Masz konto?</string>
+    <string name="zaloz_konto">Załóż konto</string>
+    <string name="wprowadz_haslo">Wprowadź hasło</string>
+    <string name="wprowadz_imie">Wprowadź imię</string>
+    <string name="wprowadz_kod">Wprowadź kod</string>
+    <string name="zatwierdz">Zatwierdź</string>
+    <string name="wprowadz_email">Wprowadź e-mail</string>
+    <string name="zalogowanie">Załoguj się</string>
 </resources>

@@ -14,45 +14,43 @@
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="90dp"
-        android:layout_marginTop="134dp"
-        android:layout_marginRight="90dp"
-        android:layout_marginBottom="626dp"
+
+        android:fontFamily="@font/quicksand_semibold"
+
         android:gravity="top"
         android:text="@string/plantoplate"
         android:textAppearance="@style/plantoplate"
         android:textColor="@color/black_gray"
-        android:fontFamily="@font/Quicksand_SemiBold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.15" />
 
 
-    <!-- Pomyślnie zarejestrowano -->
+    <!-- Pomyslnie zarejestrowano -->
     <TextView
-        android:id="@+id/pomy_lnie_z"
+        android:id="@+id/pom_zarejestrowano"
         android:layout_width="324dp"
         android:layout_height="33dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="19dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="19dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="219dp"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="548dp"
+        android:gravity="top"
+
+        android:fontFamily="@font/quicksand_medium"
+
         android:text="@string/pomy_lnie_z"
         android:textAppearance="@style/pomy_lnie_z"
-        android:fontFamily="@font/Quicksand_Medium"
-        android:gravity="top"
+        android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/plantoplate"
+        app:layout_constraintVertical_bias="0.077" />
 
     <!-- Wprowadź kod zaproszeniowy: -->
     <TextView
@@ -60,22 +58,87 @@
         android:layout_width="176dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="87dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="97dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="297dp"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="443dp"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:gravity="center_horizontal|top"
         android:text="@string/wprowad_kod"
         android:textAppearance="@style/wprowad_kod"
-        android:fontFamily="@font/Quicksand_Medium"
-        android:gravity="center_horizontal|top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/plantoplate"
+        app:layout_constraintVertical_bias="0.295" />
+
+    <!-- Wprowadź kod: -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wprowadz_kod"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="236dp"
+        android:layout_height="65dp"
+        android:hint="@string/wprowadz_kod"
+        android:textColorHint="@color/black_gray"
+
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/blue_2"
+
+        app:hintTextColor="@color/black_gray"
+
+        android:fontFamily="@font/quicksand_regular"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wprowad_kod"
+        app:layout_constraintVertical_bias="0.172">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="236dp"
+            android:layout_height="56dp"
+
+            android:textColor="@color/black_gray"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="321dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--Zatwierdz button -->
+    <Button
+        android:id="@+id/button_zatwierdz"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:text="@string/zatwierdz"
+
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
 
     <!--    app:layout_constraintBottom_toBottomOf="parent"-->
     <!--    app:layout_constraintEnd_toEndOf="parent"-->
