@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PlaneToPlate_App</string>
+    <string name="app_name">PlanToPlate</string>
     <string name="plantoplate">PlanToPlate</string>
     <string name="logowanie">Logowanie</string>
     <string name="rejestracja">Rejestracja</string>

@@ -35,7 +35,7 @@
     <TextView
         android:id="@+id/rejestracja"
         android:layout_width="140dp"
-        android:layout_height="36dp"
+        android:layout_height="33dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -84,6 +84,7 @@
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_name"
             android:layout_width="236dp"
             android:layout_height="56dp"
 
@@ -124,6 +125,7 @@
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_email"
             android:layout_width="236dp"
             android:layout_height="56dp"
 
@@ -167,6 +169,7 @@
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_password"
             android:layout_width="236dp"
             android:layout_height="56dp"
 
@@ -289,7 +292,7 @@
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1" />
 
-<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
     <!--    app:layout_constraintEnd_toEndOf="parent"-->
     <!--    app:layout_constraintStart_toStartOf="parent"-->
     <!--    app:layout_constraintTop_toTopOf="parent"-->
