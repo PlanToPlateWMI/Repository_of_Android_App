@@ -54,7 +54,7 @@
 
 
 
-    <!-- Skorzystaj z linku w wiadomości e-mail, aby zweryfikować swój adres e-mail -->
+    <!-- Weryfikacja_maila -->
     <TextView
         android:id="@+id/skorzystaj_z_linku"
         android:layout_width="271dp"
@@ -76,15 +76,34 @@
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
         app:layout_constraintVertical_bias="0.295" />
 
+    <!-- Tu powinien byc mail uzytkownika -->
 
 
-    <!-- Wprowadź kod: -->
+    <!-- Wyślij ponownie -->
+
+    <EditText
+        android:id="@+id/textView"
+        android:layout_width="271dp"
+        android:layout_height="56dp"
+        android:contextClickable="false"
+        android:fontFamily="@font/quicksand_medium"
+        android:foregroundGravity="center_horizontal"
+        android:gravity="center"
+        android:text="Tu musi byc mail uzytkownika"
+        android:textAppearance="@style/wy_lij_pono"
+        app:layout_constraintBottom_toTopOf="@+id/wprowadz_kod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skorzystaj_z_linku"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wprowadz_kod"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="236dp"
         android:layout_height="65dp"
-        android:layout_marginBottom="232dp"
+        android:layout_marginBottom="184dp"
         android:fontFamily="@font/quicksand_regular"
 
         android:hint="@string/wprowadz_kod"
@@ -99,9 +118,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/skorzystaj_z_linku"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="236dp"
@@ -115,31 +132,31 @@
             tools:layout_editor_absoluteY="321dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <!-- Uwaga! Do czasu potwierdzenia maila wejście nie będzie możliwe! -->
     <TextView
-        android:id="@+id/uwaga"
-        android:layout_width="255dp"
-        android:layout_height="42dp"
+        android:id="@+id/wy_lij_pono"
+        android:layout_width="122dp"
+        android:layout_height="25dp"
         android:layout_alignParentLeft="true"
+
         android:layout_alignParentTop="true"
+
+        android:layout_alignParentRight="true"
+
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="120dp"
 
         android:fontFamily="@font/quicksand_regular"
 
         android:gravity="top"
-        android:text="@string/uwaga_do_cz"
-        android:textAppearance="@style/uwaga_do_cz"
-        android:textColor="@color/black_gray"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/wy_lij_pono"
+        android:textAppearance="@style/wy_lij_pono"
+        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdzenie_link"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.764"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
 
-
-    <!--Zatwierdz button -->
     <Button
         android:id="@+id/button_zatwierdzenie_link"
         android:layout_width="236dp"
@@ -164,9 +181,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uwaga"
-        app:layout_constraintVertical_bias="0.306"
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod"
+        app:layout_constraintVertical_bias="0.658"
         app:rippleColor="@color/blue_1" />
+
+
+    <!--Zatwierdz button -->
     <!--    app:layout_constraintBottom_toBottomOf="parent"-->
     <!--    app:layout_constraintEnd_toEndOf="parent"-->
     <!--    app:layout_constraintStart_toStartOf="parent"-->
