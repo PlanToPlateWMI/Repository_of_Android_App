@@ -6,7 +6,7 @@
     <string name="pomy_lnie_z">Pomyślnie zarejestrowano</string>
     <string name="wprowad_kod">Wprowadź kod zaproszeniowy:</string>
     <string name="potwierdzen">Potwierdzenie e-maila</string>
-    <string name="skorzystaj_">Skorzystaj z linku w wiadomości e-mail, aby zweryfikować swój adres e-mail</string>
+    <string name="skorzystaj_">List został wysłany na podany adres e-mail. Wpisz kod z e-maila poniżej</string>
     <string name="uwaga_do_cz">Uwaga! Do czasu potwierdzenia maila wejście nie będzie możliwe!</string>
     <string name="wyra_am_zgo">Wyrażam zgodę na przetwarzanie danych osobowych</string>
     <string name="masz_konto_">Masz konto?</string>

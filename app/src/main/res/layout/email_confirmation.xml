@@ -58,7 +58,7 @@
     <TextView
         android:id="@+id/skorzystaj_z_linku"
         android:layout_width="271dp"
-        android:layout_height="120dp"
+        android:layout_height="125dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -75,6 +75,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
         app:layout_constraintVertical_bias="0.295" />
+
+
+
+    <!-- Wprowadź kod: -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wprowadz_kod"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="236dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="232dp"
+        android:fontFamily="@font/quicksand_regular"
+
+        android:hint="@string/wprowadz_kod"
+        android:textColorHint="@color/black_gray"
+
+        app:boxBackgroundMode="outline"
+
+        app:boxStrokeColor="@color/blue_2"
+
+
+        app:hintTextColor="@color/black_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skorzystaj_z_linku"
+        app:layout_constraintVertical_bias="1.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="236dp"
+            android:layout_height="56dp"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            android:textColor="@color/black_gray"
+
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="321dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <!-- Uwaga! Do czasu potwierdzenia maila wejście nie będzie możliwe! -->
@@ -96,8 +135,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/skorzystaj_z_linku"
-        app:layout_constraintVertical_bias="0.853" />
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod"
+        app:layout_constraintVertical_bias="1.0" />
 
 
     <!--Zatwierdz button -->
@@ -123,10 +162,10 @@
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uwaga"
-        app:layout_constraintVertical_bias="0.216"
+        app:layout_constraintVertical_bias="0.306"
         app:rippleColor="@color/blue_1" />
     <!--    app:layout_constraintBottom_toBottomOf="parent"-->
     <!--    app:layout_constraintEnd_toEndOf="parent"-->
