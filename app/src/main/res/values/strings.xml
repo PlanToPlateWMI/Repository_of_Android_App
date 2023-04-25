@@ -23,4 +23,5 @@
     <string name="wybierz_opcje">Wybierz jedną opcję:</string>
     <string name="uwaga">Uwaga! Wybrana opcja wygenerowanego kodu wpłynie na to, jakie opcje będą dostępne dla użytkownika, który go wprowadzi.
 Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkownika</string>
+    <string name="przekarz_kod">Przekaż kod niżej wybranemu uzytkownikowi</string>
 </resources>
