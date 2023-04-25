@@ -6,6 +6,10 @@ android {
     namespace 'com.example.planetoplate_app'
     compileSdk 33
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.example.planetoplate_app"
         minSdk 28

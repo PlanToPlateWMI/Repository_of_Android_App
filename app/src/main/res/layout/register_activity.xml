@@ -84,6 +84,7 @@
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_name"
             android:layout_width="236dp"
             android:layout_height="56dp"
 
@@ -124,6 +125,7 @@
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_email"
             android:layout_width="236dp"
             android:layout_height="56dp"
 
@@ -167,6 +169,7 @@
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enter_password"
             android:layout_width="236dp"
             android:layout_height="56dp"
 
