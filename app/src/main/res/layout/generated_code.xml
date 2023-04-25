@@ -8,6 +8,7 @@
     android:background="@color/blue_0"
     tools:context=".Choice_adult_or_child">
 
+
     <!-- PlanToPlate -->
     <TextView
         android:id="@+id/plantoplate"
@@ -49,6 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
         app:layout_constraintVertical_bias="0.077" />
 
+
     <!-- Forward the code to the selected user below -->
     <TextView
         android:id="@+id/forward_the_code"
@@ -69,24 +71,18 @@
         app:layout_constraintTop_toBottomOf="@+id/code_generation"
         app:layout_constraintVertical_bias="0.095" />
 
-    <!--Zatwierdz button -->
+
+    <!-- Kod -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wp_kod"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="236dp"
         android:layout_height="65dp"
         android:fontFamily="@font/quicksand_regular"
-
         android:textColorHint="@color/black_gray"
         app:boxBackgroundMode="outline"
-
         app:boxStrokeColor="@color/blue_2"
-
         app:hintTextColor="@color/black_gray"
-
-        android:hint="Tu musi byc kod"
-        android:contextClickable="false"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -104,7 +100,8 @@
             android:textColor="@color/black_gray"
 
             tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="321dp" />
+            tools:layout_editor_absoluteY="321dp"
+            android:enabled="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,18 +134,5 @@
         app:layout_constraintTop_toBottomOf="@+id/wp_kod"
         app:layout_constraintVertical_bias="0.587"
         app:rippleColor="@color/blue_1" />
-
-<!--    <EditText-->
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="236dp"-->
-<!--        android:layout_height="56dp"-->
-<!--        android:text="Tu musi byc kod"-->
-<!--        android:contextClickable="false"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/wp_kod"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/wp_kod"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/wp_kod"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/wp_kod"-->
-<!--        tools:ignore="MissingConstraints" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
