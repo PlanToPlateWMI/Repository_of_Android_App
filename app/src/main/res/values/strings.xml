@@ -25,4 +25,5 @@
 Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkownika</string>
     <string name="przekarz_kod">Przekaż poniższy kod wybranemu uzytkownikowi</string>
     <string name="wy_lij_pono">Wyślij ponownie</string>
+    <string name="nie_masz_konto_">Nie masz konta?</string>
 </resources>
