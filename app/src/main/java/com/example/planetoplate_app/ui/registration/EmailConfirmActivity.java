@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.planetoplate_app;
+package com.example.planetoplate_app.ui.registration;
 
-public class Group {
+public class EmailConfirmActivity {
 }

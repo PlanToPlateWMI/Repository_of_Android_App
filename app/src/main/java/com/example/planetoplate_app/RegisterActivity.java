@@ -24,14 +24,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.example.planetoplate_app.request_models.get.user_register.UserInfo;
 import com.example.planetoplate_app.databinding.RegisterActivityBinding;
 import com.example.planetoplate_app.tools.EmailValidator;
+import com.example.planetoplate_app.tools.SCryptStretcher;
 import com.google.android.material.snackbar.Snackbar;
 
 /**
  * An activity for user registration.
  */
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private RegisterActivityBinding register_view;
     private EditText enter_name;
@@ -70,10 +72,9 @@ public class Register extends AppCompatActivity {
     /**
      * Get the user's information from the input fields.
      *
-     * @param v The view that was clicked.
      * @return A UserInfo object containing the user's information.
      */
-    public UserInfo getUserInfo(View v){
+    public UserInfo getUserInfo(){
         String name = String.valueOf(enter_name.getText());
         String email = String.valueOf(enter_email.getText());
         String password = String.valueOf(enter_password.getText());
@@ -86,7 +87,7 @@ public class Register extends AppCompatActivity {
      * @param view The view that was clicked.
      */
     public void validateUserInfo(View view){
-        UserInfo info = getUserInfo(view);
+        UserInfo info = getUserInfo();
 
         if(info.getName() == null || info.getName().isEmpty()){
             Snackbar.make(view, "Wprowadż imię użytkownika!", Snackbar.LENGTH_LONG).show();
@@ -105,6 +106,10 @@ public class Register extends AppCompatActivity {
         }
 
         if (apply_policy.isChecked()){
+
+            //stretch password to make it unreadable and secure
+            info.setPassword(SCryptStretcher.stretch(info.getPassword(), info.getName()));
+
             Snackbar.make(view, "Udana rejestracja!", Snackbar.LENGTH_LONG).show();
             //TODO send data to server
         }

@@ -1,4 +1,4 @@
-package com.example.planetoplate_app;
+package com.example.planetoplate_app.tools;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
