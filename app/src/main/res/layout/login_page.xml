@@ -69,11 +69,12 @@
 
         app:hintTextColor="@color/black_gray"
 
-        app:layout_constraintBottom_toTopOf="@+id/button_zaloguj_sie"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logowanie"
+        app:layout_constraintBottom_toTopOf="@+id/button_zaloguj_sie"
         app:layout_constraintVertical_bias="0.170">
 
         <!--android:fontFamily="@font/quicksand_regular"-->
@@ -92,7 +93,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Wprowadz haslo -->
-    <!--android:fontFamily="@font/quicksand_regular"-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wprowadz_haslo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -109,11 +109,12 @@
         app:boxStrokeColor="@color/blue_2"
 
         app:hintTextColor="@color/black_gray"
-        app:layout_constraintBottom_toTopOf="@+id/button_zaloguj_sie"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_email"
+        app:layout_constraintBottom_toTopOf="@+id/button_zaloguj_sie"
+
         app:layout_constraintVertical_bias="0.183">
 
         <!--android:fontFamily="@font/quicksand_regular"-->
@@ -130,6 +131,39 @@
             tools:layout_editor_absoluteY="321dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--Przypomnij haslo -->
+
+    <Button
+        android:id="@+id/przypomnij_haslo"
+        android:layout_width="190dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="#00FFFFFF"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/przypomnij_haslo"
+        android:textAllCaps="true"
+        android:textAppearance="@style/masz_konto_"
+        android:textColor="@color/blue_3"
+        android:textColorHighlight="#00FFFFFF"
+        android:textColorHint="#00FFFFFF"
+        android:textColorLink="#00FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/button_zaloguj_sie"
+        app:layout_constraintEnd_toEndOf="@id/wprowadz_haslo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="@id/wprowadz_haslo"
+        app:layout_constraintVertical_bias="0.409"
+        tools:visibility="visible" />
+
 
     <!--Zaloguj sie button -->
     <Button
@@ -159,6 +193,7 @@
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_haslo"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1" />
+
 
     <!--Zaloz konto button -->
     <Button

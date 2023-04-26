@@ -29,4 +29,13 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="przekarz_kod">Przekaż poniższy kod wybranemu uzytkownikowi</string>
     <string name="wy_lij_pono">Wyślij ponownie</string>
     <string name="nie_masz_konto_">Nie masz konta?</string>
+    <string name="przypomnij_haslo">Przypomnij hasło</string>
+    <string name="wybierz_jadna_opcje">Wybierz jedną z opcji:</string>
+    <string name="mam_zapr_do_gr">Mam zaproszenie do grupy</string>
+    <string name="swoja_gr">Chcę założyć własną grupę</string>
+
+
+
+
+
 </resources>
