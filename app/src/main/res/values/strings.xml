@@ -35,6 +35,9 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="lista_zakupow">Lista zakupów</string>
     <string name="przepisy">Przepisy</string>
     <string name="ustawienia">Ustawienia</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="przypomnij_haslo">Przypomnij hasło</string>
+    <string name="wybierz_jadna_opcje">Wybierz jedną z opcji:</string>
+    <string name="mam_zapr_do_gr">Mam zaproszenie do grupy</string>
+    <string name="swoja_gr">Chcę założyć własną grupę</string>
 </resources>
