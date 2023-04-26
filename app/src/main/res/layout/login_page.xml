@@ -132,6 +132,8 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!--Zaloguj sie button -->
+
+    <!--Zaloz konto button -->
     <Button
         android:id="@+id/button_zaloguj_sie"
         android:layout_width="236dp"
@@ -160,7 +162,6 @@
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1" />
 
-    <!--Zaloz konto button -->
     <Button
         android:id="@+id/button_zaloz_konto"
         android:layout_width="140dp"

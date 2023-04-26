@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    tools:context=".Choice_adult_or_child">
+    tools:context=".Generated_code">
 
 
     <!-- PlanToPlate -->

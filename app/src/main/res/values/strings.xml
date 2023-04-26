@@ -29,4 +29,12 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="przekarz_kod">Przekaż poniższy kod wybranemu uzytkownikowi</string>
     <string name="wy_lij_pono">Wyślij ponownie</string>
     <string name="nie_masz_konto_">Nie masz konta?</string>
+
+    <string name="kalendarz">Kalendarz</string>
+    <string name="spizarnia">Spiżarnia</string>
+    <string name="lista_zakupow">Lista zakupów</string>
+    <string name="przepisy">Przepisy</string>
+    <string name="ustawienia">Ustawienia</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

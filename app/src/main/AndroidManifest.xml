@@ -35,12 +35,12 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Email_confirmation"
+            android:name=".EmailConfirmation"
             android:exported="true">
 
             <meta-data
                 android:name="android.app.lib_name"
-                android:value="" />
+                android:value=""/>
         </activity>
         <activity
             android:name=".Group_Choose"
