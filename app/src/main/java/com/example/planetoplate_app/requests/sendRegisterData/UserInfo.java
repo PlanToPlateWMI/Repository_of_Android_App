@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.planetoplate_app.request_models;
+package com.example.planetoplate_app.requests.sendRegisterData;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+
+ Represents user information required for API signing up.
+ */
 public class UserInfo {
 
     @SerializedName("name")
@@ -28,35 +32,64 @@ public class UserInfo {
     @SerializedName("password")
     private String password;
 
+    /**
+
+     Constructs a new UserInfo object.
+     @param name user's name
+     @param email user's email address
+     @param password user's password
+     */
     public UserInfo(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
+    /**
 
+     Returns the user's name.
+     @return user's name
+     */
     public String getName() {
         return name;
     }
+    /**
 
+     Sets the user's name.
+     @param name user's name
+     */
     public void setName(String name) {
         this.name = name;
     }
+    /**
 
+     Returns the user's email address.
+     @return user's email address
+     */
     public String getEmail() {
         return email;
     }
+    /**
 
+     Sets the user's email address.
+     @param email user's email address
+     */
     public void setEmail(String email) {
         this.email = email;
     }
+    /**
 
+     Returns the user's password.
+     @return user's password
+     */
     public String getPassword() {
         return password;
     }
+    /**
 
+     Sets the user's password.
+     @param password user's password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }

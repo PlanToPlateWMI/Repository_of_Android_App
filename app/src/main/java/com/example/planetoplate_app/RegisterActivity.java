@@ -18,17 +18,23 @@ package com.example.planetoplate_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.example.planetoplate_app.request_models.get.user_register.UserInfo;
+import com.example.planetoplate_app.requests.sendRegisterData.CodeResponseCallback;
+import com.example.planetoplate_app.requests.RetrofitClient;
+import com.example.planetoplate_app.requests.sendRegisterData.UserInfo;
 import com.example.planetoplate_app.databinding.RegisterActivityBinding;
 import com.example.planetoplate_app.tools.EmailValidator;
 import com.example.planetoplate_app.tools.SCryptStretcher;
 import com.google.android.material.snackbar.Snackbar;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 /**
  * An activity for user registration.
@@ -41,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText enter_password;
     private CheckBox apply_policy;
     private Button register_button;
+
+    private SharedPreferences preferences;
 
     /**
      * Called when the activity is first created.
@@ -64,6 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
         enter_password = register_view.enterPassword;
         apply_policy = register_view.checkboxWyrazamZgode;
         register_button = register_view.buttonZalozKonto;
+
+        preferences = getSharedPreferences("prefs", 0);
 
         // Set the click listener for the register button
         register_button.setOnClickListener(this::validateUserInfo);
@@ -111,10 +121,24 @@ public class RegisterActivity extends AppCompatActivity {
             info.setPassword(SCryptStretcher.stretch(info.getPassword(), info.getName()));
 
             Snackbar.make(view, "Udana rejestracja!", Snackbar.LENGTH_LONG).show();
-            //TODO send data to server
+            sendUserData(info, view);
         }
         else{
             Snackbar.make(view, "Musisz wyrazić zgodę na przetwarzanie danych", Snackbar.LENGTH_LONG).show();
         }
     }
+
+    /**
+     * Sends the user data to the server and handles the response asynchronously.
+     * @param data The user data to send.
+     * @param view The View to display the response in (e.g. error using SnackBar).
+     */
+    public void sendUserData(UserInfo data, View view) {
+        // Create a new retrofit call to send the user data to the server.
+        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().getConfirmCode(data);
+
+        // Enqueue the call with a custom callback that handles the response.
+        myCall.enqueue(new CodeResponseCallback(view, preferences, data.getEmail()));
+    }
+
 }

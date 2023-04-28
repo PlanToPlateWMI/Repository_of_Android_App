@@ -18,6 +18,7 @@ package com.example.planetoplate_app.tools;
 import org.bouncycastle.crypto.generators.SCrypt;
 
 import java.util.Arrays;
+import java.util.Base64;
 
 /**
 
@@ -36,7 +37,7 @@ public class SCryptStretcher {
         byte[] saltBytes = salt.getBytes();
         byte[] passwordBytes = password.getBytes();
         byte[] hashedPassword = SCrypt.generate(passwordBytes, saltBytes, 16, 16, 16, 128);
-        return new String(hashedPassword);
+        return Base64.getEncoder().encodeToString(hashedPassword);
     }
 
     /**

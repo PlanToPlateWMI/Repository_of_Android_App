@@ -15,5 +15,26 @@
  */
 package com.example.planetoplate_app.ui.registration;
 
-public class EmailConfirmActivity {
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.planetoplate_app.databinding.EmailConfirmationBinding;
+import com.example.planetoplate_app.databinding.RegisterActivityBinding;
+
+public class EmailConfirmActivity extends AppCompatActivity {
+
+    private EmailConfirmationBinding email_confirm_view;
+
+    @SuppressLint({"ResourceType", "MissingInflatedId"})
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Inflate the layout using the View Binding Library
+        email_confirm_view = EmailConfirmationBinding.inflate(getLayoutInflater());
+        setContentView(email_confirm_view.getRoot());
+    }
+
 }
