@@ -9,26 +9,26 @@
 
     <!-- TODO: Update blank fragment layout -->
     <!--Uastawienia -->
-     <TextView
-         android:id="@+id/ustawienia"
-         android:layout_width="167dp"
-         android:layout_height="40dp"
-         android:fontFamily="@font/quicksand_semibold"
-         android:layout_alignParentLeft="true"
-         android:layout_marginLeft="120dp"
-         android:layout_alignParentTop="true"
-         android:layout_marginTop="105dp"
-         android:text="@string/ustawienia"
-         android:textColor="@color/black_gray"
-         android:textAppearance="@style/plantoplate"
-         android:gravity="top"
-         />
+    <TextView
+        android:id="@+id/ustawienia"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="105dp"
+        android:fontFamily="@font/quicksand_semibold"
+        android:gravity="top"
+        android:text="@string/ustawienia"
+        android:textAppearance="@style/plantoplate"
+        android:textColor="@color/black_gray" />
 
     <!--Wygenerowanie kodu button -->
     <Button
         android:id="@+id/button_wygenerowanie_kodu"
         android:layout_width="410dp"
         android:layout_height="77dp"
+        android:gravity="left|center_vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -44,8 +44,8 @@
         android:layout_marginTop="190dp"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:drawableRight="@android:drawable/ic_menu_search"
+        android:drawableLeft="@drawable/baseline_key_24"
+        android:drawableRight="@drawable/rrow_forward_24_75"
         />
 
     <!--Zmiana danych button-->
@@ -53,6 +53,7 @@
         android:id="@+id/button_zmiana_danych"
         android:layout_width="410dp"
         android:layout_height="77dp"
+        android:gravity="left|center_vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -68,8 +69,8 @@
         android:layout_marginTop="267dp"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:drawableRight="@android:drawable/ic_menu_search"
+        android:drawableLeft="@drawable/baseline_manage_accounts_24"
+        android:drawableRight="@drawable/rrow_forward_24_75"
         />
 
     <!--Zarzadzanie uzytkownikami button-->
@@ -77,6 +78,7 @@
         android:id="@+id/button_zarzadyanie_uyztkownikamu"
         android:layout_width="410dp"
         android:layout_height="77dp"
+        android:gravity="left|center_vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -92,8 +94,8 @@
         android:layout_marginTop="344dp"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:drawableRight="@android:drawable/ic_menu_search"
+        android:drawableLeft="@drawable/baseline_manage_history_24"
+        android:drawableRight="@drawable/rrow_forward_24_75"
         />
 
     <!--About us button-->
@@ -101,6 +103,7 @@
         android:id="@+id/button_about_us"
         android:layout_width="410dp"
         android:layout_height="77dp"
+        android:gravity="left|center_vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -116,8 +119,8 @@
         android:layout_marginTop="421dp"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:drawableRight="@android:drawable/ic_menu_search"
+        android:drawableLeft="@drawable/question_mark_24_75"
+        android:drawableRight="@drawable/rrow_forward_24_75"
         />
 
     <!--Wyloguj button-->
@@ -125,6 +128,7 @@
         android:id="@+id/button_wyloguj"
         android:layout_width="410dp"
         android:layout_height="77dp"
+        android:gravity="left|center_vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -140,8 +144,8 @@
         android:layout_marginTop="498dp"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:drawableRight="@android:drawable/ic_menu_search"
+        android:drawableLeft="@drawable/exit_to_app_24"
+        android:drawableRight="@drawable/rrow_forward_24_75"
         />
 
 
