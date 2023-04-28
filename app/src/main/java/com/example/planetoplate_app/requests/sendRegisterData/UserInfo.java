@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.planetoplate_app.request_models.get.user_register;
+package com.example.planetoplate_app.request_models;
+
+import com.google.gson.annotations.SerializedName;
 
 public class UserInfo {
 
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("email")
     private String email;
+
+    @SerializedName("password")
     private String password;
 
     public UserInfo(String name, String email, String password) {
@@ -50,4 +57,6 @@ public class UserInfo {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }
