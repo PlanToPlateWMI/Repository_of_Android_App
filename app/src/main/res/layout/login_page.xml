@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    tools:context=".ui.login.Login">
+    tools:context=".LoginActivity">
 
     <!-- PlanToPlate -->
     <TextView
@@ -29,17 +29,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.15" />
 
+
     <!-- Logowanie -->
     <TextView
-        android:id="@+id/logowanie"
+        android:id="@+id/rejestracja"
         android:layout_width="140dp"
-        android:layout_height="36dp"
+        android:layout_height="38dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:gravity="top"
+
         android:fontFamily="@font/quicksand_medium"
+
         android:text="@string/logowanie"
         android:textAppearance="@style/rejestracja"
         android:textColor="@color/black_gray"
@@ -50,13 +53,31 @@
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
         app:layout_constraintVertical_bias="0.077" />
 
-    <!-- Wprowadz email -->
+    <!-- Wprowadz imie -->
+
+
+    <!-- Wprowadz e-mail -->
+
+
+    <!-- Wprowadz haslo -->
+
+    <!--Checkbox potwierdzenie danych osobowych -->
+
+
+    <!--Zalogowanie sie button -->
+
+
+    <!--Masz konto? -->
+
+
+    <!--Zaloz konto button -->
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/wprowadz_email"
+        android:id="@+id/wprowadz_imie"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="236dp"
         android:layout_height="65dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="68dp"
 
         android:fontFamily="@font/quicksand_regular"
 
@@ -69,17 +90,14 @@
 
         app:hintTextColor="@color/black_gray"
 
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logowanie"
-        app:layout_constraintBottom_toTopOf="@+id/button_zaloguj_sie"
-        app:layout_constraintVertical_bias="0.170">
+        app:layout_constraintTop_toBottomOf="@+id/rejestracja">
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/enter_email"
+            android:id="@+id/enter_mail"
             android:layout_width="236dp"
             android:layout_height="56dp"
 
@@ -92,34 +110,35 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Wprowadz haslo -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wprowadz_haslo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="236dp"
         android:layout_height="65dp"
 
-        android:hint="@string/wprowadz_haslo"
-        android:textColorHint="@color/black_gray"
-
+        android:layout_marginTop="44dp"
         android:fontFamily="@font/quicksand_regular"
+
+        android:hint="@string/wprowadz_haslo"
+
+        android:textColorHint="@color/black_gray"
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="@color/blue_2"
+        app:endIconMode="password_toggle"
 
+        app:endIconTint="@color/black_gray"
+
+        app:boxStrokeColor="@color/blue_2"
         app:hintTextColor="@color/black_gray"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wprowadz_email"
-        app:layout_constraintBottom_toTopOf="@+id/button_zaloguj_sie"
-
-        app:layout_constraintVertical_bias="0.183">
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_imie">
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/enter_password"
+            android:id="@+id/enter_pass"
             android:layout_width="236dp"
             android:layout_height="56dp"
 
@@ -128,12 +147,11 @@
             android:textColor="@color/black_gray"
 
             tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="321dp" />
+            tools:layout_editor_absoluteY="321dp"
+            android:inputType="textPassword"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <!--Przypomnij haslo -->
 
     <TextView
         android:id="@+id/przyp_haslo"
@@ -143,55 +161,45 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:background="#00FFFFFF"
+
         android:clickable="true"
 
         android:fontFamily="@font/quicksand_medium"
-
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/przypomnij_haslo"
         android:textAppearance="@style/masz_konto_"
+
         android:textColor="@color/black_gray"
-
-        app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wprowadz_haslo"
-        app:layout_constraintVertical_bias="0.909" />
+        app:layout_constraintTop_toBottomOf="@id/wprowadz_haslo" />
 
-
-    <!--Zaloz konto button -->
-    <Button
-        android:id="@+id/button_zaloguj_sie"
-        android:layout_width="236dp"
-        android:layout_height="70dp"
-
+    <TextView
+        android:id="@+id/masz_konto_"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
 
-        android:backgroundTint="@color/blue_1"
-
-        android:clickable="true"
         android:fontFamily="@font/quicksand_medium"
 
-        android:text="@string/zalogowanie"
-
-        android:textAllCaps="false"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/nie_masz_konto_"
+        android:textAppearance="@style/masz_konto_"
         android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/nie_masz_konto_"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.321"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wprowadz_haslo"
-        app:layout_constraintVertical_bias="0.162"
-        app:rippleColor="@color/blue_1" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.91" />
 
-
-    <!--Zaloz konto button -->
     <Button
-        android:id="@+id/button_zaloz_konto"
-        android:layout_width="140dp"
+        android:id="@+id/button_zaloguj_sie"
+        android:layout_width="85dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -213,35 +221,43 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/nie_masz_konto_"
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintStart_toEndOf="@+id/masz_konto_"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.84"
+        app:layout_constraintVertical_bias="0.91"
         tools:visibility="visible" />
 
+    <Button
+        android:id="@+id/button_zaloz_konto"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
 
-    <!--Nie masz konta? -->
-    <TextView
-        android:id="@+id/nie_masz_konto_"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
 
+        android:backgroundTint="@color/blue_1"
+
+        android:clickable="true"
         android:fontFamily="@font/quicksand_medium"
 
-        android:gravity="center_horizontal|center_vertical"
-        android:text="@string/nie_masz_konto_"
-        android:textAppearance="@style/masz_konto_"
+        android:text="@string/zaloz_konto"
+
+        android:textAllCaps="false"
         android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.276"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.84" />
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_haslo"
+        app:layout_constraintVertical_bias="0.408"
+        app:rippleColor="@color/blue_1" />
 
+    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--    app:layout_constraintEnd_toEndOf="parent"-->
+    <!--    app:layout_constraintStart_toStartOf="parent"-->
+    <!--    app:layout_constraintTop_toTopOf="parent"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
