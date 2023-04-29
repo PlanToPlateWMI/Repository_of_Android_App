@@ -5,10 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    tools:context="pl.plantoplate.RegisterActivity">
+    tools:context=".ui.registration.RegisterActivity">
 
     <!-- PlanToPlate -->
-    <!-- android:fontFamily="@font/quicksand_semibold" -->
     <TextView
         android:id="@+id/plantoplate"
         android:layout_width="182dp"
@@ -84,7 +83,7 @@
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/enter_name"
+            android:id="@+id/enterName"
             android:layout_width="236dp"
             android:layout_height="56dp"
 
@@ -178,7 +177,8 @@
             android:textColor="@color/black_gray"
 
             tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="321dp" />
+            tools:layout_editor_absoluteY="321dp"
+            android:inputType="textPassword"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
