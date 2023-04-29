@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
+    android:textAppearance="@style/menu_text"
     tools:context="pl.plantoplate.ui.main.ActivityMain">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -13,8 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#C6D9FF"
+
+        android:outlineAmbientShadowColor="@color/black_gray"
+        android:outlineSpotShadowColor="@color/black_gray"
+
+        android:textAppearance="@style/menu_text"
+        app:itemIconTint="@color/black_gray"
+
+        app:itemRippleColor="@color/blue_0"
+        app:itemTextColor="#80231F20"
         app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
@@ -24,6 +36,8 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
+
+
         app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>

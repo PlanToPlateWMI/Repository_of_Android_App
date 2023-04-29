@@ -5,7 +5,13 @@
         android:id = "@+id/calendar"
         android:title="@string/kalendarz"
         android:icon="@drawable/calendar_today_24_50"
+
         android:font="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_regular"
+
+        android:textAppearance="@style/menu_text"
+
+        android:iconTint="@color/black_gray"
         />
     <item
         android:id = "@+id/cottage"
@@ -13,26 +19,41 @@
         android:icon="@drawable/cottage_24_50"
 
         android:font="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_regular"
+
+        android:textAppearance="@style/menu_text"
+
+        android:iconTint="@color/black_gray"
         />
     <item
         android:id = "@+id/shopping_cart"
         android:title="@string/lista_zakupow"
         android:icon="@drawable/shopping_cart_24_50"
 
+        android:textAppearance="@style/menu_text"
+
         android:font="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_regular"
         />
     <item
         android:id = "@+id/receipt_long"
         android:title="@string/przepisy"
         android:icon="@drawable/receipt_long_24_50"
 
+        android:textAppearance="@style/menu_text"
+
         android:font="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_regular"
         />
     <item
         android:id = "@+id/settings"
         android:title="@string/ustawienia"
         android:icon="@drawable/settings_24_50"
+
+        android:textAppearance="@style/menu_text"
+
         android:font="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_regular"
         />
 
 </menu>
