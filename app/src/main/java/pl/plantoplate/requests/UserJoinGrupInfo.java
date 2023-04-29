@@ -1,2 +1,4 @@
-package pl.plantoplate.requests;public class UserJoinGrupInfo {
+package pl.plantoplate.requests;
+
+public class UserJoinGrupInfo {
 }

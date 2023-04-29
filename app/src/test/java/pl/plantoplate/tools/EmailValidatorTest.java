@@ -1,4 +1,4 @@
-package com.example.plantoplate.tools;
+package pl.plantoplate.tools;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

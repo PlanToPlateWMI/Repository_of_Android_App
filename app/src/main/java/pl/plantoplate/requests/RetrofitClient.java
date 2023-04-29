@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.plantoplate.requests;
+package pl.plantoplate.requests;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,7 +25,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitClient {
 
     // Base URL of the API
-    private final String BASE_URL = "your base url here, e.g. http://localhost:8080/api/";
+    private final String BASE_URL = "http://192.168.0.121:8080";
     // Singleton instance of the class
     private static RetrofitClient instance = null;
     // Interface representing the API endpoints

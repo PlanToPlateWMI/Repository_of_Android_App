@@ -1,12 +1,10 @@
-package com.example.planetoplate_app.requests.getNewConfirmCode;
+package pl.plantoplate.requests.getConfirmCode;
 
 import android.content.Intent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.example.planetoplate_app.requests.sendRegisterData.CodeResponse;
-import com.example.planetoplate_app.ui.registration.EmailConfirmActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -17,7 +15,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewConfirmCodeCallback implements Callback<ResponseBody> {
+import pl.plantoplate.ui.registration.EmailConfirmActivity;
+
+/**
+ * A callback class for the API request to retrieve a confirmation code for user registration (if was problems with getting code).
+ */
+public class ConfirmCodeCallback implements Callback<ResponseBody> {
 
     // View object to display the Snackbar
     private final View view;
@@ -25,11 +28,11 @@ public class NewConfirmCodeCallback implements Callback<ResponseBody> {
     private final String email;
 
     /**
-     * Constructor to create a new CodeResponseCallback object.
+     * Constructor to create a new ConfirmCodeCallback object.
      * @param view The view object to display the Snackbar.
      * @param email The user's email.
      */
-    public NewConfirmCodeCallback(View view, String email) {
+    public ConfirmCodeCallback(View view, String email) {
         this.view = view;
         this.email = email;
     }
@@ -52,7 +55,7 @@ public class NewConfirmCodeCallback implements Callback<ResponseBody> {
                 return;
             }
 
-            // If the response body is not null, parse the response body to CodeResponse and start the EmailConfirmActivity
+            // If the response body is not null, parse the response body to CodeResponse and restart the EmailConfirmActivity
             try {
                 CodeResponse code = new Gson().fromJson(response.body().string(), CodeResponse.class);
                 Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
@@ -75,7 +78,7 @@ public class NewConfirmCodeCallback implements Callback<ResponseBody> {
      */
     @Override
     public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-        Snackbar.make(view, "Error while sending user data!", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, "Błąd, sprawdź swoje połączenie internetowe!", Snackbar.LENGTH_LONG).show();
     }
 
     /**
@@ -85,7 +88,7 @@ public class NewConfirmCodeCallback implements Callback<ResponseBody> {
     private void handleErrorResponse(int code) {
         switch (code) {
             case 409:
-                Snackbar.make(view, "Użytkownik o podanym adresie email już istnieje!", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje!", Snackbar.LENGTH_LONG).show();
                 break;
             case 500:
                 Snackbar.make(view, "Błąd serwera!", Snackbar.LENGTH_LONG).show();

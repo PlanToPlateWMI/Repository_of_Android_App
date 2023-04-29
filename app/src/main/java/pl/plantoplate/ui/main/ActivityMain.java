@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.plantoplate.ui.main;
+package pl.plantoplate.ui.main;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -23,13 +23,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.plantoplate.R;
-import com.example.plantoplate.databinding.ActivityMainForFragmentsBinding;
-import com.example.plantoplate.ui.main.calendar.CalendarFragment;
-import com.example.plantoplate.ui.main.recepies.RecipeFragment;
-import com.example.plantoplate.ui.main.settings.SettingsFragment;
-import com.example.plantoplate.ui.main.shoplist.ShoppingListFragment;
-import com.example.plantoplate.ui.main.storage.StorageFragment;
+import pl.plantoplate.R;
+import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
+import pl.plantoplate.ui.main.calendar.CalendarFragment;
+import pl.plantoplate.ui.main.recepies.RecipeFragment;
+import pl.plantoplate.ui.main.settings.SettingsFragment;
+import pl.plantoplate.ui.main.shoplist.ShoppingListFragment;
+import pl.plantoplate.ui.main.storage.StorageFragment;
 
 public class ActivityMain extends AppCompatActivity{
 

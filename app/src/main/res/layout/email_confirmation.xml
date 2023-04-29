@@ -77,22 +77,22 @@
 
     <!-- Wyślij ponownie -->
 
-<!--    <EditText-->
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="271dp"-->
-<!--        android:layout_height="56dp"-->
-<!--        android:contextClickable="false"-->
-<!--        android:fontFamily="@font/quicksand_medium"-->
-<!--        android:foregroundGravity="center_horizontal"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Tu musi byc mail uzytkownika"-->
-<!--        android:textAppearance="@style/wy_lij_pono"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/wprowadz_kod"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/skorzystaj_z_linku"-->
-<!--        app:layout_constraintVertical_bias="0.0"-->
-<!--        tools:ignore="MissingConstraints" />-->
+    <!--    <EditText-->
+    <!--        android:id="@+id/textView"-->
+    <!--        android:layout_width="271dp"-->
+    <!--        android:layout_height="56dp"-->
+    <!--        android:contextClickable="false"-->
+    <!--        android:fontFamily="@font/quicksand_medium"-->
+    <!--        android:foregroundGravity="center_horizontal"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="Tu musi byc mail uzytkownika"-->
+    <!--        android:textAppearance="@style/wy_lij_pono"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/wprowadz_kod"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/skorzystaj_z_linku"-->
+    <!--        app:layout_constraintVertical_bias="0.0"-->
+    <!--        tools:ignore="MissingConstraints" />-->
 
 
     <!--Wprowadz kod -->

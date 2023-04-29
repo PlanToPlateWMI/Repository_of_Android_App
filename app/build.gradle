@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.planetoplate_app'
+    namespace 'pl.plantoplate'
     compileSdk 33
 
     buildFeatures {
@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.planetoplate_app"
+        applicationId "pl.plantoplate"
         minSdk 28
         targetSdk 33
         versionCode 1

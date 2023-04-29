@@ -71,7 +71,6 @@
 
     <!-- Wprowadź kod: -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/wprowadz_kod"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="236dp"
         android:layout_height="65dp"
@@ -94,6 +93,7 @@
         app:layout_constraintVertical_bias="0.172">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/wprowadz_kod"
             android:layout_width="236dp"
             android:layout_height="56dp"
 

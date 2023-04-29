@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.plantoplate.requests;
+package pl.plantoplate.requests;
 
-import com.example.plantoplate.requests.sendRegisterData.UserInfo;
+import pl.plantoplate.requests.sendRegisterData.UserInfo;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * An interface representing the API endpoints.
@@ -28,12 +30,24 @@ import retrofit2.http.POST;
 public interface RestApi {
 
     /**
-     * Sends a POST request to the API endpoint to retrieve a confirmation code for user registration.
+     * Sends a POST request to the API endpoint to get a email confirmation code for user registration (for the first time).
      *
      * @param info the user information object containing the email and password
      * @return a Call object representing the API request
      */
-    @POST("/auth/signup/")
-    Call<ResponseBody> getConfirmCode(@Body UserInfo info);
+    @POST("api/auth/signup/")
+    Call<ResponseBody> sendUserRegisterData(@Body UserInfo info);
+
+    /**
+     * Sends a GET request to the API endpoint to get a new email confirmation code for user registration.
+     *
+     * @param email the user email address
+     * @return a Call object representing the API request
+     */
+    @GET("api/mail/code/")
+    Call<ResponseBody> getConfirmCode(@Query("email") String email);
+
+    @POST("api/auth/group")
+    Call<ResponseBody> createGroup(@Body UserCreateGroupInfo info);
 }
 

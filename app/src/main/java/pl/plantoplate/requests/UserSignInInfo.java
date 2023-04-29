@@ -1,4 +1,4 @@
-package pl.plantoplate;
+package pl.plantoplate.requests;
 
 public class UserSignInInfo  {
 }

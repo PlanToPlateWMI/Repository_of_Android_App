@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.plantoplate.tools;
+package pl.plantoplate.tools;
 
 import org.bouncycastle.crypto.generators.SCrypt;
 

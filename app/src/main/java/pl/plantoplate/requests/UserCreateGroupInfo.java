@@ -1,4 +1,4 @@
 package pl.plantoplate.requests;
 
-public class UserGroupInfo {
+public class UserCreateGroupInfo {
 }

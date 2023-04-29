@@ -21,6 +21,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import pl.plantoplate.requests.getConfirmCode.CodeResponse;
 import pl.plantoplate.ui.registration.EmailConfirmActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -36,7 +37,7 @@ import retrofit2.Response;
 /**
  * A callback class for the API request to retrieve a confirmation code for user registration (for the first time).
  */
-public class CodeResponseCallback implements Callback<ResponseBody> {
+public class SendRegisterDataCallback implements Callback<ResponseBody> {
 
     // View object to display the Snackbar
     private final View view;
@@ -46,12 +47,12 @@ public class CodeResponseCallback implements Callback<ResponseBody> {
     private final String email;
 
     /**
-     * Constructor to create a new CodeResponseCallback object.
+     * Constructor to create a new SendRegisterDataCallback object.
      * @param view The view object to display the Snackbar.
      * @param prefs The SharedPreferences object to store the user's email.
      * @param email The user's email.
      */
-    public CodeResponseCallback(View view, SharedPreferences prefs, String email) {
+    public SendRegisterDataCallback(View view, SharedPreferences prefs, String email) {
         this.view = view;
         this.prefs = prefs;
         this.email = email;
@@ -78,7 +79,6 @@ public class CodeResponseCallback implements Callback<ResponseBody> {
                 CodeResponse code = new Gson().fromJson(response.body().string(), CodeResponse.class);
 
                 saveEmailToPrefs();
-                Snackbar.make(view, "kod potwierdzający został wysłany na twój adres e-mail!", Snackbar.LENGTH_LONG).show();
                 startEmailConfirmActivity(code.getCode());
 
             } catch (IOException e) {

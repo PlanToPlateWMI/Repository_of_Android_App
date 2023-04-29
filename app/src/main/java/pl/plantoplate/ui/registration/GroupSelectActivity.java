@@ -13,9 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.plantoplate.ui.registration;
+package pl.plantoplate.ui.registration;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import pl.plantoplate.databinding.GroupChooseBinding;
+import pl.plantoplate.ui.main.ActivityMain;
+
 public class GroupSelectActivity extends AppCompatActivity {
+
+    private GroupChooseBinding group_select_view;
+
+    private Button enter_group;
+    private Button create_group;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Inflate the layout using the View Binding Library
+        group_select_view = GroupChooseBinding.inflate(getLayoutInflater());
+        setContentView(group_select_view.getRoot());
+
+        // create buttons
+        enter_group = group_select_view.buttonMamZaproszenie;
+        create_group = group_select_view.buttonSwojaGrupa;
+
+        // set buttons onClickListeners
+        enter_group.setOnClickListener(v -> goToGroupEnterActivity());
+
+        create_group.setOnClickListener(v -> goToGroupCreateActivity());
+
+    }
+
+    public void goToGroupEnterActivity() {
+        Intent intent = new Intent(getApplicationContext(), GroupEnterActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToGroupCreateActivity() {
+        Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
+        startActivity(intent);
+    }
 }

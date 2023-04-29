@@ -1,4 +1,4 @@
-package com.example.plantoplate;
+package pl.plantoplate;
 
 import android.content.Context;
 
