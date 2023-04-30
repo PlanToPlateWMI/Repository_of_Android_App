@@ -39,11 +39,11 @@ import retrofit2.Response;
 public class CreateGroupCallback implements Callback<ResponseBody> {
     // View object to display the Snackbar
     private final View view;
-    // The user's email
+
     private SharedPreferences prefs;
 
     /**
-     * Constructor to create a new ConfirmCodeCallback object.
+     * Constructor to create a new CreateGroupCallback object.
      * @param view The view object to display the Snackbar.
      */
     public CreateGroupCallback(View view) {
@@ -71,7 +71,7 @@ public class CreateGroupCallback implements Callback<ResponseBody> {
             try {
                 JwtResponse jwt = new Gson().fromJson(response.body().string(), JwtResponse.class);
                 Intent intent = new Intent(view.getContext(), ActivityMain.class);
-                // save token
+                // save token in shared preferences
                 saveToken(jwt.getToken());
                 view.getContext().startActivity(intent);
 
@@ -99,7 +99,7 @@ public class CreateGroupCallback implements Callback<ResponseBody> {
      */
     private void handleErrorResponse(int code) {
         switch (code) {
-            case 409:
+            case 400:
                 Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje!", Snackbar.LENGTH_LONG).show();
                 break;
             case 500:

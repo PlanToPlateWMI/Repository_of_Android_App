@@ -60,8 +60,6 @@ public class ConfirmCodeCallback implements Callback<ResponseBody> {
     @Override
     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
-        System.out.println(response.code());
-
         if (response.isSuccessful()) {
 
             // If the response body is null, display a Snackbar and return

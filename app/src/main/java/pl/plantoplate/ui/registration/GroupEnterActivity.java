@@ -15,22 +15,36 @@
  */
 package pl.plantoplate.ui.registration;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
-import pl.plantoplate.databinding.GroupPageBinding;
+import java.util.Objects;
 
+import okhttp3.ResponseBody;
+import pl.plantoplate.databinding.GroupPageBinding;
+import pl.plantoplate.requests.RetrofitClient;
+import pl.plantoplate.requests.joinGroup.UserJoinGroupCallback;
+import pl.plantoplate.requests.joinGroup.UserJoinGroupData;
+import retrofit2.Call;
+
+/**
+ * An activity for user entering group code to join group.
+ */
 public class GroupEnterActivity extends AppCompatActivity {
 
     private GroupPageBinding group_enter_view;
 
     private TextInputEditText group_code_enter;
     private Button group_code_enter_button;
+
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +58,32 @@ public class GroupEnterActivity extends AppCompatActivity {
         group_code_enter = group_enter_view.wprowadzKod;
         group_code_enter_button = group_enter_view.buttonZatwierdz;
 
+        // Get shared preferences
+        prefs = getSharedPreferences("prefs", 0);
+
         // Set listener for the group code entered by the user
-        group_code_enter_button.setOnClickListener(v -> checkGroupCode());
+        group_code_enter_button.setOnClickListener(this::checkGroupCode);
 
 
 
     }
 
-    public void checkGroupCode() {
+    /**
+     * This method is called when the user clicks the confirm button.
+     * It checks if the group code entered by the user is valid and if so, it makes an API call to join the group.
+     * @param v The view that was clicked
+     */
+    public void checkGroupCode(View v) {
+        String code = Objects.requireNonNull(group_code_enter.getText()).toString();
+        if (code.isEmpty()) {
+            Snackbar.make(v, "Wprowadź kod grupy!", Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        String email = prefs.getString("email", "");
+        String password = prefs.getString("password", "");
+        UserJoinGroupData data = new UserJoinGroupData(code, email, password);
+        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().joinGroupByCode(data);
 
+        myCall.enqueue(new UserJoinGroupCallback(v));
     }
 }

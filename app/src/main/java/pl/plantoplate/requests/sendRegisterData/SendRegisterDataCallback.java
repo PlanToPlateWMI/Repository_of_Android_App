@@ -43,18 +43,17 @@ public class SendRegisterDataCallback implements Callback<ResponseBody> {
     private final View view;
     // SharedPreferences object to store the user's email
     private final SharedPreferences prefs;
-    // The user's email
+    // The user's register data (name, email, password)
     private final UserRegisterData userData;
 
     /**
      * Constructor to create a new SendRegisterDataCallback object.
      * @param view The view object to display the Snackbar.
-     * @param prefs The SharedPreferences object to store the user's email.
      * @param userData The User register data (name, email, password).
      */
-    public SendRegisterDataCallback(View view, SharedPreferences prefs, UserRegisterData userData) {
+    public SendRegisterDataCallback(View view, UserRegisterData userData) {
         this.view = view;
-        this.prefs = prefs;
+        this.prefs = view.getContext().getSharedPreferences("prefs", 0);
         this.userData = userData;
     }
 

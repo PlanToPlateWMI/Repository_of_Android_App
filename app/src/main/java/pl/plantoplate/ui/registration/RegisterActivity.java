@@ -136,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
         Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().sendUserRegisterData(data);
 
         // Enqueue the call with a custom callback that handles the response.
-        myCall.enqueue(new SendRegisterDataCallback(view, preferences, data));
+        myCall.enqueue(new SendRegisterDataCallback(view, data));
     }
 
 }

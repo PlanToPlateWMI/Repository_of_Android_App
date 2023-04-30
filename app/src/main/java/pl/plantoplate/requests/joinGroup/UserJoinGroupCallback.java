@@ -15,31 +15,40 @@
  */
 package pl.plantoplate.requests.joinGroup;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import okhttp3.ResponseBody;
+import pl.plantoplate.requests.signin.JwtResponse;
+import pl.plantoplate.ui.main.ActivityMain;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
-
- Retrofit callback for joining a group with a user's credentials and a group invite code.
+ * A callback class for the API request for join a group.
  */
 public class UserJoinGroupCallback implements Callback<ResponseBody> {
     // View object to display the Snackbar
     private final View view;
 
+    private SharedPreferences prefs;
+
     /**
-     * Constructor to create a new ConfirmCodeCallback object.
+     * Constructor to create a new UserJoinGroupCallback object.
      * @param view The view object to display the Snackbar.
      */
     public UserJoinGroupCallback(View view) {
         this.view = view;
+        this.prefs = view.getContext().getSharedPreferences("prefs",0);
     }
 
     /**
@@ -50,13 +59,29 @@ public class UserJoinGroupCallback implements Callback<ResponseBody> {
     @Override
     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
+        System.out.println(response.code());
+
         if (response.isSuccessful()) {
 
             // If the response body is null, display a Snackbar and return
             if (response.body() == null) {
                 Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
+                return;
             }
-            //TODO
+
+            // If the response body is not null, parse the response body to Jwt Response and start Main Activity.
+            try {
+                JwtResponse jwt = new Gson().fromJson(response.body().string(), JwtResponse.class);
+                Intent intent = new Intent(view.getContext(), ActivityMain.class);
+                // save token to shared preferences
+                saveTokenAndRole(jwt);
+                // delete user email from shared preferences
+                deleteUserEmail();
+                view.getContext().startActivity(intent);
+
+            } catch (IOException e) {
+                Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
+            }
         } else {
             handleErrorResponse(response.code());
         }
@@ -78,8 +103,9 @@ public class UserJoinGroupCallback implements Callback<ResponseBody> {
      */
     private void handleErrorResponse(int code) {
         switch (code) {
-            case 409:
-                Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje!", Snackbar.LENGTH_LONG).show();
+            case 400:
+                Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje lub kod zaproszeniowy jest niepoprawny!", Snackbar.LENGTH_LONG)
+                        .show();
                 break;
             case 500:
                 Snackbar.make(view, "Błąd serwera!", Snackbar.LENGTH_LONG).show();
@@ -88,5 +114,25 @@ public class UserJoinGroupCallback implements Callback<ResponseBody> {
                 Snackbar.make(view, "Nieznana odpowiedź serwera!", Snackbar.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    /**
+     * Saves the token and role to shared preferences.
+     * @param jwt The JwtResponse object containing the token and role.
+     */
+    public void saveTokenAndRole(JwtResponse jwt) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("token", jwt.getToken());
+        editor.putString("role", jwt.getRole());
+        editor.apply();
+    }
+
+    /**
+     * Deletes the user email from shared preferences.
+     */
+    public void deleteUserEmail() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove("email");
+        editor.apply();
     }
 }
