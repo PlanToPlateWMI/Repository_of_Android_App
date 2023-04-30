@@ -121,7 +121,7 @@ public class SendRegisterDataCallback implements Callback<ResponseBody> {
      */
     private void saveUserDataToPrefs() {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("name", userData.getName());
+        editor.putString("name", userData.getUsername());
         editor.putString("email", userData.getEmail());
         editor.putString("password", userData.getPassword());
         editor.apply();

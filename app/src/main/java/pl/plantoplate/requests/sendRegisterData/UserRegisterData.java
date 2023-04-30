@@ -23,8 +23,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class UserRegisterData {
 
-    @SerializedName("name")
-    private String name;
+    @SerializedName("username")
+    private String username;
 
     @SerializedName("email")
     private String email;
@@ -35,12 +35,12 @@ public class UserRegisterData {
     /**
 
      Constructs a new UserInfo object.
-     @param name user's name
+     @param username user's name
      @param email user's email address
      @param password user's password
      */
-    public UserRegisterData(String name, String email, String password) {
-        this.name = name;
+    public UserRegisterData(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }
@@ -49,16 +49,16 @@ public class UserRegisterData {
      Returns the user's name.
      @return user's name
      */
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
     /**
 
      Sets the user's name.
-     @param name user's name
+     @param username user's name
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
     /**
 

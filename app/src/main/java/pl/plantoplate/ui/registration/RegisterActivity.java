@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void validateUserInfo(View view){
         UserRegisterData info = getUserInfo();
 
-        if(info.getName() == null || info.getName().isEmpty()){
+        if(info.getUsername() == null || info.getUsername().isEmpty()){
             Snackbar.make(view, "Wprowadż imię użytkownika!", Snackbar.LENGTH_LONG).show();
             return;
         }
@@ -118,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (apply_policy.isChecked()){
 
             //stretch password to make it unreadable and secure
-            info.setPassword(SCryptStretcher.stretch(info.getPassword(), info.getName()));
+            info.setPassword(SCryptStretcher.stretch(info.getPassword(), info.getUsername()));
             sendUserData(info, view);
         }
         else{
