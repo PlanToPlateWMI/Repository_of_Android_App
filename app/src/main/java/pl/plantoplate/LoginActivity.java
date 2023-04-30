@@ -79,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
      * @param view The view that was clicked.
      */
     public void signIn(View view){
-        String name = prefs.getString("name", "");
         String email = Objects.requireNonNull(email_field.getText()).toString();
         String password = Objects.requireNonNull(password_field.getText()).toString();
 
@@ -87,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         SignInData data = new SignInData(email, password);
 
         //stretch password to make it unreadable and secure
-        data.setPassword(SCryptStretcher.stretch(data.getPassword(), name));
+        data.setPassword(SCryptStretcher.stretch(data.getPassword(), email));
 
         Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().signinUser(data);
 

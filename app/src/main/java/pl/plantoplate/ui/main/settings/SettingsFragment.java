@@ -15,7 +15,9 @@
  */
 package pl.plantoplate.ui.main.settings;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.Objects;
+
+import pl.plantoplate.LoginActivity;
 import pl.plantoplate.databinding.FragmentSettingsBinding;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 
@@ -37,6 +42,9 @@ public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding settings_view;
 
     private Button generate_group_code_button;
+    private Button exit_account_button;
+
+    private SharedPreferences prefs;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -45,11 +53,16 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout using the View Binding Library
         settings_view = FragmentSettingsBinding.inflate(inflater, container, false);
 
-        // Get the button for generating group code
+        // Get the buttons
         generate_group_code_button = settings_view.buttonWygenerowanieKodu;
+        exit_account_button = settings_view.buttonWyloguj;
 
-        // Set the onClickListener for the button
+        // Set the onClickListeners for the buttons
         generate_group_code_button.setOnClickListener(this::chooseGroupCodeType);
+        exit_account_button.setOnClickListener(this::exitAccount);
+
+        // Get the shared preferences
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
 
         return settings_view.getRoot();
     }
@@ -60,6 +73,25 @@ public class SettingsFragment extends Fragment {
      */
     public void chooseGroupCodeType(View view) {
         Intent intent = new Intent(this.getContext(), GroupCodeTypeActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Logs the user out of the app.
+     * @param view The view object that was clicked.
+     */
+    public void exitAccount(View view) {
+        //delete the user's data from the shared preferences
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove("name");
+        editor.remove("email");
+        editor.remove("password");
+        editor.remove("role");
+        editor.remove("token");
+        editor.apply();
+
+        //go back to the login screen
+        Intent intent = new Intent(this.getContext(), LoginActivity.class);
         startActivity(intent);
     }
 

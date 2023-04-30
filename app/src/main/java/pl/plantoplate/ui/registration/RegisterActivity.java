@@ -118,7 +118,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (apply_policy.isChecked()){
 
             //stretch password to make it unreadable and secure
-            info.setPassword(SCryptStretcher.stretch(info.getPassword(), info.getUsername()));
+            info.setPassword(SCryptStretcher.stretch(info.getPassword(), info.getEmail()));
             sendUserData(info, view);
         }
         else{
