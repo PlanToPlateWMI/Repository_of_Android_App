@@ -20,6 +20,7 @@ import pl.plantoplate.requests.joinGroup.UserJoinGroupData;
 import pl.plantoplate.requests.sendRegisterData.UserRegisterData;
 
 import okhttp3.ResponseBody;
+import pl.plantoplate.requests.signin.SignInData;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -78,6 +79,16 @@ public interface RestApi {
      */
     @GET("api/invite-codes/")
     Call<ResponseBody> generateGroupCode(@Header("Authorization") String token, @Query("role") String role);
+
+
+    /**
+     * Sends a POST request to the API endpoint to sign in the user.
+     *
+     * @param info the user information object containing the email and password
+     * @return a Call object representing the API request
+     */
+    @POST("api/auth/signin/")
+    Call<ResponseBody> signinUser(@Body SignInData info);
 
 
 }

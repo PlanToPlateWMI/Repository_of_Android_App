@@ -16,13 +16,25 @@
 package pl.plantoplate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
+
+import okhttp3.ResponseBody;
 import pl.plantoplate.databinding.LoginPageBinding;
+import pl.plantoplate.requests.RetrofitClient;
+import pl.plantoplate.requests.signin.SignInCallback;
+import pl.plantoplate.requests.signin.SignInData;
+import pl.plantoplate.tools.SCryptStretcher;
 import pl.plantoplate.ui.registration.RegisterActivity;
+import retrofit2.Call;
 
 
 /**
@@ -30,9 +42,14 @@ import pl.plantoplate.ui.registration.RegisterActivity;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    // Declare variables for views in the layout using view binding
     private LoginPageBinding login_view;
+
+    private TextInputEditText email_field;
+    private TextInputEditText password_field;
+    private Button sign_in_button;
     private Button create_account_button;
+
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +59,45 @@ public class LoginActivity extends AppCompatActivity {
         login_view = LoginPageBinding.inflate(getLayoutInflater());
         setContentView(login_view.getRoot());
 
-        // Get a reference to the create account button using view binding
+        // Define the ui elements
+        email_field = login_view.enterMail;
+        password_field = login_view.enterPass;
+        sign_in_button = login_view.buttonZalogujSie;
         create_account_button = login_view.buttonZalozKonto;
 
-        // Set a click listener for the create account button using a lambda expression
+        // Set a click listeners for the buttons
+        sign_in_button.setOnClickListener(this::signIn);
         create_account_button.setOnClickListener(v -> createAccount());
 
+        // Get the shared preferences
+        prefs = getSharedPreferences("prefs", 0);
+
     }
 
-    // Method to handle sign in button click
-    public void signIn(){
-        // TODO: Implement sign in logic
+    /**
+     * Signs the user in to their account.
+     * @param view The view that was clicked.
+     */
+    public void signIn(View view){
+        String name = prefs.getString("name", "");
+        String email = Objects.requireNonNull(email_field.getText()).toString();
+        String password = Objects.requireNonNull(password_field.getText()).toString();
+
+
+        SignInData data = new SignInData(email, password);
+
+        //stretch password to make it unreadable and secure
+        data.setPassword(SCryptStretcher.stretch(data.getPassword(), name));
+
+        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().signinUser(data);
+
+        myCall.enqueue(new SignInCallback(view));
     }
 
-    // Method to handle create account button click
+
+    /**
+     * Starts the RegisterActivity to allow the user to create an account.
+     */
     public void createAccount() {
         // Create an intent to start the RegisterActivity
         Intent intent = new Intent(this, RegisterActivity.class);
