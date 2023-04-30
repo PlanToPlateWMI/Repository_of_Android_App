@@ -61,11 +61,11 @@ public class ActivityMain extends AppCompatActivity implements OnItemSelectedLis
         binding = ActivityMainForFragmentsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Set the navigation item selected listener to this activity
-        binding.bottomNavigationView.setOnItemSelectedListener(this);
-
         // Set the initial fragment to be displayed
         replaceFragment(new CalendarFragment());
+
+        // Set the navigation item selected listener to this activity
+        binding.bottomNavigationView.setOnItemSelectedListener(this);
     }
 
     /**
@@ -78,7 +78,7 @@ public class ActivityMain extends AppCompatActivity implements OnItemSelectedLis
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Show a snackbar message and print to the console to confirm item selection
-        Snackbar.make(binding.getRoot(), "Item selected", Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(binding.getRoot(), "Item selected", Snackbar.LENGTH_SHORT).show();
         System.out.println("Item selected");
 
         // Replace the current fragment with the selected fragment based on its ID

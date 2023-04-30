@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/calendar_today_24_75" android:state_checked="true"/>
+    <item android:drawable="@drawable/calendar_today_24_50" android:state_checked="false"/>
+
+    <!-- pressed -->
+    <item android:drawable="@drawable/calendar_today_24_75" android:state_pressed="true"/>
+    <!-- focused -->
+    <item android:drawable="@drawable/calendar_today_24_75" android:state_focused="true"/>
+    <!-- default -->
+    <item android:drawable="@drawable/calendar_today_24_50"/>
+
+
+    <item android:drawable="@drawable/settings_24_75" android:state_checked="true"/>
+    <item android:drawable="@drawable/settings_24_50" android:state_checked="false"/>
+
+    <!-- pressed -->
+    <item android:drawable="@drawable/settings_24_75" android:state_pressed="true"/>
+    <!-- focused -->
+    <item android:drawable="@drawable/settings_24_75" android:state_focused="true"/>
+    <!-- default -->
+    <item android:drawable="@drawable/settings_24_50"/>
+
+
+    <item android:drawable="@drawable/shopping_cart_24_75" android:state_checked="true"/>
+    <item android:drawable="@drawable/shopping_cart_24_50" android:state_checked="false"/>
+
+    <!-- pressed -->
+    <item android:drawable="@drawable/shopping_cart_24_75" android:state_pressed="true"/>
+    <!-- focused -->
+    <item android:drawable="@drawable/shopping_cart_24_75" android:state_focused="true"/>
+    <!-- default -->
+    <item android:drawable="@drawable/shopping_cart_24_50"/>
+
+    <item android:drawable="@drawable/cottage_24_75" android:state_checked="true"/>
+    <item android:drawable="@drawable/cottage_24_50" android:state_checked="false"/>
+
+    <!-- pressed -->
+    <item android:drawable="@drawable/cottage_24_75" android:state_pressed="true"/>
+    <!-- focused -->
+    <item android:drawable="@drawable/cottage_24_75" android:state_focused="true"/>
+    <!-- default -->
+    <item android:drawable="@drawable/cottage_24_50"/>
+
+
+    <item android:drawable="@drawable/receipt_long_24_75" android:state_checked="true"/>
+    <item android:drawable="@drawable/receipt_long_24_50" android:state_checked="false"/>
+
+    <!-- pressed -->
+    <item android:drawable="@drawable/receipt_long_24_75" android:state_pressed="true"/>
+    <!-- focused -->
+    <item android:drawable="@drawable/receipt_long_24_75" android:state_focused="true"/>
+    <!-- default -->
+    <item android:drawable="@drawable/receipt_long_24_50"/>
+
+</selector>

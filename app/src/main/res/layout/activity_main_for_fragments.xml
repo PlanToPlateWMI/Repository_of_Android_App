@@ -36,11 +36,17 @@
 
         app:itemRippleColor="@color/blue_0"
         app:itemTextColor="#80231F20"
+
+        app:itemIconSize="36dp"
+
+        app:labelVisibilityMode="labeled"
+
         app:layout_constraintBottom_toBottomOf="parent"
 
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
