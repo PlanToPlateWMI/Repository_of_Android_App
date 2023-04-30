@@ -17,11 +17,15 @@ package pl.plantoplate.ui.main;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener;
+import com.google.android.material.snackbar.Snackbar;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
@@ -31,9 +35,9 @@ import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.shoplist.ShoppingListFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
 
-public class ActivityMain extends AppCompatActivity{
+public class ActivityMain extends AppCompatActivity implements OnItemSelectedListener {
 
-    ActivityMainForFragmentsBinding binding;
+    private ActivityMainForFragmentsBinding binding;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -41,39 +45,49 @@ public class ActivityMain extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         binding = ActivityMainForFragmentsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new ShoppingListFragment());
 
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+        binding.bottomNavigationView.setOnItemSelectedListener(this);
+        replaceFragment(new CalendarFragment());
 
-            switch (item.getItemId()){
-                case R.id.calendar:
-                    replaceFragment(new CalendarFragment());
-                    break;
-                case R.id.cottage:
-                    replaceFragment(new StorageFragment());
-                    break;
-                case R.id.shopping_cart:
-                    replaceFragment(new ShoppingListFragment());
-                    break;
-                case R.id.receipt_long:
-                    replaceFragment(new RecipeFragment());
-                    break;
-                case R.id.settings:
-                    replaceFragment(new SettingsFragment());
-                    break;
-            }
-            return true;
+    }
 
-        });
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        Snackbar.make(binding.getRoot(), "Item selected", Snackbar.LENGTH_SHORT).show();
+        System.out.println("Item selected");
+
+        switch (item.getItemId()){
+            case R.id.calendar:
+                Snackbar.make(binding.getRoot(), "Calendar", Snackbar.LENGTH_SHORT).show();
+                replaceFragment(new CalendarFragment());
+                return true;
+            case R.id.cottage:
+                Snackbar.make(binding.getRoot(), "Cottage", Snackbar.LENGTH_SHORT).show();
+                replaceFragment(new StorageFragment());
+                return true;
+            case R.id.shopping_cart:
+                Snackbar.make(binding.getRoot(), "Shopping List", Snackbar.LENGTH_SHORT).show();
+                replaceFragment(new ShoppingListFragment());
+                return true;
+            case R.id.receipt_long:
+                Snackbar.make(binding.getRoot(), "Recipes", Snackbar.LENGTH_SHORT).show();
+                replaceFragment(new RecipeFragment());
+                return true;
+            case R.id.settings:
+                Snackbar.make(binding.getRoot(), "Settings", Snackbar.LENGTH_SHORT).show();
+                replaceFragment(new SettingsFragment());
+                return true;
+        }
+        return false;
     }
 
     private void replaceFragment(Fragment fragment){
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
-
+        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }
