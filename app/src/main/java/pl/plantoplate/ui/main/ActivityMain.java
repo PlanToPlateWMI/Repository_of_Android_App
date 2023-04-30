@@ -35,59 +35,84 @@ import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.shoplist.ShoppingListFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
 
+/**
+ * This is the main activity of the application. It is responsible for displaying the bottom navigation bar and
+ * switching between the fragments.
+ */
 public class ActivityMain extends AppCompatActivity implements OnItemSelectedListener {
 
     private ActivityMainForFragmentsBinding binding;
 
+    /**
+     * Called when the activity is starting. Inflates the layout using view binding
+     * and sets the initial fragment to be displayed.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it
+     *                           most recently supplied in onSaveInstanceState(Bundle).
+     *                           Otherwise, it is null.
+     */
     @SuppressLint("NonConstantResourceId")
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Inflate the layout using view binding
         binding = ActivityMainForFragmentsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set the navigation item selected listener to this activity
         binding.bottomNavigationView.setOnItemSelectedListener(this);
-        replaceFragment(new CalendarFragment());
 
+        // Set the initial fragment to be displayed
+        replaceFragment(new CalendarFragment());
     }
 
+    /**
+     * Called when a navigation item in the bottom navigation view is selected.
+     *
+     * @param item The menu item that was selected.
+     * @return True if the item was handled, false otherwise.
+     */
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
+        // Show a snackbar message and print to the console to confirm item selection
         Snackbar.make(binding.getRoot(), "Item selected", Snackbar.LENGTH_SHORT).show();
         System.out.println("Item selected");
 
-        switch (item.getItemId()){
+        // Replace the current fragment with the selected fragment based on its ID
+        switch (item.getItemId()) {
             case R.id.calendar:
-                Snackbar.make(binding.getRoot(), "Calendar", Snackbar.LENGTH_SHORT).show();
                 replaceFragment(new CalendarFragment());
                 return true;
             case R.id.cottage:
-                Snackbar.make(binding.getRoot(), "Cottage", Snackbar.LENGTH_SHORT).show();
                 replaceFragment(new StorageFragment());
                 return true;
             case R.id.shopping_cart:
-                Snackbar.make(binding.getRoot(), "Shopping List", Snackbar.LENGTH_SHORT).show();
                 replaceFragment(new ShoppingListFragment());
                 return true;
             case R.id.receipt_long:
-                Snackbar.make(binding.getRoot(), "Recipes", Snackbar.LENGTH_SHORT).show();
                 replaceFragment(new RecipeFragment());
                 return true;
             case R.id.settings:
-                Snackbar.make(binding.getRoot(), "Settings", Snackbar.LENGTH_SHORT).show();
                 replaceFragment(new SettingsFragment());
                 return true;
         }
         return false;
     }
 
-    private void replaceFragment(Fragment fragment){
+    /**
+     * Replaces the current fragment with the specified fragment.
+     *
+     * @param fragment The fragment to replace the current fragment with.
+     */
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }
+

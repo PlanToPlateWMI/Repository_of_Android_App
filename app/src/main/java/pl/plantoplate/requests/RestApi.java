@@ -23,6 +23,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -66,6 +67,18 @@ public interface RestApi {
      */
     @POST("api/invite-codes/")
     Call<ResponseBody> joinGroupByCode(@Body UserJoinGroupData userJoinGroupRequest);
+
+
+    /**
+     * Makes a GET request to the "api/invite-codes/" endpoint to generate a group code.
+     *
+     * @param token The authorization token to include in the request header (current user token).
+     * @param role The role to assign to the user who redeems the group code.
+     * @return A `Call<ResponseBody>` object representing the asynchronous request.
+     */
+    @GET("api/invite-codes/")
+    Call<ResponseBody> generateGroupCode(@Header("Authorization") String token, @Query("role") String role);
+
 
 }
 
