@@ -71,8 +71,9 @@ public class CreateGroupCallback implements Callback<ResponseBody> {
             try {
                 JwtResponse jwt = new Gson().fromJson(response.body().string(), JwtResponse.class);
                 Intent intent = new Intent(view.getContext(), ActivityMain.class);
-                // save token in shared preferences
-                saveToken(jwt.getToken());
+                // save user token and role in shared preferences
+                saveTokenAndRole(jwt.getToken(), jwt.getRole());
+
                 view.getContext().startActivity(intent);
 
             } catch (IOException e) {
@@ -111,7 +112,10 @@ public class CreateGroupCallback implements Callback<ResponseBody> {
         }
     }
 
-    //TODO save token
-    public void saveToken(String token) {
+    public void saveTokenAndRole(String token, String role) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("token", token);
+        editor.putString("role", role);
+        editor.apply();
     }
 }
