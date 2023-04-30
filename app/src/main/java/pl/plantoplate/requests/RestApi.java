@@ -15,7 +15,9 @@
  */
 package pl.plantoplate.requests;
 
-import pl.plantoplate.requests.sendRegisterData.UserInfo;
+import pl.plantoplate.requests.createGroup.CreateGroupData;
+import pl.plantoplate.requests.joinGroup.UserJoinGroupData;
+import pl.plantoplate.requests.sendRegisterData.UserRegisterData;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -36,7 +38,7 @@ public interface RestApi {
      * @return a Call object representing the API request
      */
     @POST("api/auth/signup/")
-    Call<ResponseBody> sendUserRegisterData(@Body UserInfo info);
+    Call<ResponseBody> sendUserRegisterData(@Body UserRegisterData info);
 
     /**
      * Sends a GET request to the API endpoint to get a new email confirmation code for user registration.
@@ -47,7 +49,23 @@ public interface RestApi {
     @GET("api/mail/code/")
     Call<ResponseBody> getConfirmCode(@Query("email") String email);
 
+    /**
+     * Sends a request to the server to create a new group with the provided data.
+     *
+     * @param createGroupRequest The data needed to create the group.
+     * @return A {@link Call} object that can be used to execute the network request asynchronously and get the response.
+     */
     @POST("api/auth/group")
-    Call<ResponseBody> createGroup(@Body UserCreateGroupInfo info);
+    Call<ResponseBody> createGroup(@Body CreateGroupData createGroupRequest);
+
+    /**
+     * Sends a request to the server to add the current user to a group with the provided code.
+     *
+     * @param userJoinGroupRequest The data needed to join the group.
+     * @return A {@link Call} object that can be used to execute the network request asynchronously and get the response.
+     */
+    @POST("api/invite-codes/")
+    Call<ResponseBody> joinGroupByCode(@Body UserJoinGroupData userJoinGroupRequest);
+
 }
 

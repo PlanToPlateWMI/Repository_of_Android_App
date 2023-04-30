@@ -21,7 +21,7 @@ import com.google.gson.annotations.SerializedName;
 
  Represents user information required for API signing up.
  */
-public class UserInfo {
+public class UserRegisterData {
 
     @SerializedName("name")
     private String name;
@@ -39,7 +39,7 @@ public class UserInfo {
      @param email user's email address
      @param password user's password
      */
-    public UserInfo(String name, String email, String password) {
+    public UserRegisterData(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;

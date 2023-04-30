@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.requests.sendRegisterData;
+package pl.plantoplate.requests.createGroup;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,41 +21,34 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import pl.plantoplate.requests.getConfirmCode.ConfirmCodeResponse;
-import pl.plantoplate.ui.registration.EmailConfirmActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
+import pl.plantoplate.requests.signin.JwtResponse;
+import pl.plantoplate.ui.main.ActivityMain;
 import retrofit2.Call;
 import retrofit2.Callback;
-
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 
 /**
- * A callback class for the API request to retrieve a confirmation code for user registration (for the first time).
+ * A callback class for the API request for create a new group.
  */
-public class SendRegisterDataCallback implements Callback<ResponseBody> {
-
+public class CreateGroupCallback implements Callback<ResponseBody> {
     // View object to display the Snackbar
     private final View view;
-    // SharedPreferences object to store the user's email
-    private final SharedPreferences prefs;
     // The user's email
-    private final UserRegisterData userData;
+    private SharedPreferences prefs;
 
     /**
-     * Constructor to create a new SendRegisterDataCallback object.
+     * Constructor to create a new ConfirmCodeCallback object.
      * @param view The view object to display the Snackbar.
-     * @param prefs The SharedPreferences object to store the user's email.
-     * @param userData The User register data (name, email, password).
      */
-    public SendRegisterDataCallback(View view, SharedPreferences prefs, UserRegisterData userData) {
+    public CreateGroupCallback(View view) {
         this.view = view;
-        this.prefs = prefs;
-        this.userData = userData;
+        this.prefs = view.getContext().getSharedPreferences("prefs", 0);
     }
 
     /**
@@ -74,12 +67,13 @@ public class SendRegisterDataCallback implements Callback<ResponseBody> {
                 return;
             }
 
-            // If the response body is not null, parse the response body to CodeResponse and start the EmailConfirmActivity
+            // If the response body is not null, parse the response body to Jwt Response and start Main Activity.
             try {
-                ConfirmCodeResponse code = new Gson().fromJson(response.body().string(), ConfirmCodeResponse.class);
-
-                saveUserDataToPrefs();
-                startEmailConfirmActivity(code.getCode());
+                JwtResponse jwt = new Gson().fromJson(response.body().string(), JwtResponse.class);
+                Intent intent = new Intent(view.getContext(), ActivityMain.class);
+                // save token
+                saveToken(jwt.getToken());
+                view.getContext().startActivity(intent);
 
             } catch (IOException e) {
                 Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
@@ -96,7 +90,7 @@ public class SendRegisterDataCallback implements Callback<ResponseBody> {
      */
     @Override
     public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-        Snackbar.make(view, "Error while sending user data!", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, "Błąd, sprawdź swoje połączenie internetowe!", Snackbar.LENGTH_LONG).show();
     }
 
     /**
@@ -106,7 +100,7 @@ public class SendRegisterDataCallback implements Callback<ResponseBody> {
     private void handleErrorResponse(int code) {
         switch (code) {
             case 409:
-                Snackbar.make(view, "Użytkownik o podanym adresie email już istnieje!", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje!", Snackbar.LENGTH_LONG).show();
                 break;
             case 500:
                 Snackbar.make(view, "Błąd serwera!", Snackbar.LENGTH_LONG).show();
@@ -117,24 +111,7 @@ public class SendRegisterDataCallback implements Callback<ResponseBody> {
         }
     }
 
-    /**
-     * Saves the user's email to the SharedPreferences.
-     */
-    private void saveUserDataToPrefs() {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("name", userData.getName());
-        editor.putString("email", userData.getEmail());
-        editor.putString("password", userData.getPassword());
-        editor.apply();
-    }
-
-    /**
-     * Put confirmation code to intent of new activity and starts the EmailConfirmActivity.
-     * @param code The confirmation code.
-     */
-    private void startEmailConfirmActivity(String code) {
-        Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
-        intent.putExtra("code", code);
-        view.getContext().startActivity(intent);
+    //TODO save token
+    public void saveToken(String token) {
     }
 }

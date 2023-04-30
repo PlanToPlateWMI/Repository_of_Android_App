@@ -21,7 +21,7 @@ import com.google.gson.annotations.SerializedName;
 
  This class represents a code response body from the API.
  */
-public class CodeResponse {
+public class ConfirmCodeResponse {
 
     @SerializedName("code")
     private String code;
@@ -31,7 +31,7 @@ public class CodeResponse {
      Constructor to create a new CodeResponse object.
      @param code The code received from the API response.
      */
-    public CodeResponse(String code) {
+    public ConfirmCodeResponse(String code) {
         this.code = code;
     }
 

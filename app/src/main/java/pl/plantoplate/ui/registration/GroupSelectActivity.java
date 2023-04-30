@@ -16,20 +16,33 @@
 package pl.plantoplate.ui.registration;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import okhttp3.ResponseBody;
 import pl.plantoplate.databinding.GroupChooseBinding;
-import pl.plantoplate.ui.main.ActivityMain;
+import pl.plantoplate.requests.RetrofitClient;
+import pl.plantoplate.requests.createGroup.CreateGroupCallback;
+import pl.plantoplate.requests.createGroup.CreateGroupData;
+import retrofit2.Call;
 
+/**
+
+ This activity allows the user to select an option between entering an existing group or creating a new one.
+ If the user chooses to create a new group, this activity will make an API call to create a new group with the
+ user's email and password as credentials.
+ */
 public class GroupSelectActivity extends AppCompatActivity {
-
     private GroupChooseBinding group_select_view;
 
     private Button enter_group;
     private Button create_group;
+
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +59,37 @@ public class GroupSelectActivity extends AppCompatActivity {
         // set buttons onClickListeners
         enter_group.setOnClickListener(v -> goToGroupEnterActivity());
 
-        create_group.setOnClickListener(v -> goToGroupCreateActivity());
+        create_group.setOnClickListener(this::createGroup);
+
+        // get shared preferences
+        prefs = getSharedPreferences("prefs", 0);
 
     }
 
+    /**
+     * This method starts the GroupEnterActivity to allow the user to enter an existing group.
+     */
     public void goToGroupEnterActivity() {
         Intent intent = new Intent(getApplicationContext(), GroupEnterActivity.class);
         startActivity(intent);
     }
 
-    public void goToGroupCreateActivity() {
-        Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
-        startActivity(intent);
+    /**
+     * This method is called when the user clicks the "Create Group" button.
+     * It creates a new group using the user's email and password as credentials.
+     *
+     * @param v The view that was clicked
+     */
+    public void createGroup(View v) {
+        // get user credentials from shared preferences
+        String email = prefs.getString("email", "");
+        String password = prefs.getString("password", "");
+
+        // create a new CreateGroupData object with user credentials
+        CreateGroupData createGroupRequest = new CreateGroupData(email, password);
+
+        // make API call to create a new group with user credentials
+        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().createGroup(createGroupRequest);
+        myCall.enqueue(new CreateGroupCallback(v));
     }
 }

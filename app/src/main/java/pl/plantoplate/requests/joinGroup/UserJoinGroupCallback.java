@@ -13,43 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.requests.getConfirmCode;
+package pl.plantoplate.requests.joinGroup;
 
-import android.content.Intent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
-
-import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import pl.plantoplate.ui.registration.EmailConfirmActivity;
-
 /**
- * A callback class for the API request to retrieve a confirmation code for user registration (if was problems with getting code).
- */
-public class ConfirmCodeCallback implements Callback<ResponseBody> {
 
+ Retrofit callback for joining a group with a user's credentials and a group invite code.
+ */
+public class UserJoinGroupCallback implements Callback<ResponseBody> {
     // View object to display the Snackbar
     private final View view;
-    // The user's email
-    private final String email;
 
     /**
      * Constructor to create a new ConfirmCodeCallback object.
      * @param view The view object to display the Snackbar.
-     * @param email The user's email.
      */
-    public ConfirmCodeCallback(View view, String email) {
+    public UserJoinGroupCallback(View view) {
         this.view = view;
-        this.email = email;
     }
 
     /**
@@ -60,26 +50,13 @@ public class ConfirmCodeCallback implements Callback<ResponseBody> {
     @Override
     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
-        System.out.println(response.code());
-
         if (response.isSuccessful()) {
 
             // If the response body is null, display a Snackbar and return
             if (response.body() == null) {
                 Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
-                return;
             }
-
-            // If the response body is not null, parse the response body to CodeResponse and restart the EmailConfirmActivity
-            try {
-                ConfirmCodeResponse code = new Gson().fromJson(response.body().string(), ConfirmCodeResponse.class);
-                Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
-                intent.putExtra("code", code.getCode());
-                view.getContext().startActivity(intent);
-
-            } catch (IOException e) {
-                Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
-            }
+            //TODO
         } else {
             handleErrorResponse(response.code());
         }
@@ -112,5 +89,4 @@ public class ConfirmCodeCallback implements Callback<ResponseBody> {
                 break;
         }
     }
-
 }

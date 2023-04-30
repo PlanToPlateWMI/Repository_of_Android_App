@@ -27,7 +27,7 @@ import android.widget.EditText;
 
 import pl.plantoplate.requests.sendRegisterData.SendRegisterDataCallback;
 import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.sendRegisterData.UserInfo;
+import pl.plantoplate.requests.sendRegisterData.UserRegisterData;
 import pl.plantoplate.databinding.RegisterActivityBinding;
 import pl.plantoplate.tools.EmailValidator;
 import pl.plantoplate.tools.SCryptStretcher;
@@ -73,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
         apply_policy = register_view.checkboxWyrazamZgode;
         register_button = register_view.buttonZalozKonto;
 
+        // get shared preferences
         preferences = getSharedPreferences("prefs", 0);
 
         // Set the click listener for the register button
@@ -84,11 +85,11 @@ public class RegisterActivity extends AppCompatActivity {
      *
      * @return A UserInfo object containing the user's information.
      */
-    public UserInfo getUserInfo(){
+    public UserRegisterData getUserInfo(){
         String name = String.valueOf(enter_name.getText());
         String email = String.valueOf(enter_email.getText());
         String password = String.valueOf(enter_password.getText());
-        return new UserInfo(name, email, password);
+        return new UserRegisterData(name, email, password);
     }
 
     /**
@@ -97,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
      * @param view The view that was clicked.
      */
     public void validateUserInfo(View view){
-        UserInfo info = getUserInfo();
+        UserRegisterData info = getUserInfo();
 
         if(info.getName() == null || info.getName().isEmpty()){
             Snackbar.make(view, "Wprowadż imię użytkownika!", Snackbar.LENGTH_LONG).show();
@@ -130,12 +131,12 @@ public class RegisterActivity extends AppCompatActivity {
      * @param data The user data to send.
      * @param view The View to display the response in (e.g. error using SnackBar).
      */
-    public void sendUserData(UserInfo data, View view) {
+    public void sendUserData(UserRegisterData data, View view) {
         // Create a new retrofit call to send the user data to the server.
         Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().sendUserRegisterData(data);
 
         // Enqueue the call with a custom callback that handles the response.
-        myCall.enqueue(new SendRegisterDataCallback(view, preferences, data.getEmail()));
+        myCall.enqueue(new SendRegisterDataCallback(view, preferences, data));
     }
 
 }
