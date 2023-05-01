@@ -12,6 +12,11 @@
 konta, wprowadź 4
 cyfrowy kod, który do
 Ciebie wysłaliśmy na</string>
+    <string name="skorzystaj_2">W celu weryfikacji
+konta, wprowadź 4
+cyfrowy kod, który do
+Ciebie wysłaliśmy na mail,
+        który był podany wcześniej</string>
     <string name="uwaga_do_cz">Uwaga! Do czasu potwierdzenia maila wejście nie będzie możliwe!</string>
     <string name="wyra_am_zgo">Wyrażam zgodę na przetwarzanie danych osobowych</string>
     <string name="masz_konto_">Masz konto?</string>
