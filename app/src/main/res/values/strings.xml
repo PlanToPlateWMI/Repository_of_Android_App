@@ -22,6 +22,8 @@ Ciebie wysłaliśmy na mail,
     <string name="masz_konto_">Masz konto?</string>
     <string name="zaloz_konto">Załóż konto</string>
     <string name="wprowadz_haslo">Wprowadź hasło</string>
+    <string name="wprowadz_new_haslo">Wprowadź nowe hasło</string>
+    <string name="wprowadz_new_haslo_2">Wprowadź hasło ponownie</string>
     <string name="wprowadz_imie">Wprowadź imię</string>
     <string name="wprowadz_kod">Wprowadź kod</string>
     <string name="zatwierdz">Zatwierdź</string>
