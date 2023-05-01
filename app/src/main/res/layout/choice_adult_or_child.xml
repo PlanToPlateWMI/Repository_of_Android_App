@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    tools:context=".ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity">
+    tools:context="pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity">
 
     <!-- PlanToPlate -->
     <TextView

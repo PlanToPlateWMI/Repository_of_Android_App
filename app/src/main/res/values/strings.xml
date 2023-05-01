@@ -4,6 +4,8 @@
     <string name="logowanie">Logowanie</string>
     <string name="rejestracja">Rejestracja</string>
     <string name="pomy_lnie_z">Pomyślnie zarejestrowano</string>
+    <string name="przyp_haslo">Przypomnienie hasła</string>
+    <string name="twoj_email"> Wprowadź e-mail, przy pomocy którego logujesz się do aplikacji</string>
     <string name="wprowad_kod">Wprowadź kod zaproszeniowy:</string>
     <string name="potwierdzen">Potwierdzenie e-maila</string>
     <string name="skorzystaj_">W celu weryfikacji
