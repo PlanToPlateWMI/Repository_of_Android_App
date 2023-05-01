@@ -4,7 +4,7 @@
     <item
         android:id = "@+id/calendar"
         android:title="@string/kalendarz"
-        android:icon="@drawable/calendar_today_24_50"
+        android:icon="@drawable/selector_calendar"
 
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
@@ -16,7 +16,7 @@
     <item
         android:id = "@+id/cottage"
         android:title="@string/spizarnia"
-        android:icon="@drawable/cottage_24_50"
+        android:icon="@drawable/selector_cottage"
 
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
@@ -28,7 +28,7 @@
     <item
         android:id = "@+id/shopping_cart"
         android:title="@string/lista_zakupow"
-        android:icon="@drawable/shopping_cart_24_50"
+        android:icon="@drawable/selector_shopping"
 
         android:textAppearance="@style/menu_text"
 
@@ -38,7 +38,7 @@
     <item
         android:id = "@+id/receipt_long"
         android:title="@string/przepisy"
-        android:icon="@drawable/receipt_long_24_50"
+        android:icon="@drawable/selector_receipt"
 
         android:textAppearance="@style/menu_text"
 
@@ -48,7 +48,7 @@
     <item
         android:id = "@+id/settings"
         android:title="@string/ustawienia"
-        android:icon="@drawable/settings_24_50"
+        android:icon="@drawable/selector_settings"
 
         android:textAppearance="@style/menu_text"
 
