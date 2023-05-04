@@ -96,8 +96,7 @@ public interface RestApi {
      * @param info The {@link SignInData} object containing the user's email address and password reset token.
      * @return A {@link Call} object that wraps a {@link ResponseBody} object, representing the server's response to the reset password request.
      */
+    @POST("api/auth/password/reset/")
     Call<ResponseBody> resetPassword(@Body SignInData info);
-
-
 }
 

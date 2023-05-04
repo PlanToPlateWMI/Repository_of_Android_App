@@ -60,6 +60,8 @@ public class SignInCallback implements Callback<ResponseBody> {
     @Override
     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
+        System.out.println(response.code());
+
         if (response.isSuccessful()) {
 
             // If the response body is null, display a Snackbar and return
@@ -94,7 +96,7 @@ public class SignInCallback implements Callback<ResponseBody> {
      */
     @Override
     public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-        Snackbar.make(view, "Error while sending user data!", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, "Błąd podczas wysyłania danych!", Snackbar.LENGTH_LONG).show();
     }
 
     /**
