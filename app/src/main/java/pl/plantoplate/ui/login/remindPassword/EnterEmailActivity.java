@@ -30,6 +30,10 @@ import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.remindPassword.GetCodeCallback;
 import retrofit2.Call;
 
+/**
+ * A class that is responsible for the first step of the password remind process.
+ * It is responsible for getting the email from the user and sending it to the server.
+ */
 public class EnterEmailActivity extends AppCompatActivity {
 
     private RemindPassword1Binding change_password_view;
