@@ -97,6 +97,9 @@
 
             android:fontFamily="@font/quicksand_regular"
 
+            android:singleLine="true"
+            android:maxLines="1"
+
             android:textColor="@color/black_gray"
 
             tools:layout_editor_absoluteX="62dp"

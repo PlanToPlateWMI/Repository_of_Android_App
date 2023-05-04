@@ -89,6 +89,9 @@
 
             android:fontFamily="@font/quicksand_regular"
 
+            android:singleLine="true"
+            android:maxLines="1"
+
             android:textColor="@color/black_gray"
 
             tools:layout_editor_absoluteX="62dp"
@@ -129,6 +132,9 @@
             android:layout_height="56dp"
 
             android:fontFamily="@font/quicksand_regular"
+
+            android:singleLine="true"
+            android:maxLines="1"
 
             android:textColor="@color/black_gray"
 
@@ -173,6 +179,9 @@
             android:layout_height="56dp"
 
             android:fontFamily="@font/quicksand_regular"
+
+            android:singleLine="true"
+            android:maxLines="1"
 
             android:textColor="@color/black_gray"
 
