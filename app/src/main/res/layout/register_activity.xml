@@ -34,7 +34,7 @@
     <TextView
         android:id="@+id/rejestracja"
         android:layout_width="140dp"
-        android:layout_height="33dp"
+        android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"

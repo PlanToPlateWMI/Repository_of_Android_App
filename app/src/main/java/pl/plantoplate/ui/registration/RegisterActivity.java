@@ -18,6 +18,7 @@ package pl.plantoplate.ui.registration;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import pl.plantoplate.LoginActivity;
 import pl.plantoplate.requests.sendRegisterData.SendRegisterDataCallback;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.sendRegisterData.UserRegisterData;
@@ -46,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText enter_email;
     private EditText enter_password;
     private CheckBox apply_policy;
+    private Button sign_in_button;
     private Button register_button;
 
     private SharedPreferences preferences;
@@ -72,12 +75,14 @@ public class RegisterActivity extends AppCompatActivity {
         enter_password = register_view.enterPassword;
         apply_policy = register_view.checkboxWyrazamZgode;
         register_button = register_view.buttonZalozKonto;
+        sign_in_button = register_view.buttonZalogujSie;
 
         // get shared preferences
         preferences = getSharedPreferences("prefs", 0);
 
         // Set the click listener for the register button
         register_button.setOnClickListener(this::validateUserInfo);
+        sign_in_button.setOnClickListener(v -> signInAccount());
     }
 
     /**
@@ -139,4 +144,12 @@ public class RegisterActivity extends AppCompatActivity {
         myCall.enqueue(new SendRegisterDataCallback(view, data));
     }
 
+    /**
+     * Starts the LoginActivity to allow the user to sign in.
+     */
+    public void signInAccount() {
+        // Create an intent to start the RegisterActivity
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }
