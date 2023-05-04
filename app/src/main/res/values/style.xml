@@ -45,7 +45,7 @@
         <item name="android:textColor">#231F20</item>
     </style>
     <style name="menu_text">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">1sp</item>
         <item name="android:textColor">#231F20</item>
     </style>
 </resources>

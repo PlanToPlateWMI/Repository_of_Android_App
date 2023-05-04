@@ -34,6 +34,8 @@
 
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
+
+        android:iconTint="@color/black_gray"
         />
     <item
         android:id = "@+id/receipt_long"
@@ -44,6 +46,8 @@
 
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
+
+        android:iconTint="@color/black_gray"
         />
     <item
         android:id = "@+id/settings"
@@ -54,6 +58,8 @@
 
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
+
+        android:iconTint="@color/black_gray"
         />
 
 </menu>
