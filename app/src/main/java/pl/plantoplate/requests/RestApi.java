@@ -17,7 +17,7 @@ package pl.plantoplate.requests;
 
 import pl.plantoplate.requests.createGroup.CreateGroupData;
 import pl.plantoplate.requests.joinGroup.UserJoinGroupData;
-import pl.plantoplate.requests.sendRegisterData.UserRegisterData;
+import pl.plantoplate.requests.joinGroup.sendRegisterData.UserRegisterData;
 
 import okhttp3.ResponseBody;
 import pl.plantoplate.requests.signin.SignInData;
@@ -89,6 +89,14 @@ public interface RestApi {
      */
     @POST("api/auth/signin/")
     Call<ResponseBody> signinUser(@Body SignInData info);
+
+
+    /**
+     * Sends a reset password request to the server with the given {@link SignInData} information.
+     * @param info The {@link SignInData} object containing the user's email address and password reset token.
+     * @return A {@link Call} object that wraps a {@link ResponseBody} object, representing the server's response to the reset password request.
+     */
+    Call<ResponseBody> resetPassword(@Body SignInData info);
 
 
 }

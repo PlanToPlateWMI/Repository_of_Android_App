@@ -88,7 +88,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="pl.plantoplate.Remind_Password_1"
+            android:name=".ui.login.remindPassword.EnterEmailActivity"
             android:exported="true">
 
             <meta-data
@@ -96,7 +96,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="pl.plantoplate.Remind_Password_2"
+            android:name=".ui.login.remindPassword.EnterCodeActivity"
             android:exported="true">
 
             <meta-data
@@ -104,13 +104,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="pl.plantoplate.Remind_Password_3"
+            android:name=".ui.login.remindPassword.ChangePasswordActivity"
             android:exported="true">
 
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
     </application>
 
 </manifest>

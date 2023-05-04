@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,9 +34,9 @@ import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.signin.SignInCallback;
 import pl.plantoplate.requests.signin.SignInData;
 import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.ui.login.remindPassword.EnterEmailActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 import retrofit2.Call;
-
 
 /**
  * An activity that allows users to log in to their account.
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText password_field;
     private Button sign_in_button;
     private Button create_account_button;
+    private TextView remind_password_button;
 
     private SharedPreferences prefs;
 
@@ -64,10 +66,12 @@ public class LoginActivity extends AppCompatActivity {
         password_field = login_view.enterPass;
         sign_in_button = login_view.buttonZalogujSie;
         create_account_button = login_view.buttonZalozKonto;
+        remind_password_button = login_view.przypHaslo;
 
         // Set a click listeners for the buttons
         sign_in_button.setOnClickListener(this::signIn);
         create_account_button.setOnClickListener(v -> createAccount());
+        remind_password_button.setOnClickListener(v -> remindPassword());
 
         // Get the shared preferences
         prefs = getSharedPreferences("prefs", 0);
@@ -100,6 +104,15 @@ public class LoginActivity extends AppCompatActivity {
     public void createAccount() {
         // Create an intent to start the RegisterActivity
         Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Starts the EnterEmailActivity to allow the user to reset their password.
+     */
+    public void remindPassword() {
+        // Create an intent to start the RemindPasswordActivity
+        Intent intent = new Intent(this, EnterEmailActivity.class);
         startActivity(intent);
     }
 }
