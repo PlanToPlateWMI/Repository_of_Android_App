@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    android:textAppearance="@style/menu_text"
     tools:context="pl.plantoplate.ui.main.ActivityMain">
 
     <FrameLayout
@@ -37,6 +36,9 @@
         app:itemTextColor="#80231F20"
 
         app:itemIconSize="24dp"
+
+        app:itemTextAppearanceInactive="@style/menu_text_n_active"
+        app:itemTextAppearanceActive="@style/menu_text_active"
 
         app:labelVisibilityMode="labeled"
 

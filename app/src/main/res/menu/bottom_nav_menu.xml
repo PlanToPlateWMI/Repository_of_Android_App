@@ -9,8 +9,6 @@
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
 
-        android:textAppearance="@style/menu_text"
-
         android:iconTint="@color/black_gray"
         />
     <item
@@ -21,16 +19,12 @@
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
 
-        android:textAppearance="@style/menu_text"
-
         android:iconTint="@color/black_gray"
         />
     <item
         android:id = "@+id/shopping_cart"
         android:title="@string/lista_zakupow"
         android:icon="@drawable/selector_shopping"
-
-        android:textAppearance="@style/menu_text"
 
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
@@ -42,7 +36,6 @@
         android:title="@string/przepisy"
         android:icon="@drawable/selector_receipt"
 
-        android:textAppearance="@style/menu_text"
 
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
@@ -53,8 +46,6 @@
         android:id = "@+id/settings"
         android:title="@string/ustawienia"
         android:icon="@drawable/selector_settings"
-
-        android:textAppearance="@style/menu_text"
 
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
