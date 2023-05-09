@@ -51,4 +51,7 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="swoja_gr">Chcę założyć własną grupę</string>
     <string name="trzeba_kupic">Trzeba kupić</string>
     <string name="kupione">Kupione</string>
+    <string name="wszystkie">Wszystkie</string>
+    <string name="wlasne">Własne</string>
+    <string name="baza_produktow">Baza produktów</string>
 </resources>
