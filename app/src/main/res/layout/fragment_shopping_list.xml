@@ -58,7 +58,7 @@
         app:menu="@menu/menu_lista_zakupow" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout"
+        android:id="@+id/shopping_list_default"
         android:layout_width="409dp"
         android:layout_height="599dp"
         app:layout_constraintBottom_toBottomOf="parent"

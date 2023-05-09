@@ -15,6 +15,7 @@
  */
 package pl.plantoplate.ui.main.shoplist;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,11 +36,13 @@ public class ShoppingListFragment extends Fragment {
 
     private FragmentShoppingListBinding shopping_list_view;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
+        replaceFragment(new TrzebaKupicFragment());
 
         shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
@@ -58,5 +61,9 @@ public class ShoppingListFragment extends Fragment {
 
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.shopping_list_default, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
