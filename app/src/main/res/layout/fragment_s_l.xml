@@ -16,7 +16,6 @@
         android:id="@+id/shopping"
         android:layout_width="0dp"
         android:layout_height="65dp"
-        android:layout_marginTop="-5dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
@@ -58,10 +57,8 @@
         app:menu="@menu/menu_lista_zakupow" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout"
         android:layout_width="409dp"
         android:layout_height="599dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottomNavigationView2"

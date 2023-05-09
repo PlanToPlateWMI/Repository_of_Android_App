@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.plantoplate.ui.main.settings.SettingsFragment"
-    android:background="@color/blue_0">
+    android:background="@color/blue_0"
+    tools:context="pl.plantoplate.ui.main.settings.SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <!--Uastawienia -->
     <TextView
         android:id="@+id/ustawienia"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="120dp"
+        android:layout_height="0dp"
         android:layout_marginTop="105dp"
+        android:layout_marginBottom="45dp"
         android:fontFamily="@font/quicksand_semibold"
         android:gravity="top"
         android:text="@string/ustawienia"
         android:textAppearance="@style/plantoplate"
-        android:textColor="@color/black_gray" />
+        android:textColor="@color/black_gray"
+        app:layout_constraintBottom_toTopOf="@+id/button_wygenerowanie_kodu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--Wygenerowanie kodu button -->
     <Button
         android:id="@+id/button_wygenerowanie_kodu"
-        android:layout_width="410dp"
-        android:layout_height="77dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="190dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
         android:drawableLeft="@drawable/key_24_50"
@@ -43,20 +41,19 @@
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         app:iconPadding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_zmiana_danych"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ustawienia"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1" />
 
     <!--Zmiana danych button-->
     <Button
         android:id="@+id/button_zmiana_danych"
-        android:layout_width="410dp"
-        android:layout_height="77dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="267dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
         android:drawableLeft="@drawable/manage_accounts_24_50"
@@ -67,20 +64,19 @@
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         app:iconPadding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_zarzadyanie_uyztkownikamu"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_wygenerowanie_kodu"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1" />
 
     <!--Zarzadzanie uzytkownikami button-->
     <Button
         android:id="@+id/button_zarzadyanie_uyztkownikamu"
-        android:layout_width="410dp"
-        android:layout_height="77dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="344dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
         android:drawableLeft="@drawable/settings_suggest_24_50"
@@ -91,20 +87,19 @@
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         app:iconPadding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_about_us"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_zmiana_danych"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1" />
 
     <!--About us button-->
     <Button
         android:id="@+id/button_about_us"
-        android:layout_width="410dp"
-        android:layout_height="77dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="421dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
         android:drawableLeft="@drawable/question_mark_24_50"
@@ -115,20 +110,20 @@
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         app:iconPadding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_wyloguj"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_zarzadyanie_uyztkownikamu"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1" />
 
     <!--Wyloguj button-->
     <Button
         android:id="@+id/button_wyloguj"
-        android:layout_width="410dp"
-        android:layout_height="77dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="498dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="156dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
         android:drawableLeft="@drawable/exit_to_app_24_50"
@@ -139,11 +134,13 @@
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_about_us"
         app:layout_constraintVertical_bias="0.162"
         app:rippleColor="@color/blue_1" />
 
 
-
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

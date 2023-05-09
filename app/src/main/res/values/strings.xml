@@ -49,4 +49,6 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="wybierz_jadna_opcje">Wybierz jedną z opcji:</string>
     <string name="mam_zapr_do_gr">Mam zaproszenie do grupy</string>
     <string name="swoja_gr">Chcę założyć własną grupę</string>
+    <string name="trzeba_kupic">Trzeba kupić</string>
+    <string name="kupione">Kupione</string>
 </resources>

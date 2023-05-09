@@ -30,7 +30,6 @@
 
 
     <!-- Rejestracja -->
-    <!-- android:fontFamily="@font/quicksand_medium" -->
     <TextView
         android:id="@+id/rejestracja"
         android:layout_width="140dp"
@@ -55,7 +54,6 @@
 
 
     <!-- Wprowadz imie -->
-    <!--android:fontFamily="@font/quicksand_regular"-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wprowadz_imie"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -81,7 +79,6 @@
         app:layout_constraintTop_toBottomOf="@+id/rejestracja"
         app:layout_constraintVertical_bias="0.058">
 
-        <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enterName"
             android:layout_width="236dp"
@@ -101,7 +98,6 @@
 
 
     <!-- Wprowadz e-mail -->
-    <!--android:fontFamily="@font/quicksand_regular"-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wprowadz_mail"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -125,7 +121,6 @@
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_imie"
         app:layout_constraintVertical_bias="0.183">
 
-        <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_email"
             android:layout_width="236dp"
@@ -145,7 +140,6 @@
 
 
     <!-- Wprowadz haslo -->
-    <!--android:fontFamily="@font/quicksand_regular"-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wprowadz_haslo"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -172,7 +166,6 @@
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_mail"
         app:layout_constraintVertical_bias="0.441">
 
-        <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_password"
             android:layout_width="236dp"
@@ -192,7 +185,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!--Checkbox potwierdzenie danych osobowych -->
-    <!--android:fontFamily="@font/quicksand_regular"-->
     <CheckBox
         android:id="@+id/checkbox_wyrazam_zgode"
         android:layout_width="300dp"
@@ -214,7 +206,6 @@
 
 
     <!--Zalogowanie sie button -->
-    <!--android:fontFamily="@font/quicksand_medium"-->
     <Button
         android:id="@+id/button_zaloguj_sie"
         android:layout_width="140dp"
@@ -247,7 +238,6 @@
 
 
     <!--Masz konto? -->
-    <!--android:fontFamily="@font/quicksand_medium"-->
     <TextView
         android:id="@+id/masz_konto_"
         android:layout_width="100dp"
@@ -272,7 +262,6 @@
 
 
     <!--Zaloz konto button -->
-    <!--android:fontFamily="@font/quicksand_medium"-->
     <Button
         android:id="@+id/button_zaloz_konto"
         android:layout_width="236dp"

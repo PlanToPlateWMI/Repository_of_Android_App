@@ -32,7 +32,7 @@
     <!-- Code generation -->
     <TextView
         android:id="@+id/code_generation"
-        android:layout_width="265dp"
+        android:layout_width="267dp"
         android:layout_height="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"

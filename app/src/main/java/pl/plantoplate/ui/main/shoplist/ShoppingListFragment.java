@@ -19,12 +19,17 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import pl.plantoplate.R;
+import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
+import pl.plantoplate.ui.main.ActivityMain;
 
 public class ShoppingListFragment extends Fragment {
 
@@ -35,6 +40,23 @@ public class ShoppingListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
+
+        shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item ->{
+            switch (item.getItemId()) {
+                case R.id.kupione:
+                    replaceFragment(new KupioneFragment());
+                    return true;
+                case R.id.trzeba_kupic:
+                    replaceFragment(new TrzebaKupicFragment());
+                    return true;
+            }
+            return false;
+        });
+
         return shopping_list_view.getRoot();
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
     }
 }
