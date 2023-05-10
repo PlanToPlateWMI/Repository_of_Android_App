@@ -7,12 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.AddYourOwnProductFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:text="@string/hello_blank_fragment" />-->
-
     <Button
         android:id="@+id/baza_produktow"
         android:layout_width="0dp"
@@ -48,52 +42,31 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/quicksand_semibold"
         android:gravity="center"
-        android:text="@string/text_baza"
+        android:text="@string/edycja"
         android:textColor="@color/black_gray"
         android:textSize="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131" />
+        app:layout_constraintVertical_bias="0.113" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/wprowadz_email2"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="238dp"
-        android:layout_height="65dp"
+    <TextView
+        android:id="@+id/jednostki_miary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_regular"
-        android:hint="@string/nazwa_produktu"
-
-        android:textColorHint="@color/black_gray"
-        app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/blue_2"
-
-        app:hintTextColor="@color/black_gray"
-
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:text="@string/nowe_jednostki_miary"
+        android:textColor="@color/black_gray"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/baza_text"
-        app:layout_constraintVertical_bias="0.084">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/wprowadz_mail"
-            android:layout_width="238dp"
-            android:layout_height="56dp"
-
-            android:fontFamily="@font/quicksand_regular"
-
-            android:maxLines="1"
-            android:singleLine="true"
-
-            android:textColor="@color/black_gray"
-
-            tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="321dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/zmien_kategorie"
+        app:layout_constraintVertical_bias="0.153" />
 
     <Button
         android:id="@+id/zmien_kategorie"
@@ -123,22 +96,6 @@
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_email2"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="@color/blue_1" />
-
-    <TextView
-        android:id="@+id/jednostki_miary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/quicksand_regular"
-        android:gravity="center"
-        android:text="@string/jednostki_miary"
-        android:textColor="@color/black_gray"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/zmien_kategorie"
-        app:layout_constraintVertical_bias="0.192" />
-
 
     <ToggleButton
         android:id="@+id/button_szt"
@@ -279,20 +236,58 @@
         app:layout_constraintVertical_bias="0.439"
         app:rippleColor="@color/blue_1" />
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wprowadz_email2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="238dp"
+        android:layout_height="65dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:hint="@string/nazwa_produktu"
+
+        android:textColorHint="@color/black_gray"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/blue_2"
+
+        app:hintTextColor="@color/black_gray"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/baza_text"
+        app:layout_constraintVertical_bias="0.053">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/wprowadz_mail"
+            android:layout_width="238dp"
+            android:layout_height="56dp"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            android:maxLines="1"
+            android:singleLine="true"
+
+            android:textColor="@color/black_gray"
+
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="321dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/button_zatwierdz"
         android:layout_width="236dp"
         android:layout_height="70dp"
 
-        android:drawableLeft="@drawable/done_24_50"
-
         android:layout_alignParentLeft="true"
+
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-
         android:backgroundTint="@color/blue_1"
+
         android:clickable="true"
+        android:drawableLeft="@drawable/done_24_50"
 
         android:fontFamily="@font/quicksand_medium"
 
@@ -303,10 +298,10 @@
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zmien_kategorie"
-        app:layout_constraintVertical_bias="0.587"
+        app:layout_constraintVertical_bias="0.478"
         app:rippleColor="@color/blue_1" />
 
     <Button
@@ -314,15 +309,15 @@
         android:layout_width="236dp"
         android:layout_height="70dp"
 
-        android:drawableLeft="@drawable/close_24_50"
-
         android:layout_alignParentLeft="true"
+
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-
         android:backgroundTint="@color/blue_1"
+
         android:clickable="true"
+        android:drawableLeft="@drawable/close_24_50"
 
         android:fontFamily="@font/quicksand_medium"
 
@@ -336,7 +331,37 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"
-        app:layout_constraintVertical_bias="0.297"
+        app:layout_constraintVertical_bias="0.08"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/button_usun"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
+
+        android:layout_alignParentLeft="true"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/blue_1"
+
+        android:clickable="true"
+        android:drawableLeft="@drawable/delete_forever_24_50"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:text="@string/usun"
+
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_anuluj"
+        app:layout_constraintVertical_bias="0.272"
         app:rippleColor="@color/blue_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

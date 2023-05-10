@@ -28,6 +28,7 @@ Ciebie wysłaliśmy na mail,
     <string name="wprowadz_kod">Wprowadź kod</string>
     <string name="zatwierdz">Zatwierdź</string>
     <string name="anuluj">Anuluj</string>
+    <string name="usun">Usuń</string>
     <string name="zmien_kategorie">Zmień kategorie</string>
     <string name="wprowadz_email">Wprowadź e-mail</string>
     <string name="zalogowanie">Załoguj się</string>
@@ -65,4 +66,6 @@ produktu</string>
     <string name="l">L</string>
     <string name="kg">KG</string>
     <string name="gr">G</string>
+    <string name="edycja">Edycja produktu</string>
+    <string name="nowe_jednostki_miary">Wybierz nową jednostkę miary</string>
 </resources>
