@@ -54,4 +54,5 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="wszystkie">Wszystkie</string>
     <string name="wlasne">Własne</string>
     <string name="baza_produktow">Baza produktów</string>
+    <string name="search_hint">Wyszukaj produkt</string>
 </resources>
