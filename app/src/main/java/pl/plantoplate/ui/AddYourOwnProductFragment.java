@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main;
+package pl.plantoplate.ui;
 
 import android.os.Bundle;
 
@@ -28,10 +28,10 @@ import pl.plantoplate.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WlasneFragment#newInstance} factory method to
+ * Use the {@link AddYourOwnProductFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WlasneFragment extends Fragment {
+public class AddYourOwnProductFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +42,7 @@ public class WlasneFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public WlasneFragment() {
+    public AddYourOwnProductFragment() {
         // Required empty public constructor
     }
 
@@ -52,11 +52,11 @@ public class WlasneFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WlasneFragment.
+     * @return A new instance of fragment AddYourOwnProductFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WlasneFragment newInstance(String param1, String param2) {
-        WlasneFragment fragment = new WlasneFragment();
+    public static AddYourOwnProductFragment newInstance(String param1, String param2) {
+        AddYourOwnProductFragment fragment = new AddYourOwnProductFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,6 +77,6 @@ public class WlasneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wlasne, container, false);
+        return inflater.inflate(R.layout.fragment_add_your_own_product, container, false);
     }
 }

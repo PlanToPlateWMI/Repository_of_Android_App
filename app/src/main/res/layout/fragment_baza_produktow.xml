@@ -39,31 +39,6 @@
         app:layout_constraintVertical_bias="0.099" />
 
 
-    <!--    <Button-->
-<!--        android:id="@+id/fu"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="54dp"-->
-<!--        android:layout_marginTop="70dp"-->
-<!--        android:backgroundTint="@color/blue_1"-->
-<!--        android:clickable="true"-->
-<!--        android:contextClickable="false"-->
-<!--        android:fontFamily="@font/quicksand_semibold"-->
-<!--        android:gravity="center"-->
-<!--        android:insetLeft="0dp"-->
-<!--        android:insetTop="0dp"-->
-<!--        android:insetRight="0dp"-->
-<!--        android:insetBottom="0dp"-->
-<!--        android:text="search"-->
-<!--        android:textAllCaps="false"-->
-<!--        android:textColor="@color/black_gray"-->
-<!--        android:textSize="32dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.177" />-->
-
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search"
         android:layout_width="0dp"
