@@ -27,6 +27,8 @@ Ciebie wysłaliśmy na mail,
     <string name="wprowadz_imie">Wprowadź imię</string>
     <string name="wprowadz_kod">Wprowadź kod</string>
     <string name="zatwierdz">Zatwierdź</string>
+    <string name="anuluj">Anuluj</string>
+    <string name="zmien_kategorie">Zmień kategorie</string>
     <string name="wprowadz_email">Wprowadź e-mail</string>
     <string name="zalogowanie">Załoguj się</string>
     <string name="wygenerowanie_kodu">Wygenerowanie kodu</string>
@@ -55,4 +57,12 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="wlasne">Własne</string>
     <string name="baza_produktow">Baza produktów</string>
     <string name="search_hint">Wyszukaj produkt</string>
+    <string name="text_baza">Dodawanie własnego
+produktu</string>
+    <string name="nazwa_produktu">Wprowadź nazwę produktu</string>
+    <string name="jednostki_miary">Jednostki miary</string>
+    <string name="szt">SZT</string>
+    <string name="l">L</string>
+    <string name="kg">KG</string>
+    <string name="gr">G</string>
 </resources>

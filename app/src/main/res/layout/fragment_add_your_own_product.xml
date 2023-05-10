@@ -13,15 +13,315 @@
     <!--        android:layout_height="match_parent"-->
     <!--        android:text="@string/hello_blank_fragment" />-->
 
+    <Button
+        android:id="@+id/baza_produktow"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:contextClickable="false"
+        android:fontFamily="@font/quicksand_semibold"
+        android:gravity="center"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/baza_produktow"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        android:textSize="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.099" />
+
+    <!-- Wprowadź email2: -->
+
+
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/baza_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Baza"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/quicksand_semibold"
+        android:gravity="center"
+        android:text="@string/text_baza"
+        android:textColor="@color/black_gray"
         android:textSize="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.131" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wprowadz_email2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="238dp"
+        android:layout_height="65dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:hint="@string/nazwa_produktu"
+
+        android:textColorHint="@color/black_gray"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/blue_2"
+
+        app:hintTextColor="@color/black_gray"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/baza_text"
+        app:layout_constraintVertical_bias="0.084">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/wprowadz_mail"
+            android:layout_width="238dp"
+            android:layout_height="56dp"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            android:maxLines="1"
+            android:singleLine="true"
+
+            android:textColor="@color/black_gray"
+
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="321dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/zmien_kategorie"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="35dp"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:text="@string/zmien_kategorie"
+
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_email2"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="@color/blue_1" />
+
+    <TextView
+        android:id="@+id/jednostki_miary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="center"
+        android:text="@string/jednostki_miary"
+        android:textColor="@color/black_gray"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zmien_kategorie"
+        app:layout_constraintVertical_bias="0.192" />
+
+
+    <Button
+        android:id="@+id/button_szt"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+        android:insetTop="0dp"
+
+        android:insetBottom="0dp"
+
+        android:text="@string/szt"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        android:textSize="13dp"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"
+        app:layout_constraintVertical_bias="0.439"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/button_l"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+        android:insetTop="0dp"
+
+        android:insetBottom="0dp"
+
+        android:text="@string/l"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        android:textSize="13dp"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.112"
+        app:layout_constraintStart_toEndOf="@+id/button_szt"
+        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"
+        app:layout_constraintVertical_bias="0.439"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/button_kg"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+        android:insetTop="0dp"
+
+        android:insetBottom="0dp"
+
+        android:text="@string/kg"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        android:textSize="13dp"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintStart_toEndOf="@+id/button_l"
+        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"
+        app:layout_constraintVertical_bias="0.439"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/button_gr"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+        android:insetTop="0dp"
+
+        android:insetBottom="0dp"
+
+        android:text="@string/gr"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        android:textSize="13dp"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.394"
+        app:layout_constraintStart_toEndOf="@+id/button_kg"
+        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"
+        app:layout_constraintVertical_bias="0.439"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/button_zatwierdz"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
+
+        android:drawableLeft="@drawable/done_24_50"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:text="@string/zatwierdz"
+
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zmien_kategorie"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/button_anuluj"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
+
+        android:drawableLeft="@drawable/close_24_50"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:text="@string/anuluj"
+
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"
+        app:layout_constraintVertical_bias="0.297"
+        app:rippleColor="@color/blue_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
