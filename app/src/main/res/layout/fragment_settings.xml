@@ -9,18 +9,36 @@
     tools:context="pl.plantoplate.ui.main.settings.SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/settings"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:contextClickable="false"
+        android:fontFamily="@font/quicksand_semibold"
+        android:gravity="center"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/ustawienia"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        android:textSize="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <!--Uastawienia -->
     <TextView
         android:id="@+id/ustawienia"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="105dp"
-        android:layout_marginBottom="45dp"
-        android:fontFamily="@font/quicksand_semibold"
-        android:gravity="top"
-        android:text="@string/ustawienia"
-        android:textAppearance="@style/plantoplate"
-        android:textColor="@color/black_gray"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@+id/button_wygenerowanie_kodu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
