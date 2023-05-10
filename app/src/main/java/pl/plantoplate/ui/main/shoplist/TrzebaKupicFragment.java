@@ -49,6 +49,11 @@ public class TrzebaKupicFragment extends Fragment {
         //return inflater.inflate(R.layout.fragment_trzeba_kupic, container, false);
     }
 
+    /**
+     * Replaces the current fragment with the specified fragment
+     *
+     * @param fragment the fragment to replace the current fragment with
+     */
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();

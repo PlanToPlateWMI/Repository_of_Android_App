@@ -16,25 +16,36 @@
 package pl.plantoplate.ui.main.shoplist;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import pl.plantoplate.R;
-import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
-import pl.plantoplate.databinding.FragmentShoppingListBinding;
-import pl.plantoplate.ui.main.ActivityMain;
+import java.util.ArrayList;
 
-public class ShoppingListFragment extends Fragment {
+import okhttp3.ResponseBody;
+import pl.plantoplate.R;
+import pl.plantoplate.databinding.FragmentShoppingListBinding;
+import pl.plantoplate.requests.RetrofitClient;
+import pl.plantoplate.requests.shoppingList.GetShopListCallback;
+import pl.plantoplate.requests.shoppingList.Product;
+import pl.plantoplate.requests.shoppingList.ShopListCallback;
+import retrofit2.Call;
+
+
+public class ShoppingListFragment extends Fragment implements ShopListCallback {
 
     private FragmentShoppingListBinding shopping_list_view;
+
+    private SharedPreferences prefs;
+
+    private ArrayList<Product> shoppingList;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -44,6 +55,13 @@ public class ShoppingListFragment extends Fragment {
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
         replaceFragment(new TrzebaKupicFragment());
 
+        // Get the SharedPreferences object
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        // Get the shopping list
+        getShoppingList();
+
+        // Set the bottom navigation view listener
         shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
                 case R.id.kupione:
@@ -59,6 +77,27 @@ public class ShoppingListFragment extends Fragment {
         return shopping_list_view.getRoot();
     }
 
+    /**
+     * Get the shopping list from the server
+     */
+    private void getShoppingList() {
+        String token = "Bearer " + prefs.getString("token", "");
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getShoppingList(token);
+
+        call.enqueue(new GetShopListCallback(this.shopping_list_view.getRoot(), this));
+    }
+
+    @Override
+    public void setShoppingList(ArrayList<Product> shopList) {
+
+        this.shoppingList = shopList;
+    }
+
+    /**
+     * Replace the current fragment with the specified fragment
+     * @param fragment The fragment to replace the current fragment with
+     */
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
