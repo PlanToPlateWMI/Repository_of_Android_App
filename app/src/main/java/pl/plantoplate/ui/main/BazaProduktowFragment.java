@@ -49,8 +49,15 @@ public class BazaProduktowFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+        bazaProduktowBinding = FragmentBazaProduktowBinding.inflate(inflater, container, false);
+        replaceFragment(new WszystkieFragment());
+
+        searchView = bazaProduktowBinding.search;
+
         searchView.findViewById(R.id.search);
         searchView.clearFocus();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -63,9 +70,6 @@ public class BazaProduktowFragment extends Fragment {
                 return true;
             }
         });
-
-        bazaProduktowBinding = FragmentBazaProduktowBinding.inflate(inflater, container, false);
-        replaceFragment(new WszystkieFragment());
 
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {

@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout8"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AddYourOwnProductFragment">
+    tools:context=".ui.main.AddYourOwnProductFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <!--    <TextView-->

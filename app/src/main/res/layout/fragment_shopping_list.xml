@@ -42,9 +42,10 @@
         android:layout_marginTop="-15dp"
         android:layout_marginBottom="601dp"
 
-        android:background="@drawable/selector_trzeba_kupic"
+        android:background="@drawable/selector_buttons"
 
         android:padding="4dp"
+
         app:itemTextAppearanceActive="@style/menu_zakupy_active"
         app:itemTextAppearanceInactive="@style/menu_zakupy_no_active"
 

@@ -25,12 +25,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import pl.plantoplate.R;
-public class WszystkieFragment extends Fragment {
+
+public class AddYourOwnProductFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wszystkie, container, false);
+        return inflater.inflate(R.layout.fragment_add_your_own_product, container, false);
     }
 }
