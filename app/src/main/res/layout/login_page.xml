@@ -243,6 +243,10 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
 
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
         android:backgroundTint="@color/blue_1"
 
         android:clickable="true"

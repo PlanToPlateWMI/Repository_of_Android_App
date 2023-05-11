@@ -84,6 +84,9 @@
 
         android:fontFamily="@font/quicksand_medium"
 
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
         android:text="@string/zmien_kategorie"
 
         android:textAllCaps="false"
@@ -93,7 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wprowadz_email2"
+        app:layout_constraintTop_toBottomOf="@+id/enter_name"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="@color/blue_1" />
 
@@ -238,7 +241,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/wprowadz_email2"
+        android:id="@+id/enter_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="238dp"
         android:layout_height="65dp"
@@ -259,7 +262,7 @@
         app:layout_constraintVertical_bias="0.053">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/wprowadz_mail"
+            android:id="@+id/enter_the_name"
             android:layout_width="238dp"
             android:layout_height="56dp"
 
@@ -285,6 +288,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:backgroundTint="@color/blue_1"
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
 
         android:clickable="true"
         android:drawableLeft="@drawable/done_24_50"
@@ -319,6 +325,9 @@
         android:clickable="true"
         android:drawableLeft="@drawable/close_24_50"
 
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
         android:fontFamily="@font/quicksand_medium"
 
         android:text="@string/anuluj"
@@ -348,6 +357,9 @@
 
         android:clickable="true"
         android:drawableLeft="@drawable/delete_forever_24_50"
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
 
         android:fontFamily="@font/quicksand_medium"
 

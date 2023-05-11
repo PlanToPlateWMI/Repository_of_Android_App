@@ -99,7 +99,7 @@
 
     <!-- Wprowadz e-mail -->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/wprowadz_mail"
+        android:id="@+id/enter_the_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="236dp"
         android:layout_height="65dp"
@@ -163,7 +163,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wprowadz_mail"
+        app:layout_constraintTop_toBottomOf="@+id/enter_the_name"
         app:layout_constraintVertical_bias="0.441">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -271,6 +271,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
 
         android:fontFamily="@font/quicksand_medium"
 

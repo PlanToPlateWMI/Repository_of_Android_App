@@ -59,7 +59,7 @@
         app:layout_constraintVertical_bias="0.131" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/wprowadz_email2"
+        android:id="@+id/enter_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="238dp"
         android:layout_height="65dp"
@@ -80,7 +80,7 @@
         app:layout_constraintVertical_bias="0.084">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/wprowadz_mail"
+            android:id="@+id/enter_the_name"
             android:layout_width="238dp"
             android:layout_height="56dp"
 
@@ -106,6 +106,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="35dp"
 
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
 
@@ -120,7 +123,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wprowadz_email2"
+        app:layout_constraintTop_toBottomOf="@+id/enter_name"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="@color/blue_1" />
 
@@ -294,6 +297,9 @@
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
 
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
         android:fontFamily="@font/quicksand_medium"
 
         android:text="@string/zatwierdz"
@@ -327,6 +333,9 @@
         android:fontFamily="@font/quicksand_medium"
 
         android:text="@string/anuluj"
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
 
         android:textAllCaps="false"
         android:textColor="@color/black_gray"

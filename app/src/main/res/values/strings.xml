@@ -47,25 +47,42 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="lista_zakupow">Lista zakupów</string>
     <string name="przepisy">Przepisy</string>
     <string name="ustawienia">Ustawienia</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="przypomnij_haslo">Przypomnij hasło</string>
     <string name="wybierz_jadna_opcje">Wybierz jedną z opcji:</string>
     <string name="mam_zapr_do_gr">Mam zaproszenie do grupy</string>
     <string name="swoja_gr">Chcę założyć własną grupę</string>
+
     <string name="trzeba_kupic">Trzeba kupić</string>
     <string name="kupione">Kupione</string>
     <string name="wszystkie">Wszystkie</string>
     <string name="wlasne">Własne</string>
+
     <string name="baza_produktow">Baza produktów</string>
     <string name="search_hint">Wyszukaj produkt</string>
     <string name="text_baza">Dodawanie własnego
 produktu</string>
     <string name="nazwa_produktu">Wprowadź nazwę produktu</string>
     <string name="jednostki_miary">Jednostki miary</string>
+
     <string name="szt">SZT</string>
     <string name="l">L</string>
     <string name="kg">KG</string>
     <string name="gr">G</string>
+
     <string name="edycja">Edycja produktu</string>
     <string name="nowe_jednostki_miary">Wybierz nową jednostkę miary</string>
+
+    <string name="delete_from_shopping_list">Czy na pewno
+chcesz usunąć produkt z listy zakupów?</string>
+    <string name="delete_from_base">Czy na pewno
+chcesz usunąć produkt z bazy produktów?</string>
+    <string name="add_to_storage">Czy na pewno
+chcesz dodać wszystkie kupione produkty do spiżarni?</string>
+
+    <string name="tak">Tak</string>
+    <string name="nie">Nie</string>
+
+
 </resources>

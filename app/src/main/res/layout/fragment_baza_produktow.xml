@@ -74,9 +74,9 @@
         android:background="@drawable/selector_buttons"
 
         android:padding="4dp"
+
         app:itemTextAppearanceActive="@style/menu_zakupy_active"
         app:itemTextAppearanceInactive="@style/menu_zakupy_no_active"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

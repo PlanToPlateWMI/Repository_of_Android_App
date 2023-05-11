@@ -127,6 +127,9 @@
 
         android:text="@string/zatwierdz"
 
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         app:iconPadding="8dp"
