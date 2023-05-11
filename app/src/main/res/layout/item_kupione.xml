@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#80C6D9FF"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/iconUncheck"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="6dip"
+        android:contentDescription="TODO"
+        android:src="@drawable/exit_to_app_24" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp">
+        <TextView
+            android:id="@+id/nazwaProduktu"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/jednostkiMiary"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_toRightOf="@id/addBazaWlasne"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="Nazwa produktu"
+            android:textSize="20dp"
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/jednostkiMiary"
+            android:layout_width="250dp"
+            android:layout_height="26dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/addBazaWlasne"
+            android:layout_marginLeft="10dp"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:text="Jednostki miary"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            />
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iconDelete"
+        android:clickable="true"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="35dp"
+        android:layout_marginLeft="-45dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_toRightOf="@+id/firstLine"
+        android:src="@drawable/delete_24_75" />
+
+</LinearLayout>
