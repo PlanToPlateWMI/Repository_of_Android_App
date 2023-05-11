@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dialog_delete"
+        android:id="@+id/dialog_add"
         android:layout_width="360dp"
         android:layout_height="350dp"
         android:background="#80C6D9FF"
@@ -17,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/rejestracja"
+            android:id="@+id/add_products"
             android:layout_width="320dp"
             android:layout_height="133dp"
             android:layout_alignParentLeft="true"

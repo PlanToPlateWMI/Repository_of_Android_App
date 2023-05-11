@@ -17,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/rejestracja"
+            android:id="@+id/text_delete"
             android:layout_width="320dp"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
