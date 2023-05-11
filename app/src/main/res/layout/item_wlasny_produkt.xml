@@ -73,6 +73,6 @@
         android:layout_marginRight="6dp"
         android:clickable="true"
         android:contentDescription="TODO"
-        android:src="@drawable/create_24_75" />
+        android:src="@drawable/create_24_50" />
 
 </LinearLayout>
