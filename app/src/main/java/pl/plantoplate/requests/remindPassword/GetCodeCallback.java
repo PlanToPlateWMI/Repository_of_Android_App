@@ -18,28 +18,22 @@ package pl.plantoplate.requests.remindPassword;
 import android.content.Intent;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
 import okhttp3.ResponseBody;
+import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.requests.getConfirmCode.ConfirmCodeResponse;
 import pl.plantoplate.ui.login.remindPassword.EnterCodeActivity;
-import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A callback class for the API request to retrieve a confirmation code for password remind process.
  */
-public class GetCodeCallback implements Callback<ResponseBody> {
-    // View object to display the Snackbar
-    private final View view;
+public class GetCodeCallback extends BaseCallback implements Callback<ResponseBody> {
+
     // The user's email
-    private final String email;
+    private String email;
 
     /**
      * Constructor to create a new ConfirmCodeCallback object.
@@ -47,58 +41,24 @@ public class GetCodeCallback implements Callback<ResponseBody> {
      * @param email The user's email.
      */
     public GetCodeCallback(View view, String email) {
-        this.view = view;
+        super(view);
         this.email = email;
     }
 
-    /**
-     * Handles the API response.
-     * @param call The API call object.
-     * @param response The API response object.
-     */
     @Override
-    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-
-        System.out.println(response.code());
-
-        if (response.isSuccessful()) {
-
-            // If the response body is null, display a Snackbar and return
-            if (response.body() == null) {
-                Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
-                return;
-            }
-
-            // If the response body is not null, parse the response body to CodeResponse and start the EnterCodeActivity.
-            try {
-                ConfirmCodeResponse code = new Gson().fromJson(response.body().string(), ConfirmCodeResponse.class);
-                Intent intent = new Intent(view.getContext(), EnterCodeActivity.class);
-                intent.putExtra("code", code.getCode());
-                view.getContext().startActivity(intent);
-
-            } catch (IOException e) {
-                Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
-            }
-        } else {
-            handleErrorResponse(response.code());
-        }
-    }
-
-    /**
-     * Handles the API call failure.
-     * @param call The API call object.
-     * @param t The throwable object.
-     */
-    @Override
-    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-        Snackbar.make(view, "Błąd, sprawdź swoje połączenie internetowe!", Snackbar.LENGTH_LONG).show();
+    public void handleSuccessResponse(String response)  {
+        ConfirmCodeResponse code = new Gson().fromJson(response, ConfirmCodeResponse.class);
+        Intent intent = new Intent(view.getContext(), EnterCodeActivity.class);
+        intent.putExtra("code", code.getCode());
+        view.getContext().startActivity(intent);
     }
 
     /**
      * Handles the API server error responses.
      * @param code The error code.
      */
-    private void handleErrorResponse(int code) {
+    @Override
+    public void handleErrorResponse(int code) {
         switch (code) {
             case 400:
                 Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje!", Snackbar.LENGTH_LONG).show();

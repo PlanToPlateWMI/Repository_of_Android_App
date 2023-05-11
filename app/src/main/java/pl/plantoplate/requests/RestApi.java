@@ -39,7 +39,7 @@ public interface RestApi {
      * @param info the user information object containing the email and password
      * @return a Call object representing the API request
      */
-    @POST("api/auth/signup/")
+    @POST("api/auth/signup")
     Call<ResponseBody> sendUserRegisterData(@Body UserRegisterData info);
 
     /**
@@ -48,7 +48,7 @@ public interface RestApi {
      * @param email the user email address
      * @return a Call object representing the API request
      */
-    @GET("api/mail/code/")
+    @GET("api/mail/code")
     Call<ResponseBody> getConfirmCode(@Query("email") String email);
 
     /**
@@ -66,7 +66,7 @@ public interface RestApi {
      * @param userJoinGroupRequest The data needed to join the group.
      * @return A {@link Call} object that can be used to execute the network request asynchronously and get the response.
      */
-    @POST("api/invite-codes/")
+    @POST("api/invite-codes")
     Call<ResponseBody> joinGroupByCode(@Body UserJoinGroupData userJoinGroupRequest);
 
 
@@ -77,7 +77,7 @@ public interface RestApi {
      * @param role The role to assign to the user who redeems the group code.
      * @return A `Call<ResponseBody>` object representing the asynchronous request.
      */
-    @GET("api/invite-codes/")
+    @GET("api/invite-codes")
     Call<ResponseBody> generateGroupCode(@Header("Authorization") String token, @Query("role") String role);
 
 
@@ -87,7 +87,7 @@ public interface RestApi {
      * @param info the user information object containing the email and password
      * @return a Call object representing the API request
      */
-    @POST("api/auth/signin/")
+    @POST("api/auth/signin")
     Call<ResponseBody> signinUser(@Body SignInData info);
 
 
@@ -96,7 +96,16 @@ public interface RestApi {
      * @param info The {@link SignInData} object containing the user's email address and password reset token.
      * @return A {@link Call} object that wraps a {@link ResponseBody} object, representing the server's response to the reset password request.
      */
-    @POST("api/auth/password/reset/")
+    @POST("api/auth/password/reset")
     Call<ResponseBody> resetPassword(@Body SignInData info);
+
+    /**
+     * Sends a GET request to the API endpoint to get the user's shopping list.
+     *
+     * @param token the user's authorization token.
+     * @return a Call object representing the API request
+     */
+    @GET("api/shopping")
+    Call<ResponseBody> getShoppingList(@Header("Authorization") String token);
 }
 

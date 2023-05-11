@@ -19,28 +19,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-
+import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.requests.getConfirmCode.ConfirmCodeResponse;
 import pl.plantoplate.ui.registration.EmailConfirmActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-
-import retrofit2.Call;
 import retrofit2.Callback;
 
 import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 /**
  * A callback class for the API request to retrieve a confirmation code for user registration (for the first time).
  */
-public class SendRegisterDataCallback implements Callback<ResponseBody> {
+public class SendRegisterDataCallback extends BaseCallback implements Callback<ResponseBody> {
 
-    // View object to display the Snackbar
-    private final View view;
     // SharedPreferences object to store the user's email
     private final SharedPreferences prefs;
     // The user's register data (name, email, password)
@@ -52,57 +45,25 @@ public class SendRegisterDataCallback implements Callback<ResponseBody> {
      * @param userData The User register data (name, email, password).
      */
     public SendRegisterDataCallback(View view, UserRegisterData userData) {
-        this.view = view;
+        super(view);
         this.prefs = view.getContext().getSharedPreferences("prefs", 0);
         this.userData = userData;
     }
 
-    /**
-     * Handles the API response.
-     * @param call The API call object.
-     * @param response The API response object.
-     */
     @Override
-    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+    public void handleSuccessResponse(String response) {
+        ConfirmCodeResponse code = new Gson().fromJson(response, ConfirmCodeResponse.class);
 
-        if (response.isSuccessful()) {
-
-            // If the response body is null, display a Snackbar and return
-            if (response.body() == null) {
-                Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
-                return;
-            }
-
-            // If the response body is not null, parse the response body to CodeResponse and start the EmailConfirmActivity
-            try {
-                ConfirmCodeResponse code = new Gson().fromJson(response.body().string(), ConfirmCodeResponse.class);
-
-                saveUserDataToPrefs();
-                startEmailConfirmActivity(code.getCode());
-
-            } catch (IOException e) {
-                Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
-            }
-        } else {
-            handleErrorResponse(response.code());
-        }
-    }
-
-    /**
-     * Handles the API call failure.
-     * @param call The API call object.
-     * @param t The throwable object.
-     */
-    @Override
-    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-        Snackbar.make(view, "Error while sending user data!", Snackbar.LENGTH_LONG).show();
+        saveUserDataToPrefs();
+        startEmailConfirmActivity(code.getCode());
     }
 
     /**
      * Handles the API server error responses.
      * @param code The error code.
      */
-    private void handleErrorResponse(int code) {
+    @Override
+    public void handleErrorResponse(int code) {
         switch (code) {
             case 409:
                 Snackbar.make(view, "Użytkownik o podanym adresie email już istnieje!", Snackbar.LENGTH_LONG).show();

@@ -27,8 +27,8 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
+import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.ui.main.ActivityMain;
-import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
@@ -36,10 +36,8 @@ import retrofit2.Response;
 /**
  * A callback class for the API request to sign in the user.
  */
-public class SignInCallback implements Callback<ResponseBody> {
+public class SignInCallback extends BaseCallback implements Callback<ResponseBody> {
 
-    // View object to display the Snackbar
-    private final View view;
     // SharedPreferences object to store the user's email
     private final SharedPreferences prefs;
 
@@ -48,62 +46,25 @@ public class SignInCallback implements Callback<ResponseBody> {
      * @param view The view object to display the Snackbar.
      */
     public SignInCallback(View view) {
-        this.view = view;
+        super(view);
         this.prefs = view.getContext().getSharedPreferences("prefs", 0);
     }
 
-    /**
-     * Handles the API response.
-     * @param call The API call object.
-     * @param response The API response object.
-     */
     @Override
-    public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-
-        System.out.println(response.code());
-
-        if (response.isSuccessful()) {
-
-            // If the response body is null, display a Snackbar and return
-            if (response.body() == null) {
-                Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
-                return;
-            }
-
-            // If the response body is not null, parse the response body to JwtResponse object, save user token and role
-            // to SharedPreferences and start the MainActivity
-            try {
-                JwtResponse jwt = new Gson().fromJson(response.body().string(), JwtResponse.class);
-
-                // Save the user's token and role to SharedPreferences
-                saveTokenAndRole(jwt.getToken(), jwt.getRole());
-
-                // Start the MainActivity
-                view.getContext().startActivity(new Intent(view.getContext(), ActivityMain.class));
-
-            } catch (IOException e) {
-                Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
-            }
-        } else {
-            handleErrorResponse(response.code());
-        }
-    }
-
-    /**
-     * Handles the API call failure.
-     * @param call The API call object.
-     * @param t The throwable object.
-     */
-    @Override
-    public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-        Snackbar.make(view, "Błąd podczas wysyłania danych!", Snackbar.LENGTH_LONG).show();
+    public void handleSuccessResponse(String response) {
+        Gson gson = new Gson();
+        JwtResponse jwtResponse = gson.fromJson(response, JwtResponse.class);
+        saveTokenAndRole(jwtResponse.getToken(), jwtResponse.getRole());
+        Intent intent = new Intent(view.getContext(), ActivityMain.class);
+        view.getContext().startActivity(intent);
     }
 
     /**
      * Handles the API server error responses.
      * @param code The error code.
      */
-    private void handleErrorResponse(int code) {
+    @Override
+    public void handleErrorResponse(int code) {
         switch (code) {
             case 400:
                 Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje!", Snackbar.LENGTH_LONG).show();
@@ -131,5 +92,4 @@ public class SignInCallback implements Callback<ResponseBody> {
         editor.putString("role", role);
         editor.apply();
     }
-
 }
