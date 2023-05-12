@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package pl.plantoplate.requests.shoppingList;
+package pl.plantoplate.requests.products;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.requests.products.Product;
-
 /**
- * Interface, that is used, to setting shop list from GetShopListCallback to ShoppingListFragment
- * after succesfull response in GetShopListCallback.
+ * Interface used to set products lists from GetProductsListCallback to Products Fragment.
  */
-public interface ShopListCallback {
+public interface ProductsListCallback {
 
-    void onShoppingListReceived(ArrayList<Product> shopList);
+    void onProductsListsReceived(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList);
 }

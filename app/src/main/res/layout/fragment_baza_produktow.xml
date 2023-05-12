@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    tools:context="pl.plantoplate.ui.main.shoplist.ShoppingListFragment">
+    tools:context="pl.plantoplate.ui.main.shoppingList.ShoppingListFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <!--Wygenerowanie kodu button -->

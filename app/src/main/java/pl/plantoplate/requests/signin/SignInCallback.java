@@ -50,6 +50,10 @@ public class SignInCallback extends BaseCallback implements Callback<ResponseBod
         this.prefs = view.getContext().getSharedPreferences("prefs", 0);
     }
 
+    /**
+     * Handles the API server success responses.
+     * @param response The response object.
+     */
     @Override
     public void handleSuccessResponse(String response) {
         Gson gson = new Gson();

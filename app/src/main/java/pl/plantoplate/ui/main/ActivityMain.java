@@ -25,16 +25,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
 import pl.plantoplate.ui.main.recepies.RecipeFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
-import pl.plantoplate.ui.main.shoplist.ShoppingListFragment;
+import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
 
 /**

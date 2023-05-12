@@ -107,5 +107,13 @@ public interface RestApi {
      */
     @GET("api/shopping")
     Call<ResponseBody> getShoppingList(@Header("Authorization") String token);
+
+    /**
+     * Sends a GET request to the API endpoint to get all general and group products.
+     * @param token the user's authorization token.
+     * @return a Call object representing the API request
+     */
+    @GET("api/products")
+    Call<ResponseBody> getProducts(@Header("Authorization") String token);
 }
 

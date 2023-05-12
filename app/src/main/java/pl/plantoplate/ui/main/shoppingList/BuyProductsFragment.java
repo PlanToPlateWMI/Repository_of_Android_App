@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main.shoplist;
+package pl.plantoplate.ui.main.shoppingList;
 
 import android.os.Bundle;
 
@@ -29,11 +29,10 @@ import android.view.ViewGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import pl.plantoplate.R;
-import pl.plantoplate.databinding.FragmentShoppingListBinding;
 import pl.plantoplate.databinding.FragmentTrzebaKupicBinding;
 import pl.plantoplate.ui.main.BazaProduktowFragment;
 
-public class TrzebaKupicFragment extends Fragment {
+public class BuyProductsFragment extends Fragment {
 
     private FragmentTrzebaKupicBinding fragmentTrzebaKupicBinding;
     private FloatingActionButton plus_in_trzeba_kupic;

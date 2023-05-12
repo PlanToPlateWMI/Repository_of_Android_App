@@ -17,7 +17,7 @@
 package pl.plantoplate.ui.main;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,19 +30,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
-import pl.plantoplate.ui.main.shoplist.KupioneFragment;
-import pl.plantoplate.ui.main.shoplist.TrzebaKupicFragment;
+import pl.plantoplate.requests.RetrofitClient;
+import pl.plantoplate.requests.products.GetProductsDBaseCallback;
+import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.requests.products.ProductsListCallback;
+import retrofit2.Call;
 
-public class BazaProduktowFragment extends Fragment {
+public class BazaProduktowFragment extends Fragment implements ProductsListCallback {
 
     private FragmentBazaProduktowBinding bazaProduktowBinding;
     private SearchView searchView;
-    //this list will have items (products)
-    private  List<ClipData.Item> itemList;
+
+    private SharedPreferences prefs;
+
+    // Products lists.
+    private ArrayList<Product> generalProductsList;
+    private ArrayList<Product> groupProductsList;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -57,6 +64,12 @@ public class BazaProduktowFragment extends Fragment {
 
         searchView.findViewById(R.id.search);
         searchView.clearFocus();
+
+        // Get the SharedPreferences object
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        // Get products from database
+        getProducts();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -86,10 +99,23 @@ public class BazaProduktowFragment extends Fragment {
         return bazaProduktowBinding.getRoot();
     }
 
+    private void getProducts() {
+        String token = "Bearer " + prefs.getString("token", "");
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getProducts(token);
+
+        call.enqueue(new GetProductsDBaseCallback(this.bazaProduktowBinding.getRoot(), this));
+    }
+
+
+    @Override
+    public void onProductsListsReceived(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList) {
+        this.generalProductsList = generalProductsList;
+        this.groupProductsList = groupProductsList;
+    }
+
     private void filterText(String text) {
-        List<ClipData.Item> filteredList = new ArrayList<>();
-        for(ClipData.Item item : itemList){
-        }
+
     }
 
     private void replaceFragment(Fragment fragment) {
