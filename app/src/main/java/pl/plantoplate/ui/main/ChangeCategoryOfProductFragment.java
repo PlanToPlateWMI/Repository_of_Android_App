@@ -13,18 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package pl.plantoplate.ui.main;
 
-package pl.plantoplate.requests.shoppingList;
 
-import java.util.ArrayList;
+import androidx.fragment.app.Fragment;
 
-import pl.plantoplate.requests.products.Product;
-
-/**
- * Interface, that is used, to setting shop list from GetShopListCallback to ShoppingListFragment
- * after succesfull response in GetShopListCallback.
- */
-public interface ShopListCallback {
-
-    void onShoppingListReceived(ArrayList<Product> shopList);
+public class ChangeCategoryOfProductFragment extends Fragment {
 }

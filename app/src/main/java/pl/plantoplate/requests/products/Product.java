@@ -14,20 +14,44 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.requests.shoppingList;
+package pl.plantoplate.requests.products;
 
+/**
+ * Class representing a product returned from the API server.
+ */
 public class Product {
     private int id;
-    private String product;
+    private String name;
+    private String category;
     private int amount;
     private String unit;
+
+    public Product(int id, String name, String category, int amount, String unit) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.amount = amount;
+        this.unit = unit;
+    }
+
+    public Product(int id, String name, String category, String unit) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.amount = 0;
+        this.unit = unit;
+    }
 
     public int getId() {
         return id;
     }
 
-    public String getProduct() {
-        return product;
+    public String getName() {
+        return name;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public int getAmount() {
@@ -42,8 +66,12 @@ public class Product {
         this.id = id;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
+    public void setAmount(String amount) {
+        this.amount = Integer.parseInt(amount);
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public void setAmount(int amount) {
@@ -53,6 +81,5 @@ public class Product {
     public void setUnit(String unit) {
         this.unit = unit;
     }
-
 
 }

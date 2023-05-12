@@ -13,57 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package pl.plantoplate.requests.shoppingList;
+package pl.plantoplate.requests.products;
 
 import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import pl.plantoplate.requests.BaseCallback;
-import pl.plantoplate.requests.products.Product;
 import retrofit2.Callback;
 
-public class GetShopListCallback extends BaseCallback implements Callback<ResponseBody> {
+public class GetProductsDBaseCallback extends BaseCallback implements Callback<ResponseBody> {
 
-    private ShopListCallback callback;
+    private ProductsListCallback callback;
 
     /**
      * Constructor to create a new CreateGroupCallback object.
      *
      * @param view The view object to display the Snackbar.
+     * @param callback The callback object to call the onProductsListsReceived method.
      */
-    public GetShopListCallback(View view, ShopListCallback callback) {
+    public GetProductsDBaseCallback(View view, ProductsListCallback callback) {
         super(view);
         this.callback = callback;
     }
 
-    /**
-     * Handles the API server success responses.
-     *
-     * @param response The response object.
-     */
+
     @Override
     public void handleSuccessResponse(String response) {
         Gson gson = new Gson();
-        Type productListType = new TypeToken<List<Product>>(){}.getType();
-        ArrayList<Product> shoppingList = gson.fromJson(response, productListType);
+        ProductsDataBase productsDataBase = gson.fromJson(response, ProductsDataBase.class);
 
-        callback.onShoppingListReceived(shoppingList);
+        callback.onProductsListsReceived(productsDataBase.getGeneralProducts(), productsDataBase.getGroupProducts());
     }
 
-    /**
-     * Handles the API server error responses.
-     *
-     * @param code The error code.
-     */
     @Override
     public void handleErrorResponse(int code) {
         switch (code) {

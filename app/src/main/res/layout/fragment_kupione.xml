@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    tools:context=".ui.main.shoplist.KupioneFragment">
+    tools:context=".ui.main.shoppingList.BoughtProductsFragment">
 
     <TextView
         android:id="@+id/textView5"

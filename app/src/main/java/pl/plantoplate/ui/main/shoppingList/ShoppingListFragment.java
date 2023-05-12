@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.ui.main.shoplist;
+package pl.plantoplate.ui.main.shoppingList;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -34,7 +34,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.shoppingList.GetShopListCallback;
-import pl.plantoplate.requests.shoppingList.Product;
+import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.requests.shoppingList.ShopListCallback;
 import retrofit2.Call;
 
@@ -53,7 +53,7 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
                              Bundle savedInstanceState) {
 
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
-        replaceFragment(new TrzebaKupicFragment());
+        replaceFragment(new BuyProductsFragment());
 
         // Get the SharedPreferences object
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -65,10 +65,10 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
         shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
                 case R.id.kupione:
-                    replaceFragment(new KupioneFragment());
+                    replaceFragment(new BoughtProductsFragment());
                     return true;
                 case R.id.trzeba_kupic:
-                    replaceFragment(new TrzebaKupicFragment());
+                    replaceFragment(new BuyProductsFragment());
                     return true;
             }
             return false;
@@ -89,7 +89,7 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
     }
 
     @Override
-    public void setShoppingList(ArrayList<Product> shopList) {
+    public void onShoppingListReceived(ArrayList<Product> shopList) {
 
         this.shoppingList = shopList;
     }

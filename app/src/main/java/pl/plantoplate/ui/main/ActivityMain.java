@@ -25,14 +25,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener;
-import com.google.android.material.snackbar.Snackbar;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
 import pl.plantoplate.ui.main.recepies.RecipeFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
-import pl.plantoplate.ui.main.shoplist.ShoppingListFragment;
+import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
 
 /**
@@ -62,7 +61,7 @@ public class ActivityMain extends AppCompatActivity implements OnItemSelectedLis
         setContentView(binding.getRoot());
 
         // Set the initial fragment to be displayed
-        replaceFragment(new CalendarFragment());
+        replaceFragment(new ShoppingListFragment());
 
         // Set the navigation item selected listener to this activity
         binding.bottomNavigationView.setOnItemSelectedListener(this);
@@ -78,8 +77,6 @@ public class ActivityMain extends AppCompatActivity implements OnItemSelectedLis
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Show a snackbar message and print to the console to confirm item selection
-        //Snackbar.make(binding.getRoot(), "Item selected", Snackbar.LENGTH_SHORT).show();
-        System.out.println("Item selected");
 
         // Replace the current fragment with the selected fragment based on its ID
         switch (item.getItemId()) {
