@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout8"
+    android:id="@+id/frameLayout9"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.ChangeCategoryOfProductFragment">
@@ -12,7 +12,6 @@
         android:layout_width="0dp"
         android:layout_height="65dp"
         android:layout_marginTop="-5dp"
-        android:layout_marginBottom="5dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
         android:contextClickable="false"
@@ -29,10 +28,405 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.099" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/jednostki_miary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="center"
+        android:text="Wybierz nową kategorię"
+        android:textColor="@color/black_gray"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/kategoria1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/baza_produktow"
+        app:layout_constraintVertical_bias="0.192" />
+
+    <Button
+        android:id="@+id/kategoria1"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="500dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 1"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
 
 
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/baza_produktow"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria2"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="500dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 2"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/baza_produktow"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria3"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="480dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 3"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria1"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria4"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="480dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 4"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria2"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria5"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="370dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 5"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria1"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+
+    <Button
+        android:id="@+id/kategoria6"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="370dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 6"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria2"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria7"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="260dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 7"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria1"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria8"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="260dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 8"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria2"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria9"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 9"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria1"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria10"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 10"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria2"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria11"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="45dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 11"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria1"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+    <Button
+        android:id="@+id/kategoria12"
+        android:layout_width="190dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="45dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:fontFamily="@font/quicksand_medium"
+        android:text="Kategoria 12"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria2"
+        app:layout_constraintVertical_bias="0.587"
+        app:rippleColor="@color/blue_1" />
+
+
+    <Button
+        android:id="@+id/button_zatwierdz"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
+
+        android:layout_alignParentLeft="true"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/blue_1"
+
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp"
+
+        android:clickable="true"
+        android:drawableLeft="@drawable/done_24_50"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:text="@string/zatwierdz"
+
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kategoria1"
+        app:layout_constraintVertical_bias="0.78"
+        app:rippleColor="@color/blue_1" />
     <Button
         android:id="@+id/button_anuluj"
         android:layout_width="236dp"
@@ -59,38 +453,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/baza_produktow"
-        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"
+        app:layout_constraintVertical_bias="0.2"
         app:rippleColor="@color/blue_1" />
 
-    <Button
-        android:id="@+id/button_usun"
-        android:layout_width="236dp"
-        android:layout_height="70dp"
 
-        android:layout_alignParentLeft="true"
-
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/blue_1"
-
-        android:clickable="true"
-        android:drawableLeft="@drawable/delete_forever_24_50"
-
-        android:fontFamily="@font/quicksand_medium"
-
-        android:text="@string/usun"
-
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_anuluj"
-        app:layout_constraintVertical_bias="0.272"
-        app:rippleColor="@color/blue_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
