@@ -52,7 +52,7 @@ public class EnterEmailActivity extends AppCompatActivity {
         setContentView(change_password_view.getRoot());
 
         // Define the ui elements
-        email_field = change_password_view.wprowadzMail;
+        email_field = change_password_view.enterTheName;
         apply_button = change_password_view.buttonZatwierdz;
 
         // Set a click listeners for the buttons

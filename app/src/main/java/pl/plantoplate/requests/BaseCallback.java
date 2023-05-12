@@ -34,14 +34,15 @@ public abstract class BaseCallback implements Callback<ResponseBody> {
     @Override
     public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
-        System.out.println(response.code());
-        // If the response body is null, display a Snackbar and return
-        if (response.body() == null) {
-            Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
-            return;
-        }
+        //System.out.println(response.code());
 
         if (response.isSuccessful()) {
+
+            // If the response body is null, display a Snackbar and return
+            if (response.body() == null) {
+                Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
+                return;
+            }
 
             // If no problems with response body, handle the response.
             try {
