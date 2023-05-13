@@ -18,7 +18,7 @@
 
         <EditText
             android:id="@+id/add_products_text"
-            android:layout_width="320dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -55,6 +55,27 @@
             tools:layout_editor_absoluteX="20dp"
             tools:layout_editor_absoluteY="116dp" />
 
+
+
+        <TextView
+            android:id="@+id/jednostki_miary_napisac"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/quicksand_semibold"
+
+            android:gravity="center"
+            android:text="miara"
+
+            android:textAppearance="@style/rejestracja"
+            android:textColor="@color/black_gray"
+            android:textSize="20dp"
+            tools:layout_editor_absoluteX="200dp"
+            tools:layout_editor_absoluteY="188dp" />
+
         <TextView
             android:id="@+id/jednostki_miary"
             android:layout_width="165dp"
@@ -73,6 +94,51 @@
             android:textSize="20dp"
             tools:layout_editor_absoluteX="20dp"
             tools:layout_editor_absoluteY="188dp" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/wprowadz_ilosc"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            android:hint="@string/wprowadz_ilosc"
+
+            android:textColorHint="@color/black_gray"
+
+            app:boxBackgroundMode="outline"
+
+            app:boxStrokeColor="@color/blue_2"
+
+            app:endIconTint="@color/black_gray"
+            app:hintTextColor="@color/black_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.705"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="106dp">
+
+
+            <!--android:fontFamily="@font/quicksand_regular"-->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ilosc"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+
+                android:fontFamily="@font/quicksand_regular"
+
+                android:inputType="textPassword"
+
+                android:maxLines="1"
+                android:singleLine="true"
+
+                android:textColor="@color/black_gray"
+                tools:layout_editor_absoluteX="62dp"
+                tools:layout_editor_absoluteY="321dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/zatwierdzenie"
@@ -102,6 +168,36 @@
 
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="247dp" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:clickable="true"
+            android:contextClickable="true"
+            app:srcCompat="@drawable/close_24_50"
+            tools:layout_editor_absoluteX="330dp"
+            tools:layout_editor_absoluteY="5dp" />
+
+        <ImageView
+            android:id="@+id/minus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:clickable="true"
+            android:contextClickable="true"
+            app:srcCompat="@drawable/remove_24_50"
+            tools:layout_editor_absoluteX="110dp"
+            tools:layout_editor_absoluteY="116dp" />
+
+        <ImageView
+            android:id="@+id/plus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:clickable="true"
+            android:contextClickable="true"
+            app:srcCompat="@drawable/add_24_50"
+            tools:layout_editor_absoluteX="304dp"
+            tools:layout_editor_absoluteY="116dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

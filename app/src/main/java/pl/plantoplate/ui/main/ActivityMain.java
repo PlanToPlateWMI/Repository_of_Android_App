@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
+
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
 import pl.plantoplate.ui.main.recepies.RecipeFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;

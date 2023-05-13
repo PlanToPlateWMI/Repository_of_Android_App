@@ -244,6 +244,7 @@
     <!--        app:rippleColor="@color/blue_1" />-->
 
 
+
     <RadioGroup
         android:id="@+id/toggle_group"
         android:layout_width="363dp"

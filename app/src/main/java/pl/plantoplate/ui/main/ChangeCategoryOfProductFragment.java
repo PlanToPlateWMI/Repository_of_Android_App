@@ -16,7 +16,29 @@
 package pl.plantoplate.ui.main;
 
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.fragment.app.Fragment;
 
+import pl.plantoplate.R;
+import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
+import pl.plantoplate.databinding.FragmentChangeCategoryBinding;
+
 public class ChangeCategoryOfProductFragment extends Fragment {
+
+    private FragmentChangeCategoryBinding fragmentChangeCategoryBinding;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        fragmentChangeCategoryBinding = FragmentChangeCategoryBinding.inflate(inflater, container, false);
+
+        return fragmentChangeCategoryBinding.getRoot();
+        //return inflater.inflate(R.layout.fragment_add_your_own_product, container, false);
+    }
 }
