@@ -38,98 +38,13 @@
         app:maxImageSize="32dp"
         tools:ignore="MissingConstraints" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        tools:listitem="@layout/item_category"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:ignore="MissingClass" />
 
-        <ListView
-            android:id="@+id/listview_wlasne"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
-<!--    <TextView-->
-<!--        android:id="@+id/textViewKategoriaWlasne"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:background="@color/blue_1"-->
-<!--        tools:ignore="MissingConstraints"-->
-<!--        android:text="Kategoria"-->
-<!--        android:textSize="20dp"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:paddingLeft="160dp" />-->
-
-<!--    <RelativeLayout-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="?android:attr/listPreferredItemHeight"-->
-<!--        android:padding="6dp"-->
-<!--        android:background="#80C6D9FF"-->
-<!--        tools:layout_editor_absoluteY="41dp"-->
-<!--        tools:ignore="MissingConstraints">-->
-
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/plus"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:backgroundTint="@color/blue_1"-->
-<!--            android:clickable="true"-->
-<!--            android:iconTint="@color/black"-->
-<!--            android:src="@drawable/add_24_75"-->
-<!--            app:backgroundTint="@color/blue_3"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.884"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintVertical_bias="0.908"-->
-<!--            app:maxImageSize="32dp"-->
-<!--            tools:ignore="MissingConstraints" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/secondLine"-->
-<!--            android:layout_width="fill_parent"-->
-<!--            android:layout_height="26dp"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_toRightOf="@id/plus"-->
-<!--            android:layout_marginLeft="10dp"-->
-<!--            android:ellipsize="marquee"-->
-<!--            android:maxLines="1"-->
-<!--            android:text="Jednostki miary"-->
-<!--            android:textSize="16dp"-->
-<!--            android:textColor="@color/black"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/firstLine"-->
-<!--            android:layout_width="fill_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_above="@id/secondLine"-->
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_alignWithParentIfMissing="true"-->
-<!--            android:layout_toRightOf="@id/plus"-->
-<!--            android:layout_marginLeft="10dp"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:text="Nazwa produktu"-->
-<!--            android:textSize="20dp"-->
-<!--            android:textColor="@color/black" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/iconEdit"-->
-<!--            android:clickable="true"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_marginLeft="-45dp"-->
-<!--            android:layout_marginTop="12dp"-->
-<!--            android:layout_marginBottom="12dp"-->
-<!--            android:layout_toRightOf="@+id/firstLine"-->
-<!--            android:src="@drawable/create_24_75" />-->
-
-<!--    </RelativeLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
