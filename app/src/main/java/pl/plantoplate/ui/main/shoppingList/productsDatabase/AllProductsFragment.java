@@ -19,6 +19,7 @@ package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -30,54 +31,19 @@ import android.widget.Button;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
 import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
+import pl.plantoplate.databinding.FragmentWszystkieBinding;
+import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
 
 public class AllProductsFragment extends Fragment {
 
-    private FragmentAddYourOwnProductBinding fragmentAddYourOwnProductBinding;
-    private Button button_gr;
-    private Button button_szt;
-    private Button button_l;
-    private Button button_kg;
-    private Button change_kategory;
-
+    private FragmentWszystkieBinding fragmentWszystkieBinding;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-<<<<<<< HEAD:app/src/main/java/pl/plantoplate/ui/main/shoppingList/productsDatabase/AllProductsFragment.java
-        return inflater.inflate(R.layout.fragment_wszystkie, container, false);
-=======
+        fragmentWszystkieBinding = FragmentWszystkieBinding.inflate(inflater, container, false);
 
-        fragmentAddYourOwnProductBinding = FragmentAddYourOwnProductBinding.inflate(inflater, container, false);
-
-        button_gr = fragmentAddYourOwnProductBinding.buttonGr;
-        button_gr.findViewById(R.id.button_gr);
-
-        button_szt = fragmentAddYourOwnProductBinding.buttonSzt;
-        button_szt.findViewById(R.id.button_szt);
-
-        button_kg = fragmentAddYourOwnProductBinding.buttonKg;
-        button_kg.findViewById(R.id.button_kg);
-
-        button_l = fragmentAddYourOwnProductBinding.buttonL;
-        button_l.findViewById(R.id.button_l);
-
-        change_kategory = fragmentAddYourOwnProductBinding.zmienKategorie;
-        change_kategory.findViewById(R.id.zmien_kategorie);
-
-        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
-
-        return fragmentAddYourOwnProductBinding.getRoot();
-        //return inflater.inflate(R.layout.fragment_add_your_own_product, container, false);
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
->>>>>>> b7418731338f520524f7799dcc105c7031d11774:app/src/main/java/pl/plantoplate/ui/main/AddYourOwnProductFragment.java
+        return fragmentWszystkieBinding.getRoot();
     }
 }

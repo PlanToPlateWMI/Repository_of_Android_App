@@ -21,6 +21,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import android.widget.RadioGroup;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
 import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
 
 public class AddYourOwnProductFragment extends Fragment {
 
@@ -38,6 +40,8 @@ public class AddYourOwnProductFragment extends Fragment {
 
     private RadioGroup choose_product_unit;
     private Button add_product_button;
+
+    private Button change_kategory;
 
     private Product product;
 
@@ -65,6 +69,11 @@ public class AddYourOwnProductFragment extends Fragment {
         // Set the button listener
         add_product_button.setOnClickListener(this::addProduct);
 
+        change_kategory = add_own_product_view.zmienKategorie;
+        change_kategory.findViewById(R.id.zmien_kategorie);
+
+        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
+
 
         return add_own_product_view.getRoot();
     }
@@ -88,6 +97,14 @@ public class AddYourOwnProductFragment extends Fragment {
                 product.setUnit("GR");
                 break;
         }
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public void addProduct(View v) {
