@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main;
+package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -31,13 +32,13 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWlasneBinding;
 
 
-public class WlasneFragment extends Fragment {
+public class OwnProductsFragment extends Fragment {
 
     private FragmentWlasneBinding fragmentWlasneBinding;
     private FloatingActionButton floatingActionButton_wlasne;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentWlasneBinding = FragmentWlasneBinding.inflate(inflater, container, false);

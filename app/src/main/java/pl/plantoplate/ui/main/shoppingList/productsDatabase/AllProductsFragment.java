@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main;
+package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
 import android.os.Bundle;
 
@@ -26,12 +26,12 @@ import android.view.ViewGroup;
 
 import pl.plantoplate.R;
 
-public class AddYourOwnProductFragment extends Fragment {
+public class AllProductsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_your_own_product, container, false);
+        return inflater.inflate(R.layout.fragment_wszystkie, container, false);
     }
 }

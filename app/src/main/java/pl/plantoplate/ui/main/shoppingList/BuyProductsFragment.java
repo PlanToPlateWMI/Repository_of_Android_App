@@ -30,7 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentTrzebaKupicBinding;
-import pl.plantoplate.ui.main.BazaProduktowFragment;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 
 public class BuyProductsFragment extends Fragment {
 
@@ -43,7 +43,7 @@ public class BuyProductsFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentTrzebaKupicBinding = FragmentTrzebaKupicBinding.inflate(inflater, container, false);
         plus_in_trzeba_kupic = fragmentTrzebaKupicBinding.plusInTrzebaKupic;
-        plus_in_trzeba_kupic.setOnClickListener(v -> replaceFragment(new BazaProduktowFragment()));
+        plus_in_trzeba_kupic.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment()));
         return fragmentTrzebaKupicBinding.getRoot();
         //return inflater.inflate(R.layout.fragment_trzeba_kupic, container, false);
     }

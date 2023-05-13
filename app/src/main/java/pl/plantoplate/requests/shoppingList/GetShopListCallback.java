@@ -16,7 +16,11 @@
 
 package pl.plantoplate.requests.shoppingList;
 
+import android.content.Context;
 import android.view.View;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -29,20 +33,23 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.requests.products.Product;
+import retrofit2.Call;
 import retrofit2.Callback;
 
 public class GetShopListCallback extends BaseCallback implements Callback<ResponseBody> {
 
     private ShopListCallback callback;
+    private Context context;
 
     /**
      * Constructor to create a new CreateGroupCallback object.
      *
      * @param view The view object to display the Snackbar.
      */
-    public GetShopListCallback(View view, ShopListCallback callback) {
+    public GetShopListCallback(View view, ShopListCallback callback, Context context) {
         super(view);
         this.callback = callback;
+        this.context = context;
     }
 
     /**

@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout8"
+    android:id="@+id/product_change_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.AddYourOwnProductFragment">
+    tools:context=".ui.main.shoppingList.productsDatabase.AddYourOwnProductFragment">
 
     <Button
         android:id="@+id/baza_produktow"
@@ -100,145 +100,252 @@
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="@color/blue_1" />
 
-    <ToggleButton
-        android:id="@+id/button_szt"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
 
-        android:textOff="@string/szt"
-        android:textOn="@string/szt"
+    -
 
-        android:background="@drawable/state_list_button"
 
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+    <!--    <ToggleButton-->
+    <!--        android:id="@+id/button_szt"-->
+    <!--        android:layout_width="60dp"-->
+    <!--        android:layout_height="60dp"-->
 
-        android:clickable="true"
+    <!--        android:textOff="@string/szt"-->
+    <!--        android:textOn="@string/szt"-->
 
-        android:fontFamily="@font/quicksand_medium"
-        android:insetTop="0dp"
+    <!--        android:background="@drawable/state_list_button"-->
 
-        android:insetBottom="0dp"
+    <!--        android:layout_alignParentLeft="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        android:layout_alignParentBottom="true"-->
 
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        android:textSize="13dp"
-        app:iconPadding="8dp"
+    <!--        android:clickable="true"-->
+
+    <!--        android:fontFamily="@font/quicksand_medium"-->
+    <!--        android:insetTop="0dp"-->
+
+    <!--        android:insetBottom="0dp"-->
+
+    <!--        android:textAllCaps="false"-->
+    <!--        android:textColor="@color/black_gray"-->
+    <!--        android:textSize="13dp"-->
+    <!--        app:iconPadding="8dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.122"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"-->
+    <!--        app:layout_constraintVertical_bias="0.439"-->
+    <!--        app:rippleColor="@color/blue_1" />-->
+
+    <!--    <ToggleButton-->
+    <!--        android:id="@+id/button_l"-->
+    <!--        android:layout_width="60dp"-->
+    <!--        android:layout_height="60dp"-->
+
+    <!--        android:textOff="@string/l"-->
+    <!--        android:textOn="@string/l"-->
+
+    <!--        android:background="@drawable/state_list_button"-->
+
+    <!--        android:layout_alignParentLeft="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        android:layout_alignParentBottom="true"-->
+
+    <!--        android:clickable="true"-->
+
+    <!--        android:fontFamily="@font/quicksand_medium"-->
+    <!--        android:insetTop="0dp"-->
+
+    <!--        android:insetBottom="0dp"-->
+
+    <!--        android:text="@string/l"-->
+    <!--        android:textAllCaps="false"-->
+    <!--        android:textColor="@color/black_gray"-->
+    <!--        android:textSize="13dp"-->
+    <!--        app:iconPadding="8dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.112"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/button_szt"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"-->
+    <!--        app:layout_constraintVertical_bias="0.439"-->
+    <!--        app:rippleColor="@color/blue_1" />-->
+
+    <!--    <ToggleButton-->
+    <!--        android:id="@+id/button_kg"-->
+    <!--        android:layout_width="60dp"-->
+    <!--        android:layout_height="60dp"-->
+
+    <!--        android:layout_alignParentLeft="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        android:layout_alignParentBottom="true"-->
+
+    <!--        android:textOff="@string/kg"-->
+    <!--        android:textOn="@string/kg"-->
+
+    <!--        android:background="@drawable/state_list_button"-->
+
+    <!--        android:clickable="true"-->
+
+    <!--        android:fontFamily="@font/quicksand_medium"-->
+    <!--        android:insetTop="0dp"-->
+
+    <!--        android:insetBottom="0dp"-->
+
+    <!--        android:text="@string/kg"-->
+    <!--        android:textAllCaps="false"-->
+    <!--        android:textColor="@color/black_gray"-->
+    <!--        android:textSize="13dp"-->
+    <!--        app:iconPadding="8dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.181"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/button_l"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"-->
+    <!--        app:layout_constraintVertical_bias="0.439"-->
+    <!--        app:rippleColor="@color/blue_1" />-->
+
+    <!--    <ToggleButton-->
+    <!--        android:id="@+id/button_gr"-->
+    <!--        android:layout_width="60dp"-->
+    <!--        android:layout_height="60dp"-->
+
+    <!--        android:layout_alignParentLeft="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        android:layout_alignParentBottom="true"-->
+
+    <!--        android:textOff="@string/gr"-->
+    <!--        android:textOn="@string/gr"-->
+
+    <!--        android:background="@drawable/state_list_button"-->
+
+    <!--        android:clickable="true"-->
+
+    <!--        android:fontFamily="@font/quicksand_medium"-->
+    <!--        android:insetTop="0dp"-->
+
+    <!--        android:insetBottom="0dp"-->
+
+    <!--        android:text="@string/gr"-->
+    <!--        android:textAllCaps="false"-->
+    <!--        android:textColor="@color/black_gray"-->
+    <!--        android:textSize="13dp"-->
+    <!--        app:iconPadding="8dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.394"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/button_kg"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"-->
+    <!--        app:layout_constraintVertical_bias="0.439"-->
+    <!--        app:rippleColor="@color/blue_1" />-->
+
+
+    <RadioGroup
+        android:id="@+id/toggle_group"
+        android:layout_width="363dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"
-        app:layout_constraintVertical_bias="0.439"
-        app:rippleColor="@color/blue_1" />
+        app:layout_constraintTop_toTopOf="@+id/baza_produktow"
+        app:layout_constraintVertical_bias="0.966">
 
-    <ToggleButton
-        android:id="@+id/button_l"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        <RadioButton
+            android:id="@+id/button_szt"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="11dp"
+            android:background="@drawable/state_list_button"
+            android:button="@null"
+            android:clickable="true"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="SZT"
+            android:textAllCaps="false"
+            android:textColor="@color/black_gray"
+            android:textOff="@string/szt"
+            android:textOn="@string/szt"
+            android:textSize="13dp"
+            app:iconPadding="8dp"
+            app:rippleColor="@color/blue_1" />
 
-        android:textOff="@string/l"
-        android:textOn="@string/l"
+        <RadioButton
+            android:id="@+id/button_l"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="11dp"
+            android:background="@drawable/state_list_button"
+            android:button="@null"
+            android:clickable="true"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="16dp"
+            android:text="L"
+            android:textAllCaps="false"
+            android:textColor="@color/black_gray"
+            android:textOff="@string/l"
+            android:textOn="@string/l"
+            android:textSize="13dp"
+            app:iconPadding="8dp"
+            app:rippleColor="@color/blue_1" />
 
-        android:background="@drawable/state_list_button"
+        <RadioButton
+            android:id="@+id/button_kg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="11dp"
+            android:background="@drawable/state_list_button"
+            android:button="@null"
+            android:clickable="true"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="16dp"
+            android:text="KG"
+            android:textAllCaps="false"
+            android:textColor="@color/black_gray"
+            android:textOff="@string/kg"
+            android:textOn="@string/kg"
+            android:textSize="13dp"
+            app:iconPadding="8dp"
+            app:rippleColor="@color/blue_1" />
 
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+        <RadioButton
+            android:id="@+id/button_gr"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="11dp"
+            android:background="@drawable/state_list_button"
+            android:button="@null"
+            android:clickable="true"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="16dp"
+            android:text="GR"
+            android:textAllCaps="false"
+            android:textColor="@color/black_gray"
+            android:textOff="@string/gr"
+            android:textOn="@string/gr"
+            android:textSize="13dp"
+            app:iconPadding="8dp"
+            app:rippleColor="@color/blue_1" />
 
-        android:clickable="true"
-
-        android:fontFamily="@font/quicksand_medium"
-        android:insetTop="0dp"
-
-        android:insetBottom="0dp"
-
-        android:text="@string/l"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        android:textSize="13dp"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.112"
-        app:layout_constraintStart_toEndOf="@+id/button_szt"
-        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"
-        app:layout_constraintVertical_bias="0.439"
-        app:rippleColor="@color/blue_1" />
-
-    <ToggleButton
-        android:id="@+id/button_kg"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-
-        android:textOff="@string/kg"
-        android:textOn="@string/kg"
-
-        android:background="@drawable/state_list_button"
-
-        android:clickable="true"
-
-        android:fontFamily="@font/quicksand_medium"
-        android:insetTop="0dp"
-
-        android:insetBottom="0dp"
-
-        android:text="@string/kg"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        android:textSize="13dp"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.181"
-        app:layout_constraintStart_toEndOf="@+id/button_l"
-        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"
-        app:layout_constraintVertical_bias="0.439"
-        app:rippleColor="@color/blue_1" />
-
-    <ToggleButton
-        android:id="@+id/button_gr"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-
-        android:textOff="@string/gr"
-        android:textOn="@string/gr"
-
-        android:background="@drawable/state_list_button"
-
-        android:clickable="true"
-
-        android:fontFamily="@font/quicksand_medium"
-        android:insetTop="0dp"
-
-        android:insetBottom="0dp"
-
-        android:text="@string/gr"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        android:textSize="13dp"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.394"
-        app:layout_constraintStart_toEndOf="@+id/button_kg"
-        app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"
-        app:layout_constraintVertical_bias="0.439"
-        app:rippleColor="@color/blue_1" />
-
+    </RadioGroup>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enter_name"

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main;
+package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -40,7 +40,7 @@ import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.requests.products.ProductsListCallback;
 import retrofit2.Call;
 
-public class BazaProduktowFragment extends Fragment implements ProductsListCallback {
+public class ProductsDbaseFragment extends Fragment implements ProductsListCallback {
 
     private FragmentBazaProduktowBinding bazaProduktowBinding;
     private SearchView searchView;
@@ -58,7 +58,7 @@ public class BazaProduktowFragment extends Fragment implements ProductsListCallb
 
 
         bazaProduktowBinding = FragmentBazaProduktowBinding.inflate(inflater, container, false);
-        replaceFragment(new WszystkieFragment());
+        replaceFragment(new AllProductsFragment());
 
         searchView = bazaProduktowBinding.search;
 
@@ -87,10 +87,10 @@ public class BazaProduktowFragment extends Fragment implements ProductsListCallb
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
                 case R.id.wlasne:
-                    replaceFragment(new WlasneFragment());
+                    replaceFragment(new OwnProductsFragment());
                     return true;
                 case R.id.wszystkie:
-                    replaceFragment(new WszystkieFragment());
+                    replaceFragment(new AllProductsFragment());
                     return true;
             }
             return false;
@@ -104,7 +104,7 @@ public class BazaProduktowFragment extends Fragment implements ProductsListCallb
 
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getProducts(token);
 
-        call.enqueue(new GetProductsDBaseCallback(this.bazaProduktowBinding.getRoot(), this));
+        call.enqueue(new GetProductsDBaseCallback(requireActivity().findViewById(R.id.frame_layout), this));
     }
 
 

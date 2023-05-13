@@ -47,6 +47,12 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
 
     private ArrayList<Product> shoppingList;
 
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -57,9 +63,6 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
 
         // Get the SharedPreferences object
         prefs = requireActivity().getSharedPreferences("prefs", 0);
-
-        // Get the shopping list
-        getShoppingList();
 
         // Set the bottom navigation view listener
         shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item ->{
@@ -74,6 +77,8 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
             return false;
         });
 
+        getShoppingList();
+
         return shopping_list_view.getRoot();
     }
 
@@ -85,7 +90,7 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
 
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getShoppingList(token);
 
-        call.enqueue(new GetShopListCallback(this.shopping_list_view.getRoot(), this));
+        call.enqueue(new GetShopListCallback(requireActivity().findViewById(R.id.frame_layout), this, getContext()));
     }
 
     @Override

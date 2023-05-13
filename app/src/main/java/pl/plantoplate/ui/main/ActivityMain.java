@@ -24,8 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener;
-
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
@@ -38,7 +36,7 @@ import pl.plantoplate.ui.main.storage.StorageFragment;
  * This is the main activity of the application. It is responsible for displaying the bottom navigation bar and
  * switching between the fragments.
  */
-public class ActivityMain extends AppCompatActivity implements OnItemSelectedListener {
+public class ActivityMain extends AppCompatActivity {
 
     private ActivityMainForFragmentsBinding binding;
 
@@ -60,11 +58,13 @@ public class ActivityMain extends AppCompatActivity implements OnItemSelectedLis
         binding = ActivityMainForFragmentsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Set the initial fragment to be displayed
-        replaceFragment(new ShoppingListFragment());
-
         // Set the navigation item selected listener to this activity
-        binding.bottomNavigationView.setOnItemSelectedListener(this);
+        binding.bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
+
+        // Set the initial fragment to be displayed
+        if (savedInstanceState == null) {
+            binding.bottomNavigationView.setSelectedItemId(R.id.shopping_cart);
+        }
     }
 
     /**
@@ -74,9 +74,7 @@ public class ActivityMain extends AppCompatActivity implements OnItemSelectedLis
      * @return True if the item was handled, false otherwise.
      */
     @SuppressLint("NonConstantResourceId")
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Show a snackbar message and print to the console to confirm item selection
 
         // Replace the current fragment with the selected fragment based on its ID
         switch (item.getItemId()) {
@@ -105,6 +103,7 @@ public class ActivityMain extends AppCompatActivity implements OnItemSelectedLis
      * @param fragment The fragment to replace the current fragment with.
      */
     private void replaceFragment(Fragment fragment) {
+
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);

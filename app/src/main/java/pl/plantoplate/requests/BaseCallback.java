@@ -16,6 +16,7 @@
 package pl.plantoplate.requests;
 
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -65,7 +66,7 @@ public abstract class BaseCallback implements Callback<ResponseBody> {
                 handleSuccessResponse(response.body().string());
 
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 Snackbar.make(view, "Coś poszło nie tak!", Snackbar.LENGTH_LONG).show();
             }
         } else {
@@ -80,7 +81,7 @@ public abstract class BaseCallback implements Callback<ResponseBody> {
      */
     @Override
     public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-        Snackbar.make(view, "Błąd, sprawdź swoje połączenie internetowe!", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, "Sprawdź swoje połączenie internetowe!", Snackbar.LENGTH_LONG).show();
     }
 
     /**
