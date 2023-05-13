@@ -19,19 +19,63 @@ package pl.plantoplate.ui.main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import pl.plantoplate.R;
+import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
+import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
+import pl.plantoplate.databinding.FragmentProductChangeBinding;
 
 public class ProductChangeFragment extends Fragment {
+
+    private FragmentProductChangeBinding fragmentProductChangeBinding;
+
+    private Button button_gr;
+    private Button button_szt;
+    private Button button_l;
+    private Button button_kg;
+
+    private Button change_kategory;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_change, container, false);
+
+        fragmentProductChangeBinding = FragmentProductChangeBinding.inflate(inflater, container, false);
+
+        button_gr = fragmentProductChangeBinding.buttonGr;
+        button_gr.findViewById(R.id.button_gr);
+
+        button_szt = fragmentProductChangeBinding.buttonSzt;
+        button_szt.findViewById(R.id.button_szt);
+
+        button_kg = fragmentProductChangeBinding.buttonKg;
+        button_kg.findViewById(R.id.button_kg);
+
+        button_l = fragmentProductChangeBinding.buttonL;
+        button_l.findViewById(R.id.button_l);
+
+        change_kategory = fragmentProductChangeBinding.zmienKategorie;
+        change_kategory.findViewById(R.id.zmien_kategorie);
+
+        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
+
+        return fragmentProductChangeBinding.getRoot();
+        //return inflater.inflate(R.layout.fragment_add_your_own_product, container, false);
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

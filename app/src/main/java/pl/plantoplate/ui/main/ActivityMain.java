@@ -61,7 +61,7 @@ public class ActivityMain extends AppCompatActivity implements OnItemSelectedLis
         setContentView(binding.getRoot());
 
         // Set the initial fragment to be displayed
-        replaceFragment(new ShoppingListFragment());
+        // replaceFragment(new ShoppingListFragment());
 
         // Set the navigation item selected listener to this activity
         binding.bottomNavigationView.setOnItemSelectedListener(this);
