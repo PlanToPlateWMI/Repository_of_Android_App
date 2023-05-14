@@ -38,7 +38,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWlasneBinding;
 import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.CategorySorter;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product.ProductAdapter;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product.ProductAllAdapter;
 
 
 public class OwnProductsFragment extends Fragment {
@@ -81,7 +81,7 @@ public class OwnProductsFragment extends Fragment {
         List<Product> ownProducts = CategorySorter.sortProductsByName(groupProductsList);
         ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
         ownProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ProductAdapter productAdapter = new ProductAdapter(ownProducts);
+        ProductAllAdapter productAdapter = new ProductAllAdapter(ownProducts);
         ownProductsRecyclerView.setAdapter(productAdapter);
     }
 

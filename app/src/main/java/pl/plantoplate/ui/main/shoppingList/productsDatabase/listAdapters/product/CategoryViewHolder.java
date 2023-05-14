@@ -23,6 +23,6 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
         categoryOfProduct.setText(category.getName());
         productRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
-        productRecyclerView.setAdapter(new ProductAdapter(category.getProducts()));
+        productRecyclerView.setAdapter(new ProductAllAdapter(category.getProducts()));
     }
 }

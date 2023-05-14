@@ -17,6 +17,7 @@
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,14 +34,21 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
+import pl.plantoplate.requests.RetrofitClient;
+import pl.plantoplate.requests.products.AddOwnProductCallback;
+import pl.plantoplate.requests.products.GetProductsDBaseCallback;
 import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
+import retrofit2.Call;
 
 public class AddYourOwnProductFragment extends Fragment {
 
     private FragmentAddYourOwnProductBinding add_own_product_view;
+
+    private SharedPreferences prefs;
 
     private RadioGroup choose_product_unit;
     private Button add_product_button;
@@ -57,12 +65,15 @@ public class AddYourOwnProductFragment extends Fragment {
         // Inflate the layout for this fragment
         add_own_product_view = FragmentAddYourOwnProductBinding.inflate(inflater, container, false);
 
+        // Get the shared preferences
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
         // Get the radio group
         choose_product_unit = add_own_product_view.toggleGroup;
 
         // init the product and set the default category
         product = new Product();
-        product.setCategory("Dodane przeze mnie");
+        product.setCategory("Produkty własne");
 
         // Set the radio group listener
         choose_product_unit.setOnCheckedChangeListener((group, checkedId) -> setProductUnit(checkedId));
@@ -89,7 +100,7 @@ public class AddYourOwnProductFragment extends Fragment {
     public void setProductUnit(int checkedId) {
         switch (checkedId) {
             case R.id.button_szt:
-                product.setUnit("SZT");
+                product.setUnit("SZTUKA");
                 break;
 
             case R.id.button_l:
@@ -101,7 +112,7 @@ public class AddYourOwnProductFragment extends Fragment {
                 break;
 
             case R.id.button_gr:
-                product.setUnit("GR");
+                product.setUnit("G");
                 break;
         }
     }
@@ -113,7 +124,12 @@ public class AddYourOwnProductFragment extends Fragment {
         // Set the product name
         product.setName(product_name);
 
-        //TODO: Add the product to the database using ApiClient
+        // Get the token
+        String token = "Bearer " + prefs.getString("token", "");
+
+        // Send the request to add the product to the database
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().addOwnProduct(token, product);
+        call.enqueue(new AddOwnProductCallback(requireActivity().findViewById(R.id.frame_layout)));
 
         // Go back to the products database fragment
         requireActivity().getSupportFragmentManager().popBackStack();

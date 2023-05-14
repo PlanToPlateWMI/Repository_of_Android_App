@@ -20,6 +20,7 @@ import pl.plantoplate.requests.joinGroup.UserJoinGroupData;
 import pl.plantoplate.requests.joinGroup.sendRegisterData.UserRegisterData;
 
 import okhttp3.ResponseBody;
+import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.requests.signin.SignInData;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -115,5 +116,8 @@ public interface RestApi {
      */
     @GET("api/products")
     Call<ResponseBody> getProducts(@Header("Authorization") String token);
+
+    @POST("api/products")
+    Call<ResponseBody> addOwnProduct(@Header("Authorization") String token, @Body Product product);
 }
 

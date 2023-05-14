@@ -12,10 +12,10 @@ import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.requests.products.Product;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
+public class ProductAllAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     private List<Product> products;
 
-    public ProductAdapter(List<Product> products) {
+    public ProductAllAdapter(List<Product> products) {
         this.products = products;
     }
 

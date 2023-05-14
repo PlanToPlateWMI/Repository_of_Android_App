@@ -51,6 +51,19 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
     private ArrayList<Product> generalProductsList;
     private ArrayList<Product> groupProductsList;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Get the SharedPreferences object
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        // Get products from database
+        getProducts();
+
+        //TODO: Set selected all products fragment by default on restart fragment.
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -62,11 +75,6 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
         // Get the SearchView
         searchView = bazaProduktowBinding.search;
 
-        // Get the SharedPreferences object
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
-
-        // Get products from database
-        getProducts();
 
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
@@ -105,6 +113,4 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
-
 }
