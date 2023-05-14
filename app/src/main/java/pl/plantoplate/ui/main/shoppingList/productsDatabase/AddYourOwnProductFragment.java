@@ -29,6 +29,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
+
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
 import pl.plantoplate.requests.products.Product;
@@ -40,8 +44,8 @@ public class AddYourOwnProductFragment extends Fragment {
 
     private RadioGroup choose_product_unit;
     private Button add_product_button;
-
     private Button change_kategory;
+    private TextInputEditText add_product_name;
 
     private Product product;
 
@@ -65,6 +69,9 @@ public class AddYourOwnProductFragment extends Fragment {
 
         // Set add product button
         add_product_button = add_own_product_view.buttonZatwierdz;
+
+        // Set the product name button
+        add_product_name = add_own_product_view.enterTheName;
 
         // Set the button listener
         add_product_button.setOnClickListener(this::addProduct);
@@ -99,16 +106,25 @@ public class AddYourOwnProductFragment extends Fragment {
         }
     }
 
+    public void addProduct(View v) {
+        // Get the product name
+        String product_name = Objects.requireNonNull(add_product_name.getText()).toString();
+
+        // Set the product name
+        product.setName(product_name);
+
+        //TODO: Add the product to the database using ApiClient
+
+        // Go back to the products database fragment
+        requireActivity().getSupportFragmentManager().popBackStack();
+    }
+
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
-
-    public void addProduct(View v) {
-
     }
 
 }

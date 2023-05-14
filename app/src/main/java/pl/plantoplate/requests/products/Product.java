@@ -69,8 +69,8 @@ public class Product {
         this.id = id;
     }
 
-    public void setAmount(String amount) {
-        this.amount = Integer.parseInt(amount);
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setCategory(String category) {
