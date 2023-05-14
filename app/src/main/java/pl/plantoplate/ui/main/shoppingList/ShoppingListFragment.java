@@ -97,6 +97,7 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
     public void onShoppingListReceived(ArrayList<Product> shopList) {
 
         this.shoppingList = shopList;
+        System.out.println("Shopping list: " + shoppingList);
     }
 
     /**

@@ -16,27 +16,43 @@
 
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
-import pl.plantoplate.R;
-import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
-import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
+import java.util.ArrayList;
+import java.util.List;
+
 import pl.plantoplate.databinding.FragmentWszystkieBinding;
-import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
+import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.Category;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.CategoryAdapter;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.CategorySorter;
 
 public class AllProductsFragment extends Fragment {
 
     private FragmentWszystkieBinding fragmentWszystkieBinding;
+
+    private RecyclerView categoryRecyclerView;
+    private TextView welcomeTextView;
+
+    private ArrayList<Product> allProductsList;
+
+    public AllProductsFragment(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList) {
+        ArrayList<Product> allProductsList = new ArrayList<>();
+        allProductsList.addAll(generalProductsList);
+        allProductsList.addAll(groupProductsList);
+
+        this.allProductsList = allProductsList;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -44,6 +60,28 @@ public class AllProductsFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentWszystkieBinding = FragmentWszystkieBinding.inflate(inflater, container, false);
 
+        welcomeTextView = fragmentWszystkieBinding.textView3;
+
+        setUpRecyclerView();
+
+        if (allProductsList.isEmpty()) {
+            welcomeTextView.setVisibility(View.VISIBLE);
+        } else {
+            welcomeTextView.setVisibility(View.GONE);
+        }
+
         return fragmentWszystkieBinding.getRoot();
     }
+
+    public void setUpRecyclerView() {
+        // sort products by category
+        List<Category> categories = CategorySorter.sortCategoriesByProduct(allProductsList);
+
+        // set up recycler view
+        categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
+        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        CategoryAdapter categoryAdapter = new CategoryAdapter(categories);
+        categoryRecyclerView.setAdapter(categoryAdapter);
+    }
+
 }

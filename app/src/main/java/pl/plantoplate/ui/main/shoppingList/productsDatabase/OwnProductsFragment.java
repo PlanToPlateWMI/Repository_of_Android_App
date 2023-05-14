@@ -21,32 +21,69 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWlasneBinding;
+import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.CategorySorter;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product.ProductAdapter;
 
 
 public class OwnProductsFragment extends Fragment {
 
     private FragmentWlasneBinding fragmentWlasneBinding;
+
     private FloatingActionButton floatingActionButton_wlasne;
+    private RecyclerView ownProductsRecyclerView;
+    private TextView welcomeTextView;
+
+    private ArrayList<Product> groupProductsList;
+
+    public OwnProductsFragment(ArrayList<Product> groupProductsList) {
+        this.groupProductsList = groupProductsList;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentWlasneBinding = FragmentWlasneBinding.inflate(inflater, container, false);
+
         floatingActionButton_wlasne = fragmentWlasneBinding.floatingActionButtonWlasne;
+        welcomeTextView = fragmentWlasneBinding.welcomeWlasne;
+
         floatingActionButton_wlasne.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
+
+        setUpRecyclerView();
+
+        if (groupProductsList.isEmpty()) {
+            welcomeTextView.setVisibility(View.VISIBLE);
+        } else {
+            welcomeTextView.setVisibility(View.GONE);
+        }
+
         return fragmentWlasneBinding.getRoot();
     }
 
+    public void setUpRecyclerView() {
+        List<Product> ownProducts = CategorySorter.sortProductsByName(groupProductsList);
+        ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
+        ownProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ProductAdapter productAdapter = new ProductAdapter(ownProducts);
+        ownProductsRecyclerView.setAdapter(productAdapter);
+    }
 
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment

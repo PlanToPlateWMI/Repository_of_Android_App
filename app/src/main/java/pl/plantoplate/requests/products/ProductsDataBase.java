@@ -25,20 +25,20 @@ import java.util.ArrayList;
 public class ProductsDataBase {
 
     @SerializedName("general")
-    private ArrayList<Product> general_products;
+    private ArrayList<Product> general;
     @SerializedName("group")
-    private ArrayList<Product> group_products;
+    private ArrayList<Product> group;
 
     public ProductsDataBase(ArrayList<Product> general_products, ArrayList<Product> group_products) {
-        this.general_products = general_products;
-        this.group_products = group_products;
+        this.general = general_products;
+        this.group = group_products;
     }
 
     public ArrayList<Product> getGeneralProducts() {
-        return general_products;
+        return general;
     }
 
     public ArrayList<Product> getGroupProducts() {
-        return group_products;
+        return group;
     }
 }

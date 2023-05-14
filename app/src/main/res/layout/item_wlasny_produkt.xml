@@ -38,7 +38,6 @@
             android:id="@+id/nazwaProduktu_wlasny"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/jednostkiMiary"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_alignWithParentIfMissing="true"

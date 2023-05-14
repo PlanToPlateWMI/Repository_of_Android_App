@@ -9,16 +9,16 @@
     tools:context=".ui.main.shoppingList.BuyProductsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-<!--    <TextView-->
-<!--        android:id="@+id/textView3"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Wlasne"-->
-<!--        android:textSize="32dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <TextView
+        android:id="@+id/welcome_wlasne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wlasne"
+        android:textSize="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton_wlasne"
@@ -39,12 +39,12 @@
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/category_recycler_view"
+        android:id="@+id/products_own_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_category"
+        tools:listitem="@layout/item_wlasny_produkt"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:ignore="MissingClass" />
+        android:overScrollMode="never"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

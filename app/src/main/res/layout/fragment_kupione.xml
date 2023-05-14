@@ -8,16 +8,16 @@
     android:background="@color/blue_0"
     tools:context=".ui.main.shoppingList.BoughtProductsFragment">
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView5"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Kupione"-->
-<!--        android:textSize="32dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kupione"
+        android:textSize="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -44,6 +44,6 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/item_category"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:ignore="MissingClass" />
+        android:overScrollMode="never"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

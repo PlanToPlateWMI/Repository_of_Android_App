@@ -58,12 +58,9 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
 
 
         bazaProduktowBinding = FragmentBazaProduktowBinding.inflate(inflater, container, false);
-        replaceFragment(new AllProductsFragment());
 
+        // Get the SearchView
         searchView = bazaProduktowBinding.search;
-
-        searchView.findViewById(R.id.search);
-        searchView.clearFocus();
 
         // Get the SharedPreferences object
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -71,26 +68,13 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
         // Get products from database
         getProducts();
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterText(newText);
-                return true;
-            }
-        });
-
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
-                case R.id.wlasne:
-                    replaceFragment(new OwnProductsFragment());
-                    return true;
                 case R.id.wszystkie:
-                    replaceFragment(new AllProductsFragment());
+                    replaceFragment(new AllProductsFragment(generalProductsList, groupProductsList));
+                    return true;
+                case R.id.wlasne:
+                    replaceFragment(new OwnProductsFragment(groupProductsList));
                     return true;
             }
             return false;
@@ -107,15 +91,11 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
         call.enqueue(new GetProductsDBaseCallback(requireActivity().findViewById(R.id.frame_layout), this));
     }
 
-
     @Override
     public void onProductsListsReceived(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList) {
         this.generalProductsList = generalProductsList;
         this.groupProductsList = groupProductsList;
-    }
-
-    private void filterText(String text) {
-
+        replaceFragment(new AllProductsFragment(generalProductsList, groupProductsList));
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -125,4 +105,6 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
 }
