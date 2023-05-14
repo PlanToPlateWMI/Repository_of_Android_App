@@ -10,7 +10,7 @@
     android:layout_marginTop="5dp">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addBazaWlasne"
+        android:id="@+id/addBazaWszystkie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue_1"
@@ -33,7 +33,7 @@
         android:orientation="vertical"
         android:layout_marginStart="16dp">
         <TextView
-            android:id="@+id/nazwaProduktu"
+            android:id="@+id/nazwaProduktu_wszystkie"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/jednostkiMiary"
@@ -47,7 +47,7 @@
             android:textSize="20dp"
             android:textColor="@color/black" />
         <TextView
-            android:id="@+id/jednostkiMiary"
+            android:id="@+id/jednostkiMiary_wszystkie"
             android:layout_width="fill_parent"
             android:layout_height="26dp"
             android:layout_alignParentBottom="true"

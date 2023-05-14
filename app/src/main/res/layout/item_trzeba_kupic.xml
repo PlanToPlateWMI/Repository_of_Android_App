@@ -9,7 +9,7 @@
     android:layout_marginTop="5dp">
 
     <ImageView
-        android:id="@+id/iconCheckbox"
+        android:id="@+id/iconCheckbox_trzebaKupic"
         android:clickable="true"
         android:layout_width="30dp"
         android:layout_height="fill_parent"
@@ -26,7 +26,7 @@
         android:orientation="vertical"
         android:layout_marginStart="16dp">
         <TextView
-            android:id="@+id/nazwaProduktu"
+            android:id="@+id/nazwaProduktu_trzebaKupic"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_above="@id/jednostkiMiary"
@@ -40,7 +40,7 @@
             android:textSize="20dp"
             android:textColor="@color/black" />
         <TextView
-            android:id="@+id/jednostkiMiary"
+            android:id="@+id/jednostkiMiary_trzebaKupic"
             android:layout_width="250dp"
             android:layout_height="26dp"
             android:layout_alignParentBottom="true"
@@ -55,7 +55,7 @@
             />
     </LinearLayout>
     <ImageView
-        android:id="@+id/iconDelete"
+        android:id="@+id/iconDelete_trzebaKupic"
         android:clickable="true"
         android:layout_height="35dp"
         android:layout_alignParentTop="true"
