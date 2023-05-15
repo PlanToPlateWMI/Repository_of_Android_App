@@ -1,4 +1,4 @@
-package pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product;
+package pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category;
 
 import android.view.View;
 import android.widget.TextView;
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.Category;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product.ProductAllAdapter;
 
 public class CategoryViewHolder extends RecyclerView.ViewHolder {
     private TextView categoryOfProduct;

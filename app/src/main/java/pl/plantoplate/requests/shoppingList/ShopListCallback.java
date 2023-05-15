@@ -26,5 +26,5 @@ import pl.plantoplate.requests.products.Product;
  */
 public interface ShopListCallback {
 
-    void onShoppingListReceived(ArrayList<Product> shopList);
+    void onShoppingListReceived(ShoppingList shopList);
 }

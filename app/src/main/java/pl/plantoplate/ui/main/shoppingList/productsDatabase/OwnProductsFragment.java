@@ -52,7 +52,11 @@ public class OwnProductsFragment extends Fragment {
     private ArrayList<Product> groupProductsList;
 
     public OwnProductsFragment(ArrayList<Product> groupProductsList) {
-        this.groupProductsList = groupProductsList;
+        if (groupProductsList == null) {
+            this.groupProductsList = new ArrayList<>();
+        } else {
+            this.groupProductsList = groupProductsList;
+        }
     }
 
     @Override

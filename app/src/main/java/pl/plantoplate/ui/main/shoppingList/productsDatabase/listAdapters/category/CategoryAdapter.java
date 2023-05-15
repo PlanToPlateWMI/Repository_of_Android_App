@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import pl.plantoplate.R;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product.CategoryViewHolder;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     private List<Category> categories;

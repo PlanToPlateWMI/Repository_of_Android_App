@@ -36,6 +36,7 @@ import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.shoppingList.GetShopListCallback;
 import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.requests.shoppingList.ShopListCallback;
+import pl.plantoplate.requests.shoppingList.ShoppingList;
 import retrofit2.Call;
 
 
@@ -45,7 +46,7 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
 
     private SharedPreferences prefs;
 
-    private ArrayList<Product> shoppingList;
+    private ShoppingList shoppingList;
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -94,7 +95,7 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
     }
 
     @Override
-    public void onShoppingListReceived(ArrayList<Product> shopList) {
+    public void onShoppingListReceived(ShoppingList shopList) {
 
         this.shoppingList = shopList;
         System.out.println("Shopping list: " + shoppingList);

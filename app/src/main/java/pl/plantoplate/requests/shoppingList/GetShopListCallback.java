@@ -18,22 +18,12 @@ package pl.plantoplate.requests.shoppingList;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import pl.plantoplate.requests.BaseCallback;
-import pl.plantoplate.requests.products.Product;
-import retrofit2.Call;
 import retrofit2.Callback;
 
 public class GetShopListCallback extends BaseCallback implements Callback<ResponseBody> {
@@ -60,9 +50,7 @@ public class GetShopListCallback extends BaseCallback implements Callback<Respon
     @Override
     public void handleSuccessResponse(String response) {
         Gson gson = new Gson();
-        Type productListType = new TypeToken<List<Product>>(){}.getType();
-        ArrayList<Product> shoppingList = gson.fromJson(response, productListType);
-
+        ShoppingList shoppingList = gson.fromJson(response, ShoppingList.class);
         callback.onShoppingListReceived(shoppingList);
     }
 

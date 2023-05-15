@@ -47,6 +47,16 @@ public class AllProductsFragment extends Fragment {
     private ArrayList<Product> allProductsList;
 
     public AllProductsFragment(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList) {
+        if (generalProductsList == null) {
+            generalProductsList = new ArrayList<>();
+        }
+        if (groupProductsList == null) {
+            groupProductsList = new ArrayList<>();
+        }
+        if (generalProductsList.isEmpty() && groupProductsList.isEmpty()) {
+            allProductsList = new ArrayList<>();
+            return;
+        }
         ArrayList<Product> allProductsList = new ArrayList<>();
         allProductsList.addAll(generalProductsList);
         allProductsList.addAll(groupProductsList);
