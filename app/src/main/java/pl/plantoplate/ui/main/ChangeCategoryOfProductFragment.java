@@ -20,25 +20,71 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
 import pl.plantoplate.databinding.FragmentChangeCategoryBinding;
+import pl.plantoplate.ui.customViewes.RadioGridGroup;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.ChangeCategoryListener;
 
 public class ChangeCategoryOfProductFragment extends Fragment {
 
     private FragmentChangeCategoryBinding fragmentChangeCategoryBinding;
 
+    private RadioGridGroup categoriesRadioGroup;
+    private Button accept_button;
+    private Button cancel_button;
+
+    private ChangeCategoryListener changeCategoryCallback;
+
+    public ChangeCategoryOfProductFragment(ChangeCategoryListener changeCategoryCallback) {
+        this.changeCategoryCallback = changeCategoryCallback;
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         fragmentChangeCategoryBinding = FragmentChangeCategoryBinding.inflate(inflater, container, false);
 
+        // Get references to views
+        categoriesRadioGroup = fragmentChangeCategoryBinding.radioGroupNowaKategoria;
+        accept_button = fragmentChangeCategoryBinding.buttonZatwierdz;
+        cancel_button = fragmentChangeCategoryBinding.buttonAnuluj;
+
+        // Set onClickListeners for buttons
+        accept_button.setOnClickListener(v -> applyChanges());
+        cancel_button.setOnClickListener(v -> cancelChanges());
+
+
         return fragmentChangeCategoryBinding.getRoot();
-        //return inflater.inflate(R.layout.fragment_add_your_own_product, container, false);
     }
+
+    public void applyChanges() {
+        RadioButton checkedRadioButton = categoriesRadioGroup.getCheckedRadioButton();
+        if (checkedRadioButton == null) {
+            Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "Wybierz kategorię!", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        changeCategoryCallback.onCategoryChosen(checkedRadioButton.getText().toString());
+
+        // Close fragment
+        getParentFragmentManager().popBackStack();
+    }
+
+    public void cancelChanges() {
+        // Close fragment
+        getParentFragmentManager().popBackStack();
+    }
+
+
 }

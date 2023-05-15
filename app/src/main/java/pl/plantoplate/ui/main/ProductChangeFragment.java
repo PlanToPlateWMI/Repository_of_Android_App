@@ -18,6 +18,7 @@ package pl.plantoplate.ui.main;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -30,8 +31,9 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
 import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
 import pl.plantoplate.databinding.FragmentProductChangeBinding;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.ChangeCategoryListener;
 
-public class ProductChangeFragment extends Fragment {
+public class ProductChangeFragment extends Fragment implements ChangeCategoryListener {
 
     private FragmentProductChangeBinding fragmentProductChangeBinding;
 
@@ -44,7 +46,7 @@ public class ProductChangeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
@@ -65,10 +67,15 @@ public class ProductChangeFragment extends Fragment {
         change_kategory = fragmentProductChangeBinding.zmienKategorie;
         change_kategory.findViewById(R.id.zmien_kategorie);
 
-        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
+        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment(this)));
 
         return fragmentProductChangeBinding.getRoot();
         //return inflater.inflate(R.layout.fragment_add_your_own_product, container, false);
+    }
+
+    @Override
+    public void onCategoryChosen(String category) {
+
     }
 
     private void replaceFragment(Fragment fragment) {

@@ -44,7 +44,7 @@ import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
 import retrofit2.Call;
 
-public class AddYourOwnProductFragment extends Fragment {
+public class AddYourOwnProductFragment extends Fragment implements ChangeCategoryListener{
 
     private FragmentAddYourOwnProductBinding add_own_product_view;
 
@@ -90,7 +90,7 @@ public class AddYourOwnProductFragment extends Fragment {
         change_kategory = add_own_product_view.zmienKategorie;
         change_kategory.findViewById(R.id.zmien_kategorie);
 
-        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
+        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment(this)));
 
 
         return add_own_product_view.getRoot();
@@ -100,7 +100,7 @@ public class AddYourOwnProductFragment extends Fragment {
     public void setProductUnit(int checkedId) {
         switch (checkedId) {
             case R.id.button_szt:
-                product.setUnit("SZTUKA");
+                product.setUnit("SZT");
                 break;
 
             case R.id.button_l:
@@ -112,9 +112,14 @@ public class AddYourOwnProductFragment extends Fragment {
                 break;
 
             case R.id.button_gr:
-                product.setUnit("G");
+                product.setUnit("GR");
                 break;
         }
+    }
+
+    @Override
+    public void onCategoryChosen(String category) {
+        product.setCategory(category);
     }
 
     public void addProduct(View v) {
@@ -142,5 +147,4 @@ public class AddYourOwnProductFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }

@@ -54,6 +54,7 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
     @Override
     public void onStart() {
         super.onStart();
+        System.out.println("onStart");
 
         // Get the SharedPreferences object
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -61,7 +62,8 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
         // Get products from database
         getProducts();
 
-        //TODO: Set selected all products fragment by default on restart fragment.
+        //Set selected all products fragment by default on restart fragment.
+        bazaProduktowBinding.bottomNavigationView2.setSelectedItemId(R.id.wszystkie);
     }
 
     @SuppressLint("NonConstantResourceId")

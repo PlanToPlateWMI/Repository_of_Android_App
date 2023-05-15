@@ -44,6 +44,7 @@ public class RadioGridGroup extends GridLayout implements RadioGroup.OnCheckedCh
         }
     }
 
+
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         // do nothing
@@ -55,5 +56,14 @@ public class RadioGridGroup extends GridLayout implements RadioGroup.OnCheckedCh
 
     public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
         this.onCheckedChangeListener = listener;
+    }
+
+    public RadioButton getCheckedRadioButton() {
+        for (RadioButton radioButton : radioButtons) {
+            if (radioButton.isChecked()) {
+                return radioButton;
+            }
+        }
+        return null;
     }
 }
