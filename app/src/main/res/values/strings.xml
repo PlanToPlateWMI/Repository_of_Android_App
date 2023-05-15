@@ -89,4 +89,19 @@ chcesz dodać wszystkie kupione produkty do spiżarni?</string>
     <string name="nie">Nie</string>
 
     <string name="ilosc">Ilość</string>
+
+    <string name="produkty_mleczne">Produkty mleczne</string>
+    <string name="produkty_miesne">Produkty mięsne</string>
+    <string name="wypieki">Wypieki</string>
+    <string name="warzywa">Warzywa</string>
+    <string name="produkty_sypkie">Produkty sypkie</string>
+    <string name="owoce">Owoce</string>
+    <string name="napoje">Napoje</string>
+    <string name="ryby">Ryby</string>
+    <string name="przyprawy">Przyprawy</string>
+    <string name="bakalie">Bakalie</string>
+    <string name="inne">Inne</string>
+    <string name="konserwy">Konserwy</string>
+
+
 </resources>
