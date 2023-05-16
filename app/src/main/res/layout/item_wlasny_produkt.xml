@@ -14,8 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue_1"
+        app:elevation="0dp"
         android:clickable="true"
-        android:iconTint="@color/black_gray"
         android:src="@drawable/add_24_50"
         app:backgroundTint="@color/blue_3"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +24,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.908"
-        app:maxImageSize="32dp" />
+        app:maxImageSize="32dp"
+        />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -32,7 +33,6 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_marginStart="16dp">
-
 
         <TextView
             android:id="@+id/nazwaProduktu_wlasny"
