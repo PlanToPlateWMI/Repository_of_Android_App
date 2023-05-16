@@ -28,8 +28,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import pl.plantoplate.R;
-import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
-import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
 import pl.plantoplate.databinding.FragmentProductChangeBinding;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ChangeCategoryListener;
 

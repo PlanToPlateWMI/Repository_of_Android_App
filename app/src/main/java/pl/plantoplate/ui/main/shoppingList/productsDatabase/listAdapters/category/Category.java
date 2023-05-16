@@ -1,5 +1,6 @@
 package pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.plantoplate.requests.products.Product;
@@ -7,12 +8,12 @@ import pl.plantoplate.requests.products.Product;
 public class Category {
     private int id;
     private String name;
-    private List<Product> products;
+    private ArrayList<Product> products;
 
     public Category() {
     }
 
-    public Category(int id, String name, List<Product> products) {
+    public Category(int id, String name, ArrayList<Product> products) {
         this.id = id;
         this.name = name;
         this.products = products;
@@ -26,7 +27,7 @@ public class Category {
         return name;
     }
 
-    public List<Product> getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
@@ -38,7 +39,7 @@ public class Category {
         this.name = name;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
 }

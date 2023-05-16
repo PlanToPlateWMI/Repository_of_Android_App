@@ -10,21 +10,21 @@ import pl.plantoplate.requests.products.Product;
 
 public class CategorySorter {
 
-    public static List<Category> sortCategoriesByProduct(List<Product> products) {
+    public static ArrayList<Category> sortCategoriesByProduct(ArrayList<Product> products) {
         // Create a map of category names to lists of products
-        Map<String, List<Product>> categoryMap = new HashMap<>();
+        Map<String, ArrayList<Product>> categoryMap = new HashMap<>();
         for (Product product : products) {
             List<Product> productList = categoryMap.computeIfAbsent(product.getCategory(), k -> new ArrayList<>());
             productList.add(product);
         }
 
         // Create a list of Category objects
-        List<Category> categories = new ArrayList<>();
-        for (Map.Entry<String, List<Product>> entry : categoryMap.entrySet()) {
+        ArrayList<Category> categories = new ArrayList<>();
+        for (Map.Entry<String, ArrayList<Product>> entry : categoryMap.entrySet()) {
             Category category = new Category();
             category.setId(categories.size() + 1);
             category.setName(entry.getKey());
-            List<Product> sortedProducts = entry.getValue();
+            ArrayList<Product> sortedProducts = entry.getValue();
             sortedProducts.sort(Comparator.comparing(Product::getName));
             category.setProducts(sortedProducts);
             categories.add(category);
@@ -36,8 +36,30 @@ public class CategorySorter {
         return categories;
     }
 
-    public static List<Product> sortProductsByName(List<Product> products) {
+    public static ArrayList<Product> sortProductsByName(ArrayList<Product> products) {
         products.sort(Comparator.comparing(Product::getName));
         return products;
+    }
+
+    public static ArrayList<Product> filterCategoriesBySearch(ArrayList<Category> products, String query) {
+        ArrayList<Product> filteredProducts = new ArrayList<>();
+        for (Category category : products) {
+            for (Product product : category.getProducts()) {
+                if (product.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredProducts.add(product);
+                }
+            }
+        }
+        return filteredProducts;
+    }
+
+    public static ArrayList<Product> filterProductsBySearch(ArrayList<Product> products, String query) {
+        ArrayList<Product> filteredProducts= new ArrayList<>();
+        for (Product product : products) {
+            if (product.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredProducts.add(product);
+            }
+        }
+        return filteredProducts;
     }
 }

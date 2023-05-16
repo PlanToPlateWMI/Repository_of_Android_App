@@ -16,9 +16,11 @@
 
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +34,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWlasneBinding;
@@ -41,13 +43,14 @@ import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.categor
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product.ProductAllAdapter;
 
 
-public class OwnProductsFragment extends Fragment {
+public class OwnProductsFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     private FragmentWlasneBinding fragmentWlasneBinding;
 
     private FloatingActionButton floatingActionButton_wlasne;
     private RecyclerView ownProductsRecyclerView;
     private TextView welcomeTextView;
+    private SearchView searchView;
 
     private ArrayList<Product> groupProductsList;
 
@@ -55,7 +58,7 @@ public class OwnProductsFragment extends Fragment {
         if (groupProductsList == null) {
             this.groupProductsList = new ArrayList<>();
         } else {
-            this.groupProductsList = groupProductsList;
+            this.groupProductsList = CategorySorter.sortProductsByName(groupProductsList);
         }
     }
 
@@ -65,10 +68,14 @@ public class OwnProductsFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentWlasneBinding = FragmentWlasneBinding.inflate(inflater, container, false);
 
+        // Get views
         floatingActionButton_wlasne = fragmentWlasneBinding.floatingActionButtonWlasne;
         welcomeTextView = fragmentWlasneBinding.welcomeWlasne;
+        searchView = requireActivity().findViewById(R.id.search);
+
 
         floatingActionButton_wlasne.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
+        searchView.setOnQueryTextListener(this);
 
         setUpRecyclerView();
 
@@ -82,11 +89,30 @@ public class OwnProductsFragment extends Fragment {
     }
 
     public void setUpRecyclerView() {
-        List<Product> ownProducts = CategorySorter.sortProductsByName(groupProductsList);
         ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
         ownProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ProductAllAdapter productAdapter = new ProductAllAdapter(ownProducts);
-        ownProductsRecyclerView.setAdapter(productAdapter);
+        ProductAllAdapter productAllAdapter = new ProductAllAdapter(groupProductsList);
+        ownProductsRecyclerView.setAdapter(productAllAdapter);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        searchView.clearFocus();
+        return false;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public boolean onQueryTextChange(String query) {
+
+        // filter products by name
+        ArrayList<Product> filteredProducts = CategorySorter.filterProductsBySearch(groupProductsList, query);
+
+        // set up recycler view
+        ProductAllAdapter productAllAdapter = (ProductAllAdapter) ownProductsRecyclerView.getAdapter();
+        Objects.requireNonNull(productAllAdapter).setProductsList(filteredProducts);
+
+        return false;
     }
 
     private void replaceFragment(Fragment fragment) {

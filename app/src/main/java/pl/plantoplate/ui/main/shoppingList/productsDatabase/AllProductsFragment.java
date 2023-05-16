@@ -16,9 +16,11 @@
 
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,22 +31,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
+import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWszystkieBinding;
 import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.Category;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.CategorySorter;
 
-public class AllProductsFragment extends Fragment {
+public class AllProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     private FragmentWszystkieBinding fragmentWszystkieBinding;
 
     private RecyclerView categoryRecyclerView;
     private TextView welcomeTextView;
+    private SearchView searchView;
 
-    private ArrayList<Product> allProductsList;
+    private ArrayList<Category> allProductsList;
 
     public AllProductsFragment(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList) {
         if (generalProductsList == null) {
@@ -61,7 +65,7 @@ public class AllProductsFragment extends Fragment {
         allProductsList.addAll(generalProductsList);
         allProductsList.addAll(groupProductsList);
 
-        this.allProductsList = allProductsList;
+        this.allProductsList = CategorySorter.sortCategoriesByProduct(allProductsList);
     }
 
     @Override
@@ -71,6 +75,10 @@ public class AllProductsFragment extends Fragment {
         fragmentWszystkieBinding = FragmentWszystkieBinding.inflate(inflater, container, false);
 
         welcomeTextView = fragmentWszystkieBinding.textView3;
+        searchView = requireActivity().findViewById(R.id.search);
+
+        // set listener for search view
+        searchView.setOnQueryTextListener(this);
 
         setUpRecyclerView();
 
@@ -84,14 +92,34 @@ public class AllProductsFragment extends Fragment {
     }
 
     public void setUpRecyclerView() {
-        // sort products by category
-        List<Category> categories = CategorySorter.sortCategoriesByProduct(allProductsList);
 
         // set up recycler view
         categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(categories);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(allProductsList);
         categoryRecyclerView.setAdapter(categoryAdapter);
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        searchView.clearFocus();
+        return false;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public boolean onQueryTextChange(String query) {
+
+        // filter products by name
+        ArrayList<Product> filteredProducts = CategorySorter.filterCategoriesBySearch(allProductsList, query);
+
+        // sort products by category
+        ArrayList<Category> filteredList = CategorySorter.sortCategoriesByProduct(filteredProducts);
+
+        // set up recycler view
+        CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
+        Objects.requireNonNull(categoryAdapter).setCategoriesList(filteredList);
+
+        return false;
+    }
 }

@@ -1,5 +1,6 @@
 package pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,16 +8,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.plantoplate.R;
 import pl.plantoplate.requests.products.Product;
 
 public class ProductAllAdapter extends RecyclerView.Adapter<ProductViewHolder> {
-    private List<Product> products;
+    private ArrayList<Product> products;
 
-    public ProductAllAdapter(List<Product> products) {
+    public ProductAllAdapter(ArrayList<Product> products) {
         this.products = products;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setProductsList(ArrayList<Product> filterlist) {
+        products = filterlist;
+        notifyDataSetChanged();
     }
 
     @NonNull
