@@ -16,7 +16,7 @@
         android:id="@+id/baza_produktow"
         android:layout_width="0dp"
         android:layout_height="65dp"
-        android:layout_marginTop="-5dp"
+        android:layout_marginTop="-10dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
@@ -31,6 +31,7 @@
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         android:textSize="32dp"
+        app:iconPadding="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -44,25 +45,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
+        android:layout_marginTop="-5dp"
 
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/search_view_selector"
+        android:foregroundTint="@color/black_gray"
         android:outlineAmbientShadowColor="@color/black_gray"
         android:outlineSpotShadowColor="@color/black_gray"
+
         android:textAppearance="@style/wy_lij_pono"
-        app:searchIcon="@drawable/search_24_75"
         app:iconifiedByDefault="false"
 
-        app:searchHintIcon="@color/black_gray"
-        android:foregroundTint="@color/black_gray"
-
-        android:background="@drawable/search_view_selector"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/baza_produktow"
         app:queryHint="@string/search_hint"
 
-        />
+        app:searchHintIcon="@color/black_gray"
+        app:searchIcon="@drawable/search_24_75" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView2"
@@ -88,6 +90,7 @@
         android:id="@+id/baza_def"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

@@ -14,7 +14,7 @@
         android:id="@+id/shopping"
         android:layout_width="0dp"
         android:layout_height="65dp"
-        android:layout_marginTop="-5dp"
+        android:layout_marginTop="-20dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
@@ -39,7 +39,7 @@
         android:id="@+id/bottomNavigationView2"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginTop="-15dp"
+        android:layout_marginTop="-20dp"
         android:layout_marginBottom="601dp"
 
         android:background="@drawable/selector_buttons"
