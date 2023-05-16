@@ -14,8 +14,6 @@
         android:id="@+id/shopping"
         android:layout_width="0dp"
         android:layout_height="65dp"
-        android:layout_marginTop="-20dp"
-        android:layout_marginBottom="5dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
         android:contextClickable="false"
@@ -29,17 +27,14 @@
         android:textAllCaps="false"
         android:textColor="@color/black_gray"
         android:textSize="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView2"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginTop="-20dp"
         android:layout_marginBottom="601dp"
 
         android:background="@drawable/selector_buttons"
@@ -60,6 +55,7 @@
         android:id="@+id/shopping_list_default"
         android:layout_width="409dp"
         android:layout_height="599dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

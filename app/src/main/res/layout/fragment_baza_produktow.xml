@@ -16,7 +16,6 @@
         android:id="@+id/baza_produktow"
         android:layout_width="0dp"
         android:layout_height="65dp"
-        android:layout_marginTop="-10dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
@@ -35,9 +34,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.099" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <androidx.appcompat.widget.SearchView
@@ -45,9 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginTop="-5dp"
 
-        android:layout_marginBottom="5dp"
         android:background="@drawable/search_view_selector"
         android:foregroundTint="@color/black_gray"
         android:outlineAmbientShadowColor="@color/black_gray"
@@ -96,7 +91,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bottomNavigationView2"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
