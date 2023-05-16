@@ -33,8 +33,8 @@ import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
 import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.shoppingList.GetShopListCallback;
 import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.requests.shoppingList.GetShopListCallback;
 import pl.plantoplate.requests.shoppingList.ShopListCallback;
 import pl.plantoplate.requests.shoppingList.ShoppingList;
 import retrofit2.Call;
@@ -46,7 +46,22 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
 
     private SharedPreferences prefs;
 
-    private ShoppingList shoppingList;
+    private ArrayList<Product> toBuyProductsList;
+    private ArrayList<Product> boughtProductsList;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Get the SharedPreferences object
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        // Get products from database
+        getShoppingList();
+
+        //Set selected all products fragment by default on restart fragment.
+        shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.trzeba_kupic);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -60,25 +75,19 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
                              Bundle savedInstanceState) {
 
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
-        replaceFragment(new BuyProductsFragment());
-
-        // Get the SharedPreferences object
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
 
         // Set the bottom navigation view listener
         shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
                 case R.id.kupione:
-                    replaceFragment(new BoughtProductsFragment());
+                    replaceFragment(new BoughtProductsFragment(boughtProductsList));
                     return true;
                 case R.id.trzeba_kupic:
-                    replaceFragment(new BuyProductsFragment());
+                    replaceFragment(new BuyProductsFragment(toBuyProductsList));
                     return true;
             }
             return false;
         });
-
-        getShoppingList();
 
         return shopping_list_view.getRoot();
     }
@@ -97,8 +106,9 @@ public class ShoppingListFragment extends Fragment implements ShopListCallback {
     @Override
     public void onShoppingListReceived(ShoppingList shopList) {
 
-        this.shoppingList = shopList;
-        System.out.println("Shopping list: " + shoppingList);
+        this.toBuyProductsList = shopList.getToBuy();
+        this.boughtProductsList = shopList.getBought();
+        replaceFragment(new BuyProductsFragment(toBuyProductsList));
     }
 
     /**

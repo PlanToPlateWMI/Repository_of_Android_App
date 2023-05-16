@@ -54,7 +54,6 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
     @Override
     public void onStart() {
         super.onStart();
-        System.out.println("onStart");
 
         // Get the SharedPreferences object
         prefs = requireActivity().getSharedPreferences("prefs", 0);

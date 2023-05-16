@@ -1,4 +1,4 @@
-package pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category;
+package pl.plantoplate.ui.main.shoppingList.listAdapters.category;
 
 import java.util.ArrayList;
 import java.util.List;

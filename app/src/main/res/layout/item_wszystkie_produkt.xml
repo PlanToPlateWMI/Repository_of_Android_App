@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/layoutWszystkieProdukty"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,7 +11,7 @@
     android:layout_marginTop="5dp">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addBazaWlasne"
+        android:id="@+id/addBazaWszystkie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/blue_1"
@@ -33,7 +34,7 @@
         android:orientation="vertical"
         android:layout_marginStart="16dp">
         <TextView
-            android:id="@+id/nazwaProduktuWlasne"
+            android:id="@+id/nazwaProduktuWszystkie"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -46,7 +47,7 @@
             android:textSize="20dp"
             android:textColor="@color/black" />
         <TextView
-            android:id="@+id/jednostkiMiaryWlasne"
+            android:id="@+id/jednostkiMiaryWszsystkie"
             android:layout_width="fill_parent"
             android:layout_height="26dp"
             android:layout_alignParentBottom="true"

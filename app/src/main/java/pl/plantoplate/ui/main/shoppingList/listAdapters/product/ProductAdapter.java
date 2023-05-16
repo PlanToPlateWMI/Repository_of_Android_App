@@ -1,4 +1,4 @@
-package pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product;
+package pl.plantoplate.ui.main.shoppingList.listAdapters.product;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -9,16 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import pl.plantoplate.R;
 import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 
-public class ProductAllAdapter extends RecyclerView.Adapter<ProductViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     private ArrayList<Product> products;
+    private int itemType;
 
-    public ProductAllAdapter(ArrayList<Product> products) {
+    private OnProductItemClickListener listener;
+
+    public ProductAdapter(ArrayList<Product> products, int itemType) {
         this.products = products;
+        this.itemType = itemType;
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -27,17 +30,21 @@ public class ProductAllAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void setOnProductItemClickListener(OnProductItemClickListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_wszystkie_produkt, parent, false);
+                .inflate(this.itemType, parent, false);
         return new ProductViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        holder.bind(products.get(position));
+        holder.bind(products.get(position), listener);
     }
 
     @Override

@@ -16,7 +16,6 @@
 
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,9 +35,10 @@ import java.util.Objects;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWszystkieBinding;
 import pl.plantoplate.requests.products.Product;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.Category;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.CategoryAdapter;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.CategorySorter;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.category.Category;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategorySorter;
 
 public class AllProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -91,22 +91,12 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         return fragmentWszystkieBinding.getRoot();
     }
 
-    public void setUpRecyclerView() {
-
-        // set up recycler view
-        categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
-        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(allProductsList);
-        categoryRecyclerView.setAdapter(categoryAdapter);
-    }
-
     @Override
     public boolean onQueryTextSubmit(String query) {
         searchView.clearFocus();
         return false;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     @Override
     public boolean onQueryTextChange(String query) {
 
@@ -121,5 +111,20 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         Objects.requireNonNull(categoryAdapter).setCategoriesList(filteredList);
 
         return false;
+    }
+
+    public void setUpRecyclerView() {
+
+        // set up recycler view
+        categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
+        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        CategoryAdapter categoryAdapter = new CategoryAdapter(allProductsList, R.layout.item_wszystkie_produkt);
+        categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+            @Override
+            public void onAddToShoppingListButtonClick(View v, Product product) {
+                System.out.println(product);
+            }
+        });
+        categoryRecyclerView.setAdapter(categoryAdapter);
     }
 }

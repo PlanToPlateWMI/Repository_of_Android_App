@@ -16,7 +16,6 @@
 
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,8 +38,9 @@ import java.util.Objects;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWlasneBinding;
 import pl.plantoplate.requests.products.Product;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.category.CategorySorter;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.listAdapters.product.ProductAllAdapter;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategorySorter;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
 
 
 public class OwnProductsFragment extends Fragment implements SearchView.OnQueryTextListener{
@@ -88,20 +88,12 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         return fragmentWlasneBinding.getRoot();
     }
 
-    public void setUpRecyclerView() {
-        ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
-        ownProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ProductAllAdapter productAllAdapter = new ProductAllAdapter(groupProductsList);
-        ownProductsRecyclerView.setAdapter(productAllAdapter);
-    }
-
     @Override
     public boolean onQueryTextSubmit(String query) {
         searchView.clearFocus();
         return false;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     @Override
     public boolean onQueryTextChange(String query) {
 
@@ -109,10 +101,29 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         ArrayList<Product> filteredProducts = CategorySorter.filterProductsBySearch(groupProductsList, query);
 
         // set up recycler view
-        ProductAllAdapter productAllAdapter = (ProductAllAdapter) ownProductsRecyclerView.getAdapter();
+        ProductAdapter productAllAdapter = (ProductAdapter) ownProductsRecyclerView.getAdapter();
         Objects.requireNonNull(productAllAdapter).setProductsList(filteredProducts);
 
         return false;
+    }
+
+    public void setUpRecyclerView() {
+        ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
+        ownProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ProductAdapter productAllAdapter = new ProductAdapter(groupProductsList, R.layout.item_wlasny_produkt);
+        productAllAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+            @Override
+            public void onAddToShoppingListButtonClick(View v, Product product) {
+                System.out.println(product);
+            }
+
+            @Override
+            public void onEditProductButtonClick(View v, Product product) {
+                System.out.println(product);
+            }
+        });
+
+        ownProductsRecyclerView.setAdapter(productAllAdapter);
     }
 
     private void replaceFragment(Fragment fragment) {
