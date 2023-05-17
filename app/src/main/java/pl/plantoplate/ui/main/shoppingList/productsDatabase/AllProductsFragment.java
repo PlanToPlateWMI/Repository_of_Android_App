@@ -38,7 +38,7 @@ import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategorySorter;
+import pl.plantoplate.tools.CategorySorter;
 
 public class AllProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
 

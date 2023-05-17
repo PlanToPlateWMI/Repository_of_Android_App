@@ -19,7 +19,6 @@ package pl.plantoplate.ui.main.shoppingList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +39,7 @@ import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategorySorter;
+import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 
 public class BuyProductsFragment extends Fragment {
@@ -80,12 +79,12 @@ public class BuyProductsFragment extends Fragment {
         categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
             @Override
             public void onDeleteProductButtonClick(View v, Product product) {
-
+                System.out.println("Delete product button clicked");
             }
 
             @Override
             public void onCheckShoppingListButtonClick(View v, Product product) {
-
+                System.out.println("Check shopping list button clicked");
             }
         });
         categoryRecyclerView.setAdapter(categoryAdapter);

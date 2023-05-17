@@ -1,4 +1,4 @@
-package pl.plantoplate.ui.main.shoppingList.listAdapters.category;
+package pl.plantoplate.tools;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.category.Category;
 
 public class CategorySorter {
 

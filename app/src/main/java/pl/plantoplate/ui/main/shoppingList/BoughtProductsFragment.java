@@ -35,7 +35,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
 import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategorySorter;
+import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
 
 public class BoughtProductsFragment extends Fragment {
@@ -83,12 +83,12 @@ public class BoughtProductsFragment extends Fragment {
         productAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
             @Override
             public void onDeleteProductButtonClick(View v, Product product) {
-
+                System.out.println("Delete product button clicked");
             }
 
             @Override
             public void onCheckShoppingListButtonClick(View v, Product product) {
-
+                System.out.println("Check shopping list button clicked");
             }
         });
         productsRecyclerView.setAdapter(productAdapter);

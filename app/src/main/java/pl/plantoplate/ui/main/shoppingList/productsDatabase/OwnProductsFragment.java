@@ -39,7 +39,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWlasneBinding;
 import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategorySorter;
+import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
 
 
