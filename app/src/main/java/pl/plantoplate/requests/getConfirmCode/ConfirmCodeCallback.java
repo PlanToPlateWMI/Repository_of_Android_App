@@ -16,6 +16,7 @@
 package pl.plantoplate.requests.getConfirmCode;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -39,24 +40,23 @@ import pl.plantoplate.ui.registration.EmailConfirmActivity;
 public class ConfirmCodeCallback extends BaseCallback implements Callback<ResponseBody> {
 
     // The user's email
-    private final String email;
+    private SharedPreferences prefs;
 
     /**
      * Constructor to create a new ConfirmCodeCallback object.
      * @param view The view object to display the Snackbar.
-     * @param email The user's email.
      */
-    public ConfirmCodeCallback(View view, String email) {
+    public ConfirmCodeCallback(View view) {
         super(view);
-        this.email = email;
+        this.prefs = view.getContext().getSharedPreferences("prefs", 0);
     }
 
     @Override
     public void handleSuccessResponse(String response) {
         ConfirmCodeResponse code = new Gson().fromJson(response, ConfirmCodeResponse.class);
-        Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
-        intent.putExtra("code", code.getCode());
-        view.getContext().startActivity(intent);
+
+        // Save the code to the SharedPreferences
+        prefs.edit().putString("code", code.getCode()).apply();
     }
 
     /**

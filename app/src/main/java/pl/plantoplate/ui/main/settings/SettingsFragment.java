@@ -15,7 +15,6 @@
  */
 package pl.plantoplate.ui.main.settings;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,16 +27,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.Objects;
-
-import pl.plantoplate.LoginActivity;
 import pl.plantoplate.databinding.FragmentSettingsBinding;
+import pl.plantoplate.ui.login.LoginActivity;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 
 /**
  * A fragment that displays the app settings and allows the user to change them.
  */
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements ApplicationStateController {
 
     private FragmentSettingsBinding settings_view;
 
@@ -92,7 +91,18 @@ public class SettingsFragment extends Fragment {
 
         //go back to the login screen
         Intent intent = new Intent(this.getContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+
+        // save the app state
+        saveAppState(ApplicationState.LOGIN);
+    }
+
+    @Override
+    public void saveAppState(ApplicationState applicationState) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("applicationState", applicationState.toString());
+        editor.apply();
     }
 
 }

@@ -32,12 +32,14 @@ import pl.plantoplate.databinding.GroupPageBinding;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.joinGroup.UserJoinGroupCallback;
 import pl.plantoplate.requests.joinGroup.UserJoinGroupData;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import retrofit2.Call;
 
 /**
  * An activity for user entering group code to join group.
  */
-public class GroupEnterActivity extends AppCompatActivity {
+public class GroupEnterActivity extends AppCompatActivity implements ApplicationStateController {
 
     private GroupPageBinding group_enter_view;
 
@@ -84,6 +86,13 @@ public class GroupEnterActivity extends AppCompatActivity {
         UserJoinGroupData data = new UserJoinGroupData(code, email, password);
         Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().joinGroupByCode(data);
 
-        myCall.enqueue(new UserJoinGroupCallback(v));
+        myCall.enqueue(new UserJoinGroupCallback(v, this));
+    }
+
+    @Override
+    public void saveAppState(ApplicationState applicationState) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("applicationState", applicationState.toString());
+        editor.apply();
     }
 }

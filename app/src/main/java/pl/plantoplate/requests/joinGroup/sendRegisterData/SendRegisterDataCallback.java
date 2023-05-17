@@ -21,6 +21,8 @@ import android.view.View;
 
 import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.requests.getConfirmCode.ConfirmCodeResponse;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.ui.registration.EmailConfirmActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
@@ -38,16 +40,18 @@ public class SendRegisterDataCallback extends BaseCallback implements Callback<R
     private final SharedPreferences prefs;
     // The user's register data (name, email, password)
     private final UserRegisterData userData;
+    private ApplicationStateController controller;
 
     /**
      * Constructor to create a new SendRegisterDataCallback object.
      * @param view The view object to display the Snackbar.
      * @param userData The User register data (name, email, password).
      */
-    public SendRegisterDataCallback(View view, UserRegisterData userData) {
+    public SendRegisterDataCallback(View view, UserRegisterData userData, ApplicationStateController controller) {
         super(view);
         this.prefs = view.getContext().getSharedPreferences("prefs", 0);
         this.userData = userData;
+        this.controller = controller;
     }
 
     @Override
@@ -56,6 +60,7 @@ public class SendRegisterDataCallback extends BaseCallback implements Callback<R
 
         saveUserDataToPrefs();
         startEmailConfirmActivity(code.getCode());
+        controller.saveAppState(ApplicationState.CONFIRM_MAIL);
     }
 
     /**
@@ -93,8 +98,12 @@ public class SendRegisterDataCallback extends BaseCallback implements Callback<R
      * @param code The confirmation code.
      */
     private void startEmailConfirmActivity(String code) {
+        // save code to shared preferences
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("code", code);
+        editor.apply();
         Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
-        intent.putExtra("code", code);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         view.getContext().startActivity(intent);
     }
 }

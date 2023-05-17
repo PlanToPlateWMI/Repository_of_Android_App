@@ -28,6 +28,8 @@ import pl.plantoplate.databinding.GroupChooseBinding;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.createGroup.CreateGroupCallback;
 import pl.plantoplate.requests.createGroup.CreateGroupData;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import retrofit2.Call;
 
 /**
@@ -36,7 +38,7 @@ import retrofit2.Call;
  If the user chooses to create a new group, this activity will make an API call to create a new group with the
  user's email and password as credentials.
  */
-public class GroupSelectActivity extends AppCompatActivity {
+public class GroupSelectActivity extends AppCompatActivity implements ApplicationStateController {
     private GroupChooseBinding group_select_view;
 
     private Button enter_group;
@@ -72,6 +74,7 @@ public class GroupSelectActivity extends AppCompatActivity {
     public void goToGroupEnterActivity() {
         Intent intent = new Intent(getApplicationContext(), GroupEnterActivity.class);
         startActivity(intent);
+        saveAppState(ApplicationState.JOIN_GROUP);
     }
 
     /**
@@ -90,6 +93,13 @@ public class GroupSelectActivity extends AppCompatActivity {
 
         // make API call to create a new group with user credentials
         Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().createGroup(createGroupRequest);
-        myCall.enqueue(new CreateGroupCallback(v));
+        myCall.enqueue(new CreateGroupCallback(v, this));
+    }
+
+    @Override
+    public void saveAppState(ApplicationState applicationState) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("applicationState", applicationState.toString());
+        editor.apply();
     }
 }

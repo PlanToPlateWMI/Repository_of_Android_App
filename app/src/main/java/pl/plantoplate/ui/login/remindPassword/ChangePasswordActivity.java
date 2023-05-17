@@ -30,13 +30,15 @@ import pl.plantoplate.databinding.RemindPassword3Binding;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.signin.SignInCallback;
 import pl.plantoplate.requests.signin.SignInData;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;
 import retrofit2.Call;
 
 /**
  * An activity that allows users to change their password.
  */
-public class ChangePasswordActivity extends AppCompatActivity {
+public class ChangePasswordActivity extends AppCompatActivity implements ApplicationStateController {
 
     private RemindPassword3Binding change_password_view;
 
@@ -82,10 +84,17 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
             SignInData data = new SignInData(email, SCryptStretcher.stretch(new_password1, email));
             Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().resetPassword(data);
-            myCall.enqueue(new SignInCallback(view));
+            myCall.enqueue(new SignInCallback(view, this));
         }
         else {
             new_password_field2.setError("Hasła nie są takie same");
         }
+    }
+
+    @Override
+    public void saveAppState(ApplicationState applicationState) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("applicationState", applicationState.toString());
+        editor.apply();
     }
 }
