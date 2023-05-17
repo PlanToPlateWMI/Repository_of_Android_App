@@ -48,6 +48,11 @@
         android:outlineAmbientShadowColor="@color/black_gray"
         android:outlineSpotShadowColor="@color/black_gray"
 
+        app:itemIconTint="@color/black_gray"
+
+        app:itemRippleColor="@color/blue_3"
+        app:itemTextColor="@color/black_gray"
+
         android:textAppearance="@style/wy_lij_pono"
         app:iconifiedByDefault="false"
 
@@ -71,6 +76,14 @@
         android:background="@drawable/selector_buttons"
 
         android:padding="4dp"
+
+        android:outlineAmbientShadowColor="@color/black_gray"
+        android:outlineSpotShadowColor="@color/black_gray"
+
+        app:itemIconTint="@color/black_gray"
+
+        app:itemRippleColor="@color/blue_0"
+        app:itemTextColor="@color/black_gray"
 
         app:itemTextAppearanceActive="@style/menu_zakupy_active"
         app:itemTextAppearanceInactive="@style/menu_zakupy_no_active"

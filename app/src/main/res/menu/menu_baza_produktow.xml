@@ -3,8 +3,18 @@
 
     <item android:title="@string/wszystkie"
         android:id="@+id/wszystkie"
+
+        android:font="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_regular"
+
+        android:iconTint="@color/black_gray"
         />
     <item android:title="@string/wlasne"
         android:id="@+id/wlasne"
+
+        android:font="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_regular"
+
+        android:iconTint="@color/black_gray"
         />
 </menu>

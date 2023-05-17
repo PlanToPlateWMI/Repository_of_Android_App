@@ -53,6 +53,7 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
     private RadioGroup choose_product_unit;
     private Button add_product_button;
     private Button change_kategory;
+    private Button cancel_button;
     private TextInputEditText add_product_name;
 
     private Product product;
@@ -81,11 +82,15 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
         // Set add product button
         add_product_button = add_own_product_view.buttonZatwierdz;
 
+        //Set cansel product button
+        cancel_button = add_own_product_view.buttonAnuluj;
+
         // Set the product name button
         add_product_name = add_own_product_view.enterTheName;
 
         // Set the button listener
         add_product_button.setOnClickListener(this::addProduct);
+        cancel_button.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment()));
 
         change_kategory = add_own_product_view.zmienKategorie;
         change_kategory.findViewById(R.id.zmien_kategorie);
@@ -139,6 +144,7 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
         // Go back to the products database fragment
         requireActivity().getSupportFragmentManager().popBackStack();
     }
+
 
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment

@@ -3,8 +3,18 @@
 
     <item android:title="@string/trzeba_kupic"
         android:id="@+id/trzeba_kupic"
+
+        android:font="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_regular"
+
+        android:iconTint="@color/black_gray"
         />
     <item android:title="@string/kupione"
         android:id="@+id/kupione"
+
+        android:font="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_regular"
+
+        android:iconTint="@color/black_gray"
         />
 </menu>
