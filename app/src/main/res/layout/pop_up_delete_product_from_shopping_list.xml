@@ -10,7 +10,7 @@
         android:id="@+id/dialog_delete_shop"
         android:layout_width="360dp"
         android:layout_height="350dp"
-        android:background="#80C6D9FF"
+        android:background="@drawable/for_pop_ups"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

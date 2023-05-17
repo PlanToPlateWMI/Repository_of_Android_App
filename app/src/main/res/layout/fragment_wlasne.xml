@@ -42,9 +42,12 @@
         android:id="@+id/products_own_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_wlasny_produkt"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:overScrollMode="never"/>
+        tools:listitem="@layout/item_wlasny_produkt" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
