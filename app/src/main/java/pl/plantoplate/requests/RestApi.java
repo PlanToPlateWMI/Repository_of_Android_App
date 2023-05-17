@@ -28,6 +28,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -127,4 +128,7 @@ public interface RestApi {
 
     @POST("api/shopping")
     Call<ResponseBody> addProductToShopList(@Header("Authorization") String token, @Body Product product);
+
+    @PUT("api/shopping/{id}")
+    Call<ResponseBody> changeProductStateInShopList(@Header("Authorization") String token, @Path("id") int productId);
 }

@@ -38,6 +38,7 @@ import java.util.Objects;
 import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
+import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.products.DeleteProductCallback;
 import pl.plantoplate.requests.products.Product;
@@ -103,6 +104,23 @@ public class BoughtProductsFragment extends Fragment implements ShopListCallback
         Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
     }
 
+    public void moveProductToBought(Product product){
+        String token = "Bearer " + prefs.getString("token", "");
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().changeProductStateInShopList(token, product.getId());
+
+        call.enqueue(new BaseCallback(requireActivity().findViewById(R.id.frame_layout)) {
+            @Override
+            public void handleSuccessResponse(String response) {
+                getShoppingList();
+            }
+
+            @Override
+            public void handleErrorResponse(int code) {
+
+            }
+        });
+    }
+
     private void setUpRecyclerView() {
         if (boughtProductsList == null) {
             boughtProductsList = new ArrayList<>();
@@ -119,7 +137,7 @@ public class BoughtProductsFragment extends Fragment implements ShopListCallback
 
             @Override
             public void onCheckShoppingListButtonClick(View v, Product product) {
-                System.out.println("Check shopping list button clicked");
+                moveProductToBought(product);
             }
         });
         productsRecyclerView.setAdapter(productAdapter);

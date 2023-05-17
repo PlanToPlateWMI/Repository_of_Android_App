@@ -17,7 +17,6 @@
 package pl.plantoplate.ui.main.shoppingList;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -31,9 +30,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,6 +40,7 @@ import java.util.Objects;
 import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentTrzebaKupicBinding;
+import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.products.DeleteProductCallback;
 import pl.plantoplate.requests.products.Product;
@@ -54,7 +51,6 @@ import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListen
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 import retrofit2.Call;
 
@@ -107,9 +103,34 @@ public class BuyProductsFragment extends Fragment implements ShopListCallback {
     public void onShoppingListReceived(ShoppingList shopList) {
         this.toBuyProductsList = CategorySorter.sortCategoriesByProduct(shopList.getToBuy());
 
+        // print categories and products
+        for (Category category : toBuyProductsList) {
+            System.out.println(category.getName());
+            for (Product product : category.getProducts()) {
+                System.out.println(product.getName());
+            }
+        }
+
         // update recycler view
         CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
         Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
+    }
+
+    public void moveProductToBought(Product product){
+        String token = "Bearer " + prefs.getString("token", "");
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().changeProductStateInShopList(token, product.getId());
+
+        call.enqueue(new BaseCallback(requireActivity().findViewById(R.id.frame_layout)) {
+            @Override
+            public void handleSuccessResponse(String response) {
+                getShoppingList();
+            }
+
+            @Override
+            public void handleErrorResponse(int code) {
+
+            }
+        });
     }
 
     public void showDeleteProductPopup(Product product) {
@@ -163,7 +184,7 @@ public class BuyProductsFragment extends Fragment implements ShopListCallback {
 
         categoryRecyclerView = fragmentTrzebaKupicBinding.productsOwnRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(toBuyProductsList, R.layout.item_kupione);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(toBuyProductsList, R.layout.item_trzeba_kupic);
         categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
             @Override
             public void onDeleteProductButtonClick(View v, Product product) {
@@ -172,7 +193,7 @@ public class BuyProductsFragment extends Fragment implements ShopListCallback {
 
             @Override
             public void onCheckShoppingListButtonClick(View v, Product product) {
-
+                moveProductToBought(product);
             }
         });
         categoryRecyclerView.setAdapter(categoryAdapter);
