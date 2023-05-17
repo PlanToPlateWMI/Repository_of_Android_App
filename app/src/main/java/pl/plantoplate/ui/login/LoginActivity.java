@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate;
+package pl.plantoplate.ui.login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +33,8 @@ import pl.plantoplate.databinding.LoginPageBinding;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.signin.SignInCallback;
 import pl.plantoplate.requests.signin.SignInData;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;
 import pl.plantoplate.ui.login.remindPassword.EnterEmailActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
@@ -41,7 +43,7 @@ import retrofit2.Call;
 /**
  * An activity that allows users to log in to their account.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements ApplicationStateController {
 
     private LoginPageBinding login_view;
 
@@ -94,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().signinUser(data);
 
-        myCall.enqueue(new SignInCallback(view));
+        myCall.enqueue(new SignInCallback(view, this));
     }
 
 
@@ -105,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         // Create an intent to start the RegisterActivity
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        saveAppState(ApplicationState.REGISTER);
     }
 
     /**
@@ -114,6 +117,13 @@ public class LoginActivity extends AppCompatActivity {
         // Create an intent to start the RemindPasswordActivity
         Intent intent = new Intent(this, EnterEmailActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void saveAppState(ApplicationState applicationState){
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("applicationState", applicationState.toString());
+        editor.apply();
     }
 }
 

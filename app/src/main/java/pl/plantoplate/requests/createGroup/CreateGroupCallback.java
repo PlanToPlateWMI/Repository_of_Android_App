@@ -29,6 +29,8 @@ import java.io.IOException;
 import okhttp3.ResponseBody;
 import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.requests.signin.JwtResponse;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.ui.main.ActivityMain;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,23 +43,30 @@ public class CreateGroupCallback extends BaseCallback implements Callback<Respon
 
     private SharedPreferences prefs;
 
+    private ApplicationStateController controller;
+
     /**
      * Constructor to create a new CreateGroupCallback object.
      * @param view The view object to display the Snackbar.
      */
-    public CreateGroupCallback(View view) {
+    public CreateGroupCallback(View view, ApplicationStateController controller) {
         super(view);
         this.prefs = view.getContext().getSharedPreferences("prefs", 0);
+        this.controller = controller;
     }
 
     @Override
     public void handleSuccessResponse(String response) {
         JwtResponse jwt = new Gson().fromJson(response, JwtResponse.class);
-        Intent intent = new Intent(view.getContext(), ActivityMain.class);
+
         // save user token and role in shared preferences
         saveTokenAndRole(jwt.getToken(), jwt.getRole());
-
+        // start main activity
+        Intent intent = new Intent(view.getContext(), ActivityMain.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         view.getContext().startActivity(intent);
+        // save app state
+        controller.saveAppState(ApplicationState.MAIN_ACTIVITY);
     }
 
     /**

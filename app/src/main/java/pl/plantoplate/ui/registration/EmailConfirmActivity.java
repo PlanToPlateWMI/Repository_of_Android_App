@@ -31,13 +31,15 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Objects;
 
 import okhttp3.ResponseBody;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import retrofit2.Call;
 
 import pl.plantoplate.databinding.EmailConfirmationBinding;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.getConfirmCode.ConfirmCodeCallback;
 
-public class EmailConfirmActivity extends AppCompatActivity {
+public class EmailConfirmActivity extends AppCompatActivity implements ApplicationStateController {
 
     private EmailConfirmationBinding email_confirm_view;
 
@@ -72,9 +74,6 @@ public class EmailConfirmActivity extends AppCompatActivity {
         String email = prefs.getString("email", "");
         email_info.setText(email_info.getText() + "\n" + email);
 
-        // Get confirmation code from the intent
-        correct_code = getIntent().getStringExtra("code");
-
         // add listener to the confirm button
         confirm_button.setOnClickListener(this::checkCode);
 
@@ -85,8 +84,16 @@ public class EmailConfirmActivity extends AppCompatActivity {
 
     public void checkCode(View view) {
         String entered_code = Objects.requireNonNull(email_confirm_view.wprowadzKod.getEditText()).getText().toString();
+        String correct_code = prefs.getString("code", "");
         if (correct_code.equals(entered_code)){
-            startActivity(new Intent(this, GroupSelectActivity.class));
+            // delete the code from the shared preferences
+            prefs.edit().remove("code").apply();
+
+            // start the group select activity
+            Intent intent = new Intent(this, GroupSelectActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            saveAppState(ApplicationState.GROUP_CHOOSE);
         }
         else {
             Snackbar.make(view, "Wprowadzony kod jest niepoprawny", Snackbar.LENGTH_LONG).show();
@@ -97,12 +104,23 @@ public class EmailConfirmActivity extends AppCompatActivity {
         // Create a new Email object with the email from the shared preferences.
         String email = prefs.getString("email", "");
 
+        // clear entered code
+        enter_code.setText("");
+
         // Create a new retrofit call to send the user data to the server.
         Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().getConfirmCode(email);
 
         // Enqueue the call with a custom callback that handles the response.
-        myCall.enqueue(new ConfirmCodeCallback(view, email));
+        myCall.enqueue(new ConfirmCodeCallback(view));
+
+        // make snackbar that informs the user that the code has been sent
+        Snackbar.make(view, "Wysłano nowy kod", Snackbar.LENGTH_LONG).show();
     }
 
-
+    @Override
+    public void saveAppState(ApplicationState applicationState) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("applicationState", applicationState.toString());
+        editor.apply();
+    }
 }

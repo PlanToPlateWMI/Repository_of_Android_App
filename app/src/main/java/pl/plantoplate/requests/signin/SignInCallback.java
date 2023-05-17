@@ -28,6 +28,8 @@ import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import pl.plantoplate.requests.BaseCallback;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.ui.main.ActivityMain;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,14 +42,16 @@ public class SignInCallback extends BaseCallback implements Callback<ResponseBod
 
     // SharedPreferences object to store the user's email
     private final SharedPreferences prefs;
+    private ApplicationStateController controller;
 
     /**
      * Constructor to create a new SignInCallback object.
      * @param view The view object to display the Snackbar.
      */
-    public SignInCallback(View view) {
+    public SignInCallback(View view, ApplicationStateController controller) {
         super(view);
         this.prefs = view.getContext().getSharedPreferences("prefs", 0);
+        this.controller = controller;
     }
 
     /**
@@ -59,8 +63,14 @@ public class SignInCallback extends BaseCallback implements Callback<ResponseBod
         Gson gson = new Gson();
         JwtResponse jwtResponse = gson.fromJson(response, JwtResponse.class);
         saveTokenAndRole(jwtResponse.getToken(), jwtResponse.getRole());
+
+        // Start the main activity
         Intent intent = new Intent(view.getContext(), ActivityMain.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         view.getContext().startActivity(intent);
+
+        // save app state
+        controller.saveAppState(ApplicationState.MAIN_ACTIVITY);
     }
 
     /**

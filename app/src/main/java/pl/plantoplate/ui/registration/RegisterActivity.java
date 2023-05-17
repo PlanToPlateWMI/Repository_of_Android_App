@@ -26,11 +26,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import pl.plantoplate.LoginActivity;
+import pl.plantoplate.databinding.RegisterActivityBinding;
+import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.requests.joinGroup.sendRegisterData.SendRegisterDataCallback;
 import pl.plantoplate.requests.joinGroup.sendRegisterData.UserRegisterData;
 import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.databinding.RegisterActivityBinding;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.EmailValidator;
 import pl.plantoplate.tools.SCryptStretcher;
 import com.google.android.material.snackbar.Snackbar;
@@ -41,7 +43,7 @@ import retrofit2.Call;
 /**
  * An activity for user registration.
  */
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements ApplicationStateController {
 
     private RegisterActivityBinding register_view;
     private EditText enter_name;
@@ -141,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
         Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().sendUserRegisterData(data);
 
         // Enqueue the call with a custom callback that handles the response.
-        myCall.enqueue(new SendRegisterDataCallback(view, data));
+        myCall.enqueue(new SendRegisterDataCallback(view, data, this));
     }
 
     /**
@@ -151,5 +153,13 @@ public class RegisterActivity extends AppCompatActivity {
         // Create an intent to start the RegisterActivity
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        saveAppState(ApplicationState.LOGIN);
+    }
+
+    @Override
+    public void saveAppState(ApplicationState applicationState) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("applicationState", applicationState.toString());
+        editor.apply();
     }
 }
