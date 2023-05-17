@@ -7,19 +7,21 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dialog_add"
+        android:id="@+id/dialog_add_to_storage"
         android:layout_width="360dp"
         android:layout_height="350dp"
         android:background="#80C6D9FF"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="190dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
 
         <TextView
-            android:id="@+id/add_products"
+            android:id="@+id/text_add"
             android:layout_width="320dp"
-            android:layout_height="133dp"
+            android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -31,8 +33,11 @@
             android:text="@string/add_to_storage"
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/black_gray"
-            tools:layout_editor_absoluteX="20dp"
-            tools:layout_editor_absoluteY="16dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.132" />
 
         <Button
             android:id="@+id/button_yes"
@@ -44,23 +49,25 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/blue_1"
+            android:layout_marginTop="32dp"
 
+            android:backgroundTint="@color/blue_1"
             android:clickable="true"
+
             android:drawableLeft="@drawable/done_24_50"
 
             android:fontFamily="@font/quicksand_medium"
 
             android:text="@string/tak"
-
             android:textAllCaps="false"
-            android:textColor="@color/black_gray"
 
+            android:textColor="@color/black_gray"
             android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_add"
             app:strokeColor="@color/blue_2"
-            app:strokeWidth="1dp"
-            tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="167dp" />
+            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/button_no"
@@ -85,11 +92,14 @@
             android:textColor="@color/black_gray"
             android:textSize="16dp"
 
-            app:strokeColor="@color/blue_2"
-            app:strokeWidth="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
 
-            tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="247dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_yes"
+            app:strokeColor="@color/blue_2"
+            app:strokeWidth="1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
