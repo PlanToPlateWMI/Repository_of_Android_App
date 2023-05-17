@@ -124,4 +124,7 @@ public interface RestApi {
 
     @DELETE("api/shopping/{id}")
     Call<ResponseBody> deleteProductFromShopList(@Header("Authorization") String token, @Path("id") int productId);
+
+    @POST("api/shopping")
+    Call<ResponseBody> addProductToShopList(@Header("Authorization") String token, @Body Product product);
 }

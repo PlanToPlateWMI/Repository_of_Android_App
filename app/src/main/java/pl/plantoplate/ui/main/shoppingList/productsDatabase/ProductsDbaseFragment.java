@@ -29,27 +29,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
-import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.products.GetProductsDBaseCallback;
-import pl.plantoplate.requests.products.Product;
-import pl.plantoplate.requests.products.ProductsListCallback;
-import retrofit2.Call;
-
-public class ProductsDbaseFragment extends Fragment implements ProductsListCallback {
+public class ProductsDbaseFragment extends Fragment {
 
     private FragmentBazaProduktowBinding bazaProduktowBinding;
     private SearchView searchView;
 
     private SharedPreferences prefs;
-
-    // Products lists.
-    private ArrayList<Product> generalProductsList;
-    private ArrayList<Product> groupProductsList;
 
     @Override
     public void onStart() {
@@ -57,9 +44,6 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
 
         // Get the SharedPreferences object
         prefs = requireActivity().getSharedPreferences("prefs", 0);
-
-        // Get products from database
-        getProducts();
 
         //Set selected all products fragment by default on restart fragment.
         bazaProduktowBinding.bottomNavigationView2.setSelectedItemId(R.id.wszystkie);
@@ -76,35 +60,19 @@ public class ProductsDbaseFragment extends Fragment implements ProductsListCallb
         // Get the SearchView
         searchView = bazaProduktowBinding.search;
 
-
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
                 case R.id.wszystkie:
-                    replaceFragment(new AllProductsFragment(generalProductsList, groupProductsList));
+                    replaceFragment(new AllProductsFragment());
                     return true;
                 case R.id.wlasne:
-                    replaceFragment(new OwnProductsFragment(groupProductsList));
+                    replaceFragment(new OwnProductsFragment());
                     return true;
             }
             return false;
         });
 
         return bazaProduktowBinding.getRoot();
-    }
-
-    private void getProducts() {
-        String token = "Bearer " + prefs.getString("token", "");
-
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getProducts(token);
-
-        call.enqueue(new GetProductsDBaseCallback(requireActivity().findViewById(R.id.frame_layout), this));
-    }
-
-    @Override
-    public void onProductsListsReceived(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList) {
-        this.generalProductsList = generalProductsList;
-        this.groupProductsList = groupProductsList;
-        replaceFragment(new AllProductsFragment(generalProductsList, groupProductsList));
     }
 
     private void replaceFragment(Fragment fragment) {

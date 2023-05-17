@@ -16,6 +16,7 @@
 
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,15 +33,23 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWszystkieBinding;
+import pl.plantoplate.requests.RetrofitClient;
+import pl.plantoplate.requests.products.GetProductsDBaseCallback;
 import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.requests.products.ProductsListCallback;
+import pl.plantoplate.requests.shoppingList.AddProductToShopListCallback;
+import pl.plantoplate.requests.signin.SignInCallback;
+import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
+import retrofit2.Call;
 
-public class AllProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
+public class AllProductsFragment extends Fragment implements SearchView.OnQueryTextListener, ProductsListCallback {
 
     private FragmentWszystkieBinding fragmentWszystkieBinding;
 
@@ -48,24 +57,15 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     private TextView welcomeTextView;
     private SearchView searchView;
 
+    private SharedPreferences prefs;
+
     private ArrayList<Category> allProductsList;
 
-    public AllProductsFragment(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList) {
-        if (generalProductsList == null) {
-            generalProductsList = new ArrayList<>();
-        }
-        if (groupProductsList == null) {
-            groupProductsList = new ArrayList<>();
-        }
-        if (generalProductsList.isEmpty() && groupProductsList.isEmpty()) {
-            allProductsList = new ArrayList<>();
-            return;
-        }
-        ArrayList<Product> allProductsList = new ArrayList<>();
-        allProductsList.addAll(generalProductsList);
-        allProductsList.addAll(groupProductsList);
+    @Override
+    public void onStart() {
+        super.onStart();
 
-        this.allProductsList = CategorySorter.sortCategoriesByProduct(allProductsList);
+        getProducts();
     }
 
     @Override
@@ -80,15 +80,46 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         // set listener for search view
         searchView.setOnQueryTextListener(this);
 
+        // Get the SharedPreferences object
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
         setUpRecyclerView();
 
+        return fragmentWszystkieBinding.getRoot();
+    }
+
+    private void getProducts() {
+        String token = "Bearer " + prefs.getString("token", "");
+
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getProducts(token);
+
+        call.enqueue(new GetProductsDBaseCallback(requireActivity().findViewById(R.id.frame_layout), this));
+    }
+
+    @Override
+    public void onProductsListsReceived(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList) {
+        ArrayList<Product> allProductsList = new ArrayList<>();
+        allProductsList.addAll(generalProductsList);
+        allProductsList.addAll(groupProductsList);
+        this.allProductsList = CategorySorter.sortCategoriesByProduct(allProductsList);
+
+        // set up recycler view
         if (allProductsList.isEmpty()) {
             welcomeTextView.setVisibility(View.VISIBLE);
         } else {
             welcomeTextView.setVisibility(View.GONE);
         }
+        CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
+        Objects.requireNonNull(categoryAdapter).setCategoriesList(this.allProductsList);
+    }
 
-        return fragmentWszystkieBinding.getRoot();
+    public void addProductToShoppingList(Product product) {
+        String token = "Bearer " + prefs.getString("token", "");
+
+        product.setAmount(1);
+
+        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().addProductToShopList(token, product);
+        myCall.enqueue(new AddProductToShopListCallback(requireActivity().findViewById(R.id.frame_layout)));
     }
 
     @Override
@@ -114,7 +145,9 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     }
 
     public void setUpRecyclerView() {
-
+        if (allProductsList == null) {
+            allProductsList = new ArrayList<>();
+        }
         // set up recycler view
         categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -122,7 +155,10 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
             @Override
             public void onAddToShoppingListButtonClick(View v, Product product) {
-                System.out.println(product);
+                addProductToShoppingList(product);
+
+                // go to shopping list fragment
+                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
             }
         });
         categoryRecyclerView.setAdapter(categoryAdapter);
