@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.requests;
 
 import pl.plantoplate.requests.createGroup.CreateGroupData;
@@ -25,9 +24,11 @@ import pl.plantoplate.requests.products.Product;
 import pl.plantoplate.requests.signin.SignInData;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -120,5 +121,7 @@ public interface RestApi {
 
     @POST("api/products")
     Call<ResponseBody> addOwnProduct(@Header("Authorization") String token, @Body Product product);
-}
 
+    @DELETE("api/shopping/{id}")
+    Call<ResponseBody> deleteProductFromShopList(@Header("Authorization") String token, @Path("id") int productId);
+}
