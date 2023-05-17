@@ -9,13 +9,11 @@
     tools:context="pl.plantoplate.ui.main.settings.SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <Button
+    <TextView
         android:id="@+id/settings"
         android:layout_width="0dp"
         android:layout_height="65dp"
-        android:layout_marginTop="-5dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/blue_1"
+        android:background="@drawable/selector_buttons"
         android:clickable="true"
         android:contextClickable="false"
         android:fontFamily="@font/quicksand_semibold"
@@ -33,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <!--Uastawienia -->
+
     <TextView
         android:id="@+id/ustawienia"
         android:layout_width="wrap_content"
