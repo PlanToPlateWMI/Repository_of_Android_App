@@ -12,12 +12,12 @@
     <!--Wygenerowanie kodu button -->
 
 
-    <Button
+    <TextView
         android:id="@+id/baza_produktow"
         android:layout_width="0dp"
         android:layout_height="65dp"
         android:layout_marginBottom="5dp"
-        android:backgroundTint="@color/blue_1"
+        android:background="@drawable/selector_buttons"
         android:clickable="true"
         android:contextClickable="false"
         android:fontFamily="@font/quicksand_semibold"
@@ -73,7 +73,7 @@
         android:layout_marginTop="70dp"
         android:layout_marginBottom="548dp"
 
-        android:background="@drawable/selector_buttons"
+        android:background="@drawable/nav_background_curved"
 
         android:padding="4dp"
 

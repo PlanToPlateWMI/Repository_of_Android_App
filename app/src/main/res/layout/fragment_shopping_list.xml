@@ -10,11 +10,11 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Button
+    <TextView
         android:id="@+id/shopping"
         android:layout_width="0dp"
         android:layout_height="65dp"
-        android:backgroundTint="@color/blue_1"
+        android:background="@drawable/selector_buttons"
         android:clickable="true"
         android:contextClickable="false"
         android:fontFamily="@font/quicksand_semibold"
@@ -50,7 +50,7 @@
         app:itemRippleColor="@color/blue_0"
         app:itemTextColor="@color/black_gray"
 
-        android:background="@drawable/selector_buttons"
+        android:background="@drawable/nav_background_curved"
 
         android:padding="4dp"
         app:itemTextAppearanceActive="@style/menu_zakupy_active"
