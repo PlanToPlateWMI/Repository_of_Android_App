@@ -73,6 +73,9 @@
         android:layout_marginTop="70dp"
         android:layout_marginBottom="548dp"
 
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
         android:background="@drawable/nav_background_curved"
 
         android:padding="4dp"
