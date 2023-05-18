@@ -98,12 +98,12 @@
             android:layout_width="236dp"
             android:layout_height="56dp"
 
-            android:textColor="@color/black_gray"
-
-            android:singleLine="true"
-            android:maxLines="1"
-
             android:fontFamily="@font/quicksand_regular"
+
+            android:maxLines="1"
+            android:singleLine="true"
+
+            android:textColor="@color/black_gray"
 
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="321dp" />
