@@ -22,6 +22,5 @@ public enum ApplicationState {
     REGISTER,
     CONFIRM_MAIL,
     GROUP_CHOOSE,
-    JOIN_GROUP,
     MAIN_ACTIVITY
 }

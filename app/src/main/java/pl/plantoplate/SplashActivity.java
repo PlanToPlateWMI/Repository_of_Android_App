@@ -91,11 +91,6 @@ public class SplashActivity extends AppCompatActivity {
                 activityIntent = new Intent(SplashActivity.this, GroupSelectActivity.class);
                 startActivity(activityIntent);
                 break;
-            case JOIN_GROUP:
-                // start the join group activity
-                activityIntent = new Intent(SplashActivity.this, GroupEnterActivity.class);
-                startActivity(activityIntent);
-                break;
             case MAIN_ACTIVITY:
                 // start the main activity
                 activityIntent = new Intent(SplashActivity.this, ActivityMain.class);
