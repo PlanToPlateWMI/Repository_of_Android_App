@@ -104,7 +104,7 @@ public class BoughtProductsFragment extends Fragment implements ShopListCallback
         Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
     }
 
-    public void moveProductToBought(Product product){
+    public void moveProductToBuy(Product product){
         String token = "Bearer " + prefs.getString("token", "");
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().changeProductStateInShopList(token, product.getId());
 
@@ -137,7 +137,7 @@ public class BoughtProductsFragment extends Fragment implements ShopListCallback
 
             @Override
             public void onCheckShoppingListButtonClick(View v, Product product) {
-                moveProductToBought(product);
+                moveProductToBuy(product);
             }
         });
         productsRecyclerView.setAdapter(productAdapter);

@@ -135,4 +135,7 @@ public interface RestApi {
 
     @PATCH("api/products/{id}")
     Call<ResponseBody> changeOwnProduct(@Header("Authorization") String token, @Path("id") int productId, @Body Product product);
+
+    @DELETE("api/products/{id}")
+    Call<ResponseBody> deleteOwnProduct(@Header("Authorization") String token, @Path("id") int productId);
 }
