@@ -11,8 +11,7 @@
         android:paddingLeft="160dp"
         android:text="Kategoria"
         android:textColor="@color/black"
-        android:textSize="20dp"
-        />
+        android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/product_recycler_view"

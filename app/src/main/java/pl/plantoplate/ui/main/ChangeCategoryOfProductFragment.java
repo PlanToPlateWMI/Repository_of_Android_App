@@ -17,6 +17,7 @@
 package pl.plantoplate.ui.main;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,15 +41,11 @@ public class ChangeCategoryOfProductFragment extends Fragment {
 
     private FragmentChangeCategoryBinding fragmentChangeCategoryBinding;
 
+    private SharedPreferences productPrefs;
+
     private RadioGridGroup categoriesRadioGroup;
     private Button accept_button;
     private Button cancel_button;
-
-    private ChangeCategoryListener changeCategoryCallback;
-
-    public ChangeCategoryOfProductFragment(ChangeCategoryListener changeCategoryCallback) {
-        this.changeCategoryCallback = changeCategoryCallback;
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -56,6 +53,9 @@ public class ChangeCategoryOfProductFragment extends Fragment {
         // Inflate the layout for this fragment
 
         fragmentChangeCategoryBinding = FragmentChangeCategoryBinding.inflate(inflater, container, false);
+
+        // Get product from shared preferences
+        productPrefs = requireActivity().getSharedPreferences("product", 0);
 
         // Get references to views
         categoriesRadioGroup = fragmentChangeCategoryBinding.radioGroupNowaKategoria;
@@ -76,7 +76,9 @@ public class ChangeCategoryOfProductFragment extends Fragment {
             Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "Wybierz kategorię!", Snackbar.LENGTH_SHORT).show();
             return;
         }
-        changeCategoryCallback.onCategoryChosen(checkedRadioButton.getText().toString());
+
+        // Save product to shared preferences
+        productPrefs.edit().putString("category", checkedRadioButton.getText().toString()).apply();
 
         // Close fragment
         getParentFragmentManager().popBackStack();

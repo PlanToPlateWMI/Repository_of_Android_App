@@ -156,12 +156,12 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
             @Override
             public void onAddToShoppingListButtonClick(View v, Product product) {
                 addProductToShoppingList(product);
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
+                replaceFragment(new ShoppingListFragment());
             }
 
             @Override
             public void onEditProductButtonClick(View v, Product product) {
-                System.out.println(product);
+                replaceFragment(new EditOwnProductFragment(product));
             }
         });
 

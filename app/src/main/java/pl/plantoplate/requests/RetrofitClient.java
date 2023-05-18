@@ -26,7 +26,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitClient {
 
     // Base URL of the API
-    private final String BASE_URL = "http://192.168.0.121:8080";
+    private final String BASE_URL = "http://10.100.5.195:8080";
     // Singleton instance of the class
     private static RetrofitClient instance = null;
     // Interface representing the API endpoints

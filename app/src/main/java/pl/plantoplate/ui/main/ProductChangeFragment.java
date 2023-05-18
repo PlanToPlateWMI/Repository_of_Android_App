@@ -65,7 +65,7 @@ public class ProductChangeFragment extends Fragment implements ChangeCategoryLis
         change_kategory = fragmentProductChangeBinding.zmienKategorie;
         change_kategory.findViewById(R.id.zmien_kategorie);
 
-        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment(this)));
+        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
 
         return fragmentProductChangeBinding.getRoot();
         //return inflater.inflate(R.layout.fragment_add_your_own_product, container, false);

@@ -74,7 +74,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
     @SuppressLint("NonConstantResourceId")
     public void bind(Product product, OnProductItemClickListener listener) {
         name.setText(product.getName());
-        String unitText = product.getAmount() + product.getUnit();
+        String unitText = product.getAmount() + " " + product.getUnit();
         unit.setText(product.getUnit());
         switch(this.itemType) {
             case R.id.layoutWszystkieProdukty:
