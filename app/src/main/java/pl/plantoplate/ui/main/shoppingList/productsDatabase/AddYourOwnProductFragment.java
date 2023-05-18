@@ -48,6 +48,7 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
     private FragmentAddYourOwnProductBinding add_own_product_view;
 
     private SharedPreferences prefs;
+    private SharedPreferences productPrefs;
 
     private RadioGroup choose_product_unit;
     private Button add_product_button;
@@ -67,6 +68,7 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
 
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
+        productPrefs = requireActivity().getSharedPreferences("product", 0);
 
         // Get the radio group
         choose_product_unit = add_own_product_view.toggleGroup;
@@ -127,6 +129,11 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
     }
 
     public void addProduct(View v) {
+        String category = productPrefs.getString("category", "");
+        if (!category.isEmpty()) {
+            product.setCategory(category);
+        }
+
         // Get the product name
         String product_name = Objects.requireNonNull(add_product_name.getText()).toString();
 

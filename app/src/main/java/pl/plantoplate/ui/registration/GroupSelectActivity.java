@@ -75,7 +75,6 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
     public void goToGroupEnterActivity() {
         Intent intent = new Intent(getApplicationContext(), GroupEnterActivity.class);
         startActivity(intent);
-        saveAppState(ApplicationState.JOIN_GROUP);
     }
 
     /**

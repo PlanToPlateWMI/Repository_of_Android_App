@@ -16,7 +16,6 @@
 
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
-import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
