@@ -10,6 +10,7 @@
         android:background="@color/blue_1"
         android:paddingLeft="160dp"
         android:text="Kategoria"
+        android:layout_gravity="center"
         android:textColor="@color/black"
         android:textSize="20dp" />
 
