@@ -1,6 +1,7 @@
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class EditOwnProductFragment extends Fragment {
     private Button add_product_button;
     private Button change_kategory;
     private Button cancel_button;
+    private Button delete_button;
     private TextInputEditText add_product_name;
 
     private Product product;
@@ -108,6 +110,9 @@ public class EditOwnProductFragment extends Fragment {
 
         change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
 
+        delete_button = fragmentProductChangeBinding.buttonUsun;
+        delete_button.setOnClickListener(v -> showConfirmDeleteProductPopUp(requireActivity().findViewById(R.id.frame_layout)));
+
 
         return fragmentProductChangeBinding.getRoot();
     }
@@ -160,6 +165,47 @@ public class EditOwnProductFragment extends Fragment {
             @Override
             public void handleErrorResponse(int code) {
                 Snackbar.make(view, "Nie udało się zmienić produktu.", Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        // Go back to the products database fragment
+        requireActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    public void showConfirmDeleteProductPopUp(View view) {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.pop_up_delete_product_from_database);
+
+        Button acceptButton = dialog.findViewById(R.id.button_yes);
+        Button cancelButton = dialog.findViewById(R.id.button_no);
+
+        acceptButton.setOnClickListener(v -> {
+            deleteProduct(view);
+            dialog.dismiss();
+        });
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
+    public void deleteProduct(View view) {
+
+        // Get the token
+        String token = "Bearer " + prefs.getString("token", "");
+
+        // Send the request to add the product to the database
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().deleteOwnProduct(token, product.getId());
+        call.enqueue(new BaseCallback(view) {
+            @Override
+            public void handleSuccessResponse(String response) {
+                Snackbar.make(view, "Pomyślnie usunięto produkt.", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void handleErrorResponse(int code) {
+                Snackbar.make(view, "Nie udało się usunąć produktu.", Snackbar.LENGTH_LONG).show();
             }
         });
 
