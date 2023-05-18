@@ -39,25 +39,25 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="-10dp"
 
         android:layout_marginBottom="601dp"
 
+        android:background="@drawable/nav_background_curved"
         android:outlineAmbientShadowColor="@color/black_gray"
+
         android:outlineSpotShadowColor="@color/black_gray"
 
+        android:padding="4dp"
         app:itemIconTint="@color/black_gray"
 
         app:itemRippleColor="@color/blue_0"
-        app:itemTextColor="@color/black_gray"
 
-        android:background="@drawable/nav_background_curved"
-
-        android:padding="4dp"
         app:itemTextAppearanceActive="@style/menu_zakupy_active"
-
         app:itemTextAppearanceInactive="@style/menu_zakupy_no_active"
+
+        app:itemTextColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
