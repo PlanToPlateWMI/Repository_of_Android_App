@@ -19,6 +19,7 @@ package pl.plantoplate.ui.main.shoppingList.listAdapters.product;
 import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,8 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
     private ImageView editProductButton;
     private ImageView checkShoppingListButton;
 
+    private LinearLayout layout;
+
     @SuppressLint("NonConstantResourceId")
     public ProductViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -49,12 +52,14 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
                 name = itemView.findViewById(R.id.nazwaProduktuWszystkie);
                 unit = itemView.findViewById(R.id.jednostkiMiaryWszsystkie);
                 addToShoppingListButton = itemView.findViewById(R.id.addBazaWszystkie);
+                layout = itemView.findViewById(R.id.layoutWszystkieProdukty);
                 break;
             case R.id.layoutWlasneProdukty:
                 name = itemView.findViewById(R.id.nazwaProduktu_wlasny);
                 unit = itemView.findViewById(R.id.jednostkiMiary_wlasny);
                 addToShoppingListButton = itemView.findViewById(R.id.addBazaWlasne);
                 editProductButton = itemView.findViewById(R.id.iconEdit_wlasny);
+                layout = itemView.findViewById(R.id.layoutWlasneProdukty);
                 break;
             case R.id.layoutTrzebaKupicProdukty:
                 name = itemView.findViewById(R.id.nazwaProduktu_trzebaKupic);
@@ -79,10 +84,12 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
         switch(this.itemType) {
             case R.id.layoutWszystkieProdukty:
                 addToShoppingListButton.setOnClickListener(v-> listener.onAddToShoppingListButtonClick(v, product));
+                layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 break;
             case R.id.layoutWlasneProdukty:
                 addToShoppingListButton.setOnClickListener(v -> listener.onAddToShoppingListButtonClick(v, product));
                 editProductButton.setOnClickListener(v -> listener.onEditProductButtonClick(v, product));
+                layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 break;
             case R.id.layoutTrzebaKupicProdukty:
             case R.id.layoutKupioneProdukty:

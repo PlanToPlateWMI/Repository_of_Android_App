@@ -143,9 +143,9 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
 
-                android:fontFamily="@font/quicksand_regular"
+                android:inputType="number"
 
-                android:inputType="textPassword"
+                android:fontFamily="@font/quicksand_regular"
 
                 android:maxLines="1"
                 android:singleLine="true"

@@ -36,4 +36,8 @@ public interface OnProductItemClickListener {
     default void onCheckShoppingListButtonClick(View v, Product product) {
 
     }
+
+    default void onProductItemClick(View v, Product product) {
+
+    }
 }
