@@ -61,7 +61,6 @@ public class SendRegisterDataCallback extends BaseCallback implements Callback<R
 
         saveUserDataToPrefs();
         startEmailConfirmActivity(code.getCode());
-        controller.saveAppState(ApplicationState.CONFIRM_MAIL);
     }
 
     /**
@@ -104,7 +103,6 @@ public class SendRegisterDataCallback extends BaseCallback implements Callback<R
         editor.putString("code", code);
         editor.apply();
         Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         view.getContext().startActivity(intent);
     }
 }

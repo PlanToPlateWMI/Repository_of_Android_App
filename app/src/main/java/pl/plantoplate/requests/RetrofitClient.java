@@ -26,7 +26,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitClient {
 
     // Base URL of the API
-    private final String BASE_URL = "https://symbolic-base-384613.lm.r.appspot.com";
+    private final String BASE_URL = "https://ambient-elf-336514.lm.r.appspot.com/";
     // Singleton instance of the class
     private static RetrofitClient instance = null;
     // Interface representing the API endpoints
