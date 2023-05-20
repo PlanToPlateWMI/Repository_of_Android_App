@@ -40,6 +40,7 @@ import org.junit.runner.RunWith;
 
 import pl.plantoplate.R;
 import pl.plantoplate.ui.login.LoginActivity;
+import pl.plantoplate.ui.registration.EmailConfirmActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 
 @RunWith(AndroidJUnit4.class)
@@ -74,7 +75,7 @@ public class RegisterActivityTest {
     @Test
     public void testSignInButton() {
         onView(withId(R.id.enterName)).perform(typeText("Karol"), closeSoftKeyboard());
-        onView(withId(R.id.enter_email)).perform(typeText("test@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText("test123@test.com"), closeSoftKeyboard());
         onView(withId(R.id.enter_password)).perform(typeText("password"), closeSoftKeyboard());
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());

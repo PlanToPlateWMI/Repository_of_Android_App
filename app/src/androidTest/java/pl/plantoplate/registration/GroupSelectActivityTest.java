@@ -36,6 +36,9 @@ import org.junit.runner.RunWith;
 
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.ActivityMain;
+import pl.plantoplate.ui.main.calendar.CalendarFragment;
+import pl.plantoplate.ui.main.shoppingList.BuyProductsFragment;
+import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.registration.GroupEnterActivity;
 import pl.plantoplate.ui.registration.GroupSelectActivity;
 
@@ -74,7 +77,8 @@ public class GroupSelectActivityTest {
     @Test
     public void testNewGroupButton() {
         onView(withId(R.id.button_swoja_grupa)).perform(click());
-        intended(hasComponent(ActivityMain.class.getName()));
+        //intended(hasComponent(CalendarFragment.class.getName()));
+        intended(hasComponent(BuyProductsFragment.class.getName()));
     }
 }
 
