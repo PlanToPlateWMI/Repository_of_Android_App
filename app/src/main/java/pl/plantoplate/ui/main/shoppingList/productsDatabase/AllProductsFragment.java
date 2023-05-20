@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
 
     private FragmentWszystkieBinding fragmentWszystkieBinding;
 
+
+    private FloatingActionButton floatingActionButton_wszystkie;
     private RecyclerView categoryRecyclerView;
     private TextView welcomeTextView;
     private SearchView searchView;
@@ -55,6 +59,8 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         welcomeTextView = fragmentWszystkieBinding.textView3;
         searchView = requireActivity().findViewById(R.id.search);
         searchView.setOnQueryTextListener(this);
+        floatingActionButton_wszystkie = fragmentWszystkieBinding.floatingActionButtonWszystkie;
+        floatingActionButton_wszystkie.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
         prefs = requireActivity().getSharedPreferences("prefs", 0);
         setUpRecyclerView();
         return fragmentWszystkieBinding.getRoot();
@@ -163,5 +169,12 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
             dialog.dismiss();
         });
         dialog.show();
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
