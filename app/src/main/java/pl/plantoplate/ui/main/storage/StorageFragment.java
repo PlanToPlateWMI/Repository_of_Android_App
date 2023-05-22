@@ -20,22 +20,38 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentStorageBinding;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 
 public class StorageFragment extends Fragment {
 
-    private FragmentStorageBinding storage_view;
+    private FragmentStorageBinding fragmentStorageBinding;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        storage_view = FragmentStorageBinding.inflate(inflater, container, false);
-        return storage_view.getRoot();
+        fragmentStorageBinding = FragmentStorageBinding.inflate(inflater, container, false);
+        replaceFragment(new StorageInsideFragment());
+        return fragmentStorageBinding.getRoot();
     }
+
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.storage_default, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 }

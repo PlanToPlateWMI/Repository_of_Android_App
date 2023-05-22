@@ -9,6 +9,7 @@
 
         android:iconTint="@color/black_gray"
         />
+
     <item android:title="@string/wlasne"
         android:id="@+id/wlasne"
 

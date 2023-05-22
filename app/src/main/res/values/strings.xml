@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">PlanToPlate</string>
     <string name="plantoplate">PlanToPlate</string>
     <string name="logowanie">Logowanie</string>
@@ -8,15 +9,18 @@
     <string name="twoj_email"> Wprowadź e-mail, przy pomocy którego logujesz się do aplikacji</string>
     <string name="wprowad_kod">Wprowadź kod zaproszeniowy:</string>
     <string name="potwierdzen">Potwierdzenie e-maila</string>
+
     <string name="skorzystaj_">W celu weryfikacji
 konta, wprowadź 4
 cyfrowy kod, który do
 Ciebie wysłaliśmy na</string>
+
     <string name="skorzystaj_2">W celu weryfikacji
 konta, wprowadź 4
 cyfrowy kod, który do
 Ciebie wysłaliśmy na mail,
         który był podany wcześniej</string>
+
     <string name="uwaga_do_cz">Uwaga! Do czasu potwierdzenia maila wejście nie będzie możliwe!</string>
     <string name="wyra_am_zgo">Wyrażam zgodę na przetwarzanie danych osobowych</string>
     <string name="masz_konto_">Masz konto?</string>
@@ -40,8 +44,10 @@ Ciebie wysłaliśmy na mail,
     <string name="kod_dla_osoby_doroslej">Kod dla osoby dorosłej</string>
     <string name="kod_dla_dziecka">Kod dla dziecka</string>
     <string name="wybierz_opcje">Wybierz jedną opcję:</string>
+
     <string name="uwaga">Uwaga! Wybrana opcja wygenerowanego kodu wpłynie na to, jakie opcje będą dostępne dla użytkownika, który go wprowadzi.
 Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkownika</string>
+
     <string name="przekarz_kod">Przekaż poniższy kod wybranemu uzytkownikowi</string>
     <string name="wy_lij_pono">Wyślij ponownie</string>
     <string name="nie_masz_konto_">Nie masz konta?</string>
@@ -84,6 +90,8 @@ chcesz usunąć produkt z listy zakupów?</string>
 chcesz usunąć produkt z bazy produktów?</string>
     <string name="add_to_storage">Czy na pewno
 chcesz dodać wszystkie kupione produkty do spiżarni?</string>
+    <string name="delete_from_storage">Czy na pewno
+chcesz usunąć produkt ze spiżarni?</string>
 
     <string name="tak">Tak</string>
     <string name="nie">Nie</string>
@@ -103,5 +111,119 @@ chcesz dodać wszystkie kupione produkty do spiżarni?</string>
     <string name="inne">Inne</string>
     <string name="konserwy">Konserwy</string>
 
-
 </resources>
+
+    <!--<resources>-->
+    <!--    <string name="app_name">PlanToPlate</string>-->
+    <!--    <string name="plantoplate">PlanToPlate</string>-->
+
+    <!--    <string name="logowanie">Вход в аккаунт</string>-->
+    <!--    <string name="rejestracja">Регистрация</string>-->
+    <!--    <string name="pomy_lnie_z">Удалось зарегестрироваться</string>-->
+    <!--    <string name="przyp_haslo">Напоминание пароля</string>-->
+    <!--    <string name="twoj_email"> Введите электронную почту, которую используете для входа в приложение</string>-->
+    <!--    <string name="wprowad_kod">Введите пригласительный код:</string>-->
+    <!--    <string name="potwierdzen">Подтверждение по электронной почте</string>-->
+
+    <!--    <string name="skorzystaj_">Для проверки учетной-->
+    <!--записи введите 4-значный-->
+    <!--код, который мы отправили-->
+    <!--вам по</string>-->
+    <!--    <string name="skorzystaj_2">Для проверки учетной-->
+    <!--записи введите 4-значный-->
+    <!--код, который мы отправили-->
+    <!--вам на почту,-->
+    <!--    указанную ранее</string>-->
+    <!--    <string name="uwaga_do_cz">Внимание! Вход будет недоступен до подтверждения почты!</string>-->
+    <!--    <string name="wyra_am_zgo">Я согласен на обработку персональных данных</string>-->
+    <!--    <string name="masz_konto_">У вас есть аккаунт?</string>-->
+    <!--    <string name="zaloz_konto">Создать аккаунт</string>-->
+
+    <!--    <string name="wprowadz_haslo">Введите пароль</string>-->
+    <!--    <string name="wprowadz_new_haslo">Введите новый пароль</string>-->
+    <!--    <string name="wprowadz_new_haslo_2">Введите пароль еще раз</string>-->
+    <!--    <string name="wprowadz_imie">Введите имя</string>-->
+    <!--    <string name="wprowadz_kod">Введите код</string>-->
+    <!--    <string name="wprowadz_ilosc">Введите количество</string>-->
+
+    <!--    <string name="zatwierdz">Подтвердить</string>-->
+    <!--    <string name="anuluj">Отмена</string>-->
+    <!--    <string name="usun">Удалить</string>-->
+
+    <!--    <string name="zmien_kategorie">Изменить категорию</string>-->
+    <!--    <string name="wprowadz_email">Введите электронную почту</string>-->
+    <!--    <string name="zalogowanie">Войти</string>-->
+    <!--    <string name="wygenerowanie_kodu">Генерация кода</string>-->
+    <!--    <string name="kod_dla_osoby_doroslej">Код для взрослого</string>-->
+    <!--    <string name="kod_dla_dziecka">Код для ребенка</string>-->
+    <!--    <string name="wybierz_opcje">Выберите одну опцию:</string>-->
+
+
+    <!--    <string name="uwaga">Внимание! Выбранная опция кода будет влиять на доступные опции для пользователя, вводящего его.-->
+    <!--Роль пользователя можно изменить в любое время в настройках пользователя</string>-->
+    <!--    <string name="przekarz_kod">Передайте следующий код выбранному пользователю</string>-->
+    <!--    <string name="wy_lij_pono">Отправить повторно</string>-->
+    <!--    <string name="nie_masz_konto_">У вас нет аккаунта?</string>-->
+
+    <!--    <string name="kalendarz">Календарь</string>-->
+    <!--    <string name="spizarnia">Кладовая</string>-->
+    <!--    <string name="lista_zakupow">Список покупок</string>-->
+    <!--    <string name="przepisy">Рецепты</string>-->
+    <!--    <string name="ustawienia">Настройки</string>-->
+
+    <!--    <string name="hello_blank_fragment">Приветственный пустой фрагмент</string>-->
+    <!--    <string name="przypomnij_haslo">Восстановление пароля</string>-->
+    <!--    <string name="wybierz_jadna_opcje">Выберите одну из опций:</string>-->
+    <!--    <string name="mam_zapr_do_gr">У меня есть приглашение в группу</string>-->
+    <!--    <string name="swoja_gr">Хочу создать свою группу</string>-->
+
+    <!--    <string name="trzeba_kupic">Необходимо купить</string>-->
+    <!--    <string name="kupione">Куплено</string>-->
+    <!--    <string name="wszystkie">Все</string>-->
+    <!--    <string name="wlasne">Собственные</string>-->
+
+    <!--    <string name="baza_produktow">База продуктов</string>-->
+    <!--    <string name="search_hint">Найти продукт</string>-->
+
+
+    <!--    <string name="text_baza">Добавление своего-->
+    <!--продукта</string>-->
+    <!--    <string name="nazwa_produktu">Введи название продукта</string>-->
+    <!--    <string name="jednostki_miary">Единицы измерения</string>-->
+
+    <!--    <string name="szt">ШТ</string>-->
+    <!--    <string name="l">Л</string>-->
+    <!--    <string name="kg">КГ</string>-->
+    <!--    <string name="gr">Г</string>-->
+
+    <!--    <string name="edycja">Изменение продукта</string>-->
+    <!--    <string name="nowe_jednostki_miary">Выбери новую единицу измерения</string>-->
+
+    <!--    <string name="delete_from_shopping_list">Хочешь ли-->
+    <!--удалить продукт со списка покупок?</string>-->
+    <!--    <string name="delete_from_base">Хочешь ли-->
+    <!--удалить продукт с базы продуктов?</string>-->
+    <!--    <string name="add_to_storage">Хочешь ли-->
+    <!--добавить все продукты со списка покупок в кладовую?</string>-->
+    <!--    <string name="delete_from_storage">Хочешь ли-->
+    <!--удалить продукт со склада?</string>-->
+
+    <!--    <string name="tak">Да</string>-->
+    <!--    <string name="nie">Нет</string>-->
+
+    <!--    <string name="ilosc">Количество</string>-->
+
+    <!--    <string name="produkty_mleczne">Молочные продукты</string>-->
+    <!--    <string name="produkty_miesne">Мясные продукты</string>-->
+    <!--    <string name="wypieki">Выпечка</string>-->
+    <!--    <string name="warzywa">Овощи</string>-->
+    <!--    <string name="produkty_sypkie">Крупы</string>-->
+    <!--    <string name="owoce">Фрукты</string>-->
+    <!--    <string name="napoje">Напитки</string>-->
+    <!--    <string name="ryby">Рыбные продукты</string>-->
+    <!--    <string name="przyprawy">Приправы</string>-->
+    <!--    <string name="bakalie">Бакалея</string>-->
+    <!--    <string name="inne">Другие</string>-->
+    <!--    <string name="konserwy">Консервы</string>-->
+
+    <!--</resources>-->
