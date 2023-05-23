@@ -21,6 +21,8 @@ public class EmailValidatorTest {
     @Test
     public void testInvalidEmail() {
         assertFalse(EmailValidator.isEmail("invalid email"));
+        assertFalse(EmailValidator.isEmail("invalid+@.email.com"));
+        assertFalse(EmailValidator.isEmail("invalid@@gmail.com"));
     }
 
     /**
