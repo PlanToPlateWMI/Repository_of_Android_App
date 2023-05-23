@@ -62,10 +62,12 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
                 layout = itemView.findViewById(R.id.layoutWlasneProdukty);
                 break;
             case R.id.layoutTrzebaKupicProdukty:
+                System.out.println("layoutTrzebaKupicProdukty");
                 name = itemView.findViewById(R.id.nazwaProduktu_trzebaKupic);
                 unit = itemView.findViewById(R.id.jednostkiMiary_trzebaKupic);
                 checkShoppingListButton = itemView.findViewById(R.id.iconCheckbox_trzebaKupic);
                 deleteProductButton = itemView.findViewById(R.id.iconDelete_trzebaKupic);
+                layout = itemView.findViewById(R.id.layoutTrzebaKupicProdukty);
                 break;
             case R.id.layoutKupioneProdukty:
                 name = itemView.findViewById(R.id.nazwaProduktu_kupione);
@@ -92,6 +94,10 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
                 layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 break;
             case R.id.layoutTrzebaKupicProdukty:
+                checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
+                deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
+                layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
+                unit.setText(unitText);
             case R.id.layoutKupioneProdukty:
                 checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
                 deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));

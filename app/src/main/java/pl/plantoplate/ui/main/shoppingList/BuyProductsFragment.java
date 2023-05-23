@@ -30,9 +30,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -195,8 +197,72 @@ public class BuyProductsFragment extends Fragment implements ShopListCallback {
             public void onCheckShoppingListButtonClick(View v, Product product) {
                 moveProductToBought(product);
             }
+
+            @Override
+            public void onProductItemClick(View v, Product product) {
+                showAddProductPopup(product);
+            }
         });
         categoryRecyclerView.setAdapter(categoryAdapter);
+    }
+
+    public void changeProductAmount(Product product){
+        String token = "Bearer " + prefs.getString("token", "");
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().changeProductAmountInShopList(token, product.getId(), product);
+
+        call.enqueue(new BaseCallback(requireActivity().findViewById(R.id.frame_layout)) {
+            @Override
+            public void handleSuccessResponse(String response) {
+                getShoppingList();
+            }
+
+            @Override
+            public void handleErrorResponse(int code) {
+
+            }
+        });
+    }
+
+    public void showAddProductPopup(Product product) {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.pop_up_change_in_product_quantity);
+
+        ImageView plusButton = dialog.findViewById(R.id.plus);
+        ImageView minusButton = dialog.findViewById(R.id.minus);
+        TextInputEditText quantityTextView = dialog.findViewById(R.id.ilosc);
+        ImageView closeButton = dialog.findViewById(R.id.close);
+        TextView productUnitTextView = dialog.findViewById(R.id.jednostki_miary_napisac);
+        Button acceptButton = dialog.findViewById(R.id.zatwierdzenie);
+
+        quantityTextView.setText("0");
+        productUnitTextView.setText(product.getUnit());
+        quantityTextView.setText(String.valueOf(product.getAmount()));
+
+        closeButton.setOnClickListener(v -> dialog.dismiss());
+
+        plusButton.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(Objects.requireNonNull(quantityTextView.getText()).toString());
+            quantity++;
+            quantityTextView.setText(String.valueOf(quantity));
+        });
+
+        minusButton.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(Objects.requireNonNull(quantityTextView.getText()).toString());
+            if (quantity > 1) {
+                quantity--;
+                quantityTextView.setText(String.valueOf(quantity));
+            }
+        });
+
+        acceptButton.setOnClickListener(v -> {
+            product.setAmount(Integer.parseInt(Objects.requireNonNull(quantityTextView.getText()).toString()));
+            changeProductAmount(product);
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 
     /**
