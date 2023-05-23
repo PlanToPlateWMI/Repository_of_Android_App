@@ -9,9 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:background="@color/blue_1"
-        android:paddingLeft="160dp"
         android:text="Kategoria"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="20dp" />
 
@@ -19,4 +18,5 @@
         android:id="@+id/product_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 </LinearLayout>
