@@ -18,6 +18,7 @@ package pl.plantoplate.requests.signin;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import okhttp3.ResponseBody;
 import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
+import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.ActivityMain;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,8 +72,9 @@ public class SignInCallback extends BaseCallback implements Callback<ResponseBod
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         view.getContext().startActivity(intent);
 
+
         // save app state
-        controller.saveAppState(ApplicationState.MAIN_ACTIVITY);
+        controller.saveAppState(ApplicationState.LOGIN);
     }
 
     /**

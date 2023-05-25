@@ -16,8 +16,10 @@
 
 package pl.plantoplate.ui.login.remindPassword;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,14 +28,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import pl.plantoplate.databinding.RemindPassword3Binding;
+import pl.plantoplate.requests.BaseCallback;
 import pl.plantoplate.requests.RetrofitClient;
 import pl.plantoplate.requests.signin.SignInCallback;
 import pl.plantoplate.requests.signin.SignInData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.ui.login.LoginActivity;
+import pl.plantoplate.ui.main.ActivityMain;
 import retrofit2.Call;
 
 /**
@@ -85,7 +92,21 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
             }
             SignInData data = new SignInData(email, SCryptStretcher.stretch(new_password1, email));
             Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().resetPassword(data);
-            myCall.enqueue(new SignInCallback(view, this));
+            myCall.enqueue(new BaseCallback(view) {
+                @Override
+                public void handleSuccessResponse(String response) {
+                    // Start the login activity
+                    Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    Snackbar.make(view, "Pomyślnie zmieniono hasło!", Snackbar.LENGTH_LONG).show();
+                    new Handler().postDelayed(() -> view.getContext().startActivity(intent), 500);
+                }
+
+                @Override
+                public void handleErrorResponse(int code) {
+
+                }
+            });
         }
         else {
             new_password_field2.setError("Hasła nie są takie same");

@@ -29,7 +29,7 @@ public class EmailValidator {
      * This method checks if a given string is a valid email address.
      *
      * @param str the string to check
-     * @return true if the string is a valid email address, false otherwise
+     * @return true if the string  is a valid email address, false otherwise
      */
     public static boolean isEmail(String str) {
 
