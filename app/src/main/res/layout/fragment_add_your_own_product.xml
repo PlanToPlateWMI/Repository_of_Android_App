@@ -53,10 +53,9 @@
         android:textSize="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131" />
+        app:layout_constraintVertical_bias="0.13" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/enter_name"
@@ -74,10 +73,10 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/baza_text"
-        app:layout_constraintVertical_bias="0.084">
+        app:layout_constraintVertical_bias="0.077">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_the_name"
@@ -95,40 +94,8 @@
             tools:layout_editor_absoluteY="321dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/zmien_kategorie"
-        android:layout_width="236dp"
-        android:layout_height="70dp"
-
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="35dp"
-
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp"
-
-        android:backgroundTint="@color/blue_1"
-        android:clickable="true"
-
-        android:fontFamily="@font/quicksand_medium"
-
-        android:text="@string/zmien_kategorie"
-
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_name"
-        app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/blue_1" />
-
     <TextView
-        android:id="@+id/jednostki_miary"
+        android:id="@+id/kategoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_regular"
@@ -282,6 +249,70 @@
     <!--        app:layout_constraintVertical_bias="0.439"-->
     <!--        app:rippleColor="@color/blue_1" />-->
 
+
+    <Button
+        android:id="@+id/zmien_kategorie"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="35dp"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+        android:text="@string/zmien_kategorie"
+
+        android:textAllCaps="false"
+
+        android:textColor="@color/black_gray"
+
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_name"
+        app:layout_constraintVertical_bias="0.034"
+        app:rippleColor="@color/blue_1"
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp" />
+
+    <TextView
+        android:id="@+id/kategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="center"
+        android:text="@string/kategoria"
+        android:textColor="@color/black_gray"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_group"
+        app:layout_constraintEnd_toStartOf="@+id/kategoria_napis"
+        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_name"
+        app:layout_constraintVertical_bias="0.066" />
+
+    <TextView
+        android:id="@+id/kategoria_napis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="center"
+        android:text="Dodane przeze mnie"
+        android:textColor="@color/black_gray"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.768"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_name"
+        app:layout_constraintVertical_bias="0.073" />
 
     <RadioGroup
         android:id="@+id/toggle_group"

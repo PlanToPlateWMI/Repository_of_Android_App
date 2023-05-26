@@ -111,6 +111,8 @@ chcesz usunąć produkt ze spiżarni?</string>
     <string name="inne">Inne</string>
     <string name="konserwy">Konserwy</string>
 
+    <string name="kategoria">Kategoria: </string>
+
 </resources>
 
     <!--<resources>-->

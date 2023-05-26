@@ -68,38 +68,6 @@
         app:layout_constraintTop_toBottomOf="@+id/zmien_kategorie"
         app:layout_constraintVertical_bias="0.153" />
 
-    <Button
-        android:id="@+id/zmien_kategorie"
-        android:layout_width="236dp"
-        android:layout_height="70dp"
-
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="35dp"
-
-        android:backgroundTint="@color/blue_1"
-        android:clickable="true"
-
-        android:fontFamily="@font/quicksand_medium"
-
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp"
-
-        android:text="@string/zmien_kategorie"
-
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_name"
-        app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/blue_1" />
-
 
     -
 
@@ -244,6 +212,69 @@
     <!--        app:rippleColor="@color/blue_1" />-->
 
 
+    <TextView
+        android:id="@+id/kategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="center"
+        android:text="@string/kategoria"
+        android:textColor="@color/black_gray"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_group"
+        app:layout_constraintEnd_toStartOf="@+id/kategoria_napis"
+        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_name"
+        app:layout_constraintVertical_bias="0.122" />
+
+    <TextView
+        android:id="@+id/kategoria_napis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_regular"
+        android:gravity="center"
+        android:text="Napis_kategorii"
+        android:textColor="@color/black_gray"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.768"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_name"
+        app:layout_constraintVertical_bias="0.122" />
+
+    <Button
+        android:id="@+id/zmien_kategorie"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="35dp"
+
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:text="@string/zmien_kategorie"
+        android:textAllCaps="false"
+
+        android:textColor="@color/black_gray"
+
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_name"
+        app:layout_constraintVertical_bias="0.054"
+        app:rippleColor="@color/blue_1"
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp" />
 
     <RadioGroup
         android:id="@+id/toggle_group"
