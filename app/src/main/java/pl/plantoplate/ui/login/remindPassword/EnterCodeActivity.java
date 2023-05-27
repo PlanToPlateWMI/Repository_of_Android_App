@@ -16,6 +16,7 @@
 
 package pl.plantoplate.ui.login.remindPassword;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,12 +43,14 @@ public class EnterCodeActivity extends AppCompatActivity {
 
     private RemindPassword2Binding change_password_view;
 
+    private TextView title;
     private TextInputEditText enter_code_field;
     private Button confirm_button;
     private TextView resend_code_button;
 
     private SharedPreferences prefs;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,7 @@ public class EnterCodeActivity extends AppCompatActivity {
         setContentView(change_password_view.getRoot());
 
         // Define the views
+        title = change_password_view.skorzystajZKodu;
         enter_code_field = change_password_view.wprowadzKod;
         confirm_button = change_password_view.buttonZatwierdzenieLink;
         resend_code_button = change_password_view.wyLijPono;
@@ -69,6 +73,10 @@ public class EnterCodeActivity extends AppCompatActivity {
 
         // Get the shared preferences
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        // Set the title
+        String email = prefs.getString("email", "");
+        title.setText(title.getText().toString() + "\n" + email);
 
     }
 

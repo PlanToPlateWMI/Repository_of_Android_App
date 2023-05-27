@@ -74,7 +74,7 @@ public class SignInCallback extends BaseCallback implements Callback<ResponseBod
 
 
         // save app state
-        controller.saveAppState(ApplicationState.LOGIN);
+        controller.saveAppState(ApplicationState.MAIN_ACTIVITY);
     }
 
     /**

@@ -87,6 +87,9 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
      */
     public void signIn(View view){
         String email = Objects.requireNonNull(email_field.getText()).toString();
+        // remove all whitespaces from email
+        email = email.trim();
+
         String password = Objects.requireNonNull(password_field.getText()).toString();
 
 

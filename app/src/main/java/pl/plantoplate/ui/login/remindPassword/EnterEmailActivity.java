@@ -72,6 +72,9 @@ public class EnterEmailActivity extends AppCompatActivity {
         // Get the email from the text field.
         String email = email_field.getText() != null ? email_field.getText().toString() : "";
 
+        // remove whitespaces
+        email = email.trim();
+
         // Save the email in the shared preferences.
         prefs.edit().putString("email", email).apply();
 

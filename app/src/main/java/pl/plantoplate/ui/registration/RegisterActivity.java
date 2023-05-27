@@ -96,6 +96,10 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     public UserRegisterData getUserInfo(){
         String name = String.valueOf(enter_name.getText());
         String email = String.valueOf(enter_email.getText());
+
+        //remove all whitespaces from email
+        email = email.trim();
+
         String password = String.valueOf(enter_password.getText());
         return new UserRegisterData(name, email, password);
     }
