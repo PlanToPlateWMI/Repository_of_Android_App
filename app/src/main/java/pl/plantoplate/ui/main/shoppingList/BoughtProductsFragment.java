@@ -31,26 +31,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
-import pl.plantoplate.requests.BaseCallback;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.products.DeleteProductCallback;
-import pl.plantoplate.requests.products.Product;
-import pl.plantoplate.requests.shoppingList.GetShopListCallback;
-import pl.plantoplate.requests.shoppingList.ShopListCallback;
-import pl.plantoplate.requests.shoppingList.ShoppingList;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
+import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.models.ShoppingList;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
-import retrofit2.Call;
 
-public class BoughtProductsFragment extends Fragment implements ShopListCallback {
+public class BoughtProductsFragment extends Fragment {
 
     private FragmentKupioneBinding fragmentKupioneBinding;
 
@@ -58,6 +54,7 @@ public class BoughtProductsFragment extends Fragment implements ShopListCallback
     private FloatingActionButton moveToStorageButton;
 
     private SharedPreferences prefs;
+    private ShoppingListRepository shoppingListRepository;
 
     private ArrayList<Product> boughtProductsList;
 
@@ -79,44 +76,84 @@ public class BoughtProductsFragment extends Fragment implements ShopListCallback
         // get shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
+        // get shopping list repository
+        shoppingListRepository = new ShoppingListRepository();
+
         setUpRecyclerView();
 
         return fragmentKupioneBinding.getRoot();
     }
 
-    /**
-     * Get the shopping list from the server
-     */
-    private void getShoppingList() {
+    public void getShoppingList(){
         String token = "Bearer " + prefs.getString("token", "");
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getShoppingList(token);
+        shoppingListRepository.getBoughtShoppingList(token, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> shopList) {
+                boughtProductsList = CategorySorter.sortProductsByName(shopList);
 
-        call.enqueue(new GetShopListCallback(requireActivity().findViewById(R.id.frame_layout), this, getContext()));
+                // update recycler view
+                ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
+                Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
-    @Override
-    public void onShoppingListReceived(ShoppingList shopList) {
-        this.boughtProductsList = CategorySorter.sortProductsByName(shopList.getBought());
+    public void deleteProductFromList(Product product){
+        String token = "Bearer " + prefs.getString("token", "");
+        shoppingListRepository.deleteProductFromShopList(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> shopList) {
+                boughtProductsList = CategorySorter.sortProductsByName(shopList);
 
-        // update recycler view
-        ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
-        Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
+                // update recycler view
+                ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
+                Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void moveProductToBuy(Product product){
         String token = "Bearer " + prefs.getString("token", "");
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().changeProductStateInShopList(token, product.getId());
-
-        call.enqueue(new BaseCallback(requireActivity().findViewById(R.id.frame_layout)) {
+        shoppingListRepository.changeProductStateInShopList(token, product.getId(), new ResponseCallback<ShoppingList>() {
             @Override
-            public void handleSuccessResponse(String response) {
-                getShoppingList();
+            public void onSuccess(ShoppingList shoppingList) {
+                boughtProductsList = CategorySorter.sortProductsByName(shoppingList.getBought());
+
+                // update recycler view
+                ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
+                Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
+
             }
 
             @Override
-            public void handleErrorResponse(int code) {
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
 
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -148,6 +185,7 @@ public class BoughtProductsFragment extends Fragment implements ShopListCallback
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.pop_up_delete_product_from_shopping_list);
 
+
         Button acceptButton = dialog.findViewById(R.id.button_yes);
         Button cancelButton = dialog.findViewById(R.id.button_no);
 
@@ -159,22 +197,5 @@ public class BoughtProductsFragment extends Fragment implements ShopListCallback
         cancelButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
-    }
-
-    public void deleteProductFromList(Product product) {
-        // send request to delete product from database
-
-        String token = "Bearer " + prefs.getString("token", "");
-
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().deleteProductFromShopList(token, product.getId());
-
-        call.enqueue(new DeleteProductCallback(requireActivity().findViewById(R.id.frame_layout)));
-
-        // delete product from list
-        boughtProductsList.remove(product);
-
-        // update recycler view
-        ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
-        Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
     }
 }

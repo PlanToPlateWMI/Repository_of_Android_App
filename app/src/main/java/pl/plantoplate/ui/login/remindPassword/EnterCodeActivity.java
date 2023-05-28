@@ -29,11 +29,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.databinding.RemindPassword2Binding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.remindPassword.ResendCodeCallback;
-import retrofit2.Call;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.auth.AuthRepository;
 
 /**
  * This activity is responsible for handling the user input of the code sent to the user's email
@@ -87,7 +85,7 @@ public class EnterCodeActivity extends AppCompatActivity {
      */
     public void checkCode(View view) {
         String entered_code = enter_code_field.getText() != null ? enter_code_field.getText().toString(): "";
-        String correct_code = getIntent().getStringExtra("code");
+        String correct_code = prefs.getString("code", "");
         if (correct_code.equals(entered_code)){
             startActivity(new Intent(this, ChangePasswordActivity.class));
         }
@@ -105,10 +103,24 @@ public class EnterCodeActivity extends AppCompatActivity {
         // Create a new Email object with the email from the shared preferences.
         String email = prefs.getString("email", "");
 
-        // Create a new retrofit call to send the user data to the server.
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().getConfirmCode(email);
+        AuthRepository repository = new AuthRepository();
+        repository.getEmailConfirmCode(email, new ResponseCallback<String>() {
+            @Override
+            public void onSuccess(String code) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("code", code);
+                editor.apply();
+            }
 
-        // Enqueue the call with a custom callback that handles the response.
-        myCall.enqueue(new ResendCodeCallback(view, email));
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 }

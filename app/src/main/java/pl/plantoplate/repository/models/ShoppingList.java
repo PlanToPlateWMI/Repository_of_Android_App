@@ -14,30 +14,36 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main.shoppingList.listAdapters;
+package pl.plantoplate.repository.models;
 
-import android.view.View;
+import java.util.ArrayList;
 
-import pl.plantoplate.repository.models.Product;
+public class ShoppingList {
 
-public interface OnProductItemClickListener {
-    default void onAddToShoppingListButtonClick(View v, Product product) {
+    private ArrayList<Product> toBuy;
+    private ArrayList<Product> bought;
 
+    public ShoppingList() {
     }
 
-    default void onDeleteProductButtonClick(View v, Product product) {
-
+    public ShoppingList(ArrayList<Product> toBuy, ArrayList<Product> bought) {
+        this.toBuy = toBuy;
+        this.bought = bought;
     }
 
-    default void onEditProductButtonClick(View v, Product product) {
-
+    public ArrayList<Product> getToBuy() {
+        return toBuy;
     }
 
-    default void onCheckShoppingListButtonClick(View v, Product product) {
-
+    public void setToBuy(ArrayList<Product> toBuy) {
+        this.toBuy = toBuy;
     }
 
-    default void onProductItemClick(View v, Product product) {
+    public ArrayList<Product> getBought() {
+        return bought;
+    }
 
+    public void setBought(ArrayList<Product> bought) {
+        this.bought = bought;
     }
 }

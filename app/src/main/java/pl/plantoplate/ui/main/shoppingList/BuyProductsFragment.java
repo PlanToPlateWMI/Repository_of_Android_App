@@ -30,33 +30,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentTrzebaKupicBinding;
-import pl.plantoplate.requests.BaseCallback;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.products.DeleteProductCallback;
-import pl.plantoplate.requests.products.Product;
-import pl.plantoplate.requests.shoppingList.GetShopListCallback;
-import pl.plantoplate.requests.shoppingList.ShopListCallback;
-import pl.plantoplate.requests.shoppingList.ShoppingList;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
+import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.models.ShoppingList;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.Category;
+import pl.plantoplate.repository.models.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
-import retrofit2.Call;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.AddToCartPopUp;
 
-public class BuyProductsFragment extends Fragment implements ShopListCallback {
+public class BuyProductsFragment extends Fragment {
 
     private FragmentTrzebaKupicBinding fragmentTrzebaKupicBinding;
 
@@ -67,6 +64,8 @@ public class BuyProductsFragment extends Fragment implements ShopListCallback {
     private SharedPreferences prefs;
 
     private ArrayList<Category> toBuyProductsList;
+
+    private ShoppingListRepository shoppingListRepository;
 
     @Override
     public void onStart() {
@@ -86,53 +85,131 @@ public class BuyProductsFragment extends Fragment implements ShopListCallback {
         // get shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
+        // get shopping list repository
+        shoppingListRepository = new ShoppingListRepository();
+
         setUpRecyclerView();
         return fragmentTrzebaKupicBinding.getRoot();
     }
 
-    /**
-     * Get the shopping list from the server
-     */
-    private void getShoppingList() {
+    public void getShoppingList(){
         String token = "Bearer " + prefs.getString("token", "");
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getShoppingList(token);
+        shoppingListRepository.getToBuyShoppingList(token, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> shopList) {
+                toBuyProductsList = CategorySorter.sortCategoriesByProduct(shopList);
 
-        call.enqueue(new GetShopListCallback(requireActivity().findViewById(R.id.frame_layout), this, getContext()));
-    }
-
-    @Override
-    public void onShoppingListReceived(ShoppingList shopList) {
-        this.toBuyProductsList = CategorySorter.sortCategoriesByProduct(shopList.getToBuy());
-
-        // print categories and products
-        for (Category category : toBuyProductsList) {
-            System.out.println(category.getName());
-            for (Product product : category.getProducts()) {
-                System.out.println(product.getName());
+                // update recycler view
+                CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
+                Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
             }
-        }
 
-        // update recycler view
-        CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
-        Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void moveProductToBought(Product product){
         String token = "Bearer " + prefs.getString("token", "");
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().changeProductStateInShopList(token, product.getId());
-
-        call.enqueue(new BaseCallback(requireActivity().findViewById(R.id.frame_layout)) {
+        shoppingListRepository.changeProductStateInShopList(token, product.getId(), new ResponseCallback<ShoppingList>() {
             @Override
-            public void handleSuccessResponse(String response) {
-                getShoppingList();
+            public void onSuccess(ShoppingList shoppingList) {
+                toBuyProductsList = CategorySorter.sortCategoriesByProduct(shoppingList.getToBuy());
+
+                // update recycler view
+                CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
+                Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
+
             }
 
             @Override
-            public void handleErrorResponse(int code) {
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
 
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void deleteProductFromList(Product product){
+        String token = "Bearer " + prefs.getString("token", "");
+        shoppingListRepository.deleteProductFromShopList(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> shopList) {
+                toBuyProductsList = CategorySorter.sortCategoriesByProduct(shopList);
+
+                // update recycler view
+                CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
+                Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void changeProductAmount(Product product){
+        String token = "Bearer " + prefs.getString("token", "");
+        shoppingListRepository.changeProductAmountInShopList(token, product.getId(), product, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> shopList) {
+                toBuyProductsList = CategorySorter.sortCategoriesByProduct(shopList);
+
+                // update recycler view
+                CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
+                Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void showAddProductPopup(Product product) {
+        AddToCartPopUp addToCartPopUp = new AddToCartPopUp(requireContext(), product);
+        addToCartPopUp.acceptButton.setOnClickListener(v -> {
+            String quantityValue = Objects.requireNonNull(addToCartPopUp.quantity.getText()).toString();
+            if (quantityValue.isEmpty()) {
+                addToCartPopUp.quantity.setError("Podaj ilość");
+                return;
+            }
+            if (quantityValue.endsWith(".")) {
+                // Remove dot at the end
+                quantityValue = quantityValue.substring(0, quantityValue.length() - 1);
+            }
+            float quantity = BigDecimal.valueOf(Float.parseFloat(quantityValue)).setScale(3, RoundingMode.HALF_UP).floatValue();
+            product.setAmount(quantity);
+            System.out.println(product.getAmount());
+            changeProductAmount(product);
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
+            addToCartPopUp.dismiss();
+        });
+        addToCartPopUp.show();
     }
 
     public void showDeleteProductPopup(Product product) {
@@ -151,32 +228,6 @@ public class BuyProductsFragment extends Fragment implements ShopListCallback {
         cancelButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
-    }
-
-    public void deleteProductFromList(Product product) {
-        // send request to delete product from database
-
-        String token = "Bearer " + prefs.getString("token", "");
-
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().deleteProductFromShopList(token, product.getId());
-
-        call.enqueue(new DeleteProductCallback(requireActivity().findViewById(R.id.frame_layout)));
-
-        // delete product from list
-        for (Category category : toBuyProductsList) {
-            if (category.getProducts().contains(product)) {
-                category.getProducts().remove(product);
-                // if category is empty, remove it from list
-                if (category.getProducts().isEmpty()) {
-                    toBuyProductsList.remove(category);
-                }
-                break;
-            }
-        }
-
-        // update recycler view
-        CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
-        Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
     }
 
     private void setUpRecyclerView() {
@@ -204,65 +255,6 @@ public class BuyProductsFragment extends Fragment implements ShopListCallback {
             }
         });
         categoryRecyclerView.setAdapter(categoryAdapter);
-    }
-
-    public void changeProductAmount(Product product){
-        String token = "Bearer " + prefs.getString("token", "");
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().changeProductAmountInShopList(token, product.getId(), product);
-
-        call.enqueue(new BaseCallback(requireActivity().findViewById(R.id.frame_layout)) {
-            @Override
-            public void handleSuccessResponse(String response) {
-                getShoppingList();
-            }
-
-            @Override
-            public void handleErrorResponse(int code) {
-
-            }
-        });
-    }
-
-    public void showAddProductPopup(Product product) {
-        Dialog dialog = new Dialog(getContext());
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.pop_up_change_in_product_quantity);
-
-        ImageView plusButton = dialog.findViewById(R.id.plus);
-        ImageView minusButton = dialog.findViewById(R.id.minus);
-        TextInputEditText quantityTextView = dialog.findViewById(R.id.ilosc);
-        ImageView closeButton = dialog.findViewById(R.id.close);
-        TextView productUnitTextView = dialog.findViewById(R.id.jednostki_miary_napisac);
-        Button acceptButton = dialog.findViewById(R.id.zatwierdzenie);
-
-        quantityTextView.setText("0");
-        productUnitTextView.setText(product.getUnit());
-        quantityTextView.setText(String.valueOf(product.getAmount()));
-
-        closeButton.setOnClickListener(v -> dialog.dismiss());
-
-        plusButton.setOnClickListener(v -> {
-            int quantity = Integer.parseInt(Objects.requireNonNull(quantityTextView.getText()).toString());
-            quantity++;
-            quantityTextView.setText(String.valueOf(quantity));
-        });
-
-        minusButton.setOnClickListener(v -> {
-            int quantity = Integer.parseInt(Objects.requireNonNull(quantityTextView.getText()).toString());
-            if (quantity > 1) {
-                quantity--;
-                quantityTextView.setText(String.valueOf(quantity));
-            }
-        });
-
-        acceptButton.setOnClickListener(v -> {
-            product.setAmount(Integer.parseInt(Objects.requireNonNull(quantityTextView.getText()).toString()));
-            changeProductAmount(product);
-            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
-            dialog.dismiss();
-        });
-
-        dialog.show();
     }
 
     /**

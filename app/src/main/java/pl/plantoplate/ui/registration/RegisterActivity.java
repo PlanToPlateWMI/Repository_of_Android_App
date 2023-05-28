@@ -28,18 +28,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import pl.plantoplate.databinding.RegisterActivityBinding;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.auth.AuthRepository;
 import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.requests.joinGroup.sendRegisterData.SendRegisterDataCallback;
-import pl.plantoplate.requests.joinGroup.sendRegisterData.UserRegisterData;
-import pl.plantoplate.requests.RetrofitClient;
+import pl.plantoplate.repository.models.UserRegisterData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.EmailValidator;
 import pl.plantoplate.tools.SCryptStretcher;
 import com.google.android.material.snackbar.Snackbar;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 
 /**
  * An activity for user registration.
@@ -54,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     private Button sign_in_button;
     private Button register_button;
 
-    private SharedPreferences preferences;
+    private SharedPreferences prefs;
 
     /**
      * Called when the activity is first created.
@@ -81,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         sign_in_button = register_view.buttonZalogujSie;
 
         // get shared preferences
-        preferences = getSharedPreferences("prefs", 0);
+        prefs = getSharedPreferences("prefs", 0);
 
         // Set the click listener for the register button
         register_button.setOnClickListener(this::validateUserInfo);
@@ -140,15 +137,36 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
 
     /**
      * Sends the user data to the server and handles the response asynchronously.
-     * @param data The user data to send.
+     * @param userData The user data to send.
      * @param view The View to display the response in (e.g. error using SnackBar).
      */
-    public void sendUserData(UserRegisterData data, View view) {
-        // Create a new retrofit call to send the user data to the server.
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().sendUserRegisterData(data);
+    public void sendUserData(UserRegisterData userData, View view) {
+        AuthRepository authRepository = new AuthRepository();
+        authRepository.sendUserRegisterData(userData, new ResponseCallback<String>() {
+            @Override
+            public void onSuccess(String code) {
+                // save user data to shared preferences
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("name", userData.getUsername());
+                editor.putString("email", userData.getEmail());
+                editor.putString("password", userData.getPassword());
 
-        // Enqueue the call with a custom callback that handles the response.
-        myCall.enqueue(new SendRegisterDataCallback(view, data, this));
+                // start email confirmation activity
+                Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
+                editor.putString("code", code).apply();
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     /**
@@ -161,9 +179,13 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         saveAppState(ApplicationState.LOGIN);
     }
 
+    /**
+     * Saves the application state to shared preferences.
+     * @param applicationState The application state to save.
+     */
     @Override
     public void saveAppState(ApplicationState applicationState) {
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = prefs.edit();
         editor.putString("applicationState", applicationState.toString());
         editor.apply();
     }

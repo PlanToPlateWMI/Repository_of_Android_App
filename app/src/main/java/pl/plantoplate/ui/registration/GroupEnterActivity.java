@@ -16,6 +16,7 @@
 
 package pl.plantoplate.ui.registration;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -28,14 +29,14 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.databinding.GroupPageBinding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.joinGroup.UserJoinGroupCallback;
-import pl.plantoplate.requests.joinGroup.UserJoinGroupData;
+import pl.plantoplate.repository.models.JwtResponse;
+import pl.plantoplate.repository.models.UserJoinGroupData;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.group.GroupRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
-import retrofit2.Call;
+import pl.plantoplate.ui.main.ActivityMain;
 
 /**
  * An activity for user entering group code to join group.
@@ -65,9 +66,7 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         prefs = getSharedPreferences("prefs", 0);
 
         // Set listener for the group code entered by the user
-        group_code_enter_button.setOnClickListener(this::checkGroupCode);
-
-
+        group_code_enter_button.setOnClickListener(this::validateGroupCode);
 
     }
 
@@ -76,18 +75,55 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
      * It checks if the group code entered by the user is valid and if so, it makes an API call to join the group.
      * @param v The view that was clicked
      */
-    public void checkGroupCode(View v) {
+    public void validateGroupCode(View v) {
         String code = Objects.requireNonNull(group_code_enter.getText()).toString();
         if (code.isEmpty()) {
             Snackbar.make(v, "Wprowadź kod grupy!", Snackbar.LENGTH_LONG).show();
             return;
         }
+        getJoinGroupData(v, code);
+    }
+
+    public void getJoinGroupData(View v, String code) {
         String email = prefs.getString("email", "");
         String password = prefs.getString("password", "");
-        UserJoinGroupData data = new UserJoinGroupData(code, email, password);
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().joinGroupByCode(data);
+        pl.plantoplate.repository.models.UserJoinGroupData data = new pl.plantoplate.repository.models.UserJoinGroupData(code, email, password);
 
-        myCall.enqueue(new UserJoinGroupCallback(v, this));
+        joinGroup(v, data);
+    }
+
+    public void joinGroup(View view, UserJoinGroupData userJoinGroupdata) {
+        GroupRepository groupRepository = new GroupRepository();
+        groupRepository.joinGroupByCode(userJoinGroupdata, new ResponseCallback<JwtResponse>() {
+            @Override
+            public void onSuccess(JwtResponse jwt) {
+                // Save token and role in shared preferences
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("token", jwt.getToken());
+                editor.putString("role", jwt.getRole());
+
+                // delete email from shared preferences
+                editor.remove("email").apply();
+
+                // start main activity
+                Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+                // save app state
+                saveAppState(ApplicationState.MAIN_ACTIVITY);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

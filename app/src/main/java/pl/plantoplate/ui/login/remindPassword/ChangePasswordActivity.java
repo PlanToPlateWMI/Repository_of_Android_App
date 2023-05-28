@@ -28,20 +28,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 import pl.plantoplate.databinding.RemindPassword3Binding;
-import pl.plantoplate.requests.BaseCallback;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.signin.SignInCallback;
-import pl.plantoplate.requests.signin.SignInData;
+import pl.plantoplate.repository.models.Message;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.auth.AuthRepository;
+import pl.plantoplate.repository.models.SignInData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;
 import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.ui.main.ActivityMain;
-import retrofit2.Call;
 
 /**
  * An activity that allows users to change their password.
@@ -90,27 +85,42 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
                 Snackbar.make(view, "Hasło musi mieć co najmniej 7 znaków", Snackbar.LENGTH_LONG).show();
                 return;
             }
-            SignInData data = new SignInData(email, SCryptStretcher.stretch(new_password1, email));
-            Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().resetPassword(data);
-            myCall.enqueue(new BaseCallback(view) {
-                @Override
-                public void handleSuccessResponse(String response) {
-                    // Start the login activity
-                    Intent intent = new Intent(view.getContext(), LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    Snackbar.make(view, "Pomyślnie zmieniono hasło!", Snackbar.LENGTH_LONG).show();
-                    new Handler().postDelayed(() -> view.getContext().startActivity(intent), 500);
-                }
 
-                @Override
-                public void handleErrorResponse(int code) {
-
-                }
-            });
+            SignInData userSignInData = new SignInData(email, SCryptStretcher.stretch(new_password1, email));
+            sendNewPassword(userSignInData, view);
         }
         else {
             new_password_field2.setError("Hasła nie są takie same");
         }
+    }
+
+    /**
+     * A method that sends the new password to the server and get the token.
+     * @param userSignInData The data that will be sent to the server to apply the new password.
+     * @param view The view that was clicked.
+     */
+    private void sendNewPassword(SignInData userSignInData, View view) {
+        AuthRepository authRepository = new AuthRepository();
+        authRepository.resetPassword(userSignInData, new ResponseCallback<Message>() {
+            @Override
+            public void onSuccess(Message message) {
+                // Start the login activity
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Snackbar.make(view, "Pomyślnie zmieniono hasło!", Snackbar.LENGTH_LONG).show();
+                new Handler().postDelayed(() -> view.getContext().startActivity(intent), 500);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

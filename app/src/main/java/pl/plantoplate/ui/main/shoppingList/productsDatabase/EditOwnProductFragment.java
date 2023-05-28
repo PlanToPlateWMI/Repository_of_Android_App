@@ -17,16 +17,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentProductChangeBinding;
-import pl.plantoplate.requests.BaseCallback;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.product.ProductRepository;
+import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
-import retrofit2.Call;
 
 public class EditOwnProductFragment extends Fragment {
 
@@ -43,6 +42,7 @@ public class EditOwnProductFragment extends Fragment {
     private TextInputEditText add_product_name;
 
     private Product product;
+    private ProductRepository productRepository;
 
     public EditOwnProductFragment(Product product) {
         this.product = product;
@@ -113,6 +113,9 @@ public class EditOwnProductFragment extends Fragment {
         delete_button = fragmentProductChangeBinding.buttonUsun;
         delete_button.setOnClickListener(v -> showConfirmDeleteProductPopUp(requireActivity().findViewById(R.id.frame_layout)));
 
+        // Get the product repository
+        productRepository = new ProductRepository();
+
 
         return fragmentProductChangeBinding.getRoot();
     }
@@ -138,6 +141,31 @@ public class EditOwnProductFragment extends Fragment {
         }
     }
 
+    public void saveProduct(View view){
+
+        // Get the token
+        String token = "Bearer " + prefs.getString("token", "");
+        productRepository.modifyProduct(token, product.getId(), product, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                Snackbar.make(view, "Pomyślnie zmieniono produkt.", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        // Go back to the products database fragment
+        requireActivity().getSupportFragmentManager().popBackStack();
+    }
+
     public void applyProductChange(View view) {
 
         // Get the product name
@@ -151,25 +179,8 @@ public class EditOwnProductFragment extends Fragment {
         }
         product.setCategory(category);
 
-        // Get the token
-        String token = "Bearer " + prefs.getString("token", "");
-
-        // Send the request to add the product to the database
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().changeOwnProduct(token, product.getId(), product);
-        call.enqueue(new BaseCallback(view) {
-            @Override
-            public void handleSuccessResponse(String response) {
-                Snackbar.make(view, "Pomyślnie zmieniono produkt.", Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void handleErrorResponse(int code) {
-                Snackbar.make(view, "Nie udało się zmienić produktu.", Snackbar.LENGTH_LONG).show();
-            }
-        });
-
-        // Go back to the products database fragment
-        requireActivity().getSupportFragmentManager().popBackStack();
+        // Save the product
+        saveProduct(view);
     }
 
     public void showConfirmDeleteProductPopUp(View view) {
@@ -194,18 +205,20 @@ public class EditOwnProductFragment extends Fragment {
 
         // Get the token
         String token = "Bearer " + prefs.getString("token", "");
-
-        // Send the request to add the product to the database
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().deleteOwnProduct(token, product.getId());
-        call.enqueue(new BaseCallback(view) {
+        productRepository.deleteProduct(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
             @Override
-            public void handleSuccessResponse(String response) {
+            public void onSuccess(ArrayList<Product> response) {
                 Snackbar.make(view, "Pomyślnie usunięto produkt.", Snackbar.LENGTH_LONG).show();
             }
 
             @Override
-            public void handleErrorResponse(int code) {
-                Snackbar.make(view, "Nie udało się usunąć produktu.", Snackbar.LENGTH_LONG).show();
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
             }
         });
 

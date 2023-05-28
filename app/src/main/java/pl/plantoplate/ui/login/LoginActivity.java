@@ -25,21 +25,22 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.databinding.LoginPageBinding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.signin.SignInCallback;
-import pl.plantoplate.requests.signin.SignInData;
+import pl.plantoplate.repository.models.JwtResponse;
+import pl.plantoplate.repository.models.SignInData;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.auth.AuthRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;
 import pl.plantoplate.ui.login.remindPassword.EnterEmailActivity;
+import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.registration.RegisterActivity;
-import retrofit2.Call;
 
 /**
  * An activity that allows users to log in to their account.
@@ -71,14 +72,31 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         create_account_button = login_view.buttonZalozKonto;
         remind_password_button = login_view.przypHaslo;
 
+        // Get the shared preferences
+        prefs = getSharedPreferences("prefs", 0);
+
         // Set a click listeners for the buttons
         sign_in_button.setOnClickListener(this::signIn);
         create_account_button.setOnClickListener(v -> createAccount());
         remind_password_button.setOnClickListener(v -> remindPassword());
 
-        // Get the shared preferences
-        prefs = getSharedPreferences("prefs", 0);
+    }
 
+    /**
+     * Get the user's information from the input fields.
+     *
+     * @return A UserInfo object containing the user's information.
+     */
+    public SignInData getUserInfo(){
+        // get the email and password from the text fields
+        String email = Objects.requireNonNull(email_field.getText()).toString();
+        String password = Objects.requireNonNull(password_field.getText()).toString();
+        // remove all whitespaces from email
+        email = email.trim();
+        //stretch password to make it unreadable and secure
+        password = SCryptStretcher.stretch(password, email);
+
+        return new SignInData(email, password);
     }
 
     /**
@@ -86,21 +104,38 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
      * @param view The view that was clicked.
      */
     public void signIn(View view){
-        String email = Objects.requireNonNull(email_field.getText()).toString();
-        // remove all whitespaces from email
-        email = email.trim();
 
-        String password = Objects.requireNonNull(password_field.getText()).toString();
+        SignInData userSignInData = getUserInfo();
 
+        AuthRepository authRepository = new AuthRepository();
+        authRepository.signIn(userSignInData, new ResponseCallback<JwtResponse>() {
+            @Override
+            public void onSuccess(JwtResponse jwtResponse) {
+                // save the token and role in the shared preferences
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("token", jwtResponse.getToken());
+                editor.putString("role", jwtResponse.getRole());
+                editor.apply();
 
-        SignInData data = new SignInData(email, password);
+                // Start the main activity
+                Intent intent = new Intent(view.getContext(), ActivityMain.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                view.getContext().startActivity(intent);
 
-        //stretch password to make it unreadable and secure
-        data.setPassword(SCryptStretcher.stretch(data.getPassword(), email));
+                // save the app state
+                saveAppState(ApplicationState.MAIN_ACTIVITY);
+            }
 
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().signinUser(data);
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
 
-        myCall.enqueue(new SignInCallback(view, this));
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
 

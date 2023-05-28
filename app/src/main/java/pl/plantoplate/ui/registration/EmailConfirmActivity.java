@@ -32,13 +32,13 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.Objects;
 
 import okhttp3.ResponseBody;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.auth.AuthRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import retrofit2.Call;
 
 import pl.plantoplate.databinding.EmailConfirmationBinding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.getConfirmCode.ConfirmCodeCallback;
 
 public class EmailConfirmActivity extends AppCompatActivity implements ApplicationStateController {
 
@@ -108,11 +108,24 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         // clear entered code
         enter_code.setText("");
 
-        // Create a new retrofit call to send the user data to the server.
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().getConfirmCode(email);
+        AuthRepository authRepository = new AuthRepository();
+        authRepository.getEmailConfirmCode(email, new ResponseCallback<String>() {
+            @Override
+            public void onSuccess(String response) {
+                // save the code in the shared preferences
+                prefs.edit().putString("code", response).apply();
+            }
 
-        // Enqueue the call with a custom callback that handles the response.
-        myCall.enqueue(new ConfirmCodeCallback(view));
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
 
         // make snackbar that informs the user that the code has been sent
         Snackbar.make(view, "Wysłano nowy kod", Snackbar.LENGTH_LONG).show();

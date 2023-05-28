@@ -29,19 +29,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.products.AddOwnProductCallback;
-import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.product.ProductRepository;
+import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
-import retrofit2.Call;
 
 public class AddYourOwnProductFragment extends Fragment implements ChangeCategoryListener{
 
@@ -55,8 +56,10 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
     private Button change_kategory;
     private Button cancel_button;
     private TextInputEditText add_product_name;
+    private TextView product_category;
 
     private Product product;
+    private ProductRepository productRepository;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -89,8 +92,11 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
         // Set the product name button
         add_product_name = add_own_product_view.enterTheName;
 
+        // Set the product category
+        product_category = add_own_product_view.kategoria;
+
         // Set the button listener
-        add_product_button.setOnClickListener(this::addProduct);
+        add_product_button.setOnClickListener(v -> addProduct(requireActivity().findViewById(R.id.frame_layout)));
         cancel_button.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment()));
 
         change_kategory = add_own_product_view.zmienKategorie;
@@ -98,6 +104,8 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
 
         change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
 
+        // get the product repository
+        productRepository = new ProductRepository();
 
         return add_own_product_view.getRoot();
     }
@@ -126,6 +134,7 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
     @Override
     public void onCategoryChosen(String category) {
         product.setCategory(category);
+        product_category.setText(category);
     }
 
     public void addProduct(View v) {
@@ -134,18 +143,28 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
             product.setCategory(category);
         }
 
-        // Get the product name
+        // Set up product
         String product_name = Objects.requireNonNull(add_product_name.getText()).toString();
-
-        // Set the product name
         product.setName(product_name);
 
         // Get the token
         String token = "Bearer " + prefs.getString("token", "");
+        productRepository.addProduct(token, product, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                Snackbar.make(v, "Produkt został dodany", Snackbar.LENGTH_LONG).show();
+            }
 
-        // Send the request to add the product to the database
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().addOwnProduct(token, product);
-        call.enqueue(new AddOwnProductCallback(requireActivity().findViewById(R.id.frame_layout)));
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(v, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(v, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
 
         // Go back to the products database fragment
         requireActivity().getSupportFragmentManager().popBackStack();

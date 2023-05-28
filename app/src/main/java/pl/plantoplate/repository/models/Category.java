@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main.shoppingList.listAdapters.category;
+package pl.plantoplate.repository.models;
 
 import java.util.ArrayList;
 

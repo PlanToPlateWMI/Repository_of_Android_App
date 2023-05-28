@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pl.plantoplate.requests.products.Product;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.Category;
+import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.models.Category;
 
 public class CategorySorter {
 

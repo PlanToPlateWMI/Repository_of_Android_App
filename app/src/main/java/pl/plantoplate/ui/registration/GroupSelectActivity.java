@@ -24,14 +24,17 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import okhttp3.ResponseBody;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+
 import pl.plantoplate.databinding.GroupChooseBinding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.createGroup.CreateGroupCallback;
-import pl.plantoplate.requests.createGroup.CreateGroupData;
+import pl.plantoplate.repository.models.JwtResponse;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.group.GroupRepository;
+import pl.plantoplate.repository.models.CreateGroupData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
-import retrofit2.Call;
+import pl.plantoplate.ui.main.ActivityMain;
 
 /**
 
@@ -55,17 +58,16 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         group_select_view = GroupChooseBinding.inflate(getLayoutInflater());
         setContentView(group_select_view.getRoot());
 
-        // create buttons
+        // find views
         enter_group = group_select_view.buttonMamZaproszenie;
         create_group = group_select_view.buttonSwojaGrupa;
 
-        // set buttons onClickListeners
-        enter_group.setOnClickListener(v -> goToGroupEnterActivity());
-
-        create_group.setOnClickListener(this::createGroup);
-
         // get shared preferences
         prefs = getSharedPreferences("prefs", 0);
+
+        // set buttons onClickListeners
+        enter_group.setOnClickListener(v -> goToGroupEnterActivity());
+        create_group.setOnClickListener(this::createGroup);
 
     }
 
@@ -77,23 +79,55 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         startActivity(intent);
     }
 
-    /**
-     * This method is called when the user clicks the "Create Group" button.
-     * It creates a new group using the user's email and password as credentials.
-     *
-     * @param v The view that was clicked
-     */
-    public void createGroup(View v) {
+    public CreateGroupData getCreateGroupData() {
         // get user credentials from shared preferences
         String email = prefs.getString("email", "");
         String password = prefs.getString("password", "");
 
         // create a new CreateGroupData object with user credentials
-        CreateGroupData createGroupRequest = new CreateGroupData(email, password);
+        return new CreateGroupData(email, password);
+    }
+
+    /**
+     * This method is called when the user clicks the "Create Group" button.
+     * It creates a new group using the user's email and password as credentials.
+     *
+     * @param view The view that was clicked
+     */
+    public void createGroup(View view) {
+        CreateGroupData createGroupData = getCreateGroupData();
 
         // make API call to create a new group with user credentials
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().createGroup(createGroupRequest);
-        myCall.enqueue(new CreateGroupCallback(v, this));
+        GroupRepository groupRepository = new GroupRepository();
+        groupRepository.createGroup(createGroupData, new ResponseCallback<JwtResponse>() {
+            @Override
+            public void onSuccess(JwtResponse jwt) {
+
+                // save user token and role in shared preferences
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("token", jwt.getToken());
+                editor.putString("role", jwt.getRole());
+                editor.apply();
+
+                // start main activity
+                Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+                // save app state
+                saveAppState(ApplicationState.MAIN_ACTIVITY);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

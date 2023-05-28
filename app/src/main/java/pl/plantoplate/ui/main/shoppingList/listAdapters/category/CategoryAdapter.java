@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.repository.models.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     private ArrayList<Category> categories;

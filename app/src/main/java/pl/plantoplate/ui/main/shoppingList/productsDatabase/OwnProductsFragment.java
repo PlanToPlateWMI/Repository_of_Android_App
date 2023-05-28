@@ -15,7 +15,6 @@
  */
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
-import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -29,31 +28,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWlasneBinding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.products.GetProductsDBaseCallback;
-import pl.plantoplate.requests.products.Product;
-import pl.plantoplate.requests.products.ProductsListCallback;
-import pl.plantoplate.requests.shoppingList.AddProductToShopListCallback;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.product.ProductRepository;
+import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
+import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
-import retrofit2.Call;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.AddToCartPopUp;
 
-public class OwnProductsFragment extends Fragment implements SearchView.OnQueryTextListener, ProductsListCallback {
+public class OwnProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
     private FragmentWlasneBinding fragmentWlasneBinding;
 
     private FloatingActionButton floatingActionButton_wlasne;
@@ -62,17 +59,9 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
     private SearchView searchView;
 
     private SharedPreferences prefs;
-    private ArrayList<Product> groupProductsList;
+    private ProductRepository productRepository;
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragmentWlasneBinding = FragmentWlasneBinding.inflate(inflater, container, false);
-        setupViews();
-        setupListeners();
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
-        setupRecyclerView();
-        return fragmentWlasneBinding.getRoot();
-    }
+    private ArrayList<Product> groupProductsList;
 
     @Override
     public void onStart() {
@@ -80,34 +69,72 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         getProducts();
     }
 
-    private void setupViews() {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
+        fragmentWlasneBinding = FragmentWlasneBinding.inflate(inflater, container, false);
+
+        // Setup views
         floatingActionButton_wlasne = fragmentWlasneBinding.floatingActionButtonWlasne;
         welcomeTextView = fragmentWlasneBinding.welcomeWlasne;
         searchView = requireActivity().findViewById(R.id.search);
-    }
 
-    private void setupListeners() {
+        // Setup listeners
         floatingActionButton_wlasne.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
         searchView.setOnQueryTextListener(this);
+
+        // Get shared preferences
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        // Get product repository
+        productRepository = new ProductRepository();
+
+        setupRecyclerView();
+        return fragmentWlasneBinding.getRoot();
     }
 
-    private void getProducts() {
+    private void getProducts(){
         String token = "Bearer " + prefs.getString("token", "");
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().getProducts(token);
-        call.enqueue(new GetProductsDBaseCallback(requireActivity().findViewById(R.id.frame_layout), this));
+        productRepository.getOwnProducts(token, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> products) {
+                groupProductsList = CategorySorter.sortProductsByName(products);
+
+                updateRecyclerView();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
-    @Override
-    public void onProductsListsReceived(ArrayList<Product> generalProductsList, ArrayList<Product> groupProductsList) {
-        this.groupProductsList = CategorySorter.sortProductsByName(groupProductsList);
-        updateRecyclerView();
-    }
-
-    public void addProductToShoppingList(Product product, int amount) {
+    public void addProductToShoppingList(Product product) {
         String token = "Bearer " + prefs.getString("token", "");
-        product.setAmount(amount);
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().addProductToShopList(token, product);
-        myCall.enqueue(new AddProductToShopListCallback(requireActivity().findViewById(R.id.frame_layout)));
+        ShoppingListRepository shoppingListRepository = new ShoppingListRepository();
+        shoppingListRepository.addProductToShopList(token, product, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "Dodano produkt do listy zakupów", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -121,30 +148,6 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         ArrayList<Product> filteredProducts = CategorySorter.filterProductsBySearch(groupProductsList, query);
         updateRecyclerView(filteredProducts);
         return false;
-    }
-
-    private void setupRecyclerView() {
-        ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
-        ownProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ProductAdapter productAllAdapter = new ProductAdapter(groupProductsList, R.layout.item_wlasny_produkt);
-        productAllAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
-            @Override
-            public void onAddToShoppingListButtonClick(View v, Product product) {
-                addProductToShoppingList(product, 1);
-                replaceFragment(new ShoppingListFragment());
-            }
-
-            @Override
-            public void onEditProductButtonClick(View v, Product product) {
-                replaceFragment(new EditOwnProductFragment(product));
-            }
-
-            @Override
-            public void onProductItemClick(View v, Product product) {
-                showAddProductPopup(product);
-            }
-        });
-        ownProductsRecyclerView.setAdapter(productAllAdapter);
     }
 
     private void updateRecyclerView() {
@@ -163,44 +166,50 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
     }
 
     public void showAddProductPopup(Product product) {
-        Dialog dialog = new Dialog(getContext());
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.pop_up_change_in_product_quantity);
-
-        ImageView plusButton = dialog.findViewById(R.id.plus);
-        ImageView minusButton = dialog.findViewById(R.id.minus);
-        TextInputEditText quantityTextView = dialog.findViewById(R.id.ilosc);
-        ImageView closeButton = dialog.findViewById(R.id.close);
-        TextView productUnitTextView = dialog.findViewById(R.id.jednostki_miary_napisac);
-        Button acceptButton = dialog.findViewById(R.id.zatwierdzenie);
-
-        quantityTextView.setText("0");
-        productUnitTextView.setText(product.getUnit());
-
-        closeButton.setOnClickListener(v -> dialog.dismiss());
-
-        plusButton.setOnClickListener(v -> {
-            int quantity = Integer.parseInt(Objects.requireNonNull(quantityTextView.getText()).toString());
-            quantity++;
-            quantityTextView.setText(String.valueOf(quantity));
+        product.setAmount(1);
+        AddToCartPopUp addToCartPopUp = new AddToCartPopUp(requireContext(), product);
+        addToCartPopUp.acceptButton.setOnClickListener(v -> {
+            String quantityValue = Objects.requireNonNull(addToCartPopUp.quantity.getText()).toString();
+            if (quantityValue.isEmpty()) {
+                addToCartPopUp.quantity.setError("Podaj ilość");
+                return;
+            }
+            if (quantityValue.endsWith(".")) {
+                // Remove dot at the end
+                quantityValue = quantityValue.substring(0, quantityValue.length() - 1);
+            }
+            float quantity = BigDecimal.valueOf(Float.parseFloat(quantityValue)).setScale(3, RoundingMode.HALF_UP).floatValue();
+            product.setAmount(quantity);
+            addProductToShoppingList(product);
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
+            addToCartPopUp.dismiss();
         });
+        addToCartPopUp.show();
+    }
 
-        minusButton.setOnClickListener(v -> {
-            int quantity = Integer.parseInt(Objects.requireNonNull(quantityTextView.getText()).toString());
-            if (quantity > 1) {
-                quantity--;
-                quantityTextView.setText(String.valueOf(quantity));
+    private void setupRecyclerView() {
+        ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
+        ownProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ProductAdapter productAllAdapter = new ProductAdapter(groupProductsList, R.layout.item_wlasny_produkt);
+        productAllAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+            @Override
+            public void onAddToShoppingListButtonClick(View v, Product product) {
+                product.setAmount(1.0f);
+                addProductToShoppingList(product);
+                replaceFragment(new ShoppingListFragment());
+            }
+
+            @Override
+            public void onEditProductButtonClick(View v, Product product) {
+                replaceFragment(new EditOwnProductFragment(product));
+            }
+
+            @Override
+            public void onProductItemClick(View v, Product product) {
+                showAddProductPopup(product);
             }
         });
-
-        acceptButton.setOnClickListener(v -> {
-            product.setAmount(Integer.parseInt(Objects.requireNonNull(quantityTextView.getText()).toString()));
-            addProductToShoppingList(product, product.getAmount());
-            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
-            dialog.dismiss();
-        });
-
-        dialog.show();
+        ownProductsRecyclerView.setAdapter(productAllAdapter);
     }
 
     private void replaceFragment(Fragment fragment) {

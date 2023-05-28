@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import pl.plantoplate.R;
-import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder{

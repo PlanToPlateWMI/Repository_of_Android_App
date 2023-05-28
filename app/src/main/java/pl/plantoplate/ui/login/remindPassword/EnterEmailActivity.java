@@ -16,6 +16,7 @@
 
 package pl.plantoplate.ui.login.remindPassword;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -23,13 +24,12 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.databinding.RemindPassword1Binding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.remindPassword.GetCodeCallback;
-import retrofit2.Call;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.auth.AuthRepository;
 
 /**
  * A class that is responsible for the first step of the password remind process.
@@ -78,10 +78,24 @@ public class EnterEmailActivity extends AppCompatActivity {
         // Save the email in the shared preferences.
         prefs.edit().putString("email", email).apply();
 
-        // Create a new retrofit call to send the user data to the server.
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().getConfirmCode(email);
+        AuthRepository authRepository = new AuthRepository();
+        authRepository.getEmailConfirmCode(email, new ResponseCallback<String>() {
+            @Override
+            public void onSuccess(String code) {
+                Intent intent = new Intent(getApplicationContext(), EnterCodeActivity.class);
+                prefs.edit().putString("code", code).apply();
+                startActivity(intent);
+            }
 
-        // Enqueue the call with a custom callback that handles the response.
-        myCall.enqueue(new GetCodeCallback(v, email));
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(v, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(v, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 }

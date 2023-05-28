@@ -16,6 +16,7 @@
 
 package pl.plantoplate.ui.main.settings.groupCodeGeneration;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -23,11 +24,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import okhttp3.ResponseBody;
+import com.google.android.material.snackbar.Snackbar;
+
 import pl.plantoplate.databinding.ChoiceAdultOrChildBinding;
-import pl.plantoplate.requests.RetrofitClient;
-import pl.plantoplate.requests.groupCodeGeneration.GenerateGroupCodeCallback;
-import retrofit2.Call;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.group.GroupRepository;
 
 /**
  * An activity that allows the user to choose the type of group code to generate.
@@ -45,47 +46,70 @@ public class GroupCodeTypeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Inflate the layout using the View Binding Library
+        // Inflate the layout and set it as the activity content
         choose_group_code_type_view = ChoiceAdultOrChildBinding.inflate(getLayoutInflater());
-
-        // Set the content view to the inflated layout
         setContentView(choose_group_code_type_view.getRoot());
 
         // Get the buttons for choosing group code type
         child_code_button = choose_group_code_type_view.codeForChild;
         adult_code_button = choose_group_code_type_view.codeForAdult;
 
+        // Get shared preferences
+        prefs = getSharedPreferences("prefs", 0);
+
         // Set the onClickListeners for the buttons
         child_code_button.setOnClickListener(this::generateChildCode);
         adult_code_button.setOnClickListener(this::generateAdultCode);
-
-        // Get shared preferences
-        prefs = getSharedPreferences("prefs", 0);
     }
 
     /**
-     * Generates a group code for a child (USER permission).
+     * Set the User (Child) role of the user and call the generateGroupCode method.
      *
      * @param view The view that was clicked.
      */
     public void generateChildCode(View view) {
-        String token = "Bearer " + prefs.getString("token", "");
         String role = "USER";
-
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().generateGroupCode(token, role);
-        myCall.enqueue(new GenerateGroupCodeCallback(view));
+        generateGroupCode(view, role);
     }
 
     /**
-     * Generates a group code for an adult (ADMIN permission).
+     * Set the ADMIN (Parent) role of the user and call the generateGroupCode method.
      *
      * @param view The view that was clicked.
      */
     public void generateAdultCode(View view) {
-        String token = "Bearer " + prefs.getString("token", "");
         String role = "ADMIN";
+        generateGroupCode(view, role);
+    }
 
-        Call<ResponseBody> myCall = RetrofitClient.getInstance().getApi().generateGroupCode(token, role);
-        myCall.enqueue(new GenerateGroupCodeCallback(view));
+    /**
+     * Generate a group code for the user.
+     *
+     * @param view The view that was clicked.
+     * @param role The role of the user.
+     */
+    public void generateGroupCode(View view, String role){
+        String token = "Bearer " + prefs.getString("token", "");
+
+        GroupRepository groupRepository = new GroupRepository();
+        groupRepository.generateGroupCode(token, role, new ResponseCallback<String>() {
+
+            @Override
+            public void onSuccess(String groupCode) {
+                Intent intent = new Intent(getApplicationContext(), GeneratedGroupCodeActivity.class);
+                intent.putExtra("group_code", groupCode);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 }

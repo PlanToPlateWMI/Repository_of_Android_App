@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.requests.products.Product;
+import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
