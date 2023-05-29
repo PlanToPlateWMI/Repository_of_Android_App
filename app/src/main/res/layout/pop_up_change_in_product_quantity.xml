@@ -20,8 +20,8 @@
 
         <TextView
             android:id="@+id/add_products_text"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -44,8 +44,8 @@
 
         <TextView
             android:id="@+id/quanity"
-            android:layout_width="65dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -67,8 +67,8 @@
 
         <TextView
             android:id="@+id/jednostki_miary_napisac"
-            android:layout_width="140dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -83,15 +83,15 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.972"
+            app:layout_constraintHorizontal_bias="0.844"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.587" />
+            app:layout_constraintVertical_bias="0.582" />
 
         <TextView
             android:id="@+id/jednostki_miary"
-            android:layout_width="165dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -106,10 +106,10 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/jednostki_miary_napisac"
-            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintHorizontal_bias="0.346"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.587" />
+            app:layout_constraintVertical_bias="0.582" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/wprowadz_ilosc"
@@ -151,6 +151,8 @@
 
                 android:maxLines="1"
                 android:singleLine="true"
+
+                android:textAppearance="@style/wprowadz_ilosc"
 
                 android:textColor="@color/black_gray"
                 tools:layout_editor_absoluteX="62dp"

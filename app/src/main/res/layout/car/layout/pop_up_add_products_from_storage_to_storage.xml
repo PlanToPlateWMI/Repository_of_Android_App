@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dialog_delete_base"
+        android:id="@+id/dialog_add_to_storage"
         android:layout_width="360dp"
         android:layout_height="350dp"
         android:background="@drawable/for_pop_ups"
@@ -19,7 +19,7 @@
 
 
         <TextView
-            android:id="@+id/delete_base"
+            android:id="@+id/text_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -30,7 +30,7 @@
 
             android:gravity="center"
 
-            android:text="@string/delete_from_base"
+            android:text="@string/dodac_ze_spizarni"
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/black_gray"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,18 +54,19 @@
             android:backgroundTint="@color/blue_1"
             android:clickable="true"
 
-            android:drawableLeft="@drawable/done_24_50"
 
             android:fontFamily="@font/quicksand_medium"
 
-            android:text="@string/tak"
+            android:text="@string/dodac_do_spizarni"
             android:textAllCaps="false"
 
             android:textColor="@color/black_gray"
             android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/delete_base"
+            app:layout_constraintTop_toBottomOf="@+id/text_add"
+            app:layout_constraintVertical_bias="0.097"
             app:strokeColor="@color/blue_2"
             app:strokeWidth="1dp" />
 
@@ -82,11 +83,10 @@
             android:backgroundTint="@color/blue_1"
 
             android:clickable="true"
-            android:drawableLeft="@drawable/close_24_50"
 
             android:fontFamily="@font/quicksand_medium"
 
-            android:text="@string/nie"
+            android:text="@string/przejsc_do_bazy"
 
             android:textAllCaps="false"
             android:textColor="@color/black_gray"

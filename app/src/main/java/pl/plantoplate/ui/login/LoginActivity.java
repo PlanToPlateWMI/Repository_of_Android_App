@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
     private Button sign_in_button;
     private Button create_account_button;
     private TextView remind_password_button;
+    private TextView nie_masz_konta;
 
     private SharedPreferences prefs;
 
@@ -71,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         sign_in_button = login_view.buttonZalogujSie;
         create_account_button = login_view.buttonZalozKonto;
         remind_password_button = login_view.przypHaslo;
+        nie_masz_konta = login_view.nieMaszKonta;
 
         // Get the shared preferences
         prefs = getSharedPreferences("prefs", 0);
@@ -79,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         sign_in_button.setOnClickListener(this::signIn);
         create_account_button.setOnClickListener(v -> createAccount());
         remind_password_button.setOnClickListener(v -> remindPassword());
+        nie_masz_konta.setOnClickListener(v -> createAccount());
 
     }
 

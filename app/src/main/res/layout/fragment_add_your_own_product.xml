@@ -316,7 +316,7 @@
 
     <RadioGroup
         android:id="@+id/toggle_group"
-        android:layout_width="363dp"
+        android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -368,6 +368,27 @@
             android:textColor="@color/black_gray"
             android:textOff="@string/l"
             android:textOn="@string/l"
+            android:textSize="13dp"
+            app:iconPadding="8dp"
+            app:rippleColor="@color/blue_1" />
+
+        <RadioButton
+            android:id="@+id/button_ml"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="11dp"
+            android:background="@drawable/state_list_button"
+            android:button="@null"
+            android:clickable="true"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="ML"
+            android:textAllCaps="false"
+            android:textColor="@color/black_gray"
+            android:textOff="@string/ml"
+            android:textOn="@string/ml"
             android:textSize="13dp"
             app:iconPadding="8dp"
             app:rippleColor="@color/blue_1" />

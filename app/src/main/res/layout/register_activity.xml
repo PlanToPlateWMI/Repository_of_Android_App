@@ -10,8 +10,8 @@
     <!-- PlanToPlate -->
     <TextView
         android:id="@+id/plantoplate"
-        android:layout_width="182dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
 
@@ -32,8 +32,8 @@
     <!-- Rejestracja -->
     <TextView
         android:id="@+id/rejestracja"
-        android:layout_width="140dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -187,8 +187,8 @@
     <!--Checkbox potwierdzenie danych osobowych -->
     <CheckBox
         android:id="@+id/checkbox_wyrazam_zgode"
-        android:layout_width="300dp"
-        android:layout_height="42dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:shadowColor="@color/blue_0"
 
         android:fontFamily="@font/quicksand_regular"
@@ -206,10 +206,14 @@
 
 
     <!--Zalogowanie sie button -->
+
+
+    <!--Masz konto? -->
+
     <Button
         android:id="@+id/button_zaloguj_sie"
-        android:layout_width="140dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -230,22 +234,24 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/masz_konto_"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toEndOf="@+id/masz_konto"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.909"
+        app:layout_constraintVertical_bias="0.928"
         tools:visibility="visible" />
 
 
-    <!--Masz konto? -->
+    <!--Zaloz konto button -->
     <TextView
-        android:id="@+id/masz_konto_"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:id="@+id/masz_konto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+
+        android:clickable="true"
 
         android:fontFamily="@font/quicksand_medium"
 
@@ -255,13 +261,11 @@
         android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.276"
+        app:layout_constraintHorizontal_bias="0.274"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.909" />
+        app:layout_constraintVertical_bias="0.915" />
 
-
-    <!--Zaloz konto button -->
     <Button
         android:id="@+id/button_zaloz_konto"
         android:layout_width="236dp"

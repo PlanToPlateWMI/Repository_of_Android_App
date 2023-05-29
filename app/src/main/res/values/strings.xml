@@ -6,8 +6,11 @@
     <string name="rejestracja">Rejestracja</string>
     <string name="pomy_lnie_z">Pomyślnie zarejestrowano</string>
     <string name="przyp_haslo">Przypomnienie hasła</string>
-    <string name="twoj_email"> Wprowadź e-mail, przy pomocy którego logujesz się do aplikacji</string>
-    <string name="wprowad_kod">Wprowadź kod zaproszeniowy:</string>
+    <string name="twoj_email"> Wprowadź e-mail,
+przy pomocy którego
+logujesz się do aplikacji</string>
+    <string name="wprowad_kod">Wprowadź kod
+zaproszeniowy:</string>
     <string name="potwierdzen">Potwierdzenie e-maila</string>
 
     <string name="skorzystaj_">W celu weryfikacji
@@ -22,7 +25,8 @@ Ciebie wysłaliśmy na mail,
         który był podany wcześniej</string>
 
     <string name="uwaga_do_cz">Uwaga! Do czasu potwierdzenia maila wejście nie będzie możliwe!</string>
-    <string name="wyra_am_zgo">Wyrażam zgodę na przetwarzanie danych osobowych</string>
+    <string name="wyra_am_zgo">Wyrażam zgodę na przetwarzanie
+danych osobowych</string>
     <string name="masz_konto_">Masz konto?</string>
     <string name="zaloz_konto">Załóż konto</string>
 
@@ -45,10 +49,14 @@ Ciebie wysłaliśmy na mail,
     <string name="kod_dla_dziecka">Kod dla dziecka</string>
     <string name="wybierz_opcje">Wybierz jedną opcję:</string>
 
-    <string name="uwaga">Uwaga! Wybrana opcja wygenerowanego kodu wpłynie na to, jakie opcje będą dostępne dla użytkownika, który go wprowadzi.
-Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkownika</string>
+    <string name="uwaga">Uwaga! Wybrana opcja wygenerowanego
+kodu wpłynie na to, jakie opcje będą dostępne
+dla użytkownika, który go wprowadzi.
+Rolę użytkownika można zmienić w dowolnym
+momencie w ustawieniach użytkownika</string>
 
-    <string name="przekarz_kod">Przekaż poniższy kod wybranemu uzytkownikowi</string>
+    <string name="przekarz_kod">Przekaż poniższy kod
+wybranemu uzytkownikowi</string>
     <string name="wy_lij_pono">Wyślij ponownie</string>
     <string name="nie_masz_konto_">Nie masz konta?</string>
 
@@ -62,7 +70,8 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="przypomnij_haslo">Przypomnij hasło</string>
     <string name="wybierz_jadna_opcje">Wybierz jedną z opcji:</string>
     <string name="mam_zapr_do_gr">Mam zaproszenie do grupy*</string>
-    <string name="podpowiedz_gr">* Jeżeli chcesz dołączyć się do użytkownika, który już ma konto.</string>
+    <string name="podpowiedz_gr">* Jeżeli chcesz dołączyć się do
+użytkownika, który już ma konto.</string>
     <string name="swoja_gr">Chcę założyć własną grupę</string>
 
     <string name="trzeba_kupic">Trzeba kupić</string>
@@ -79,6 +88,7 @@ produktu</string>
 
     <string name="szt">SZT</string>
     <string name="l">L</string>
+    <string name="ml">ML</string>
     <string name="kg">KG</string>
     <string name="gr">G</string>
 
@@ -86,13 +96,16 @@ produktu</string>
     <string name="nowe_jednostki_miary">Wybierz nową jednostkę miary</string>
 
     <string name="delete_from_shopping_list">Czy na pewno
-chcesz usunąć produkt z listy zakupów?</string>
+chcesz usunąć produkt
+z listy zakupów?</string>
     <string name="delete_from_base">Czy na pewno
-chcesz usunąć produkt z bazy produktów?</string>
+chcesz usunąć produkt
+z bazy produktów?</string>
     <string name="add_to_storage">Czy na pewno
 chcesz dodać wszystkie kupione produkty do spiżarni?</string>
     <string name="delete_from_storage">Czy na pewno
-chcesz usunąć produkt ze spiżarni?</string>
+chcesz usunąć produkt
+ze spiżarni?</string>
 
     <string name="tak">Tak</string>
     <string name="nie">Nie</string>
@@ -113,6 +126,11 @@ chcesz usunąć produkt ze spiżarni?</string>
     <string name="konserwy">Konserwy</string>
 
     <string name="kategoria">Kategoria: </string>
+
+    <string name="dodac_ze_spizarni">W twoich kupionych
+teraz są produkty.</string>
+    <string name="dodac_do_spizarni">Dodać kupione produkty do spiżarni</string>
+    <string name="przejsc_do_bazy">Przejść do bazy produktów</string>
 
 </resources>
 

@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import pl.plantoplate.databinding.RegisterActivityBinding;
 import pl.plantoplate.repository.remote.ResponseCallback;
@@ -50,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     private CheckBox apply_policy;
     private Button sign_in_button;
     private Button register_button;
+    private TextView masz_konto;
 
     private SharedPreferences prefs;
 
@@ -76,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         apply_policy = register_view.checkboxWyrazamZgode;
         register_button = register_view.buttonZalozKonto;
         sign_in_button = register_view.buttonZalogujSie;
+        masz_konto = register_view.maszKonto;
 
         // get shared preferences
         prefs = getSharedPreferences("prefs", 0);
@@ -83,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         // Set the click listener for the register button
         register_button.setOnClickListener(this::validateUserInfo);
         sign_in_button.setOnClickListener(v -> signInAccount());
+        masz_konto.setOnClickListener(v -> signInAccount());
     }
 
     /**

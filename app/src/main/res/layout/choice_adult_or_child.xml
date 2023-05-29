@@ -11,8 +11,8 @@
     <!-- PlanToPlate -->
     <TextView
         android:id="@+id/plantoplate"
-        android:layout_width="182dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:fontFamily="@font/quicksand_semibold"
@@ -31,8 +31,8 @@
     <!-- Code generation -->
     <TextView
         android:id="@+id/code_generation"
-        android:layout_width="275dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -52,8 +52,8 @@
     <!-- Choose one of the option -->
     <TextView
         android:id="@+id/choose_an_option"
-        android:layout_width="270dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -133,8 +133,8 @@
     <!--Uwaga! -->
     <TextView
         android:id="@+id/uwaga"
-        android:layout_width="255dp"
-        android:layout_height="180dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"

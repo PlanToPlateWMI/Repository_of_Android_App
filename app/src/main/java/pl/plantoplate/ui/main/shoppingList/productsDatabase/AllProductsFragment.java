@@ -40,8 +40,6 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
 
     private FragmentWszystkieBinding fragmentWszystkieBinding;
 
-
-    private FloatingActionButton floatingActionButton_wszystkie;
     private RecyclerView categoryRecyclerView;
     private TextView welcomeTextView;
     private SearchView searchView;
@@ -65,7 +63,6 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         // get views
         welcomeTextView = fragmentWszystkieBinding.textView3;
         searchView = requireActivity().findViewById(R.id.search);
-        floatingActionButton_wszystkie = fragmentWszystkieBinding.floatingActionButtonWszystkie;
 
         // Get the SharedPreferences object
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -75,7 +72,6 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
 
         // set up listeners
         searchView.setOnQueryTextListener(this);
-        floatingActionButton_wszystkie.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
 
         // set up recycler view
         setUpRecyclerView();
