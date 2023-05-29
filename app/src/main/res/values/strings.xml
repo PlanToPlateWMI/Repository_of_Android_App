@@ -61,7 +61,8 @@ Rolę użytkownika można zmienić w dowolnym momencie w ustawieniach użytkowni
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="przypomnij_haslo">Przypomnij hasło</string>
     <string name="wybierz_jadna_opcje">Wybierz jedną z opcji:</string>
-    <string name="mam_zapr_do_gr">Mam zaproszenie do grupy</string>
+    <string name="mam_zapr_do_gr">Mam zaproszenie do grupy*</string>
+    <string name="podpowiedz_gr">* Jeżeli chcesz dołączyć się do użytkownika, który już ma konto.</string>
     <string name="swoja_gr">Chcę założyć własną grupę</string>
 
     <string name="trzeba_kupic">Trzeba kupić</string>

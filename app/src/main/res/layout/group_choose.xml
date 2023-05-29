@@ -124,6 +124,29 @@
         app:layout_constraintVertical_bias="0.600"
         app:rippleColor="@color/blue_1" />
 
+
+    <TextView
+        android:id="@+id/podpowiedz_grupa"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/podpowiedz_gr"
+        android:textAppearance="@style/masz_konto_"
+        android:textColor="@color/black_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.500"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.881" />
+
     <!--    app:layout_constraintBottom_toBottomOf="parent"-->
     <!--    app:layout_constraintEnd_toEndOf="parent"-->
     <!--    app:layout_constraintStart_toStartOf="parent"-->

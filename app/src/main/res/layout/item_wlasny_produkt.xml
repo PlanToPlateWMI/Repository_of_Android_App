@@ -10,23 +10,16 @@
     android:padding="16dp"
     android:layout_marginTop="5dp">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageView
         android:id="@+id/addBazaWlasne"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/blue_1"
-        app:elevation="0dp"
         android:clickable="true"
-        android:src="@drawable/add_24_50"
-        app:backgroundTint="@color/blue_3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.884"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.908"
-        app:maxImageSize="32dp"
-        />
+        android:layout_width="30dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="6dip"
+        android:src="@drawable/add_24_50" />
+
 
     <LinearLayout
         android:layout_width="0dp"
