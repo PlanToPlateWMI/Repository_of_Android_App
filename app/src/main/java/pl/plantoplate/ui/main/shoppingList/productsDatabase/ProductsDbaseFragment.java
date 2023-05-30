@@ -29,6 +29,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Objects;
+
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
 public class ProductsDbaseFragment extends Fragment {
@@ -37,6 +39,16 @@ public class ProductsDbaseFragment extends Fragment {
     private SearchView searchView;
 
     private SharedPreferences prefs;
+
+    public ProductsDbaseFragment(String comesFrom) {
+        Bundle args = new Bundle();
+        args.putString("comesFrom", comesFrom);
+        setArguments(args);
+    }
+
+    public ProductsDbaseFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onStart() {
@@ -63,10 +75,10 @@ public class ProductsDbaseFragment extends Fragment {
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
                 case R.id.wszystkie:
-                    replaceFragment(new AllProductsFragment());
+                    replaceFragment(new AllProductsFragment(requireArguments().getString("comesFrom")));
                     return true;
                 case R.id.wlasne:
-                    replaceFragment(new OwnProductsFragment());
+                    replaceFragment(new OwnProductsFragment(requireArguments().getString("comesFrom")));
                     return true;
             }
             return false;
@@ -79,7 +91,7 @@ public class ProductsDbaseFragment extends Fragment {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.baza_def, fragment);
-        //transaction.addToBackStack(null);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 }

@@ -21,6 +21,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,7 @@ import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.product.ProductRepository;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.remote.storage.StorageRepository;
 import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 import pl.plantoplate.tools.CategorySorter;
@@ -62,6 +64,17 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
     private ProductRepository productRepository;
 
     private ArrayList<Product> groupProductsList;
+
+
+    public OwnProductsFragment() {
+    }
+
+    public OwnProductsFragment(String comesFrom) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("comesFrom", comesFrom);
+        this.setArguments(bundle);
+    }
 
     @Override
     public void onResume() {
@@ -116,6 +129,35 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         });
     }
 
+    public void addProduct(Product product){
+        String comesFrom = "";
+        if (getArguments() != null) {
+            comesFrom = getArguments().getString("comesFrom");
+        }
+        else{
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+            int backStackEntryCount = fragmentManager.getBackStackEntryCount();
+            for (int i=backStackEntryCount - 1; i>0; i--) {
+                FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(i);
+                String name = entry.getName();
+                if (Objects.equals(name, "shoppingList") || Objects.equals(name, "storage")) {
+                    comesFrom = name;
+                }
+            }
+        }
+        switch (comesFrom) {
+            case "shoppingList":
+                addProductToShoppingList(product);
+                break;
+            case "storage":
+                addProductToStorage(product);
+                break;
+            default:
+                addProductToShoppingList(product);
+                break;
+        }
+    }
+
     public void addProductToShoppingList(Product product) {
         String token = "Bearer " + prefs.getString("token", "");
         ShoppingListRepository shoppingListRepository = new ShoppingListRepository();
@@ -123,6 +165,27 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
             @Override
             public void onSuccess(ArrayList<Product> response) {
                 Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "Dodano produkt do listy zakupów", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void addProductToStorage(Product product){
+        String token = "Bearer " + prefs.getString("token", "");
+        StorageRepository storageRepository = new StorageRepository();
+        storageRepository.addProductToStorage(token, product, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "Dodano produkt do spiżarni", Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -180,7 +243,7 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
             }
             float quantity = BigDecimal.valueOf(Float.parseFloat(quantityValue)).setScale(3, RoundingMode.HALF_UP).floatValue();
             product.setAmount(quantity);
-            addProductToShoppingList(product);
+            addProduct(product);
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
             addToCartPopUp.dismiss();
         });
@@ -195,7 +258,7 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
             @Override
             public void onAddToShoppingListButtonClick(View v, Product product) {
                 product.setAmount(1.0f);
-                addProductToShoppingList(product);
+                addProduct(product);
                 replaceFragment(new ShoppingListFragment());
             }
 

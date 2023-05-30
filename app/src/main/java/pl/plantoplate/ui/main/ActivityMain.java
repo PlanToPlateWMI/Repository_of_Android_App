@@ -81,19 +81,19 @@ public class ActivityMain extends AppCompatActivity {
         // Replace the current fragment with the selected fragment based on its ID
         switch (item.getItemId()) {
             case R.id.calendar:
-                replaceFragment(new CalendarFragment());
+                replaceFragment(new CalendarFragment(), "calendar");
                 return true;
             case R.id.cottage:
-                replaceFragment(new StorageFragment());
+                replaceFragment(new StorageFragment(), "storage");
                 return true;
             case R.id.shopping_cart:
-                replaceFragment(new ShoppingListFragment());
+                replaceFragment(new ShoppingListFragment(), "shoppingList");
                 return true;
             case R.id.receipt_long:
-                replaceFragment(new RecipeFragment());
+                replaceFragment(new RecipeFragment(), "recipe");
                 return true;
             case R.id.settings:
-                replaceFragment(new SettingsFragment());
+                replaceFragment(new SettingsFragment(), "settings");
                 return true;
         }
         return false;
@@ -104,12 +104,12 @@ public class ActivityMain extends AppCompatActivity {
      *
      * @param fragment The fragment to replace the current fragment with.
      */
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment, String tag) {
 
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
-        //transaction.addToBackStack(null);
+        transaction.addToBackStack(tag);
         transaction.commit();
     }
 }

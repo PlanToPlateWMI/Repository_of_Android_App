@@ -79,7 +79,7 @@ public class BuyProductsFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentTrzebaKupicBinding = FragmentTrzebaKupicBinding.inflate(inflater, container, false);
         plus_in_trzeba_kupic = fragmentTrzebaKupicBinding.plusInTrzebaKupic;
-        plus_in_trzeba_kupic.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment()));
+        plus_in_trzeba_kupic.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment("shoppingList")));
 
         // get shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -265,7 +265,7 @@ public class BuyProductsFragment extends Fragment {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack("trzebaKupicFragment");
         transaction.commit();
     }
 }

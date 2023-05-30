@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
 package pl.plantoplate.ui.main.storage;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,7 +76,7 @@ public class StorageInsideFragment extends Fragment {
         recyclerView = fragmentStorageInsideBinding.productsStorage;
         storage_title = fragmentStorageInsideBinding.textView4;
 
-        plus_in_storage.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment()));
+        plus_in_storage.setOnClickListener(this::showaddFromPopUp);
 
         // get storage repository
         storageRepository = new StorageRepository();
@@ -121,6 +121,48 @@ public class StorageInsideFragment extends Fragment {
                 Snackbar.make(requireView(), failureMessage, Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void moveProductsToStorage(){
+        //TODO: get products ids from shopping list
+
+//        String token = "Bearer " + prefs.getString("token", "");
+//        storageRepository.transferBoughtProductsToStorage(token, productsIds, new ResponseCallback<ArrayList<Product>>(){
+//            @Override
+//            public void onSuccess(ArrayList<Product> response) {
+//                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "Produkty zostały przeniesione do spiżarni", Snackbar.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onError(String errorMessage) {
+//                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onFailure(String failureMessage) {
+//                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+//            }
+//        });
+    }
+
+    public void showaddFromPopUp(View view) {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.pop_up_add_products_from_storage_to_storage);
+
+        Button add_from_shopping_list = dialog.findViewById(R.id.button_yes);
+        Button go_to_products_database = dialog.findViewById(R.id.button_no);
+
+//        add_from_shopping_list.setOnClickListener(v -> {
+//            moveProductsToStorage();
+//            dialog.dismiss();
+//        });
+
+        go_to_products_database.setOnClickListener(v -> {
+            replaceFragment(new ProductsDbaseFragment("storage"));
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 
     public void setUpRecyclerView() {
