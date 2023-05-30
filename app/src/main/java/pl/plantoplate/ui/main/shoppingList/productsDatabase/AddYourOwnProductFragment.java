@@ -76,9 +76,18 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
         // Get the radio group
         choose_product_unit = add_own_product_view.toggleGroup;
 
+        // Set the product category
+        product_category = add_own_product_view.kategoriaNapisac;
+
         // init the product and set the default category
-        product = new Product();
-        product.setCategory("Produkty własne");
+        if (product == null) {
+            product = new Product();
+            product.setCategory("Produkty własne");
+            product_category.setText(product.getCategory());
+        }
+        else{
+            product_category.setText(product.getCategory());
+        }
 
         // Set the radio group listener
         choose_product_unit.setOnCheckedChangeListener((group, checkedId) -> setProductUnit(checkedId));
@@ -92,17 +101,14 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
         // Set the product name button
         add_product_name = add_own_product_view.enterTheName;
 
-        // Set the product category
-        product_category = add_own_product_view.kategoria;
-
         // Set the button listener
         add_product_button.setOnClickListener(v -> addProduct(requireActivity().findViewById(R.id.frame_layout)));
-        cancel_button.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment()));
+        cancel_button.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         change_kategory = add_own_product_view.zmienKategorie;
         change_kategory.findViewById(R.id.zmien_kategorie);
 
-        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
+        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment(this)));
 
         // get the product repository
         productRepository = new ProductRepository();
@@ -128,6 +134,9 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
             case R.id.button_gr:
                 product.setUnit("GR");
                 break;
+            case R.id.button_ml:
+                product.setUnit("ML");
+                break;
         }
     }
 
@@ -138,11 +147,6 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
     }
 
     public void addProduct(View v) {
-        String category = productPrefs.getString("category", "");
-        if (!category.isEmpty()) {
-            product.setCategory(category);
-        }
-
         // Set up product
         String product_name = Objects.requireNonNull(add_product_name.getText()).toString();
         product.setName(product_name);

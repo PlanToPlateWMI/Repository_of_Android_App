@@ -36,6 +36,7 @@ import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
 import pl.plantoplate.databinding.FragmentChangeCategoryBinding;
 import pl.plantoplate.ui.customViewes.RadioGridGroup;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ChangeCategoryListener;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.EditOwnProductFragment;
 
 public class ChangeCategoryOfProductFragment extends Fragment {
 
@@ -46,6 +47,12 @@ public class ChangeCategoryOfProductFragment extends Fragment {
     private RadioGridGroup categoriesRadioGroup;
     private Button accept_button;
     private Button cancel_button;
+
+    private ChangeCategoryListener changeCategoryListener;
+
+    public ChangeCategoryOfProductFragment(ChangeCategoryListener changeCategoryListener) {
+        this.changeCategoryListener = changeCategoryListener;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -77,8 +84,7 @@ public class ChangeCategoryOfProductFragment extends Fragment {
             return;
         }
 
-        // Save product to shared preferences
-        productPrefs.edit().putString("category", checkedRadioButton.getText().toString()).apply();
+        changeCategoryListener.onCategoryChosen(checkedRadioButton.getText().toString());
 
         // Close fragment
         getParentFragmentManager().popBackStack();

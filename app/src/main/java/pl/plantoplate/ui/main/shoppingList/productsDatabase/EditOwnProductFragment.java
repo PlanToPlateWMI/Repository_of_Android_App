@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,7 +28,7 @@ import pl.plantoplate.repository.remote.product.ProductRepository;
 import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
 
-public class EditOwnProductFragment extends Fragment {
+public class EditOwnProductFragment extends Fragment implements ChangeCategoryListener{
 
     private FragmentProductChangeBinding fragmentProductChangeBinding;
 
@@ -40,6 +41,7 @@ public class EditOwnProductFragment extends Fragment {
     private Button cancel_button;
     private Button delete_button;
     private TextInputEditText add_product_name;
+    private TextView product_category;
 
     private Product product;
     private ProductRepository productRepository;
@@ -72,6 +74,9 @@ public class EditOwnProductFragment extends Fragment {
             case "GR":
                 choose_product_unit.check(R.id.button_gr);
                 break;
+            case "ML":
+                choose_product_unit.check(R.id.button_ml);
+                break;
         }
     }
 
@@ -102,16 +107,22 @@ public class EditOwnProductFragment extends Fragment {
         // Set the product name button
         add_product_name = fragmentProductChangeBinding.enterTheName;
 
+        // Set the product category
+        product_category = fragmentProductChangeBinding.kategoriaNapis;
+        product_category.setText(product.getCategory());
+
         // Set the button listener
         add_product_button.setOnClickListener(v -> applyProductChange(requireActivity().findViewById(R.id.frame_layout)));
-        cancel_button.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment()));
+        cancel_button.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         change_kategory = fragmentProductChangeBinding.zmienKategorie;
 
-        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
+        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment(this)));
 
         delete_button = fragmentProductChangeBinding.buttonUsun;
         delete_button.setOnClickListener(v -> showConfirmDeleteProductPopUp(requireActivity().findViewById(R.id.frame_layout)));
+
+
 
         // Get the product repository
         productRepository = new ProductRepository();
@@ -126,17 +137,17 @@ public class EditOwnProductFragment extends Fragment {
             case R.id.button_szt:
                 product.setUnit("SZT");
                 break;
-
             case R.id.button_l:
                 product.setUnit("L");
                 break;
-
             case R.id.button_kg:
                 product.setUnit("KG");
                 break;
-
             case R.id.button_gr:
                 product.setUnit("GR");
+                break;
+            case R.id.button_ml:
+                product.setUnit("ML");
                 break;
         }
     }
@@ -173,11 +184,11 @@ public class EditOwnProductFragment extends Fragment {
 
         // Set the product name
         product.setName(product_name);
-        String category = productPrefs.getString("category", "");
-        if (category.isEmpty()) {
-            category = product.getCategory();
-        }
-        product.setCategory(category);
+        //String category = productPrefs.getString("category", "");
+//        if (category.isEmpty()) {
+//            category = product.getCategory();
+//        }
+        //product.setCategory(category);
 
         // Save the product
         saveProduct(view);
@@ -232,5 +243,11 @@ public class EditOwnProductFragment extends Fragment {
         transaction.replace(R.id.frame_layout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void onCategoryChosen(String category) {
+        product.setCategory(category);
+        //product_category.setText(category);
     }
 }
