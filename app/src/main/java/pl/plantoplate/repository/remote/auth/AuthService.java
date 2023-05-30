@@ -1,6 +1,5 @@
 package pl.plantoplate.repository.remote.auth;
 
-import okhttp3.ResponseBody;
 import pl.plantoplate.repository.models.CodeResponse;
 import pl.plantoplate.repository.models.JwtResponse;
 import pl.plantoplate.repository.models.Message;
@@ -18,7 +17,7 @@ public interface AuthService {
     Call<CodeResponse> sendUserRegisterData(@Body UserRegisterData info);
 
     @GET("api/mail/code")
-    Call<CodeResponse> getEmailConfirmCode(@Query("email") String email);
+    Call<CodeResponse> getEmailConfirmCode(@Query("email") String email, @Query("type") String type);
 
     @POST("api/auth/signin")
     Call<JwtResponse> signinUser(@Body SignInData info);

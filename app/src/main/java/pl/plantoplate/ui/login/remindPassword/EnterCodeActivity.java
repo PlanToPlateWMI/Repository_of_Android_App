@@ -104,7 +104,7 @@ public class EnterCodeActivity extends AppCompatActivity {
         String email = prefs.getString("email", "");
 
         AuthRepository repository = new AuthRepository();
-        repository.getEmailConfirmCode(email, new ResponseCallback<String>() {
+        repository.getEmailConfirmCode(email, "reset", new ResponseCallback<String>() {
             @Override
             public void onSuccess(String code) {
                 SharedPreferences.Editor editor = prefs.edit();

@@ -154,10 +154,10 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
                 editor.putString("name", userData.getUsername());
                 editor.putString("email", userData.getEmail());
                 editor.putString("password", userData.getPassword());
+                editor.putString("code", code).apply();
 
                 // start email confirmation activity
                 Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
-                editor.putString("code", code).apply();
                 startActivity(intent);
             }
 

@@ -59,8 +59,8 @@ public class AuthRepository {
         });
     }
 
-    public void getEmailConfirmCode(String email, ResponseCallback<String> callback) {
-        Call<CodeResponse> call = authService.getEmailConfirmCode(email);
+    public void getEmailConfirmCode(String email, String type, ResponseCallback<String> callback) {
+        Call<CodeResponse> call = authService.getEmailConfirmCode(email, type);
         call.enqueue(new Callback<CodeResponse>() {
             @Override
             public void onResponse(@NonNull Call<CodeResponse> call, @NonNull Response<CodeResponse> response) {

@@ -109,7 +109,7 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         enter_code.setText("");
 
         AuthRepository authRepository = new AuthRepository();
-        authRepository.getEmailConfirmCode(email, new ResponseCallback<String>() {
+        authRepository.getEmailConfirmCode(email, "registration", new ResponseCallback<String>() {
             @Override
             public void onSuccess(String response) {
                 // save the code in the shared preferences

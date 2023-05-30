@@ -79,7 +79,7 @@ public class EnterEmailActivity extends AppCompatActivity {
         prefs.edit().putString("email", email).apply();
 
         AuthRepository authRepository = new AuthRepository();
-        authRepository.getEmailConfirmCode(email, new ResponseCallback<String>() {
+        authRepository.getEmailConfirmCode(email, "reset", new ResponseCallback<String>() {
             @Override
             public void onSuccess(String code) {
                 Intent intent = new Intent(getApplicationContext(), EnterCodeActivity.class);
