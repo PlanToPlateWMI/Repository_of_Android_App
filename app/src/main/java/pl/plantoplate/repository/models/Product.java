@@ -16,17 +16,33 @@
 
 package pl.plantoplate.repository.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * Class representing a product returned from the API server.
  */
+@Entity(tableName = "products")
 public class Product {
+
+    @PrimaryKey
     private int id;
     private String name;
     private String category;
     private float amount;
     private String unit;
+    private boolean isOwn = false;
 
     public Product() {
+    }
+
+    public Product(int id, String name, String category, float amount, String unit, boolean isOwn) { 
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.amount = amount;
+        this.unit = unit;
+        this.isOwn = isOwn;
     }
 
     public Product(int id, String name, String category, int amount, String unit) {

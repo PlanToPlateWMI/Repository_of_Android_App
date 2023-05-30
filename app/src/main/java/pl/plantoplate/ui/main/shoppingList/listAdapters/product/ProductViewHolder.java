@@ -23,9 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import pl.plantoplate.R;
 import pl.plantoplate.repository.models.Product;
@@ -36,7 +35,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
     private TextView name;
     private TextView unit;
 
-    private FloatingActionButton addToShoppingListButton;
+    private AppCompatImageView addToShoppingListButton;
     private ImageView deleteProductButton;
     private ImageView editProductButton;
     private ImageView checkShoppingListButton;
@@ -75,6 +74,11 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
                 checkShoppingListButton = itemView.findViewById(R.id.iconUncheck_kupione);
                 deleteProductButton = itemView.findViewById(R.id.iconDelete_kupione);
                 break;
+            case R.id.item_produkt_spizarnia:
+                name = itemView.findViewById(R.id.nazwaProduktu_spizarnia);
+                unit = itemView.findViewById(R.id.jednostkiMiary_spizarnia);
+                deleteProductButton = itemView.findViewById(R.id.iconDelete_spizarnia);
+                break;
         }
     }
 
@@ -100,6 +104,10 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
                 unit.setText(unitText);
             case R.id.layoutKupioneProdukty:
                 checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
+                deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
+                unit.setText(unitText);
+                break;
+            case R.id.item_produkt_spizarnia:
                 deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
                 unit.setText(unitText);
                 break;

@@ -68,9 +68,8 @@ public class BuyProductsFragment extends Fragment {
     private ShoppingListRepository shoppingListRepository;
 
     @Override
-    public void onStart() {
-        super.onStart();
-
+    public void onResume() {
+        super.onResume();
         getShoppingList();
     }
 

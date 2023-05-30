@@ -22,6 +22,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,9 +43,11 @@ import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.repository.models.ShoppingList;
+import pl.plantoplate.repository.remote.storage.StorageRepository;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
+import pl.plantoplate.ui.main.storage.StorageFragment;
 
 public class BoughtProductsFragment extends Fragment {
 
@@ -55,13 +58,13 @@ public class BoughtProductsFragment extends Fragment {
 
     private SharedPreferences prefs;
     private ShoppingListRepository shoppingListRepository;
+    private StorageRepository storageRepository;
 
     private ArrayList<Product> boughtProductsList;
 
     @Override
-    public void onStart() {
-        super.onStart();
-
+    public void onResume() {
+        super.onResume();
         getShoppingList();
     }
 
@@ -78,6 +81,12 @@ public class BoughtProductsFragment extends Fragment {
 
         // get shopping list repository
         shoppingListRepository = new ShoppingListRepository();
+
+        // get storage repository
+        storageRepository = new StorageRepository();
+
+        // set listener for floating action button
+        moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
 
         setUpRecyclerView();
 
@@ -158,6 +167,31 @@ public class BoughtProductsFragment extends Fragment {
         });
     }
 
+    public void moveProductsToStorage(){
+        ArrayList<Integer> productsIds = new ArrayList<>();
+        for (Product storageProduct : boughtProductsList) {
+            productsIds.add(storageProduct.getId());
+        }
+
+        String token = "Bearer " + prefs.getString("token", "");
+        storageRepository.transferBoughtProductsToStorage(token, productsIds, new ResponseCallback<ArrayList<Product>>(){
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "Produkty zostały przeniesione do spiżarni", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void setUpRecyclerView() {
         if (boughtProductsList == null) {
             boughtProductsList = new ArrayList<>();
@@ -197,5 +231,33 @@ public class BoughtProductsFragment extends Fragment {
         cancelButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
+    }
+
+    public void showMoveProductToStoragePopUp(){
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.pop_up_add_to_storage);
+
+        Button acceptButton = dialog.findViewById(R.id.button_yes);
+        Button cancelButton = dialog.findViewById(R.id.button_no);
+
+        acceptButton.setOnClickListener(v -> {
+
+            moveProductsToStorage();
+
+            replaceFragment(new StorageFragment());
+            dialog.dismiss();
+        });
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

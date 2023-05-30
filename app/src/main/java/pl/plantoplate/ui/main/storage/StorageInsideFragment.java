@@ -17,6 +17,7 @@
 
 package pl.plantoplate.ui.main.storage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,18 +26,24 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import pl.plantoplate.R;
-import pl.plantoplate.databinding.FragmentStorageBinding;
 import pl.plantoplate.databinding.FragmentStorageInsideBinding;
+import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 
 public class StorageInsideFragment extends Fragment {
 
     private FragmentStorageInsideBinding fragmentStorageInsideBinding;
+
     private FloatingActionButton plus_in_storage;
+    private RecyclerView recyclerView;
 
 
     @Override
@@ -44,10 +51,32 @@ public class StorageInsideFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         fragmentStorageInsideBinding = FragmentStorageInsideBinding.inflate(inflater, container, false);
+
         plus_in_storage = fragmentStorageInsideBinding.plusInStorage;
+        recyclerView = fragmentStorageInsideBinding.productsStorage;
+
         plus_in_storage.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment()));
+
+        //setUpRecyclerView();
         return fragmentStorageInsideBinding.getRoot();
     }
+
+//    public void setUpRecyclerView() {
+//
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//        CategoryAdapter categoryAdapter = new CategoryAdapter(storage, R.layout.item_spizarnia);
+//        categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+//            @Override
+//            public void onAddToShoppingListButtonClick(View v, Product product) {
+//            }
+//
+//            @Override
+//            public void onProductItemClick(View v, Product product) {
+//            }
+//        });
+//        recyclerView.setAdapter(categoryAdapter);
+//    }
+
 
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment

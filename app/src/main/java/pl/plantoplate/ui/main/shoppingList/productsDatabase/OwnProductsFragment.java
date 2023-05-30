@@ -64,8 +64,8 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
     private ArrayList<Product> groupProductsList;
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         getProducts();
     }
 
