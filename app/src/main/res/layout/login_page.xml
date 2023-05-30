@@ -9,7 +9,11 @@
     tools:context="pl.plantoplate.ui.login.LoginActivity">
 
     <!-- PlanToPlate -->
+
+
+    <!-- Logowanie -->
     <TextView
+        android:layout_marginTop="70dp"
         android:id="@+id/plantoplate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,13 +28,10 @@
         android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.023" />
 
-
-    <!-- Logowanie -->
     <TextView
         android:id="@+id/rejestracja"
         android:layout_width="wrap_content"
@@ -71,10 +72,12 @@
 
         app:hintTextColor="@color/black_gray"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rejestracja">
+        app:layout_constraintTop_toBottomOf="@+id/rejestracja"
+        app:layout_constraintVertical_bias="0.0">
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
@@ -84,8 +87,8 @@
 
             android:fontFamily="@font/quicksand_regular"
 
-            android:singleLine="true"
             android:maxLines="1"
+            android:singleLine="true"
 
             android:textColor="@color/black_gray"
 
@@ -93,6 +96,7 @@
             tools:layout_editor_absoluteY="321dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wprowadz_haslo"
@@ -109,16 +113,18 @@
 
         app:boxBackgroundMode="outline"
 
+        app:boxStrokeColor="@color/blue_2"
+
         app:endIconMode="password_toggle"
 
         app:endIconTint="@color/black_gray"
-
-        app:boxStrokeColor="@color/blue_2"
         app:hintTextColor="@color/black_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wprowadz_imie">
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_imie"
+        app:layout_constraintVertical_bias="0.0">
 
         <!--android:fontFamily="@font/quicksand_regular"-->
         <com.google.android.material.textfield.TextInputEditText
@@ -128,17 +134,16 @@
 
             android:fontFamily="@font/quicksand_regular"
 
-            android:textColor="@color/black_gray"
+            android:inputType="textPassword"
 
-            android:singleLine="true"
             android:maxLines="1"
+            android:singleLine="true"
 
+            android:textColor="@color/black_gray"
             tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="321dp"
-            android:inputType="textPassword"/>
+            tools:layout_editor_absoluteY="321dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <TextView
         android:id="@+id/przyp_haslo"
@@ -148,7 +153,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
         android:background="#00FFFFFF"
 
         android:clickable="true"
@@ -159,8 +163,12 @@
         android:textAppearance="@style/masz_konto_"
 
         android:textColor="@color/blue_3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wprowadz_haslo" />
+        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wprowadz_haslo"
+        app:layout_constraintVertical_bias="0.026" />
 
     <TextView
         android:id="@+id/nie_masz_konta"
@@ -181,10 +189,10 @@
         android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.885" />
+        app:layout_constraintTop_toBottomOf="@+id/button_zaloguj_sie"
+        app:layout_constraintVertical_bias="0.304" />
 
     <Button
         android:id="@+id/button_zaloz_konto"
@@ -210,10 +218,11 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/nie_masz_konta"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.901"
+        app:layout_constraintHorizontal_bias="0.766"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_zaloguj_sie"
+        app:layout_constraintVertical_bias="0.265
+"
         tools:visibility="visible" />
 
     <Button
@@ -227,27 +236,26 @@
         android:layout_alignParentBottom="true"
 
 
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp"
-
         android:backgroundTint="@color/blue_1"
-
         android:clickable="true"
+
         android:fontFamily="@font/quicksand_medium"
 
         android:text="@string/zalogowanie"
-
         android:textAllCaps="false"
+
         android:textColor="@color/black_gray"
+
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_haslo"
-        app:layout_constraintVertical_bias="0.408"
-        app:rippleColor="@color/blue_1" />
-
+        app:layout_constraintVertical_bias="0.292"
+        app:rippleColor="@color/blue_1"
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

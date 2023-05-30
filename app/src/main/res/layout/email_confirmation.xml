@@ -52,8 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
         app:layout_constraintVertical_bias="0.077" />
 
-    <!-- Weryfikacja_maila -->
-    <!-- Tu powinien byc mail uzytkownika -->
+
     <TextView
         android:id="@+id/skorzystaj_z_linku"
         android:layout_width="wrap_content"
@@ -74,26 +73,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
         app:layout_constraintVertical_bias="0.295" />
-
-    <!-- Wyślij ponownie -->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/textView"-->
-    <!--        android:layout_width="271dp"-->
-    <!--        android:layout_height="56dp"-->
-    <!--        android:contextClickable="false"-->
-    <!--        android:fontFamily="@font/quicksand_medium"-->
-    <!--        android:foregroundGravity="center_horizontal"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="Tu musi byc mail uzytkownika"-->
-    <!--        android:textAppearance="@style/wy_lij_pono"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/wprowadz_kod"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/skorzystaj_z_linku"-->
-    <!--        app:layout_constraintVertical_bias="0.0"-->
-    <!--        tools:ignore="MissingConstraints" />-->
-
 
     <!--Wprowadz kod -->
     <com.google.android.material.textfield.TextInputLayout
@@ -192,11 +171,5 @@
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod"
         app:layout_constraintVertical_bias="0.658"
         app:rippleColor="@color/blue_1" />
-
-
-    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--    app:layout_constraintEnd_toEndOf="parent"-->
-    <!--    app:layout_constraintStart_toStartOf="parent"-->
-    <!--    app:layout_constraintTop_toTopOf="parent"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
