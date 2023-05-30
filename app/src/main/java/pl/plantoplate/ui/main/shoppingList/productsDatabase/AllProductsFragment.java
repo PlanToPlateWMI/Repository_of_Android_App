@@ -161,7 +161,8 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         shoppingListRepository.addProductToShopList(token, product, new ResponseCallback<ArrayList<Product>>() {
             @Override
             public void onSuccess(ArrayList<Product> response) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "Dodano produkt do listy zakupów", Snackbar.LENGTH_LONG).show();
+                String message = "Produkt " + product.getName() + " w ilości " + product.getAmount() + " " + product.getUnit() + " został dodany do listy zakupów";
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), message, Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -182,7 +183,8 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         storageRepository.addProductToStorage(token, product, new ResponseCallback<ArrayList<Product>>() {
             @Override
             public void onSuccess(ArrayList<Product> response) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "Dodano produkt do spiżarni", Snackbar.LENGTH_LONG).show();
+                String message = "Produkt " + product.getName() + " w ilości " + product.getAmount() + " " + product.getUnit() + " został dodany do spiżarni";
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), message, Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -227,7 +229,6 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
             float quantity = BigDecimal.valueOf(Float.parseFloat(quantityValue)).setScale(3, RoundingMode.HALF_UP).floatValue();
             product.setAmount(quantity);
             addProduct(product);
-            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
             addToCartPopUp.dismiss();
         });
         addToCartPopUp.show();
@@ -245,7 +246,6 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
             public void onAddToShoppingListButtonClick(View v, Product product) {
                 product.setAmount(1.0f);
                 addProduct(product);
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
             }
 
             @Override
