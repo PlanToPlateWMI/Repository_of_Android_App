@@ -14,10 +14,10 @@ import retrofit2.http.Path;
 
 public interface StorageService {
 
-    @GET("api/pantry")
+    @GET("api/pantry/")
     Call<ArrayList<Product>> getStorage(@Header("Authorization") String token);
 
-    @POST("api/pantry")
+    @POST("api/pantry/")
     Call<ArrayList<Product>> addProductToStorage(@Header("Authorization") String token, @Body Product product);
 
     @DELETE("api/pantry/{id}")

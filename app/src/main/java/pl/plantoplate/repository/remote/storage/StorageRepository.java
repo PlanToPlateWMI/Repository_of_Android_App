@@ -34,6 +34,7 @@ public class StorageRepository {
 
                 } else {
                     int code = response.code();
+                    System.out.println(code);
                     switch (code) {
                         case 400:
                             callback.onError("Użytkownik o podanym adresie email nie istnieje.");

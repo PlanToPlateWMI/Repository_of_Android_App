@@ -17,11 +17,12 @@
 
 package pl.plantoplate.ui.main.storage;
 
-import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,10 +31,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentStorageInsideBinding;
+import pl.plantoplate.repository.models.Category;
 import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.storage.StorageRepository;
+import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
@@ -42,9 +51,20 @@ public class StorageInsideFragment extends Fragment {
 
     private FragmentStorageInsideBinding fragmentStorageInsideBinding;
 
+    private TextView storage_title;
     private FloatingActionButton plus_in_storage;
     private RecyclerView recyclerView;
 
+    private SharedPreferences prefs;
+    private StorageRepository storageRepository;
+
+    private ArrayList<Category> storage;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getStorage();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -54,28 +74,70 @@ public class StorageInsideFragment extends Fragment {
 
         plus_in_storage = fragmentStorageInsideBinding.plusInStorage;
         recyclerView = fragmentStorageInsideBinding.productsStorage;
+        storage_title = fragmentStorageInsideBinding.textView4;
 
         plus_in_storage.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment()));
 
-        //setUpRecyclerView();
+        // get storage repository
+        storageRepository = new StorageRepository();
+
+        // get shared preferences
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        // if storage is null, make new arraylist
+        if (storage == null) {
+            storage = new ArrayList<>();
+        }
+
+        setUpRecyclerView();
         return fragmentStorageInsideBinding.getRoot();
     }
 
-//    public void setUpRecyclerView() {
-//
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        CategoryAdapter categoryAdapter = new CategoryAdapter(storage, R.layout.item_spizarnia);
-//        categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
-//            @Override
-//            public void onAddToShoppingListButtonClick(View v, Product product) {
-//            }
-//
-//            @Override
-//            public void onProductItemClick(View v, Product product) {
-//            }
-//        });
-//        recyclerView.setAdapter(categoryAdapter);
-//    }
+    public void getStorage(){
+        String token = "Bearer " + prefs.getString("token", "");
+        storageRepository.getStorage(token, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                storage = CategorySorter.sortCategoriesByProduct(response);
+
+                if (storage.isEmpty()) {
+                    storage_title.setText(R.string.spizarnia);
+                } else {
+                    storage_title.setText("");
+                }
+
+                // update recycler view
+                CategoryAdapter categoryAdapter = (CategoryAdapter) recyclerView.getAdapter();
+                Objects.requireNonNull(categoryAdapter).setCategoriesList(storage);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireView(), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireView(), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void setUpRecyclerView() {
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        CategoryAdapter categoryAdapter = new CategoryAdapter(storage, R.layout.item_spizarnia);
+        categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+            @Override
+            public void onAddToShoppingListButtonClick(View v, Product product) {
+            }
+
+            @Override
+            public void onProductItemClick(View v, Product product) {
+            }
+        });
+        recyclerView.setAdapter(categoryAdapter);
+    }
 
 
     private void replaceFragment(Fragment fragment) {
