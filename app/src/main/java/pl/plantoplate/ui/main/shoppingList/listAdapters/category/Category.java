@@ -18,7 +18,7 @@ package pl.plantoplate.ui.main.shoppingList.listAdapters.category;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.remote.models.Product;
 
 public class Category {
     private int id;

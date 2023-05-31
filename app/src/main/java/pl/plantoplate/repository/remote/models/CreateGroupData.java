@@ -14,86 +14,69 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.repository.models;
+package pl.plantoplate.repository.remote.models;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
- * A model class representing data for joining a user to a group.
+ * A class that represents the data required to create a new group.
  */
-public class UserJoinGroupData {
+public class CreateGroupData {
 
-    @SerializedName("code")
-    private String code;
-
+    /**
+     * The email address of the group creator.
+     */
     @SerializedName("email")
     private String email;
 
+    /**
+     * The password for the group creator.
+     */
     @SerializedName("password")
     private String password;
 
     /**
-     * Constructs a new UserJoinGroupData object with the given code, email, and password.
+     * Creates a new `CreateGroupData` object with the given email and password.
      *
-     * @param code The code to join the group.
-     * @param email The email of the user.
-     * @param password The password of the user.
+     * @param email    The email address of the group creator.
+     * @param password The password for the group creator.
      */
-    public UserJoinGroupData(String code, String email, String password) {
-        this.code = code;
+    public CreateGroupData(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
     /**
-     * Returns the code to join the group.
+     * Returns the email address of the group creator.
      *
-     * @return The code to join the group.
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * Returns the email of the user.
-     *
-     * @return The email of the user.
+     * @return The email address of the group creator.
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     * Returns the password of the user.
+     * Returns the password for the group creator.
      *
-     * @return The password of the user.
+     * @return The password for the group creator.
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * Sets the code to join the group.
+     * Sets the email address of the group creator.
      *
-     * @param code The code to join the group.
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
-     * Sets the email of the user.
-     *
-     * @param email The email of the user.
+     * @param email The new email address to set.
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * Sets the password of the user.
+     * Sets the password for the group creator.
      *
-     * @param password The password of the user.
+     * @param password The new password to set.
      */
     public void setPassword(String password) {
         this.password = password;

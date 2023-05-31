@@ -25,7 +25,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentProductChangeBinding;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.product.ProductRepository;
-import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.remote.models.Product;
 import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
 
 public class EditOwnProductFragment extends Fragment implements ChangeCategoryListener{

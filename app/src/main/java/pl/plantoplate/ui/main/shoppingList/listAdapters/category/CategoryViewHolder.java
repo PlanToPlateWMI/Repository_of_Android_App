@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
-import pl.plantoplate.repository.models.Category;
+import pl.plantoplate.repository.remote.models.Category;
 
 public class CategoryViewHolder extends RecyclerView.ViewHolder {
     private TextView categoryOfProduct;

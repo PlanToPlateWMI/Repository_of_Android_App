@@ -29,10 +29,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import pl.plantoplate.databinding.RemindPassword3Binding;
-import pl.plantoplate.repository.models.Message;
+import pl.plantoplate.repository.remote.models.Message;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.auth.AuthRepository;
-import pl.plantoplate.repository.models.SignInData;
+import pl.plantoplate.repository.remote.models.SignInData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;

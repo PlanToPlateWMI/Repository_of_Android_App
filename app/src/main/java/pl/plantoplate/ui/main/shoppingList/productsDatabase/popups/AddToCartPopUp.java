@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,7 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.Objects;
 
 import pl.plantoplate.R;
-import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.remote.models.Product;
 
 public class AddToCartPopUp extends Dialog {
 

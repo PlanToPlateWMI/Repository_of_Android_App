@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.repository.models;
+package pl.plantoplate.repository.remote.models;
 
 import java.util.ArrayList;
-
-import pl.plantoplate.repository.models.Product;
 
 public class Category {
     private int id;

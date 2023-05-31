@@ -44,7 +44,7 @@ import pl.plantoplate.databinding.FragmentWlasneBinding;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.product.ProductRepository;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
-import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.remote.models.Product;
 import pl.plantoplate.repository.remote.storage.StorageRepository;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.tools.CategorySorter;

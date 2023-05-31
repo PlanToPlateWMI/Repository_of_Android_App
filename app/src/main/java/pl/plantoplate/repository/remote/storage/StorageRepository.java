@@ -1,20 +1,22 @@
 package pl.plantoplate.repository.remote.storage;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.remote.models.Product;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.RetrofitClient;
+import pl.plantoplate.repository.remote.models.ShoppingList;
+import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
+import pl.plantoplate.repository.remote.shoppingList.ShoppingListService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StorageRepository {
     private StorageService storageService;
+    private RetrofitClient retrofitClient;
 
     public StorageRepository() {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();

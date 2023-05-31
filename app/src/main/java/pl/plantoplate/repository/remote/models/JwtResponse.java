@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.repository.models;
+package pl.plantoplate.repository.remote.models;
 
 import com.google.gson.annotations.SerializedName;
 

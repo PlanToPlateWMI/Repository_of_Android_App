@@ -25,13 +25,12 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import pl.plantoplate.databinding.GroupChooseBinding;
-import pl.plantoplate.repository.models.JwtResponse;
+import pl.plantoplate.repository.remote.models.JwtResponse;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.group.GroupRepository;
-import pl.plantoplate.repository.models.CreateGroupData;
+import pl.plantoplate.repository.remote.models.CreateGroupData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.ui.main.ActivityMain;

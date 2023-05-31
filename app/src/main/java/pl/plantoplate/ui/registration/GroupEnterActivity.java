@@ -30,8 +30,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.Objects;
 
 import pl.plantoplate.databinding.GroupPageBinding;
-import pl.plantoplate.repository.models.JwtResponse;
-import pl.plantoplate.repository.models.UserJoinGroupData;
+import pl.plantoplate.repository.remote.models.JwtResponse;
+import pl.plantoplate.repository.remote.models.UserJoinGroupData;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.group.GroupRepository;
 import pl.plantoplate.tools.ApplicationState;
@@ -87,7 +87,7 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
     public void getJoinGroupData(View v, String code) {
         String email = prefs.getString("email", "");
         String password = prefs.getString("password", "");
-        pl.plantoplate.repository.models.UserJoinGroupData data = new pl.plantoplate.repository.models.UserJoinGroupData(code, email, password);
+        UserJoinGroupData data = new UserJoinGroupData(code, email, password);
 
         joinGroup(v, data);
     }

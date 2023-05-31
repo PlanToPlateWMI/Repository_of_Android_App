@@ -2,15 +2,13 @@ package pl.plantoplate.repository.remote.shoppingList;
 
 import java.util.ArrayList;
 
-import okhttp3.ResponseBody;
-import pl.plantoplate.repository.models.Product;
-import pl.plantoplate.repository.models.ShoppingList;
+import pl.plantoplate.repository.remote.models.Product;
+import pl.plantoplate.repository.remote.models.ShoppingList;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;

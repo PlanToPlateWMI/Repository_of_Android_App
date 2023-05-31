@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.repository.models;
+package pl.plantoplate.repository.remote.models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

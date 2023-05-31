@@ -32,7 +32,7 @@ import pl.plantoplate.databinding.RegisterActivityBinding;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.auth.AuthRepository;
 import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.repository.models.UserRegisterData;
+import pl.plantoplate.repository.remote.models.UserRegisterData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.EmailValidator;

@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.repository.models.Product;
+import pl.plantoplate.repository.remote.models.Product;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {

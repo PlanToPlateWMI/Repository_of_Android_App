@@ -1,10 +1,9 @@
 package pl.plantoplate.repository.remote.group;
 
-import okhttp3.ResponseBody;
-import pl.plantoplate.repository.models.CodeResponse;
-import pl.plantoplate.repository.models.CreateGroupData;
-import pl.plantoplate.repository.models.JwtResponse;
-import pl.plantoplate.repository.models.UserJoinGroupData;
+import pl.plantoplate.repository.remote.models.CodeResponse;
+import pl.plantoplate.repository.remote.models.CreateGroupData;
+import pl.plantoplate.repository.remote.models.JwtResponse;
+import pl.plantoplate.repository.remote.models.UserJoinGroupData;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

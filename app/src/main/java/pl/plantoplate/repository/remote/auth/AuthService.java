@@ -1,10 +1,10 @@
 package pl.plantoplate.repository.remote.auth;
 
-import pl.plantoplate.repository.models.CodeResponse;
-import pl.plantoplate.repository.models.JwtResponse;
-import pl.plantoplate.repository.models.Message;
-import pl.plantoplate.repository.models.UserRegisterData;
-import pl.plantoplate.repository.models.SignInData;
+import pl.plantoplate.repository.remote.models.CodeResponse;
+import pl.plantoplate.repository.remote.models.JwtResponse;
+import pl.plantoplate.repository.remote.models.Message;
+import pl.plantoplate.repository.remote.models.UserRegisterData;
+import pl.plantoplate.repository.remote.models.SignInData;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

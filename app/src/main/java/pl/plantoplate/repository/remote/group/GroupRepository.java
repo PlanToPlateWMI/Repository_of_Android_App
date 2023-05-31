@@ -2,10 +2,10 @@ package pl.plantoplate.repository.remote.group;
 
 import androidx.annotation.NonNull;
 
-import pl.plantoplate.repository.models.CodeResponse;
-import pl.plantoplate.repository.models.CreateGroupData;
-import pl.plantoplate.repository.models.JwtResponse;
-import pl.plantoplate.repository.models.UserJoinGroupData;
+import pl.plantoplate.repository.remote.models.CodeResponse;
+import pl.plantoplate.repository.remote.models.CreateGroupData;
+import pl.plantoplate.repository.remote.models.JwtResponse;
+import pl.plantoplate.repository.remote.models.UserJoinGroupData;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.RetrofitClient;
 import retrofit2.Call;

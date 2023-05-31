@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pl.plantoplate.repository.models.Product;
-import pl.plantoplate.repository.models.Category;
+import pl.plantoplate.repository.remote.models.Product;
+import pl.plantoplate.repository.remote.models.Category;
 
 public class CategorySorter {
 

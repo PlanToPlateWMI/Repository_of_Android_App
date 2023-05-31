@@ -73,18 +73,34 @@ public class RetrofitClient {
      */
     private static Interceptor networkInterceptor() {
         return chain -> {
-
-            Response response = chain.proceed(chain.request());
-
+            Request request = chain.request();
             CacheControl cacheControl = new CacheControl.Builder()
-                    .maxAge(5, TimeUnit.MINUTES)
+                    .maxAge(0, TimeUnit.SECONDS)
                     .build();
 
-            return response.newBuilder()
+            Response response = chain.proceed(request);
+
+            // Update cache with the response
+            Response updatedResponse = response.newBuilder()
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
                     .header("Cache-Control", cacheControl.toString())
                     .build();
+
+            // Get the original response's cache control
+            CacheControl originalCacheControl = response.cacheControl();
+
+            if (originalCacheControl.maxAgeSeconds() > 0) {
+                // Cache the updated response
+                CacheControl updatedCacheControl = new CacheControl.Builder()
+                        .maxAge(originalCacheControl.maxAgeSeconds(), TimeUnit.SECONDS)
+                        .build();
+                updatedResponse = updatedResponse.newBuilder()
+                        .header("Cache-Control", updatedCacheControl.toString())
+                        .build();
+            }
+
+            return updatedResponse;
         };
     }
 

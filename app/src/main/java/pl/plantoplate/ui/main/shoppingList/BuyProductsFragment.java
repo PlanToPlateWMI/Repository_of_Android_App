@@ -44,13 +44,12 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentTrzebaKupicBinding;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
-import pl.plantoplate.repository.models.Product;
-import pl.plantoplate.repository.models.ShoppingList;
+import pl.plantoplate.repository.remote.models.Product;
+import pl.plantoplate.repository.remote.models.ShoppingList;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
-import pl.plantoplate.repository.models.Category;
+import pl.plantoplate.repository.remote.models.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.EditOwnProductFragment;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.AddToCartPopUp;
 

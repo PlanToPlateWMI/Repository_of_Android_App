@@ -1,13 +1,11 @@
 package pl.plantoplate.repository.remote.shoppingList;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.repository.models.Product;
-import pl.plantoplate.repository.models.ShoppingList;
+import pl.plantoplate.repository.remote.models.Product;
+import pl.plantoplate.repository.remote.models.ShoppingList;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.RetrofitClient;
 import retrofit2.Call;
@@ -89,6 +87,30 @@ public class ShoppingListRepository {
             @Override
             public void onFailure(@NonNull Call<ArrayList<Product>> call, @NonNull Throwable t) {
                 callback.onFailure("Brak połączenia z serwerem. Sprawdź połączenie z internetem.");
+            }
+        });
+    }
+
+    public void getBoughtProductsIds(String token, ResponseCallback<ArrayList<Integer>> callback) {
+        ShoppingListRepository shoppingListRepository = new ShoppingListRepository();
+        // get bought products ids
+        shoppingListRepository.getBoughtShoppingList(token, new ResponseCallback<ArrayList<Product>>() {
+
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                ArrayList<Integer> productsIds = new ArrayList<>();
+                for (Product product : response) {
+                    productsIds.add(product.getId());
+                }
+                callback.onSuccess(productsIds);
+            }
+            @Override
+            public void onError(String errorMessage) {
+                callback.onError(errorMessage);
+            }
+            @Override
+            public void onFailure(String failureMessage) {
+                callback.onFailure(failureMessage);
             }
         });
     }
