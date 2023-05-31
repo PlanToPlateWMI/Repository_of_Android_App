@@ -27,20 +27,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pl.plantoplate.R;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.repository.models.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     private ArrayList<Category> categories;
     private int itemType;
-    private OnProductItemClickListener listener;
+    private SetupItemButtons listener;
 
     public CategoryAdapter(ArrayList<Category> categories, int itemType) {
         this.categories = categories;
         this.itemType = itemType;
     }
 
-    public void setOnProductItemClickListener(OnProductItemClickListener listener) {
+    public void setUpItemButtons(SetupItemButtons listener) {
         this.listener = listener;
     }
 

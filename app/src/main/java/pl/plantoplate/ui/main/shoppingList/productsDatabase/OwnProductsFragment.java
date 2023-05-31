@@ -46,8 +46,7 @@ import pl.plantoplate.repository.remote.product.ProductRepository;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.repository.remote.storage.StorageRepository;
-import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.AddToCartPopUp;
@@ -263,22 +262,24 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
         ownProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ProductAdapter productAllAdapter = new ProductAdapter(groupProductsList, R.layout.item_wlasny_produkt);
-        productAllAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+        productAllAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
-            public void onAddToShoppingListButtonClick(View v, Product product) {
-                product.setAmount(1.0f);
-                addProduct(product);
+            public void setupAddToShoppingListButtonClick(View v, Product product) {
+                v.setOnClickListener(view -> {
+                    product.setAmount(1.0f);
+                    addProduct(product);
+                });
             }
 
             @Override
-            public void onEditProductButtonClick(View v, Product product) {
+            public void setupEditProductButtonClick(View v, Product product) {
                 //if admin
-                replaceFragment(new EditOwnProductFragment(product));
+                v.setOnClickListener(view -> replaceFragment(new EditOwnProductFragment(product)));
             }
 
             @Override
-            public void onProductItemClick(View v, Product product) {
-                showAddProductPopup(product);
+            public void setupProductItemClick(View v, Product product) {
+                v.setOnClickListener(view -> showAddProductPopup(product));
             }
         });
         ownProductsRecyclerView.setAdapter(productAllAdapter);

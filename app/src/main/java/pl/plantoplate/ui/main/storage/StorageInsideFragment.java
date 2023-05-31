@@ -43,7 +43,7 @@ import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.storage.StorageRepository;
 import pl.plantoplate.tools.CategorySorter;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 
@@ -169,13 +169,18 @@ public class StorageInsideFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         CategoryAdapter categoryAdapter = new CategoryAdapter(storage, R.layout.item_spizarnia);
-        categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+        categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
-            public void onAddToShoppingListButtonClick(View v, Product product) {
+            public void setupAddToShoppingListButtonClick(View v, Product product) {
+                v.setOnClickListener(view -> {
+
+                });
             }
 
             @Override
-            public void onProductItemClick(View v, Product product) {
+            public void setupProductItemClick(View v, Product product) {
+                v.setOnClickListener(view -> {
+                });
             }
         });
         recyclerView.setAdapter(categoryAdapter);

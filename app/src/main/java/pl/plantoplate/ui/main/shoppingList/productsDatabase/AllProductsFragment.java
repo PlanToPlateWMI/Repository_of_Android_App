@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.math.BigDecimal;
@@ -31,8 +30,7 @@ import pl.plantoplate.repository.remote.product.ProductRepository;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.repository.remote.storage.StorageRepository;
-import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.repository.models.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
@@ -241,16 +239,18 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         CategoryAdapter categoryAdapter = new CategoryAdapter(allProductsList, R.layout.item_wszystkie_produkt);
-        categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+        categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
-            public void onAddToShoppingListButtonClick(View v, Product product) {
-                product.setAmount(1.0f);
-                addProduct(product);
+            public void setupAddToShoppingListButtonClick(View v, Product product) {
+                v.setOnClickListener(view -> {
+                    product.setAmount(1.0f);
+                    addProduct(product);
+                });
             }
 
             @Override
-            public void onProductItemClick(View v, Product product) {
-                showAddProductPopup(product);
+            public void setupProductItemClick(View v, Product product) {
+                v.setOnClickListener(view -> showAddProductPopup(product));
             }
         });
         categoryRecyclerView.setAdapter(categoryAdapter);

@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import pl.plantoplate.R;
 import pl.plantoplate.repository.models.Product;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder{
     private int itemType;
@@ -83,39 +83,50 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
     }
 
     @SuppressLint("NonConstantResourceId")
-    public void bind(Product product, OnProductItemClickListener listener) {
+    public void bind(Product product, SetupItemButtons listener) {
         name.setText(product.getName());
         String unitText = product.getAmount() + " " + product.getUnit();
         unit.setText(product.getUnit());
         switch(this.itemType) {
             case R.id.layoutWszystkieProdukty:
-                addToShoppingListButton.setOnClickListener(v-> listener.onAddToShoppingListButtonClick(v, product));
-                layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
+                listener.setupAddToShoppingListButtonClick(addToShoppingListButton, product);
+                listener.setupProductItemClick(layout, product);
+                //addToShoppingListButton.setOnClickListener(v-> listener.onAddToShoppingListButtonClick(v, product));
+                //layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 break;
             case R.id.layoutWlasneProdukty:
-                addToShoppingListButton.setOnClickListener(v -> listener.onAddToShoppingListButtonClick(v, product));
+                listener.setupAddToShoppingListButtonClick(addToShoppingListButton, product);
+                listener.setupEditProductButtonClick(editProductButton, product);
+                listener.setupProductItemClick(layout, product);
+                //addToShoppingListButton.setOnClickListener(v -> listener.onAddToShoppingListButtonClick(v, product));
                 //
-                editProductButton.setOnClickListener(v -> listener.onEditProductButtonClick(v, product));
+                //editProductButton.setOnClickListener(v -> listener.onEditProductButtonClick(v, product));
                 //
-                layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
+                //layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 break;
             case R.id.layoutTrzebaKupicProdukty:
-                checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
+                listener.setupCheckShoppingListButtonClick(checkShoppingListButton, product);
+                listener.setupDeleteProductButtonClick(deleteProductButton, product);
+                listener.setupProductItemClick(layout, product);
+                //checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
                 //
-                deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
+                //deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
                 //
-                layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
+                //layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 unit.setText(unitText);
             case R.id.layoutKupioneProdukty:
-                checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
+                listener.setupCheckShoppingListButtonClick(checkShoppingListButton, product);
+                listener.setupDeleteProductButtonClick(deleteProductButton, product);
+                //checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
                 //
-                deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
+                //deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
                 //
                 unit.setText(unitText);
                 break;
             case R.id.item_produkt_spizarnia:
                 //
-                deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
+                listener.setupDeleteProductButtonClick(deleteProductButton, product);
+                //deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
                 //
                 unit.setText(unitText);
                 break;

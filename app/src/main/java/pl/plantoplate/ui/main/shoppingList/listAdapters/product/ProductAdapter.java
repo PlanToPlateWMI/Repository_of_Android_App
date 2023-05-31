@@ -27,13 +27,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pl.plantoplate.repository.models.Product;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     private ArrayList<Product> products;
     private int itemType;
 
-    private OnProductItemClickListener listener;
+    private SetupItemButtons listener;
 
     public ProductAdapter(ArrayList<Product> products, int itemType) {
         this.products = products;
@@ -46,7 +46,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void setOnProductItemClickListener(OnProductItemClickListener listener) {
+    public void setUpItemButtons(SetupItemButtons listener) {
         this.listener = listener;
     }
 

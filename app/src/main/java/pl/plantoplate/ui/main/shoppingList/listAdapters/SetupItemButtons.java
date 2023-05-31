@@ -20,24 +20,24 @@ import android.view.View;
 
 import pl.plantoplate.repository.models.Product;
 
-public interface OnProductItemClickListener {
-    default void onAddToShoppingListButtonClick(View v, Product product) {
+public interface SetupItemButtons {
+    default void setupAddToShoppingListButtonClick(View v, Product product) {
 
     }
 
-    default void onDeleteProductButtonClick(View v, Product product) {
+    default void setupDeleteProductButtonClick(View v, Product product) {
 
     }
 
-    default void onEditProductButtonClick(View v, Product product) {
+    default void setupEditProductButtonClick(View v, Product product) {
 
     }
 
-    default void onCheckShoppingListButtonClick(View v, Product product) {
+    default void setupCheckShoppingListButtonClick(View v, Product product) {
 
     }
 
-    default void onProductItemClick(View v, Product product) {
+    default void setupProductItemClick(View v, Product product) {
 
     }
 }

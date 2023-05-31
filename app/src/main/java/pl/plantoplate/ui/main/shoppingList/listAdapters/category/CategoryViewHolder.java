@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import pl.plantoplate.R;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
 import pl.plantoplate.repository.models.Category;
 
@@ -40,12 +40,12 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void bind(Category category, OnProductItemClickListener listener) {
+    public void bind(Category category, SetupItemButtons listener) {
 
         categoryOfProduct.setText(category.getName());
         productRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
         ProductAdapter productAdapter = new ProductAdapter(category.getProducts(), this.itemType);
-        productAdapter.setOnProductItemClickListener(listener);
+        productAdapter.setUpItemButtons(listener);
         productRecyclerView.setAdapter(productAdapter);
     }
 }

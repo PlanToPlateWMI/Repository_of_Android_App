@@ -46,7 +46,7 @@ import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.repository.models.ShoppingList;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.repository.models.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
@@ -237,20 +237,20 @@ public class BuyProductsFragment extends Fragment {
         categoryRecyclerView = fragmentTrzebaKupicBinding.productsOwnRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         CategoryAdapter categoryAdapter = new CategoryAdapter(toBuyProductsList, R.layout.item_trzeba_kupic);
-        categoryAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+        categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
-            public void onDeleteProductButtonClick(View v, Product product) {
-                showDeleteProductPopup(product);
+            public void setupDeleteProductButtonClick(View v, Product product) {
+                v.setOnClickListener(view -> showDeleteProductPopup(product));
             }
 
             @Override
-            public void onCheckShoppingListButtonClick(View v, Product product) {
-                moveProductToBought(product);
+            public void setupCheckShoppingListButtonClick(View v, Product product) {
+                v.setOnClickListener(view -> moveProductToBought(product));
             }
 
             @Override
-            public void onProductItemClick(View v, Product product) {
-                showAddProductPopup(product);
+            public void setupProductItemClick(View v, Product product) {
+                v.setOnClickListener(view -> showAddProductPopup(product));
             }
         });
         categoryRecyclerView.setAdapter(categoryAdapter);

@@ -44,7 +44,7 @@ import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.models.Product;
 import pl.plantoplate.repository.models.ShoppingList;
 import pl.plantoplate.repository.remote.storage.StorageRepository;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.OnProductItemClickListener;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
 import pl.plantoplate.ui.main.storage.StorageFragment;
@@ -200,15 +200,15 @@ public class BoughtProductsFragment extends Fragment {
         productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
         productsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ProductAdapter productAdapter = new ProductAdapter(boughtProductsList, R.layout.item_kupione);
-        productAdapter.setOnProductItemClickListener(new OnProductItemClickListener() {
+        productAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
-            public void onDeleteProductButtonClick(View v, Product product) {
-                showDeleteProductPopup(product);
+            public void setupDeleteProductButtonClick(View v, Product product) {
+                v.setOnClickListener(view -> showDeleteProductPopup(product));
             }
 
             @Override
-            public void onCheckShoppingListButtonClick(View v, Product product) {
-                moveProductToBuy(product);
+            public void setupCheckShoppingListButtonClick(View v, Product product) {
+                v.setOnClickListener(view -> moveProductToBuy(product));
             }
         });
         productsRecyclerView.setAdapter(productAdapter);
