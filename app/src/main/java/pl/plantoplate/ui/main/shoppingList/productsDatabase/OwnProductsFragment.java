@@ -102,7 +102,7 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         if(role.equals("ROLE_ADMIN")) {
             floatingActionButton_wlasne.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
         }else {
-            floatingActionButton_wlasne.setBackgroundColor(getResources().getColor(R.color.gray));
+            floatingActionButton_wlasne.setVisibility(View.INVISIBLE);
             floatingActionButton_wlasne.setClickable(false);
         }
         searchView.setOnQueryTextListener(this);
@@ -274,7 +274,14 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
             @Override
             public void setupEditProductButtonClick(View v, Product product) {
                 //if admin
-                v.setOnClickListener(view -> replaceFragment(new EditOwnProductFragment(product)));
+                String role = prefs.getString("role", "");
+                if(role.equals("ROLE_ADMIN")) {
+                    v.setOnClickListener(view -> replaceFragment(new EditOwnProductFragment(product)));
+                }
+                else{
+                    //set visibility none
+                    v.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override

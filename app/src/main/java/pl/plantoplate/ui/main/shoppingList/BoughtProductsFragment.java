@@ -203,7 +203,14 @@ public class BoughtProductsFragment extends Fragment {
         productAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {
-                v.setOnClickListener(view -> showDeleteProductPopup(product));
+                String role = prefs.getString("role", "");
+                if(role.equals("ROLE_ADMIN")) {
+                    v.setOnClickListener(view -> showDeleteProductPopup(product));
+                }
+                else{
+                    //set visibility none
+                    v.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -217,6 +224,12 @@ public class BoughtProductsFragment extends Fragment {
     public void showDeleteProductPopup(Product product) {
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
+        //add delay!!!!
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         dialog.setContentView(R.layout.pop_up_delete_product_from_shopping_list);
 
 

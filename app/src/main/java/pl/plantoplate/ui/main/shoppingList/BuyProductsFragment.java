@@ -50,6 +50,7 @@ import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.repository.models.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.EditOwnProductFragment;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.AddToCartPopUp;
 
@@ -214,6 +215,11 @@ public class BuyProductsFragment extends Fragment {
     public void showDeleteProductPopup(Product product) {
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         dialog.setContentView(R.layout.pop_up_delete_product_from_shopping_list);
 
         Button acceptButton = dialog.findViewById(R.id.button_yes);
@@ -240,7 +246,14 @@ public class BuyProductsFragment extends Fragment {
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {
-                v.setOnClickListener(view -> showDeleteProductPopup(product));
+                String role = prefs.getString("role", "");
+                if(role.equals("ROLE_ADMIN")) {
+                    v.setOnClickListener(view -> showDeleteProductPopup(product));
+                }
+                else{
+                    //set visibility none
+                    v.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override

@@ -182,10 +182,50 @@ public class StorageInsideFragment extends Fragment {
                 v.setOnClickListener(view -> {
                 });
             }
+
+            //delete product from storage
+            @Override
+            public void setupDeleteProductButtonClick(View v, Product product) {
+                String role = prefs.getString("role", "");
+                if(role.equals("ROLE_ADMIN")) {
+                    v.setOnClickListener(view -> showDeleteProductPopup(product));
+                }
+                else{
+                    //set visibility none
+                    v.setVisibility(View.INVISIBLE);
+                }
+            }
         });
         recyclerView.setAdapter(categoryAdapter);
     }
 
+
+    public void showDeleteProductPopup(Product product) {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCancelable(true);
+        //add delay!!!!
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        dialog.setContentView(R.layout.pop_up_delete_from_storage);
+
+
+        Button acceptButton = dialog.findViewById(R.id.button_yes);
+        Button cancelButton = dialog.findViewById(R.id.button_no);
+
+
+        acceptButton.setOnClickListener(v -> dialog.dismiss());
+//        acceptButton.setOnClickListener(v -> {
+//            deleteProductFromList(product);
+//            dialog.dismiss();
+//        });
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
 
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
