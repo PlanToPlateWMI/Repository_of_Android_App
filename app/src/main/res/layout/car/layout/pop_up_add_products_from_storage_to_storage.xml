@@ -48,11 +48,10 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
 
             android:backgroundTint="@color/blue_1"
             android:clickable="true"
-
 
             android:fontFamily="@font/quicksand_medium"
 
@@ -61,11 +60,9 @@
 
             android:textColor="@color/black_gray"
             android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_add"
-            app:layout_constraintVertical_bias="0.097"
             app:strokeColor="@color/blue_2"
             app:strokeWidth="1dp" />
 
@@ -96,6 +93,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_yes"
+            app:layout_constraintVertical_bias="0.21"
             app:strokeColor="@color/blue_2"
             app:strokeWidth="1dp" />
 

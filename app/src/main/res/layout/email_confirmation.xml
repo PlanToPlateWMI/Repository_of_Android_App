@@ -8,12 +8,17 @@
     tools:context="pl.plantoplate.ui.registration.EmailConfirmActivity">
 
     <!-- PlanToPlate -->
+
+
+    <!-- Potwierdzenie maila -->
+
     <TextView
         android:id="@+id/plantoplate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="70dp"
 
         android:fontFamily="@font/quicksand_semibold"
 
@@ -23,13 +28,10 @@
         android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.023" />
 
-
-    <!-- Potwierdzenie maila -->
     <TextView
         android:id="@+id/potwierdzenie_maila"
         android:layout_width="wrap_content"
@@ -63,6 +65,8 @@
         android:layout_alignParentBottom="true"
 
         android:fontFamily="@font/quicksand_medium"
+
+        android:textSize="20dp"
 
         android:gravity="center_horizontal|top"
         android:text="@string/skorzystaj_"

@@ -49,7 +49,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="48dp"
 
             android:backgroundTint="@color/blue_1"
             android:clickable="true"
@@ -97,6 +97,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_yes"
+            app:layout_constraintVertical_bias="0.21"
             app:strokeColor="@color/blue_2"
             app:strokeWidth="1dp" />
 

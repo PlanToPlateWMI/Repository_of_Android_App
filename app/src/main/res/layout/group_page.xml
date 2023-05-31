@@ -62,6 +62,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:fontFamily="@font/quicksand_medium"
+        android:textSize="20dp"
+
         android:gravity="center_horizontal|top"
         android:text="@string/wprowad_kod"
         android:textAppearance="@style/wprowad_kod"

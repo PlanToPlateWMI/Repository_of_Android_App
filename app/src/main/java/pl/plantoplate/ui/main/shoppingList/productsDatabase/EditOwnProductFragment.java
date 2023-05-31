@@ -195,6 +195,12 @@ public class EditOwnProductFragment extends Fragment implements ChangeCategoryLi
     }
 
     public void showConfirmDeleteProductPopUp(View view) {
+        //add delay!!!!
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.pop_up_delete_product_from_database);

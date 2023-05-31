@@ -61,6 +61,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:textSize="20dp"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="center_horizontal|top"
         android:text="@string/wybierz_jadna_opcje"
