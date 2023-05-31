@@ -161,5 +161,37 @@ public class AuthRepository {
             }
         });
     }
+
+    public void userExists(String email, ResponseCallback<Message> callback) {
+        Call<Message> call = authService.userExists(email);
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(@NonNull Call<Message> call, @NonNull Response<Message> response) {
+
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
+
+                } else {
+                    int code = response.code();
+                    switch (code) {
+                        case 409:
+                            callback.onError("Użytkownik o podanym adresie email już istnieje.");
+                            break;
+                        case 500:
+                            callback.onError("Błąd serwera!");
+                            break;
+                        default:
+                            callback.onError("Wystąpił nieznany błąd.");
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Message> call, @NonNull Throwable t) {
+                callback.onFailure("Brak połączenia z serwerem. Sprawdź połączenie z internetem.");
+            }
+        });
+    }
 }
 

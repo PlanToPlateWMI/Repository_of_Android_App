@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import pl.plantoplate.databinding.RemindPassword1Binding;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.auth.AuthRepository;
+import pl.plantoplate.repository.remote.models.Message;
 
 /**
  * A class that is responsible for the first step of the password remind process.
@@ -43,6 +44,7 @@ public class EnterEmailActivity extends AppCompatActivity {
     private Button apply_button;
 
     private SharedPreferences prefs;
+    private AuthRepository authRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +59,38 @@ public class EnterEmailActivity extends AppCompatActivity {
         apply_button = change_password_view.buttonZatwierdz;
 
         // Set a click listeners for the buttons
-        apply_button.setOnClickListener(this::validateEmail);
+        apply_button.setOnClickListener(this::checkUserExists);
 
         // Get the shared preferences
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
+        // Create the auth repository
+        authRepository = new AuthRepository();
+
+    }
+
+    public void checkUserExists(View view){
+        String email = String.valueOf(email_field.getText());
+
+        authRepository.userExists(email, new ResponseCallback<Message>() {
+
+            @Override
+            public void onSuccess(Message response) {
+                // user exists
+                Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                // user don't exists
+                validateEmail(view);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     /**
@@ -78,13 +107,15 @@ public class EnterEmailActivity extends AppCompatActivity {
         // Save the email in the shared preferences.
         prefs.edit().putString("email", email).apply();
 
+        // start the next activity
+        Intent intent = new Intent(getApplicationContext(), EnterCodeActivity.class);
+        startActivity(intent);
+
         AuthRepository authRepository = new AuthRepository();
         authRepository.getEmailConfirmCode(email, "reset", new ResponseCallback<String>() {
             @Override
             public void onSuccess(String code) {
-                Intent intent = new Intent(getApplicationContext(), EnterCodeActivity.class);
                 prefs.edit().putString("code", code).apply();
-                startActivity(intent);
             }
 
             @Override

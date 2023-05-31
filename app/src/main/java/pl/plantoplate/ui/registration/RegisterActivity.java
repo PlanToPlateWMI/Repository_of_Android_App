@@ -31,6 +31,7 @@ import android.widget.TextView;
 import pl.plantoplate.databinding.RegisterActivityBinding;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.auth.AuthRepository;
+import pl.plantoplate.repository.remote.models.Message;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.repository.remote.models.UserRegisterData;
 import pl.plantoplate.tools.ApplicationState;
@@ -54,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     private TextView masz_konto;
 
     private SharedPreferences prefs;
+    private AuthRepository authRepository;
 
     /**
      * Called when the activity is first created.
@@ -83,8 +85,11 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         // get shared preferences
         prefs = getSharedPreferences("prefs", 0);
 
+        // get auth repository
+        authRepository = new AuthRepository();
+
         // Set the click listener for the register button
-        register_button.setOnClickListener(this::validateUserInfo);
+        register_button.setOnClickListener(this::checkUserExists);
         sign_in_button.setOnClickListener(v -> signInAccount());
         masz_konto.setOnClickListener(v -> signInAccount());
     }
@@ -139,13 +144,40 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         }
     }
 
+    public void checkUserExists(View view){
+        String email = String.valueOf(enter_email.getText());
+
+        authRepository.userExists(email, new ResponseCallback<Message>() {
+
+            @Override
+            public void onSuccess(Message response) {
+                // user don't exists
+                validateUserInfo(view);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                // user exists
+                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
     /**
      * Sends the user data to the server and handles the response asynchronously.
      * @param userData The user data to send.
      * @param view The View to display the response in (e.g. error using SnackBar).
      */
     public void sendUserData(UserRegisterData userData, View view) {
-        AuthRepository authRepository = new AuthRepository();
+        // start email confirmation activity
+        Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
+        startActivity(intent);
+
         authRepository.sendUserRegisterData(userData, new ResponseCallback<String>() {
             @Override
             public void onSuccess(String code) {
@@ -155,10 +187,6 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
                 editor.putString("email", userData.getEmail());
                 editor.putString("password", userData.getPassword());
                 editor.putString("code", code).apply();
-
-                // start email confirmation activity
-                Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
-                startActivity(intent);
             }
 
             @Override

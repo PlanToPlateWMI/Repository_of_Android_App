@@ -24,4 +24,7 @@ public interface AuthService {
 
     @POST("api/auth/password/reset")
     Call<Message> resetPassword(@Body SignInData info);
+
+    @GET("api/users/emails")
+    Call<Message> userExists(@Query("email") String email);
 }
