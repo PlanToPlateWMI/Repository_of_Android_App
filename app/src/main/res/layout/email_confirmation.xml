@@ -130,6 +130,7 @@
 
         android:gravity="top"
         android:text="@string/wy_lij_pono"
+        android:textColor="@color/blue_3"
         android:textAppearance="@style/wy_lij_pono"
         app:layout_constraintBottom_toTopOf="@+id/button_zatwierdzenie_link"
         app:layout_constraintEnd_toEndOf="parent"

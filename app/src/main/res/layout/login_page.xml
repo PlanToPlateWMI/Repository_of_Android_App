@@ -178,6 +178,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginLeft="80dp"
 
         android:clickable="true"
 
@@ -188,8 +189,8 @@
         android:textAppearance="@style/masz_konto_"
         android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.276"
+        app:layout_constraintEnd_toStartOf="@+id/button_zaloz_konto"
+        app:layout_constraintHorizontal_bias="0.784"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_zaloguj_sie"
         app:layout_constraintVertical_bias="0.304" />

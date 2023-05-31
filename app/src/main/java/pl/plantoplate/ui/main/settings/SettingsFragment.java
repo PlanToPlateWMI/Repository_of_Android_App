@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentSettingsBinding;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.tools.ApplicationState;
@@ -43,6 +44,9 @@ public class SettingsFragment extends Fragment implements ApplicationStateContro
 
     private Button generate_group_code_button;
     private Button exit_account_button;
+    private Button button_zarzadyanie_uyztkownikamu;
+    private Button button_zmiana_danych;
+    private Button button_about_us;
 
     private SharedPreferences prefs;
 
@@ -56,13 +60,30 @@ public class SettingsFragment extends Fragment implements ApplicationStateContro
         // Get the buttons
         generate_group_code_button = settings_view.buttonWygenerowanieKodu;
         exit_account_button = settings_view.buttonWyloguj;
-
-        // Set the onClickListeners for the buttons
-        generate_group_code_button.setOnClickListener(this::chooseGroupCodeType);
-        exit_account_button.setOnClickListener(this::exitAccount);
+        button_zarzadyanie_uyztkownikamu = settings_view.buttonZarzadyanieUyztkownikamu;
+        button_zmiana_danych = settings_view.buttonZmianaDanych;
+        button_about_us = settings_view.buttonAboutUs;
 
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        // Set the onClickListeners for the buttons
+        String role = prefs.getString("role", "");
+
+        if(role.equals("ROLE_ADMIN")) {
+            generate_group_code_button.setOnClickListener(this::chooseGroupCodeType);
+        }else {
+            generate_group_code_button.setBackgroundColor(getResources().getColor(R.color.gray));
+            generate_group_code_button.setClickable(false);
+        }
+        if(role.equals("ROLE_ADMIN")) {
+            //button_zarzadyanie_uyztkownikamu.setOnClickListener(this::zarzadywanieUzytkownikami);
+        }else {
+            button_zarzadyanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
+            button_zarzadyanie_uyztkownikamu.setClickable(false);
+        }
+        exit_account_button.setOnClickListener(this::exitAccount);
+
 
         return settings_view.getRoot();
     }

@@ -93,12 +93,20 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         welcomeTextView = fragmentWlasneBinding.welcomeWlasne;
         searchView = requireActivity().findViewById(R.id.search);
 
-        // Setup listeners
-        floatingActionButton_wlasne.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
-        searchView.setOnQueryTextListener(this);
-
-        // Get shared preferences
+        // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        // Set the onClickListeners for the buttons
+        String role = prefs.getString("role", "");
+
+        // Setup listeners
+        if(role.equals("ROLE_ADMIN")) {
+            floatingActionButton_wlasne.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
+        }else {
+            floatingActionButton_wlasne.setBackgroundColor(getResources().getColor(R.color.gray));
+            floatingActionButton_wlasne.setClickable(false);
+        }
+        searchView.setOnQueryTextListener(this);
 
         // Get product repository
         productRepository = new ProductRepository();
@@ -264,6 +272,7 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
 
             @Override
             public void onEditProductButtonClick(View v, Product product) {
+                //if admin
                 replaceFragment(new EditOwnProductFragment(product));
             }
 

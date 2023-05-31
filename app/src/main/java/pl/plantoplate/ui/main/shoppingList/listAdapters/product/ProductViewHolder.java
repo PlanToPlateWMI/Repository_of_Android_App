@@ -94,21 +94,29 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
                 break;
             case R.id.layoutWlasneProdukty:
                 addToShoppingListButton.setOnClickListener(v -> listener.onAddToShoppingListButtonClick(v, product));
+                //
                 editProductButton.setOnClickListener(v -> listener.onEditProductButtonClick(v, product));
+                //
                 layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 break;
             case R.id.layoutTrzebaKupicProdukty:
                 checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
+                //
                 deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
+                //
                 layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 unit.setText(unitText);
             case R.id.layoutKupioneProdukty:
                 checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
+                //
                 deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
+                //
                 unit.setText(unitText);
                 break;
             case R.id.item_produkt_spizarnia:
+                //
                 deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
+                //
                 unit.setText(unitText);
                 break;
         }
