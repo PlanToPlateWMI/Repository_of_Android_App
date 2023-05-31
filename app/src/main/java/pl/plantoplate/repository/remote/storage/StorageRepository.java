@@ -95,8 +95,8 @@ public class StorageRepository {
         });
     }
 
-    public void deleteProductStorage(String token, Product product, ResponseCallback<ArrayList<Product>> callback) {
-        Call<ArrayList<Product>> call = storageService.deleteProductStorage(token, product.getId());
+    public void deleteProductStorage(String token, int productId, ResponseCallback<ArrayList<Product>> callback) {
+        Call<ArrayList<Product>> call = storageService.deleteProductStorage(token, productId);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {

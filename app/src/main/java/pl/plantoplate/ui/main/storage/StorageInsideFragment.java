@@ -104,7 +104,7 @@ public class StorageInsideFragment extends Fragment {
                     goToProductsDatabase();
                 }
                 else{
-                   showaddFromPopUp(view, productsIds);
+                   showaddFromPopUp(productsIds);
                 }
             }
 
@@ -180,7 +180,7 @@ public class StorageInsideFragment extends Fragment {
         });
     }
 
-    public void showaddFromPopUp(View view, ArrayList<Integer> productsIds) {
+    public void showaddFromPopUp(ArrayList<Integer> productsIds) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.pop_up_add_products_from_storage_to_storage);
 
@@ -245,21 +245,42 @@ public class StorageInsideFragment extends Fragment {
             e.printStackTrace();
         }
         dialog.setContentView(R.layout.pop_up_delete_from_storage);
-
-
         Button acceptButton = dialog.findViewById(R.id.button_yes);
         Button cancelButton = dialog.findViewById(R.id.button_no);
 
-
         acceptButton.setOnClickListener(v -> dialog.dismiss());
-//        acceptButton.setOnClickListener(v -> {
-//            deleteProductFromList(product);
-//            dialog.dismiss();
-//        });
+        acceptButton.setOnClickListener(v -> {
+            deleteProductFromStorage(product);
+           dialog.dismiss();
+        });
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());
-
         dialog.show();
+    }
+
+    private void deleteProductFromStorage(Product product) {
+        String token = "Bearer " + prefs.getString("token", "");
+        storageRepository.deleteProductStorage(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> storageProducts) {
+                storage = CategorySorter.sortCategoriesByProduct(storageProducts);
+                // update recycler view
+                CategoryAdapter categoryAdapter = (CategoryAdapter) recyclerView.getAdapter();
+                Objects.requireNonNull(categoryAdapter).setCategoriesList(storage);
+
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "produkt '" + product.getName() + "' został usunięty", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void replaceFragment(Fragment fragment) {
