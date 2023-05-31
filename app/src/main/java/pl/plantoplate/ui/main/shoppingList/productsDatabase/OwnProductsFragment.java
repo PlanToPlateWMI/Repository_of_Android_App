@@ -49,7 +49,7 @@ import pl.plantoplate.repository.remote.storage.StorageRepository;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.AddToCartPopUp;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProductpopUp;
 
 public class OwnProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
     private FragmentWlasneBinding fragmentWlasneBinding;
@@ -239,7 +239,7 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
 
     public void showAddProductPopup(Product product) {
         product.setAmount(1);
-        AddToCartPopUp addToCartPopUp = new AddToCartPopUp(requireContext(), product);
+        ModifyProductpopUp addToCartPopUp = new ModifyProductpopUp(requireContext(), product);
         addToCartPopUp.acceptButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(addToCartPopUp.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {

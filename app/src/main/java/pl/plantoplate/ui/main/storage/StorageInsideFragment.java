@@ -33,6 +33,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -47,6 +49,7 @@ import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProductpopUp;
 
 public class StorageInsideFragment extends Fragment {
 
@@ -180,6 +183,61 @@ public class StorageInsideFragment extends Fragment {
         });
     }
 
+    private void deleteProductFromStorage(Product product) {
+        String token = "Bearer " + prefs.getString("token", "");
+        storageRepository.deleteProductStorage(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> storageProducts) {
+                storage = CategorySorter.sortCategoriesByProduct(storageProducts);
+                // update recycler view
+                CategoryAdapter categoryAdapter = (CategoryAdapter) recyclerView.getAdapter();
+                Objects.requireNonNull(categoryAdapter).setCategoriesList(storage);
+
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "produkt '" + product.getName() + "' został usunięty", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void changeProductAmount(Product product){
+        System.out.println(product.getId());
+        String token = "Bearer " + prefs.getString("token", "");
+        System.out.println(token);
+        storageRepository.changeProductAmountInStorage(token, product.getId(), product, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> storageProducts) {
+                storage = CategorySorter.sortCategoriesByProduct(storageProducts);
+
+                // update recycler view
+                CategoryAdapter categoryAdapter = (CategoryAdapter) recyclerView.getAdapter();
+                Objects.requireNonNull(categoryAdapter).setCategoriesList(storage);
+
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout),
+                             "produkt '" + product.getName()
+                                + "' został zmieniony", Snackbar.LENGTH_LONG).show();
+
+            }
+            @Override
+            public void onError(String errorMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
     public void showaddFromPopUp(ArrayList<Integer> productsIds) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.pop_up_add_products_from_storage_to_storage);
@@ -200,6 +258,26 @@ public class StorageInsideFragment extends Fragment {
         dialog.show();
     }
 
+    public void showModifyProductPopup(Product product) {
+        ModifyProductpopUp modifyProductPopUp = new ModifyProductpopUp(requireContext(), product);
+        modifyProductPopUp.acceptButton.setOnClickListener(v -> {
+            String quantityValue = Objects.requireNonNull(modifyProductPopUp.quantity.getText()).toString();
+            if (quantityValue.isEmpty()) {
+                modifyProductPopUp.quantity.setError("Podaj ilość");
+                return;
+            }
+            if (quantityValue.endsWith(".")) {
+                // Remove dot at the end
+                quantityValue = quantityValue.substring(0, quantityValue.length() - 1);
+            }
+            float quantity = BigDecimal.valueOf(Float.parseFloat(quantityValue)).setScale(3, RoundingMode.HALF_UP).floatValue();
+            product.setAmount(quantity);
+            changeProductAmount(product);
+            modifyProductPopUp.dismiss();
+        });
+        modifyProductPopUp.show();
+    }
+
     public void setUpRecyclerView() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -214,8 +292,7 @@ public class StorageInsideFragment extends Fragment {
 
             @Override
             public void setupProductItemClick(View v, Product product) {
-                v.setOnClickListener(view -> {
-                });
+                v.setOnClickListener(view -> showModifyProductPopup(product));
             }
 
             //delete product from storage
@@ -256,31 +333,6 @@ public class StorageInsideFragment extends Fragment {
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
-    }
-
-    private void deleteProductFromStorage(Product product) {
-        String token = "Bearer " + prefs.getString("token", "");
-        storageRepository.deleteProductStorage(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
-            @Override
-            public void onSuccess(ArrayList<Product> storageProducts) {
-                storage = CategorySorter.sortCategoriesByProduct(storageProducts);
-                // update recycler view
-                CategoryAdapter categoryAdapter = (CategoryAdapter) recyclerView.getAdapter();
-                Objects.requireNonNull(categoryAdapter).setCategoriesList(storage);
-
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), "produkt '" + product.getName() + "' został usunięty", Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void replaceFragment(Fragment fragment) {

@@ -34,7 +34,7 @@ import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.repository.remote.models.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.AddToCartPopUp;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProductpopUp;
 
 public class AllProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -213,7 +213,7 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     }
 
     public void showAddProductPopup(Product product) {
-        AddToCartPopUp addToCartPopUp = new AddToCartPopUp(requireContext(), product);
+        ModifyProductpopUp addToCartPopUp = new ModifyProductpopUp(requireContext(), product);
         addToCartPopUp.acceptButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(addToCartPopUp.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {

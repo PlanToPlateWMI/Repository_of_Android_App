@@ -18,7 +18,7 @@ import java.util.Objects;
 import pl.plantoplate.R;
 import pl.plantoplate.repository.remote.models.Product;
 
-public class AddToCartPopUp extends Dialog {
+public class ModifyProductpopUp extends Dialog {
 
     private TextView productName;
     private ImageView plusButton;
@@ -29,7 +29,7 @@ public class AddToCartPopUp extends Dialog {
     public Button acceptButton;
 
 
-    public AddToCartPopUp(@NonNull Context context, Product product) {
+    public ModifyProductpopUp(@NonNull Context context, Product product) {
         super(context);
         // set up dialog parameters
         setCancelable(true);

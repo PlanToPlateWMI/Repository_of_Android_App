@@ -78,6 +78,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
                 name = itemView.findViewById(R.id.nazwaProduktu_spizarnia);
                 unit = itemView.findViewById(R.id.jednostkiMiary_spizarnia);
                 deleteProductButton = itemView.findViewById(R.id.iconDelete_spizarnia);
+                layout = itemView.findViewById(R.id.item_produkt_spizarnia);
                 break;
         }
     }
@@ -91,43 +92,25 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
             case R.id.layoutWszystkieProdukty:
                 listener.setupAddToShoppingListButtonClick(addToShoppingListButton, product);
                 listener.setupProductItemClick(layout, product);
-                //addToShoppingListButton.setOnClickListener(v-> listener.onAddToShoppingListButtonClick(v, product));
-                //layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 break;
             case R.id.layoutWlasneProdukty:
                 listener.setupAddToShoppingListButtonClick(addToShoppingListButton, product);
                 listener.setupEditProductButtonClick(editProductButton, product);
                 listener.setupProductItemClick(layout, product);
-                //addToShoppingListButton.setOnClickListener(v -> listener.onAddToShoppingListButtonClick(v, product));
-                //
-                //editProductButton.setOnClickListener(v -> listener.onEditProductButtonClick(v, product));
-                //
-                //layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 break;
             case R.id.layoutTrzebaKupicProdukty:
                 listener.setupCheckShoppingListButtonClick(checkShoppingListButton, product);
                 listener.setupDeleteProductButtonClick(deleteProductButton, product);
                 listener.setupProductItemClick(layout, product);
-                //checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
-                //
-                //deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
-                //
-                //layout.setOnClickListener(v -> listener.onProductItemClick(v, product));
                 unit.setText(unitText);
             case R.id.layoutKupioneProdukty:
                 listener.setupCheckShoppingListButtonClick(checkShoppingListButton, product);
                 listener.setupDeleteProductButtonClick(deleteProductButton, product);
-                //checkShoppingListButton.setOnClickListener(v -> listener.onCheckShoppingListButtonClick(v, product));
-                //
-                //deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
-                //
                 unit.setText(unitText);
                 break;
             case R.id.item_produkt_spizarnia:
-                //
+                listener.setupProductItemClick(layout, product);
                 listener.setupDeleteProductButtonClick(deleteProductButton, product);
-                //deleteProductButton.setOnClickListener(v -> listener.onDeleteProductButtonClick(v, product));
-                //
                 unit.setText(unitText);
                 break;
         }
