@@ -9,7 +9,7 @@
     tools:context="pl.plantoplate.ui.main.calendar.CalendarFragment">
 
     <TextView
-        android:id="@+id/calendar"
+        android:id="@+id/calendarTextView"
         android:layout_width="0dp"
         android:layout_height="65dp"
         android:background="@drawable/selector_buttons"
