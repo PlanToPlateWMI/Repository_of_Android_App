@@ -82,16 +82,16 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         sign_in_button = register_view.buttonZalogujSie;
         masz_konto = register_view.maszKonto;
 
-        // get shared preferences
-        prefs = getSharedPreferences("prefs", 0);
-
         // get auth repository
         authRepository = new AuthRepository();
 
-        // Set the click listener for the register button
+        // Set the click listeners for the buttons
         register_button.setOnClickListener(this::checkUserExists);
         sign_in_button.setOnClickListener(v -> signInAccount());
         masz_konto.setOnClickListener(v -> signInAccount());
+
+        // get shared preferences
+        prefs = getSharedPreferences("prefs", 0);
     }
 
     /**
@@ -152,6 +152,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
             @Override
             public void onSuccess(Message response) {
                 // user don't exists
+                prefs.edit().putString("email", email).apply();
                 validateUserInfo(view);
             }
 
@@ -184,7 +185,6 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
                 // save user data to shared preferences
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("name", userData.getUsername());
-                editor.putString("email", userData.getEmail());
                 editor.putString("password", userData.getPassword());
                 editor.putString("code", code).apply();
             }

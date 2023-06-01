@@ -62,12 +62,19 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         group_code_enter = group_enter_view.wprowadzKod;
         group_code_enter_button = group_enter_view.buttonZatwierdz;
 
-        // Get shared preferences
-        prefs = getSharedPreferences("prefs", 0);
-
         // Set listener for the group code entered by the user
         group_code_enter_button.setOnClickListener(this::validateGroupCode);
 
+        // Get shared preferences
+        prefs = getSharedPreferences("prefs", 0);
+    }
+
+    public void getJoinGroupData(View v, String code) {
+        String email = prefs.getString("email", "");
+        String password = prefs.getString("password", "");
+        UserJoinGroupData data = new UserJoinGroupData(code, email, password);
+
+        joinGroup(v, data);
     }
 
     /**
@@ -82,14 +89,6 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
             return;
         }
         getJoinGroupData(v, code);
-    }
-
-    public void getJoinGroupData(View v, String code) {
-        String email = prefs.getString("email", "");
-        String password = prefs.getString("password", "");
-        UserJoinGroupData data = new UserJoinGroupData(code, email, password);
-
-        joinGroup(v, data);
     }
 
     public void joinGroup(View view, UserJoinGroupData userJoinGroupdata) {

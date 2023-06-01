@@ -62,24 +62,22 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         email_confirm_view = EmailConfirmationBinding.inflate(getLayoutInflater(), null, false);
         setContentView(email_confirm_view.getRoot());
 
-        // get shared preferences
-        prefs = getSharedPreferences("prefs", 0);
-
         // define ui elements
         email_info = email_confirm_view.skorzystajZLinku;
         enter_code = email_confirm_view.wprowadzKod.getEditText();
         confirm_button = email_confirm_view.buttonZatwierdzenieLink;
         resend_code_button = email_confirm_view.wyLijPono;
 
+        // buttons listeners
+        confirm_button.setOnClickListener(this::checkCode);
+        resend_code_button.setOnClickListener(this::getNewConfirmCode);
+
+        // get shared preferences
+        prefs = getSharedPreferences("prefs", 0);
+
         // Set the email info text
         String email = prefs.getString("email", "");
         email_info.setText(email_info.getText() + "\n" + email);
-
-        // add listener to the confirm button
-        confirm_button.setOnClickListener(this::checkCode);
-
-        // add listener to the resend button
-        resend_code_button.setOnClickListener(this::getNewConfirmCode);
 
     }
 

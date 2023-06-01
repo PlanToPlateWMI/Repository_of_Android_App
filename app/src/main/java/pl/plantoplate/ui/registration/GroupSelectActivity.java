@@ -61,13 +61,12 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         enter_group = group_select_view.buttonMamZaproszenie;
         create_group = group_select_view.buttonSwojaGrupa;
 
-        // get shared preferences
-        prefs = getSharedPreferences("prefs", 0);
-
         // set buttons onClickListeners
         enter_group.setOnClickListener(v -> goToGroupEnterActivity());
         create_group.setOnClickListener(this::createGroup);
 
+        // get shared preferences
+        prefs = getSharedPreferences("prefs", 0);
     }
 
     /**
