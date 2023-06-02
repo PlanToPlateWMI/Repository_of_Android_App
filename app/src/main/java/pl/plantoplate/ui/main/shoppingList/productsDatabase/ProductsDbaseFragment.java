@@ -125,8 +125,8 @@ public class ProductsDbaseFragment extends Fragment {
 
     private void setupViewPager(ViewPager2 viewPagerBase) {
         ProductsDbaseFragment.ViewPagerAdapter adapter = new ProductsDbaseFragment.ViewPagerAdapter(this);
-        adapter.addFragment(new AllProductsFragment());
-        adapter.addFragment(new OwnProductsFragment());
+        adapter.addFragment(new AllProductsFragment(requireArguments().getString("comesFrom")));
+        adapter.addFragment(new OwnProductsFragment(requireArguments().getString("comesFrom")));
         viewPagerBase.setAdapter(adapter);
     }
 

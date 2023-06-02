@@ -212,9 +212,7 @@ public class StorageInsideFragment extends Fragment {
     }
 
     public void changeProductAmount(Product product){
-        System.out.println(product.getId());
         String token = "Bearer " + prefs.getString("token", "");
-        System.out.println(token);
         storageRepository.changeProductAmountInStorage(token, product.getId(), product, new ResponseCallback<ArrayList<Product>>() {
             @Override
             public void onSuccess(ArrayList<Product> storageProducts) {
@@ -244,10 +242,6 @@ public class StorageInsideFragment extends Fragment {
     public void showaddFromPopUp(ArrayList<Integer> productsIds) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.new_pop_up_add_products_from_storage_to_storage);
-        //dialog.setContentView(R.layout.pop_up_add_products_from_storage_to_storage);
-
-//        Button add_from_shopping_list = dialog.findViewById(R.id.button_yes);
-//        Button go_to_products_database = dialog.findViewById(R.id.button_no);
 
         TextView add_from_shopping_list = dialog.findViewById(R.id.button_yes);
         TextView go_to_products_database = dialog.findViewById(R.id.button_no);

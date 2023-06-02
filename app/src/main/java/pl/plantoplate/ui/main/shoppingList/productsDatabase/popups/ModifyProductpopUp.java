@@ -23,31 +23,35 @@ public class ModifyProductpopUp extends Dialog {
     private TextView productName;
     private ImageView plusButton;
     private ImageView minusButton;
-    private ImageView closeButton;
+    private TextView closeButton;
     public TextInputEditText quantity;
     private TextView productUnitTextView;
-    public Button acceptButton;
+    public TextView acceptButton;
 
 
     public ModifyProductpopUp(@NonNull Context context, Product product) {
         super(context);
         // set up dialog parameters
         setCancelable(true);
-        setContentView(R.layout.pop_up_change_in_product_quantity);
+        setContentView(R.layout.new_pop_up_change_in_product_quantity);
 
         // find views
-        productName = findViewById(R.id.add_products_text);
+        productName = findViewById(R.id.text_head);
         plusButton = findViewById(R.id.plus);
         minusButton = findViewById(R.id.minus);
         closeButton = findViewById(R.id.close);
         quantity = findViewById(R.id.ilosc);
-        productUnitTextView = findViewById(R.id.jednostki_miary_napisac);
+        productUnitTextView = findViewById(R.id.unit);
         acceptButton = findViewById(R.id.zatwierdzenie);
 
         // set up views
-        productName.setText(product.getName());
+        String title = productName.getText().toString() + " " + product.getName();
+        productName.setText(title);
+
+        String unitTitle = productUnitTextView.getText().toString() + " " + product.getUnit();
+        productUnitTextView.setText(unitTitle);
+
         quantity.setText(String.valueOf(product.getAmount()));
-        productUnitTextView.setText(product.getUnit());
 
         // set up input type
         setOnlyFloatInput();

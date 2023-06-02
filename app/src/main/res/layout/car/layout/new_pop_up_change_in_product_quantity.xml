@@ -40,6 +40,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.067" />
 
+
+        <!--android:fontFamily="@font/quicksand_regular"-->
+
+
         <TextView
             android:id="@+id/q"
             android:layout_width="100dp"
@@ -61,11 +65,7 @@
             app:layout_constraintHorizontal_bias="0.038"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.284" />
-
-
-        <!--android:fontFamily="@font/quicksand_regular"-->
-
+            app:layout_constraintVertical_bias="0.289" />
 
         <ImageView
             android:id="@+id/minus"
@@ -76,9 +76,10 @@
             android:contextClickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/wprowadz_ilosc"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/q"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.439"
+            app:layout_constraintTop_toBottomOf="@+id/text_head"
+            app:layout_constraintVertical_bias="0.294"
             app:srcCompat="@drawable/remove_24_50" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -100,10 +101,10 @@
             app:hintTextColor="@color/black_gray"
             app:layout_constraintBottom_toTopOf="@+id/close"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.821"
+            app:layout_constraintHorizontal_bias="0.831"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.567">
+            app:layout_constraintTop_toBottomOf="@+id/text_head"
+            app:layout_constraintVertical_bias="0.4">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ilosc"
@@ -133,15 +134,15 @@
             android:contextClickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/wprowadz_ilosc"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.435"
+            app:layout_constraintTop_toBottomOf="@+id/text_head"
+            app:layout_constraintVertical_bias="0.294"
             app:srcCompat="@drawable/add_24_50" />
 
         <TextView
             android:id="@+id/unit"
-            android:layout_width="170dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -151,16 +152,16 @@
 
             android:gravity="left"
 
-            android:text="Jednostki miary: "
+            android:text="@string/j_m"
             android:textAppearance="@style/logowanie"
             android:textColor="@color/black_gray"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.052"
+            app:layout_constraintHorizontal_bias="0.166"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/q"
-            app:layout_constraintVertical_bias="0.322" />
+            app:layout_constraintVertical_bias="0.364" />
 
         <TextView
             android:id="@+id/close"
@@ -178,7 +179,7 @@
 
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/black_gray"
-            android:textSize="24dp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.669"
@@ -200,7 +201,7 @@
 
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/black_gray"
-            android:textSize="24dp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"
