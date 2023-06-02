@@ -84,6 +84,12 @@
         app:layout_constraintTop_toBottomOf="@+id/shopping"
         app:menu="@menu/menu_lista_zakupow" />
 
+    <ViewFlipper
+        android:id="@+id/flipper_shop_main"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        tools:ignore="MissingConstraints" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/shopping_list_default"
         android:layout_width="0dp"
@@ -96,5 +102,13 @@
         app:layout_constraintTop_toBottomOf="@+id/bottomNavigationView2"
         app:layout_constraintVertical_bias="0.0">
 
+        <ViewFlipper
+            android:id="@+id/flipper_shop"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            tools:ignore="MissingConstraints" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,4 @@
 <resources>
-
     <string name="app_name">PlanToPlate</string>
     <string name="plantoplate">PlanToPlate</string>
     <string name="logowanie">Logowanie</string>
@@ -109,6 +108,10 @@ ze spiżarni?</string>
     <string name="tak">Tak</string>
     <string name="nie">Nie</string>
 
+    <string name="ok">OK</string>
+    <string name="zamknij">Zamknij</string>
+    <string name="dodac_do_spizarni_ze_spizarni">W twoich kupionych teraz są produkty. Czy dodac kupione produkty do spizarni?</string>
+
     <string name="ilosc">Ilość</string>
 
     <string name="produkty_mleczne">Produkty mleczne</string>
@@ -128,6 +131,7 @@ ze spiżarni?</string>
 
     <string name="dodac_ze_spizarni">W twoich kupionych
 teraz są produkty.</string>
+    <string name="z_kup">Dodać produkty z kupionych</string>
     <string name="dodac_do_spizarni">Dodać kupione produkty do spiżarni</string>
     <string name="przejsc_do_bazy">Przejść do bazy produktów</string>
 

@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.Objects;
 
@@ -37,6 +38,7 @@ public class ProductsDbaseFragment extends Fragment {
 
     private FragmentBazaProduktowBinding bazaProduktowBinding;
     private SearchView searchView;
+    private ImageView back;
 
     private SharedPreferences prefs;
 
@@ -72,6 +74,12 @@ public class ProductsDbaseFragment extends Fragment {
         // Get the SearchView
         searchView = bazaProduktowBinding.search;
 
+        back = bazaProduktowBinding.back;
+
+        back.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager().popBackStack();
+        });
+
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
                 case R.id.wszystkie:
@@ -81,6 +89,7 @@ public class ProductsDbaseFragment extends Fragment {
                     replaceFragment(new OwnProductsFragment(requireArguments().getString("comesFrom")));
                     return true;
             }
+
             return false;
         });
 

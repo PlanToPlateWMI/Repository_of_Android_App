@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ViewFlipper;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
@@ -37,6 +38,8 @@ public class ShoppingListFragment extends Fragment{
     private FragmentShoppingListBinding shopping_list_view;
 
     private SharedPreferences prefs;
+    private ViewFlipper flipper_shop;
+    private ViewFlipper flipper_shop_main;
 
     @Override
     public void onStart() {
@@ -61,6 +64,32 @@ public class ShoppingListFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
+
+        //change on swipe (change BuyProductsFragment to BoughtProductsFragment and BoughtProductsFragment to BuyProductsFragment)
+        flipper_shop_main = shopping_list_view.flipperShopMain;
+        flipper_shop = shopping_list_view.flipperShop;
+
+        int layouts[] = new int[]{R.layout.fragment_trzeba_kupic, R.layout.fragment_kupione};
+        for (int layout : layouts)
+            flipper_shop.addView(inflater.inflate(layout, null));
+//            flipper_shop_main.addView(inflater.inflate(layout, null));
+
+
+//        //add lisner to flipper
+//        flipper_shop_main = shopping_list_view.flipperShopMain;
+//        flipper_shop = shopping_list_view.flipperShop;
+//
+//        //add lisner on swipe
+//        flipper_shop_main.setOnTouchListener(new OnSwipeTouchListener(requireActivity()) {
+//            public void onSwipeRight() {
+//                flipper_shop_main.showNext();
+//            }
+//            public void onSwipeLeft() {
+//                flipper_shop_main.showPrevious();
+//            }
+//        });
+
+
 
         // Set the bottom navigation view listener
         shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item ->{
