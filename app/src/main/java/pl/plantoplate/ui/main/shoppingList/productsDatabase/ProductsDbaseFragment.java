@@ -28,7 +28,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.Objects;
 
@@ -38,7 +37,6 @@ public class ProductsDbaseFragment extends Fragment {
 
     private FragmentBazaProduktowBinding bazaProduktowBinding;
     private SearchView searchView;
-    private ImageView back;
 
     private SharedPreferences prefs;
 
@@ -71,8 +69,6 @@ public class ProductsDbaseFragment extends Fragment {
 
         bazaProduktowBinding = FragmentBazaProduktowBinding.inflate(inflater, container, false);
 
-        back = bazaProduktowBinding.back;
-
         // Get the SearchView
         searchView = bazaProduktowBinding.search;
 
@@ -88,10 +84,6 @@ public class ProductsDbaseFragment extends Fragment {
             return false;
         });
 
-        back.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack();
-        });
-
         return bazaProduktowBinding.getRoot();
     }
 
@@ -99,7 +91,7 @@ public class ProductsDbaseFragment extends Fragment {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.baza_def, fragment);
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         transaction.commit();
     }
 }

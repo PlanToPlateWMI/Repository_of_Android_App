@@ -109,7 +109,7 @@ public class ActivityMain extends AppCompatActivity {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
-        transaction.addToBackStack(tag);
+        //transaction.addToBackStack(tag);
         transaction.commit();
     }
 }
