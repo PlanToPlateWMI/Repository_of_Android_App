@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/blue_0"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dialog_add_to_storage"
+        android:layout_width="360dp"
+        android:layout_height="240dp"
+        android:background="@drawable/new_for_popups"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+
+        <TextView
+            android:id="@+id/text_head"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="left"
+
+            android:text="@string/change"
+
+            android:textAppearance="@style/rejestracja"
+            android:textColor="@color/black_gray"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.067" />
+
+        <TextView
+            android:id="@+id/q"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/quicksand_medium"
+
+            android:gravity="left"
+
+            android:text="@string/ilosc_"
+            android:textAppearance="@style/logowanie"
+            android:textColor="@color/black_gray"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.038"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_head"
+            app:layout_constraintVertical_bias="0.284" />
+
+
+        <!--android:fontFamily="@font/quicksand_regular"-->
+
+
+        <ImageView
+            android:id="@+id/minus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="12dp"
+            android:clickable="true"
+            android:contextClickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/wprowadz_ilosc"
+            app:layout_constraintStart_toEndOf="@+id/q"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.439"
+            app:srcCompat="@drawable/remove_24_50" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/wprowadz_ilosc"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="170dp"
+            android:layout_height="50dp"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            android:hint="@string/wprowadz_ilosc"
+
+            android:textColorHint="@color/black_gray"
+
+            app:boxBackgroundMode="outline"
+
+            app:boxStrokeColor="@color/blue_2"
+            app:endIconTint="@color/black_gray"
+            app:hintTextColor="@color/black_gray"
+            app:layout_constraintBottom_toTopOf="@+id/close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.821"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.567">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ilosc"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+
+                android:digits="0123456789."
+                android:fontFamily="@font/quicksand_regular"
+
+                android:inputType="numberDecimal"
+
+                android:maxLines="1"
+                android:singleLine="true"
+
+                android:textAppearance="@style/wprowadz_ilosc"
+
+                android:textColor="@color/black_gray" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/plus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:contextClickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/wprowadz_ilosc"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.435"
+            app:srcCompat="@drawable/add_24_50" />
+
+        <TextView
+            android:id="@+id/unit"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/quicksand_medium"
+
+            android:gravity="left"
+
+            android:text="Jednostki miary: "
+            android:textAppearance="@style/logowanie"
+            android:textColor="@color/black_gray"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.052"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/q"
+            app:layout_constraintVertical_bias="0.322" />
+
+        <TextView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/quicksand_medium"
+
+            android:gravity="center"
+
+            android:text="@string/zamknij"
+
+            android:textAppearance="@style/rejestracja"
+            android:textColor="@color/black_gray"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.669"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/unit" />
+
+        <TextView
+            android:id="@+id/zatwierdzenie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="@font/quicksand_medium"
+
+            android:gravity="center"
+            android:text="@string/ok"
+
+            android:textAppearance="@style/rejestracja"
+            android:textColor="@color/black_gray"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/unit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

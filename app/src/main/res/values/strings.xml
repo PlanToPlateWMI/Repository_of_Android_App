@@ -111,6 +111,21 @@ ze spiżarni?</string>
     <string name="ok">OK</string>
     <string name="zamknij">Zamknij</string>
     <string name="dodac_do_spizarni_ze_spizarni">W twoich kupionych teraz są produkty. Czy dodac kupione produkty do spizarni?</string>
+    <string name="add_to_storage_from_kupione">Czy napewno chcesz dodac kupione produkty do spizarni?</string>
+
+    <string name="delete_storage_title">Usunięcie ze spiżarni</string>
+    <string name="delete_storage_body">Czy napewno chcesz usunąć ten produkt ze spizarni?</string>
+
+    <string name="delete_baze_title">Usunięcie z bazy produktów</string>
+    <string name="delete_baze_body">Czy napewno chcesz usunąć ten produkt z bazy produktów?</string>
+
+    <string name="delete_shopping_list_title">Usunięcie z listy zakupów</string>
+    <string name="delete_shopping_list_body">Czy napewno chcesz usunąć ten produkt z listy zakupów?</string>
+
+    <string name="change">Zmiana ilości produktu</string>
+    <string name="ilosc_">Ilość:</string>
+
+
 
     <string name="ilosc">Ilość</string>
 

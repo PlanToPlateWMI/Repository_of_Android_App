@@ -29,7 +29,7 @@
             android:fontFamily="@font/quicksand_medium"
             android:gravity="left"
 
-            android:text="@string/z_kup"
+            android:text="@string/delete_storage_title"
 
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/black_gray"
@@ -52,7 +52,7 @@
 
             android:gravity="left"
 
-            android:text="@string/dodac_do_spizarni_ze_spizarni"
+            android:text="@string/delete_storage_body"
             android:textAppearance="@style/logowanie"
             android:textColor="@color/black_gray"
             android:textSize="18dp"
@@ -72,8 +72,9 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_medium"
 
-            android:gravity="center"
             android:textSize="24dp"
+
+            android:gravity="center"
 
             android:text="@string/zamknij"
             android:textAppearance="@style/rejestracja"
@@ -106,7 +107,7 @@
             app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_add"
-            app:layout_constraintVertical_bias="0.725" />
+            app:layout_constraintVertical_bias="0.737" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

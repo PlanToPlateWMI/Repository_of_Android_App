@@ -19,27 +19,26 @@ package pl.plantoplate.ui.main.shoppingList;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ViewFlipper;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
 
-
-public class ShoppingListFragment extends Fragment{
+public class ShoppingListFragment extends Fragment {
 
     private FragmentShoppingListBinding shopping_list_view;
-
     private SharedPreferences prefs;
-    private ViewFlipper flipper_shop;
-    private ViewFlipper flipper_shop_main;
+    private ViewPager2 viewPager;
 
     @Override
     public void onStart() {
@@ -48,14 +47,9 @@ public class ShoppingListFragment extends Fragment{
         // Get the SharedPreferences object
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
-        //Set selected all products fragment by default on restart fragment.
+        // Set selected all products fragment by default on restart fragment.
         shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.trzeba_kupic);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+        viewPager.setCurrentItem(0);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -65,57 +59,67 @@ public class ShoppingListFragment extends Fragment{
 
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
 
-        //change on swipe (change BuyProductsFragment to BoughtProductsFragment and BoughtProductsFragment to BuyProductsFragment)
-        flipper_shop_main = shopping_list_view.flipperShopMain;
-        flipper_shop = shopping_list_view.flipperShop;
+        viewPager = shopping_list_view.viewPager;
+        setupViewPager(viewPager);
 
-        int layouts[] = new int[]{R.layout.fragment_trzeba_kupic, R.layout.fragment_kupione};
-        for (int layout : layouts)
-            flipper_shop.addView(inflater.inflate(layout, null));
-//            flipper_shop_main.addView(inflater.inflate(layout, null));
-
-
-//        //add lisner to flipper
-//        flipper_shop_main = shopping_list_view.flipperShopMain;
-//        flipper_shop = shopping_list_view.flipperShop;
-//
-//        //add lisner on swipe
-//        flipper_shop_main.setOnTouchListener(new OnSwipeTouchListener(requireActivity()) {
-//            public void onSwipeRight() {
-//                flipper_shop_main.showNext();
-//            }
-//            public void onSwipeLeft() {
-//                flipper_shop_main.showPrevious();
-//            }
-//        });
-
-
-
-        // Set the bottom navigation view listener
-        shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item ->{
+        shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                case R.id.kupione:
-                    replaceFragment(new BoughtProductsFragment());
-                    return true;
                 case R.id.trzeba_kupic:
-                    replaceFragment(new BuyProductsFragment());
+                    viewPager.setCurrentItem(0);
+                    System.out.println("trzeba kupic");
+                    return true;
+                case R.id.kupione:
+                    viewPager.setCurrentItem(1);
+                    System.out.println("kupione");
                     return true;
             }
             return false;
         });
 
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.trzeba_kupic);
+                        break;
+                    case 1:
+                        shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.kupione);
+                        break;
+                }
+            }
+        });
+
         return shopping_list_view.getRoot();
     }
 
-    /**
-     * Replace the current fragment with the specified fragment
-     * @param fragment The fragment to replace the current fragment with
-     */
-    private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.shopping_list_default, fragment);
-        //transaction.addToBackStack(null);
-        transaction.commit();
+    private void setupViewPager(ViewPager2 viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        adapter.addFragment(new BuyProductsFragment());
+        adapter.addFragment(new BoughtProductsFragment());
+        viewPager.setAdapter(adapter);
+    }
+
+    static class ViewPagerAdapter extends FragmentStateAdapter {
+        private final List<Fragment> fragmentList = new ArrayList<>();
+
+        public ViewPagerAdapter(@NonNull Fragment fragment) {
+            super(fragment);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return fragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment) {
+            fragmentList.add(fragment);
+        }
     }
 }

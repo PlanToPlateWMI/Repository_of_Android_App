@@ -34,6 +34,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Text;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -241,10 +243,14 @@ public class StorageInsideFragment extends Fragment {
 
     public void showaddFromPopUp(ArrayList<Integer> productsIds) {
         Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.pop_up_add_products_from_storage_to_storage);
+        dialog.setContentView(R.layout.new_pop_up_add_products_from_storage_to_storage);
+        //dialog.setContentView(R.layout.pop_up_add_products_from_storage_to_storage);
 
-        Button add_from_shopping_list = dialog.findViewById(R.id.button_yes);
-        Button go_to_products_database = dialog.findViewById(R.id.button_no);
+//        Button add_from_shopping_list = dialog.findViewById(R.id.button_yes);
+//        Button go_to_products_database = dialog.findViewById(R.id.button_no);
+
+        TextView add_from_shopping_list = dialog.findViewById(R.id.button_yes);
+        TextView go_to_products_database = dialog.findViewById(R.id.button_no);
 
         add_from_shopping_list.setOnClickListener(v -> {
             moveProductsToStorage(productsIds);
@@ -322,9 +328,14 @@ public class StorageInsideFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dialog.setContentView(R.layout.pop_up_delete_from_storage);
-        Button acceptButton = dialog.findViewById(R.id.button_yes);
-        Button cancelButton = dialog.findViewById(R.id.button_no);
+        //dialog.setContentView(R.layout.pop_up_delete_from_storage);
+        dialog.setContentView(R.layout.new_pop_up_delete_from_storage);
+
+//        Button acceptButton = dialog.findViewById(R.id.button_yes);
+//        Button cancelButton = dialog.findViewById(R.id.button_no);
+
+        TextView acceptButton = dialog.findViewById(R.id.button_yes);
+        TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         acceptButton.setOnClickListener(v -> dialog.dismiss());
         acceptButton.setOnClickListener(v -> {

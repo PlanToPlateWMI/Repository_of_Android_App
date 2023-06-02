@@ -24,21 +24,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
+import pl.plantoplate.ui.main.shoppingList.BoughtProductsFragment;
+import pl.plantoplate.ui.main.shoppingList.BuyProductsFragment;
+import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
+
 public class ProductsDbaseFragment extends Fragment {
 
     private FragmentBazaProduktowBinding bazaProduktowBinding;
     private SearchView searchView;
     private ImageView back;
+    private ViewPager2 viewPagerBase;
 
     private SharedPreferences prefs;
 
@@ -61,6 +70,7 @@ public class ProductsDbaseFragment extends Fragment {
 
         //Set selected all products fragment by default on restart fragment.
         bazaProduktowBinding.bottomNavigationView2.setSelectedItemId(R.id.wszystkie);
+        viewPagerBase.setCurrentItem(0);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -70,6 +80,9 @@ public class ProductsDbaseFragment extends Fragment {
 
 
         bazaProduktowBinding = FragmentBazaProduktowBinding.inflate(inflater, container, false);
+
+        viewPagerBase = bazaProduktowBinding.viewPagerBase;
+        setupViewPager(viewPagerBase);
 
         // Get the SearchView
         searchView = bazaProduktowBinding.search;
@@ -83,18 +96,63 @@ public class ProductsDbaseFragment extends Fragment {
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
                 case R.id.wszystkie:
-                    replaceFragment(new AllProductsFragment(requireArguments().getString("comesFrom")));
+                    viewPagerBase.setCurrentItem(0);
                     return true;
                 case R.id.wlasne:
-                    replaceFragment(new OwnProductsFragment(requireArguments().getString("comesFrom")));
+                    viewPagerBase.setCurrentItem(1);
                     return true;
             }
 
             return false;
         });
 
+        viewPagerBase.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        bazaProduktowBinding.bottomNavigationView2.setSelectedItemId(R.id.wszystkie);
+                        break;
+                    case 1:
+                        bazaProduktowBinding.bottomNavigationView2.setSelectedItemId(R.id.wlasne);
+                        break;
+                }
+            }
+        });
+
         return bazaProduktowBinding.getRoot();
     }
+
+    private void setupViewPager(ViewPager2 viewPagerBase) {
+        ProductsDbaseFragment.ViewPagerAdapter adapter = new ProductsDbaseFragment.ViewPagerAdapter(this);
+        adapter.addFragment(new AllProductsFragment());
+        adapter.addFragment(new OwnProductsFragment());
+        viewPagerBase.setAdapter(adapter);
+    }
+
+    static class ViewPagerAdapter extends FragmentStateAdapter {
+        private final List<Fragment> fragmentList = new ArrayList<>();
+
+        public ViewPagerAdapter(@NonNull Fragment fragment) {
+            super(fragment);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return fragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment) {
+            fragmentList.add(fragment);
+        }
+    }
+
 
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment

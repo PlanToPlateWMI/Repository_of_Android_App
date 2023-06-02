@@ -219,10 +219,14 @@ public class BuyProductsFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dialog.setContentView(R.layout.pop_up_delete_product_from_shopping_list);
+        //dialog.setContentView(R.layout.pop_up_delete_product_from_shopping_list);
+        dialog.setContentView(R.layout.new_pop_up_delete_product_from_shopping_list);
 
-        Button acceptButton = dialog.findViewById(R.id.button_yes);
-        Button cancelButton = dialog.findViewById(R.id.button_no);
+//        Button acceptButton = dialog.findViewById(R.id.button_yes);
+//        Button cancelButton = dialog.findViewById(R.id.button_no);
+
+        TextView acceptButton = dialog.findViewById(R.id.button_yes);
+        TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         acceptButton.setOnClickListener(v -> {
             deleteProductFromList(product);

@@ -30,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -230,11 +231,14 @@ public class BoughtProductsFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        dialog.setContentView(R.layout.pop_up_delete_product_from_shopping_list);
+        dialog.setContentView(R.layout.new_pop_up_delete_product_from_shopping_list);
+        //dialog.setContentView(R.layout.pop_up_delete_product_from_shopping_list);
 
 
-        Button acceptButton = dialog.findViewById(R.id.button_yes);
-        Button cancelButton = dialog.findViewById(R.id.button_no);
+//        Button acceptButton = dialog.findViewById(R.id.button_yes);
+//        Button cancelButton = dialog.findViewById(R.id.button_no);
+        TextView acceptButton = dialog.findViewById(R.id.button_yes);
+        TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         acceptButton.setOnClickListener(v -> {
             deleteProductFromList(product);
@@ -249,10 +253,14 @@ public class BoughtProductsFragment extends Fragment {
     public void showMoveProductToStoragePopUp(){
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.pop_up_add_to_storage);
+        //dialog.setContentView(R.layout.pop_up_add_to_storage);
+        dialog.setContentView(R.layout.new_pop_up_add_to_storage);
 
-        Button acceptButton = dialog.findViewById(R.id.button_yes);
-        Button cancelButton = dialog.findViewById(R.id.button_no);
+//        Button acceptButton = dialog.findViewById(R.id.button_yes);
+//        Button cancelButton = dialog.findViewById(R.id.button_no);
+
+        TextView acceptButton = dialog.findViewById(R.id.button_yes);
+        TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         acceptButton.setOnClickListener(v -> {
 

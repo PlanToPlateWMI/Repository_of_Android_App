@@ -52,7 +52,7 @@
 
             android:gravity="left"
 
-            android:text="@string/dodac_do_spizarni_ze_spizarni"
+            android:text="@string/add_to_storage_from_kupione"
             android:textAppearance="@style/logowanie"
             android:textColor="@color/black_gray"
             android:textSize="18dp"
@@ -106,7 +106,7 @@
             app:layout_constraintHorizontal_bias="0.95"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_add"
-            app:layout_constraintVertical_bias="0.725" />
+            app:layout_constraintVertical_bias="0.737" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
