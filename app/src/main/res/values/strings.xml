@@ -155,6 +155,7 @@ teraz są produkty.</string>
     <string name="zmiana_imienia">Zmiana imienia</string>
     <string name="zmiana_email">Zmiana email</string>
     <string name="zmiana_hasla">Zmiana hasła</string>
+    <string name="zmiana_uprawnien">Zmiana uprawnień</string>
 
     <string name="imie">Imie:</string>
     <string name="mail">Email:</string>
@@ -166,6 +167,23 @@ teraz są produkty.</string>
     <string name="About_us">About us</string>
     <string name="Wyłoguj">Wyłoguj</string>
 
+
+    <string name="nowe_imie">Nowe imię zostało
+zaakceptowane!</string>
+
+    <string name="dalej">Dalej</string>
+    <string name="wroc">Wroć</string>
+
+    <string name="wprowadz_nowe_imie">Wprowadź nowe imię</string>
+
+    <string name="zm_im">Wprowadzone przez ciebie imię zostało przyjęte!</string>
+    <string name="zm_ac">Wszystkie zmieny zostały zaakceptowane!</string>
+
+    <string name="napisz_do_nas">Napisz do nas</string>
+    <string name="dev_adres">plantoplatemobileapp@gmail.com</string>
+    <string name="dev_text">Jest to aplikacja, która pomaga w planowaniu diety, śledzeniu tego, co mamy w domu oraz robieniu zakupów.
+
+W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc mail na adres</string>
 
 </resources>
 

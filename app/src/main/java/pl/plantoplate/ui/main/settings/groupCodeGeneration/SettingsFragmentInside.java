@@ -66,7 +66,7 @@ public class SettingsFragmentInside extends Fragment{
 
         exit_account_button.setOnClickListener(this::exitAccount);
         button_zmiana_danych.setOnClickListener(v -> replaceFragment(new ChangeTheData()));
-
+        button_about_us.setOnClickListener(v -> replaceFragment(new MailDevelops()));
 
         return settings_view.getRoot();
     }

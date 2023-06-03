@@ -27,7 +27,9 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
 
 
@@ -35,13 +37,36 @@ public class ChangeTheData extends Fragment {
 
     private FragmentChangeSelectorBinding fragmentChangeSelectorBinding;
 
+    private Button zmiana_imienia;
+    private Button zmiana_emaila;
+    private Button zmiana_hasla;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        fragmentChangeSelectorBinding = FragmentChangeSelectorBinding.inflate(getLayoutInflater());
+        fragmentChangeSelectorBinding = FragmentChangeSelectorBinding.inflate(inflater, container, false);
+
+        zmiana_imienia = fragmentChangeSelectorBinding.zmianaImienia;
+        zmiana_emaila = fragmentChangeSelectorBinding.zmianaEmail;
+        zmiana_hasla = fragmentChangeSelectorBinding.zmianaHasla;
+
+        zmiana_imienia.setOnClickListener(v -> replaceFragment(new ChangeName()));
+
         return fragmentChangeSelectorBinding.getRoot();
+    }
+
+    /**
+     * Replaces the current fragment with the specified fragment.
+     * @param fragment The fragment to replace the current fragment with.
+     */
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.settings_default, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }
