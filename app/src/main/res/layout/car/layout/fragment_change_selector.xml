@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout7"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_0">
+
+    <TextView
+        android:id="@+id/mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="572dp"
+        android:fontFamily="@font/quicksand_medium"
+
+        android:gravity="top"
+
+        android:text="@string/mail"
+        android:textAppearance="@style/rejestracja"
+        android:textColor="@color/black_gray"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.119"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imie"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <TextView
+        android:id="@+id/imie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:gravity="top"
+        android:text="@string/imie"
+        android:textAppearance="@style/rejestracja"
+        android:textColor="@color/black_gray"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.048" />
+
+    <Button
+        android:id="@+id/button_wygenerowanie_kodu"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:drawableLeft="@drawable/key_24_50"
+        android:drawableRight="@drawable/arrow_forward_ios_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="@string/Wygenerowanie_kodu"
+        android:textAllCaps="false"
+
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mail"
+        app:layout_constraintVertical_bias="0.051"
+        app:rippleColor="@color/blue_1"
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/button_zmiana_danych"
+        android:layout_width="0dp"
+        android:layout_height="91dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:drawableLeft="@drawable/manage_accounts_24_50"
+        android:drawableRight="@drawable/arrow_forward_ios_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="@string/Zmiana_danych"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_wygenerowanie_kodu"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="@color/blue_1"
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/button_zarzadyanie_uyztkownikamu"
+        android:layout_width="0dp"
+        android:layout_height="91dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:drawableLeft="@drawable/settings_suggest_24_50"
+        android:drawableRight="@drawable/arrow_forward_ios_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="@string/Zarządzanie_użytkownikami"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_zmiana_danych"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="@color/blue_1"
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/button_about_us"
+        android:layout_width="0dp"
+        android:layout_height="91dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:drawableLeft="@drawable/question_mark_24_50"
+        android:drawableRight="@drawable/arrow_forward_ios_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="@string/About_us"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_zarzadyanie_uyztkownikamu"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="@color/blue_1"
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/button_wyloguj"
+        android:layout_width="0dp"
+        android:layout_height="91dp"
+        android:backgroundTint="@color/blue_1"
+        android:clickable="true"
+        android:drawableLeft="@drawable/exit_to_app_24_50"
+        android:drawableRight="@drawable/arrow_forward_ios_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="@string/Wyłoguj"
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_about_us"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="@color/blue_1"
+        app:strokeColor="@color/blue_2"
+        app:strokeWidth="1dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -151,6 +151,22 @@ teraz są produkty.</string>
     <string name="dodac_do_spizarni">Dodać kupione produkty do spiżarni</string>
     <string name="przejsc_do_bazy">Przejść do bazy produktów</string>
 
+    <string name="zmiana_danych">Zmiana danych</string>
+    <string name="zmiana_imienia">Zmiana imienia</string>
+    <string name="zmiana_email">Zmiana email</string>
+    <string name="zmiana_hasla">Zmiana hasła</string>
+
+    <string name="imie">Imie:</string>
+    <string name="mail">Email:</string>
+
+
+    <string name="Wygenerowanie_kodu">Wygenerowanie kodu</string>
+    <string name="Zmiana_danych">Zmiana danych</string>
+    <string name="Zarządzanie_użytkownikami">Zarządzanie użytkownikami</string>
+    <string name="About_us">About us</string>
+    <string name="Wyłoguj">Wyłoguj</string>
+
+
 </resources>
 
     <!--<resources>-->

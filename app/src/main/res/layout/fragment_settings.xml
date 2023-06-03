@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
+    android:id="@+id/frameLayoutSettings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
@@ -32,153 +32,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/ustawienia"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_wygenerowanie_kodu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!--Wygenerowanie kodu button -->
-    <Button
-        android:id="@+id/button_wygenerowanie_kodu"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_default"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="@color/blue_1"
-        android:clickable="true"
-        android:drawableLeft="@drawable/key_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="left|center_vertical"
-        android:text="Wygenerowanie kodu"
-        android:textAllCaps="false"
+        android:layout_marginTop="10dp"
 
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp"
-
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_zmiana_danych"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ustawienia"
-        app:layout_constraintVertical_bias="0.162"
-        app:rippleColor="@color/blue_1" />
-
-    <!--Zmiana danych button-->
-    <Button
-        android:id="@+id/button_zmiana_danych"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:backgroundTint="@color/blue_1"
-        android:clickable="true"
-        android:drawableLeft="@drawable/manage_accounts_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="left|center_vertical"
-        android:text="Zmiana danych"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/button_zarzadyanie_uyztkownikamu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_wygenerowanie_kodu"
-        app:layout_constraintVertical_bias="0.162"
-        app:rippleColor="@color/blue_1" />
-
-    <!--Zarzadzanie uzytkownikami button-->
-    <Button
-        android:id="@+id/button_zarzadyanie_uyztkownikamu"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:backgroundTint="@color/blue_1"
-        android:clickable="true"
-        android:drawableLeft="@drawable/settings_suggest_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="left|center_vertical"
-        android:text="Zarządzanie użytkownikami"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/button_about_us"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_zmiana_danych"
-        app:layout_constraintVertical_bias="0.162"
-        app:rippleColor="@color/blue_1" />
-
-    <!--About us button-->
-    <Button
-        android:id="@+id/button_about_us"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:backgroundTint="@color/blue_1"
-        android:clickable="true"
-        android:drawableLeft="@drawable/question_mark_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="left|center_vertical"
-        android:text="About us"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-
-
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/button_wyloguj"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_zarzadyanie_uyztkownikamu"
-        app:layout_constraintVertical_bias="0.162"
-        app:rippleColor="@color/blue_1" />
-
-    <!--Wyloguj button-->
-    <Button
-        android:id="@+id/button_wyloguj"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="156dp"
-        android:backgroundTint="@color/blue_1"
-        android:clickable="true"
-        android:drawableLeft="@drawable/exit_to_app_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="left|center_vertical"
-        android:text="Wyłoguj"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_about_us"
-        app:layout_constraintVertical_bias="0.162"
-        app:rippleColor="@color/blue_1" />
-
+        app:layout_constraintTop_toBottomOf="@+id/settings">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
