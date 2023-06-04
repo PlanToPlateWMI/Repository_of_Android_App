@@ -190,7 +190,8 @@ W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc m
 
     <string name="wprowadz_stare_haslo">Wprowadź stare hasło</string>
     <string name="uwaga_log_out"> Uwaga!\nZe względów bezpieczeństwa, po zmianie hasła wylogujemy Cię ze wszystkich urządzeń.</string>
-
+    <string name="wprowadz_nowe_haslo">Wprowadź nowe hasło</string>
+    <string name="wprowadz_nowe_haslo_ponownie">Wprowadź hasło ponownie</string>
 
 
 </resources>
