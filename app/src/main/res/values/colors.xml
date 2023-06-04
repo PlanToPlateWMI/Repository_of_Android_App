@@ -7,6 +7,19 @@
     <color name="blue_2">#77A0F2</color>
     <color name="blue_1">#C6D9FF</color>
     <color name="blue_0">#E7F0FF</color>
+
+    <color name="lista_color">#CCA1E6</color>
+    <color name="baza_color">#AEDE88</color>
+    <color name="spizarnia_color">#C8DFEB</color>
+
+
+    <color name="zam_black_gray">#E1E4F2</color>
+    <color name="zam_blue_3">#6791CA</color>
+    <color name="zam_blue_2">#426390</color>
+    <color name="zam_blue_1">#2E3846</color>
+    <color name="zam_blue_0">#1F2732</color>
+
+
     
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>

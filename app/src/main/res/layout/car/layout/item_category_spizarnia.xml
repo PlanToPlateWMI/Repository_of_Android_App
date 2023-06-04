@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/layoutTrzebaKupic">
+
+    <TextView
+        android:id="@+id/сategory_of_product_spizarnia"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/spizarnia_color"
+        android:text="Kategoria"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/product_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
