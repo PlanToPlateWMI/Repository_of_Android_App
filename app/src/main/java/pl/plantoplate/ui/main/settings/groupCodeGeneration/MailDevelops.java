@@ -38,6 +38,8 @@ public class MailDevelops extends Fragment {
     private FragmentDeveloperBinding fragmentDeveloperBinding;
     private TextView dev_adres;
     private Button button_zatwierdz;
+
+
     /**
      * Create the view
      * @param inflater

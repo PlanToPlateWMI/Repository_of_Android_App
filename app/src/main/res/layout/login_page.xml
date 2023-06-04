@@ -178,53 +178,20 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="80dp"
+        android:textSize="16dp"
 
         android:clickable="true"
 
         android:fontFamily="@font/quicksand_medium"
-
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/nie_masz_konto_"
         android:textAppearance="@style/masz_konto_"
         android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_zaloz_konto"
-        app:layout_constraintHorizontal_bias="0.784"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_zaloguj_sie"
-        app:layout_constraintVertical_bias="0.304" />
-
-    <Button
-        android:id="@+id/button_zaloz_konto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:background="#00FFFFFF"
-        android:clickable="true"
-
-        android:fontFamily="@font/quicksand_medium"
-
-        android:gravity="center_horizontal|center_vertical"
-        android:text="@string/zaloz_konto"
-        android:textAllCaps="true"
-        android:textAppearance="@style/masz_konto_"
-        android:textColor="@color/blue_3"
-        android:textColorHighlight="#00FFFFFF"
-        android:textColorHint="#00FFFFFF"
-        android:textColorLink="#00FFFFFF"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.766"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_zaloguj_sie"
-        app:layout_constraintVertical_bias="0.265
-"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.328" />
 
     <Button
         android:id="@+id/button_zaloguj_sie"

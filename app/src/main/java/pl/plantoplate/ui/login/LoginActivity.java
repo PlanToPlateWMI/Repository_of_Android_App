@@ -18,7 +18,11 @@ package pl.plantoplate.ui.login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,12 +56,15 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
     private TextInputEditText email_field;
     private TextInputEditText password_field;
     private Button sign_in_button;
-    private Button create_account_button;
     private TextView remind_password_button;
     private TextView nie_masz_konta;
 
     private SharedPreferences prefs;
 
+    /**
+     * A method that allows the user to log in to their account.
+     * @param view The view that was clicked.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,16 +77,18 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         email_field = login_view.enterMail;
         password_field = login_view.enterPass;
         sign_in_button = login_view.buttonZalogujSie;
-        create_account_button = login_view.buttonZalozKonto;
         remind_password_button = login_view.przypHaslo;
         nie_masz_konta = login_view.nieMaszKonta;
+
+        Spannable spans = new SpannableString("Nie masz konta?    ZAŁÓŻ KONTO");
+        spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        nie_masz_konta.setText(spans);
 
         // Get the shared preferences
         prefs = getSharedPreferences("prefs", 0);
 
         // Set a click listeners for the buttons
         sign_in_button.setOnClickListener(this::signIn);
-        create_account_button.setOnClickListener(v -> createAccount());
         remind_password_button.setOnClickListener(v -> remindPassword());
         nie_masz_konta.setOnClickListener(v -> createAccount());
 
@@ -178,6 +187,10 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         startActivity(intent);
     }
 
+    /**
+     * Saves the current app state in the shared preferences.
+     * @param applicationState The current app state.
+     */
     @Override
     public void saveAppState(ApplicationState applicationState){
         SharedPreferences.Editor editor = prefs.edit();

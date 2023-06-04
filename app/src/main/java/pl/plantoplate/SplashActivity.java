@@ -34,6 +34,10 @@ import pl.plantoplate.ui.registration.GroupEnterActivity;
 import pl.plantoplate.ui.registration.GroupSelectActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 
+/**
+ * This activity is responsible for displaying the splash screen and initializing the application.
+ * It is also responsible for redirecting the user to the appropriate activity.
+ */
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
@@ -41,6 +45,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final int SPLASH_TIME_OUT = 1000;
 
+    /**
+     * This method is responsible for displaying the splash screen and initializing the application.
+     * It is also responsible for redirecting the user to the appropriate activity.
+     *
+     * @param savedInstanceState saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +70,12 @@ public class SplashActivity extends AppCompatActivity {
         }, SPLASH_TIME_OUT);
     }
 
+    /**
+     * This method is responsible for initializing the application.
+     * It is also responsible for redirecting the user to the appropriate activity.
+     *
+     * @param applicationState The application state.
+     */
     public void initApplication(ApplicationState applicationState) {
         if (applicationState == ApplicationState.INIT) {
             prefs.edit().putString("applicationState", ApplicationState.LOGIN.toString()).apply();

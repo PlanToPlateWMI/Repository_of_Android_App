@@ -21,7 +21,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -50,7 +54,6 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     private EditText enter_email;
     private EditText enter_password;
     private CheckBox apply_policy;
-    private Button sign_in_button;
     private Button register_button;
     private TextView masz_konto;
 
@@ -79,15 +82,17 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         enter_password = register_view.enterPassword;
         apply_policy = register_view.checkboxWyrazamZgode;
         register_button = register_view.buttonZalozKonto;
-        sign_in_button = register_view.buttonZalogujSie;
         masz_konto = register_view.maszKonto;
+
+        Spannable spans = new SpannableString("Masz konto?    ZAŁOGUJ SIĘ");
+        spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 11, 26, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        masz_konto.setText(spans);
 
         // get auth repository
         authRepository = new AuthRepository();
 
         // Set the click listeners for the buttons
         register_button.setOnClickListener(this::checkUserExists);
-        sign_in_button.setOnClickListener(v -> signInAccount());
         masz_konto.setOnClickListener(v -> signInAccount());
 
         // get shared preferences
@@ -144,6 +149,12 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         }
     }
 
+    /**
+     * Send the user's information to the server and handle the response asynchronously.
+     *
+     * @param info The user's information.
+     * @param view The view to display the response in (e.g. error using SnackBar).
+     */
     public void checkUserExists(View view){
         String email = String.valueOf(enter_email.getText());
 

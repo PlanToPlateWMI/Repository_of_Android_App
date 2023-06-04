@@ -40,6 +40,9 @@ import retrofit2.Call;
 
 import pl.plantoplate.databinding.EmailConfirmationBinding;
 
+/**
+ * This activity is responsible for handling the email confirmation process.
+ */
 public class EmailConfirmActivity extends AppCompatActivity implements ApplicationStateController {
 
     private EmailConfirmationBinding email_confirm_view;
@@ -53,6 +56,14 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
 
     private String correct_code;
 
+    /**
+     * This method is called when the activity is created.
+     * It is responsible for inflating the layout and defining the ui elements.
+     * It is also responsible for setting the email info text.
+     * It is also responsible for setting the listeners for the buttons.
+     * It is also responsible for getting the shared preferences.
+     * @param savedInstanceState
+     */
     @SuppressLint({"SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +92,13 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
 
     }
 
+    /**
+     * This method is called when the user clicks the confirm button.
+     * It is responsible for checking if the entered code is correct.
+     * If the code is correct, it starts the group select activity.
+     * If the code is incorrect, it shows a snackbar with an error message.
+     * @param view
+     */
     public void checkCode(View view) {
         String entered_code = Objects.requireNonNull(email_confirm_view.wprowadzKod.getEditText()).getText().toString();
         String correct_code = prefs.getString("code", "");
@@ -99,6 +117,14 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         }
     }
 
+    /**
+     * This method is called when the user clicks the resend code button.
+     * It is responsible for getting a new code from the server.
+     * It is also responsible for saving the new code in the shared preferences.
+     * It is also responsible for clearing the entered code.
+     * It is also responsible for showing a snackbar with a message that the code has been sent.
+     * @param view
+     */
     public void getNewConfirmCode(View view) {
         // Create a new Email object with the email from the shared preferences.
         String email = prefs.getString("email", "");
@@ -129,6 +155,10 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         Snackbar.make(view, "Wysłano nowy kod", Snackbar.LENGTH_LONG).show();
     }
 
+    /**
+     * This method is called when the user clicks the back button.
+     * It is responsible for starting the login activity.
+     */
     @Override
     public void saveAppState(ApplicationState applicationState) {
         SharedPreferences.Editor editor = prefs.edit();

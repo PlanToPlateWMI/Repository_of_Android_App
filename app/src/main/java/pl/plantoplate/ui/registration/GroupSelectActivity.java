@@ -49,6 +49,12 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
 
     private SharedPreferences prefs;
 
+    /**
+     * This method is called when the activity is created.
+     * It inflates the layout and sets the onClickListeners for the buttons.
+     *
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +134,11 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         });
     }
 
+    /**
+     * This method saves the application state in shared preferences.
+     *
+     * @param applicationState The application state
+     */
     @Override
     public void saveAppState(ApplicationState applicationState) {
         SharedPreferences.Editor editor = prefs.edit();

@@ -46,6 +46,10 @@ public class EnterEmailActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private AuthRepository authRepository;
 
+    /**
+     * A method that is called when the activity is created.
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +73,10 @@ public class EnterEmailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * A method that checks if the user exists in the database.
+     * @param view The view that was clicked.
+     */
     public void checkUserExists(View view){
         String email = String.valueOf(email_field.getText());
 

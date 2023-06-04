@@ -48,6 +48,10 @@ public class EnterCodeActivity extends AppCompatActivity {
 
     private SharedPreferences prefs;
 
+    /**
+     * This method is called when the activity is created.
+     * @param savedInstanceState The saved instance state.
+     */
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -50,6 +50,10 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
 
     private SharedPreferences prefs;
 
+    /**
+     * This method is called when the activity is created.
+     * @param savedInstanceState The saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +73,9 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         prefs = getSharedPreferences("prefs", 0);
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     public void getJoinGroupData(View v, String code) {
         String email = prefs.getString("email", "");
         String password = prefs.getString("password", "");
@@ -91,6 +98,12 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         getJoinGroupData(v, code);
     }
 
+    /**
+     * This method is called when the user clicks the confirm button.
+     * It makes an API call to join the group.
+     * @param view The view that was clicked
+     * @param userJoinGroupdata The data needed to join the group
+     */
     public void joinGroup(View view, UserJoinGroupData userJoinGroupdata) {
         GroupRepository groupRepository = new GroupRepository();
         groupRepository.joinGroupByCode(userJoinGroupdata, new ResponseCallback<JwtResponse>() {
@@ -125,6 +138,11 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         });
     }
 
+    /**
+     * This method is called when the user clicks the back button.
+     * It starts the previous activity.
+     * @param view The view that was clicked
+     */
     @Override
     public void saveAppState(ApplicationState applicationState) {
         SharedPreferences.Editor editor = prefs.edit();

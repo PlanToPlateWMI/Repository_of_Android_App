@@ -51,6 +51,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
 
     private SharedPreferences prefs;
 
+    /**
+     * A method that is called when the activity is created.
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +127,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
         });
     }
 
+    /**
+     * A method that saves the application state.
+     * @param applicationState The application state that will be saved.
+     */
     @Override
     public void saveAppState(ApplicationState applicationState) {
         SharedPreferences.Editor editor = prefs.edit();
