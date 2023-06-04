@@ -96,10 +96,27 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         String password = Objects.requireNonNull(password_field.getText()).toString();
         // remove all whitespaces from email
         email = email.trim();
+        checkMail(email);
+        checkPassword(password, email);
         //stretch password to make it unreadable and secure
         password = SCryptStretcher.stretch(password, email);
 
+
         return new SignInData(email, password);
+    }
+
+    public void checkMail(String email){
+        if(email.isEmpty()) {
+            Snackbar.make(email_field, "Adres mail nie może być pusty!", Snackbar.LENGTH_LONG).show();
+            getUserInfo();
+        }
+    }
+
+    public void checkPassword(String password, String email){
+        if(password.isEmpty()) {
+            Snackbar.make(email_field, "Hasło nie może być pustę!", Snackbar.LENGTH_LONG).show();
+            getUserInfo();
+        }
     }
 
     /**
