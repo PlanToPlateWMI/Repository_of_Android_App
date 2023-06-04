@@ -28,7 +28,7 @@
         app:layout_constraintVertical_bias="0.016" />
 
     <TextView
-        android:id="@+id/zmiana_hasla"
+        android:id="@+id/zmiana_emeil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -39,7 +39,7 @@
 
         android:gravity="top"
 
-        android:text="@string/zmiana_hasla"
+        android:text="@string/zmiana_email"
         android:textAppearance="@style/rejestracja"
         android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,14 +50,14 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/wprowadz_nowe_haslo"
+        android:id="@+id/wprowadz_nowy_email"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="286dp"
         android:layout_height="65dp"
 
         android:fontFamily="@font/quicksand_regular"
 
-        android:hint="@string/wprowadz_nowe_haslo"
+        android:hint="@string/wprowadz_nowy_emeil"
         android:textColorHint="@color/black_gray"
 
         app:boxBackgroundMode="outline"
@@ -68,13 +68,13 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/zmiana_hasla"
-        app:layout_constraintVertical_bias="0.088">
+        app:layout_constraintTop_toBottomOf="@+id/zmiana_emeil"
+        app:layout_constraintVertical_bias="0.173">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/enterNewPassword"
+            android:id="@+id/enterNewMail"
             android:layout_width="286dp"
             android:layout_height="56dp"
 
@@ -91,14 +91,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/wprowadz_nowe_haslo_ponownie"
+        android:id="@+id/wprowadz_nowy_email_ponownie"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="286dp"
         android:layout_height="65dp"
 
         android:fontFamily="@font/quicksand_regular"
 
-        android:hint="@string/wprowadz_nowe_haslo_ponownie"
+        android:hint="@string/wprowadz_nowy_emeil_ponownie"
         android:textColorHint="@color/black_gray"
 
         app:boxBackgroundMode="outline"
@@ -109,13 +109,13 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wprowadz_nowe_haslo"
-        app:layout_constraintVertical_bias="0.113">
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_nowy_email"
+        app:layout_constraintVertical_bias="0.134">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/enterNewPasswordAgain"
+            android:id="@+id/enterNewMailAgain"
             android:layout_width="286dp"
             android:layout_height="56dp"
 
@@ -158,7 +158,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wprowadz_nowe_haslo_ponownie"
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_nowy_email_ponownie"
         app:layout_constraintVertical_bias="0.504"
         app:rippleColor="@color/blue_1"
         app:strokeColor="@color/blue_2"
