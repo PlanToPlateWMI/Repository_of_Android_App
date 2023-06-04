@@ -37,16 +37,39 @@ public class MailDevelops extends Fragment {
 
     private FragmentDeveloperBinding fragmentDeveloperBinding;
     private TextView dev_adres;
-
+    private Button button_zatwierdz;
+    /**
+     * Create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return the view
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         fragmentDeveloperBinding = FragmentDeveloperBinding.inflate(inflater, container, false);
 
-        dev_adres = fragmentDeveloperBinding.devAdres;
+        button_zatwierdz = fragmentDeveloperBinding.buttonZatwierdz;
+
+        button_zatwierdz.setOnClickListener(this::sendMail);
 
         return fragmentDeveloperBinding.getRoot();
+    }
+
+    /**
+     * Send an email to the developers
+     * @param view
+     */
+    public void sendMail(View view) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "plantoplatemobileapp@gmail.com" });
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Plantoplate - question");
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, ""));
     }
 
 }
