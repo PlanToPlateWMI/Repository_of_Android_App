@@ -195,6 +195,9 @@ W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc m
     <string name="accept_new_password">Nowe hasło zostało przyjęte\nUwaga!\nZe względów bezpieczeństwa, po zmianie hasła wylogujemy Cię ze wszystkich urządzeń.</string>
     <string name="wprowadz_nowy_emeil">Wprowadź nowy email</string>
     <string name="wprowadz_nowy_emeil_ponownie">Wprowadź nowy email ponownie</string>
+    <string name="accept_new_email">Wprowadzony przez ciebie mail został przyjęty!</string>
+
+
 
 
 </resources>
