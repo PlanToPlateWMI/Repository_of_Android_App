@@ -188,6 +188,11 @@ zaakceptowane!</string>
 
 W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc mail na adres</string>
 
+    <string name="wprowadz_stare_haslo">Wprowadź stare hasło</string>
+    <string name="uwaga_log_out"> Uwaga!\nZe względów bezpieczeństwa, po zmianie hasła wylogujemy Cię ze wszystkich urządzeń.</string>
+
+
+
 </resources>
 
     <!--<resources>-->
