@@ -8,15 +8,13 @@
     android:background="@color/blue_0">
 
     <TextView
+        android:layout_marginTop="70dp"
         android:id="@+id/plantoplate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="70dp"
-
         android:fontFamily="@font/quicksand_semibold"
-
         android:gravity="top"
         android:text="@string/plantoplate"
         android:textAppearance="@style/plantoplate"
@@ -25,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.016" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <TextView
         android:id="@+id/zmiana_danych"
@@ -35,18 +33,17 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:fontFamily="@font/quicksand_medium"
-
         android:gravity="top"
-
+        android:fontFamily="@font/quicksand_medium"
         android:text="@string/Zmiana_danych"
-        android:textAppearance="@style/rejestracja"
+        android:textAppearance="@style/pomy_lnie_z"
         android:textColor="@color/black_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
-        app:layout_constraintVertical_bias="0.149" />
+        app:layout_constraintVertical_bias="0.077" />
 
 
     <Button

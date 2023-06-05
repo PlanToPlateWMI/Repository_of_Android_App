@@ -19,23 +19,30 @@ package pl.plantoplate.ui.main.settings.groupCodeGeneration;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import pl.plantoplate.databinding.ChoiceAdultOrChildBinding;
+import pl.plantoplate.R;
+import pl.plantoplate.databinding.FragmentChoiceAdultOrChildBinding;
+import pl.plantoplate.databinding.FragmentNameChangeBinding;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.group.GroupRepository;
 
 /**
  * An activity that allows the user to choose the type of group code to generate.
  */
-public class GroupCodeTypeActivity extends AppCompatActivity {
+public class GroupCodeTypeActivity extends Fragment {
 
-    private ChoiceAdultOrChildBinding choose_group_code_type_view;
+    private FragmentChoiceAdultOrChildBinding choose_group_code_type_view;
 
     private Button child_code_button;
     private Button adult_code_button;
@@ -43,23 +50,24 @@ public class GroupCodeTypeActivity extends AppCompatActivity {
     private SharedPreferences prefs;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        // Inflate the layout and set it as the activity content
-        choose_group_code_type_view = ChoiceAdultOrChildBinding.inflate(getLayoutInflater());
-        setContentView(choose_group_code_type_view.getRoot());
+        choose_group_code_type_view = FragmentChoiceAdultOrChildBinding.inflate(inflater, container, false);
+
 
         // Get the buttons for choosing group code type
         child_code_button = choose_group_code_type_view.codeForChild;
         adult_code_button = choose_group_code_type_view.codeForAdult;
 
         // Get shared preferences
-        prefs = getSharedPreferences("prefs", 0);
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
 
         // Set the onClickListeners for the buttons
         child_code_button.setOnClickListener(this::generateChildCode);
         adult_code_button.setOnClickListener(this::generateAdultCode);
+
+        return choose_group_code_type_view.getRoot();
     }
 
     /**
@@ -96,9 +104,11 @@ public class GroupCodeTypeActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(String groupCode) {
-                Intent intent = new Intent(getApplicationContext(), GeneratedGroupCodeActivity.class);
-                intent.putExtra("group_code", groupCode);
-                startActivity(intent);
+                Fragment fragment = new GeneratedGroupCodeActivity();
+                Bundle bundle = new Bundle();
+                bundle.putString("group_code", groupCode);
+                fragment.setArguments(bundle);
+                replaceFragment(fragment);
             }
 
             @Override
@@ -111,5 +121,17 @@ public class GroupCodeTypeActivity extends AppCompatActivity {
                 Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    /**
+     * Replaces the current fragment with the specified fragment.
+     * @param fragment The fragment to replace the current fragment with.
+     */
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.settings_default, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

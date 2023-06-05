@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_0"
-    tools:context="pl.plantoplate.Group">
-
+    tools:context="pl.plantoplate.ui.registration.GroupEnterActivity">
 
     <TextView
         android:layout_marginTop="70dp"
@@ -74,7 +73,6 @@
         app:layout_constraintTop_toBottomOf="@+id/pom_zarejestrowano"
         app:layout_constraintVertical_bias="0.095" />
 
-    <!-- Wprowadź kod: -->
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:id="@+id/wprowadz_kod2"
@@ -114,8 +112,6 @@
             tools:layout_editor_absoluteY="321dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <!--Zatwierdz button -->
     <Button
         android:id="@+id/button_zatwierdz"
         android:layout_width="236dp"
@@ -146,10 +142,5 @@
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod2"
         app:layout_constraintVertical_bias="0.587"
         app:rippleColor="@color/blue_1" />
-
-    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--    app:layout_constraintEnd_toEndOf="parent"-->
-    <!--    app:layout_constraintStart_toStartOf="parent"-->
-    <!--    app:layout_constraintTop_toTopOf="parent"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

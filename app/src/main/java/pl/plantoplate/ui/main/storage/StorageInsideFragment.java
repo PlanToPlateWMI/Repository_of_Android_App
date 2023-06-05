@@ -54,6 +54,9 @@ import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProductpopUp;
 
+/**
+ * This fragment is responsible for displaying the storage.
+ */
 public class StorageInsideFragment extends Fragment {
 
     private FragmentStorageInsideBinding fragmentStorageInsideBinding;

@@ -8,7 +8,6 @@
     android:background="@color/blue_0"
     tools:context="pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity">
 
-
     <TextView
         android:layout_marginTop="70dp"
         android:id="@+id/plantoplate"
@@ -48,103 +47,89 @@
         app:layout_constraintVertical_bias="0.077" />
 
     <TextView
-        android:id="@+id/choose_an_option"
+        android:id="@+id/forward_the_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:fontFamily="@font/quicksand_medium"
         android:textSize="20dp"
+        android:fontFamily="@font/quicksand_medium"
         android:gravity="center_horizontal|top"
-        android:text="@string/wybierz_opcje"
+        android:text="@string/przekarz_kod"
         android:textAppearance="@style/wprowad_kod"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/code_generation"
-        app:layout_constraintVertical_bias="0.097" />
+        app:layout_constraintVertical_bias="0.095" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/wp_kod"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="236dp"
+        android:layout_height="65dp"
+        android:fontFamily="@font/quicksand_regular"
+        android:textColorHint="@color/black_gray"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/blue_2"
+        app:hintTextColor="@color/black_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forward_the_code"
+        app:layout_constraintVertical_bias="0.209">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/kod"
+            android:layout_width="236dp"
+            android:layout_height="56dp"
+
+            android:fontFamily="@font/quicksand_regular"
+
+            android:singleLine="true"
+            android:maxLines="1"
+
+            android:textColor="@color/black_gray"
+
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="321dp"
+            android:enabled="false" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/code_for_adult"
-        android:layout_width="250dp"
+        android:id="@+id/apply_button"
+        android:layout_width="236dp"
         android:layout_height="70dp"
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="300dp"
+
         android:backgroundTint="@color/blue_1"
         android:clickable="true"
-        android:fontFamily="@font/quicksand_medium"
-        android:text="@string/kod_dla_osoby_doroslej"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
 
+        android:fontFamily="@font/quicksand_medium"
+
+        android:text="@string/zatwierdz"
 
         app:strokeColor="@color/blue_2"
         app:strokeWidth="1dp"
 
+        android:textAllCaps="false"
+        android:textColor="@color/black_gray"
+        app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choose_an_option"
+        app:layout_constraintTop_toBottomOf="@+id/wp_kod"
         app:layout_constraintVertical_bias="0.587"
         app:rippleColor="@color/blue_1" />
-
-
-    <Button
-        android:id="@+id/code_for_child"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="150dp"
-        android:backgroundTint="@color/blue_1"
-        android:clickable="true"
-        android:fontFamily="@font/quicksand_medium"
-        android:text="@string/kod_dla_dziecka"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
-
-
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/code_for_adult"
-        app:layout_constraintVertical_bias="0.325"
-        app:rippleColor="@color/blue_1" />
-
-
-    <TextView
-        android:id="@+id/uwaga"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-
-        android:fontFamily="@font/quicksand_regular"
-
-        android:gravity="top"
-        android:text="@string/uwaga"
-        android:textAppearance="@style/uwaga_do_cz"
-        android:textColor="@color/black_gray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/code_for_child" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

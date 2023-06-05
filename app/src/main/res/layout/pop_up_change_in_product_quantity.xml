@@ -136,8 +136,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.76">
 
-
-            <!--android:fontFamily="@font/quicksand_regular"-->
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ilosc"
                 android:layout_width="160dp"

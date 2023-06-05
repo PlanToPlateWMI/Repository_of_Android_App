@@ -18,35 +18,38 @@ package pl.plantoplate.ui.main.settings.groupCodeGeneration;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import pl.plantoplate.databinding.GeneratedCodeBinding;
+import pl.plantoplate.R;
+import pl.plantoplate.databinding.FragmentGeneratedCodeBinding;
+import pl.plantoplate.databinding.FragmentNameChangeBinding;
 import pl.plantoplate.ui.main.ActivityMain;
 
 /**
  * An activity that displays the generated group code.
  */
-public class GeneratedGroupCodeActivity extends AppCompatActivity {
+public class GeneratedGroupCodeActivity extends Fragment {
 
-    private GeneratedCodeBinding generated_code_view;
+    private FragmentGeneratedCodeBinding generated_code_view;
 
     private TextInputEditText group_code;
     private Button apply_button;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        // Inflate the layout using the View Binding Library
-        generated_code_view = GeneratedCodeBinding.inflate(getLayoutInflater());
-
-        // Set the content view to the inflated layout
-        setContentView(generated_code_view.getRoot());
+        generated_code_view = FragmentGeneratedCodeBinding.inflate(inflater, container, false);
 
         // Get the TextView for the group code
         group_code = generated_code_view.kod;
@@ -54,19 +57,19 @@ public class GeneratedGroupCodeActivity extends AppCompatActivity {
         // Get the button for accepting the code
         apply_button = generated_code_view.applyButton;
 
-        // Set the group code view
+        // Get the button for accepting the code
+        apply_button.setOnClickListener(this::applyCode);
+
         setGroupCodeView();
 
-        // Set the onClickListener for the button
-        apply_button.setOnClickListener(this::applyCode);
+        return generated_code_view.getRoot();
     }
 
     /**
      * Sets the group code view, so that the user can see the generated group code.
      */
     public void setGroupCodeView() {
-        // get group code from extras
-        String groupCode = getIntent().getStringExtra("group_code");
+        String groupCode = requireArguments().getString("group_code");
 
         // set the group code text view
         group_code.setText(groupCode);
@@ -77,8 +80,19 @@ public class GeneratedGroupCodeActivity extends AppCompatActivity {
      * @param view The view object that was clicked.
      */
     private void applyCode(View view) {
-        Intent intent = new Intent(this, ActivityMain.class);
-        startActivity(intent);
+        replaceFragment(new SettingsFragmentInside());
+    }
+
+    /**
+     * Replaces the current fragment with the specified fragment.
+     * @param fragment The fragment to replace the current fragment with.
+     */
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.settings_default, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }

@@ -55,7 +55,8 @@ public class SettingsFragmentInside extends Fragment{
         String role = prefs.getString("role", "");
 
         if(role.equals("ROLE_ADMIN")) {
-            generate_group_code_button.setOnClickListener(this::chooseGroupCodeType);
+            //generate_group_code_button.setOnClickListener(this::chooseGroupCodeType);
+            generate_group_code_button.setOnClickListener(v -> replaceFragment(new GroupCodeTypeActivity()));
         }else {
             generate_group_code_button.setBackgroundColor(getResources().getColor(R.color.gray));
             generate_group_code_button.setClickable(false);
