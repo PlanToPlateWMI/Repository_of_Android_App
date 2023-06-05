@@ -101,7 +101,10 @@
         android:id="@+id/baza_def"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
+
+        android:background="@drawable/image_baz"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
