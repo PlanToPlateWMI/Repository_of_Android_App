@@ -40,7 +40,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="0dp"
 
-        android:background="@drawable/image_spizarnia"
+        android:background="@drawable/nowa_spizarnia"
 
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintVertical_bias="0.0"
