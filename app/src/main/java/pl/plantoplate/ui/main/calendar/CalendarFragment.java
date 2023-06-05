@@ -27,6 +27,9 @@ import android.view.ViewGroup;
 
 import pl.plantoplate.databinding.FragmentCalendarBinding;
 
+/**
+ * This fragment is responsible for displaying calendar view.
+ */
 public class CalendarFragment extends Fragment {
 
     private FragmentCalendarBinding calendar_view;

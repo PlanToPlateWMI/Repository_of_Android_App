@@ -44,6 +44,9 @@ import pl.plantoplate.repository.remote.product.ProductRepository;
 import pl.plantoplate.repository.remote.models.Product;
 import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
 
+/**
+ * This fragment is responsible for adding a new product to the database.
+ */
 public class AddYourOwnProductFragment extends Fragment implements ChangeCategoryListener{
 
     private FragmentAddYourOwnProductBinding add_own_product_view;

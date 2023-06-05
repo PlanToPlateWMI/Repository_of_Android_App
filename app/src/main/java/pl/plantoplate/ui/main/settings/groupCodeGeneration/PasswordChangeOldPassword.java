@@ -16,23 +16,17 @@
 
 package pl.plantoplate.ui.main.settings.groupCodeGeneration;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 
 
-public class PasswordChange1 extends Fragment{
+/**
+ * This fragment is used to change the password.
+ */
+public class PasswordChangeOldPassword extends Fragment{
 
     private Button button_zatwierdz;
     private TextInputLayout wprowadz_stare_haslo;

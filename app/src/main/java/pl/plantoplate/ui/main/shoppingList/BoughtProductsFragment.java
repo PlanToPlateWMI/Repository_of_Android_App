@@ -50,6 +50,9 @@ import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
 import pl.plantoplate.ui.main.storage.StorageFragment;
 
+/**
+ * This fragment is responsible for displaying bought products.
+ */
 public class BoughtProductsFragment extends Fragment {
 
     private FragmentKupioneBinding fragmentKupioneBinding;

@@ -53,6 +53,9 @@ import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProductpopUp;
 
+/**
+ * This fragment is responsible for displaying the shopping list.
+ */
 public class BuyProductsFragment extends Fragment {
 
     private FragmentTrzebaKupicBinding fragmentTrzebaKupicBinding;

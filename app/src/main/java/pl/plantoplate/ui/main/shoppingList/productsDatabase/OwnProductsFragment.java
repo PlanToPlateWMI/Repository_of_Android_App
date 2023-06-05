@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
 import android.content.SharedPreferences;
@@ -51,6 +52,9 @@ import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProductpopUp;
 
+/**
+ * This fragment is responsible for displaying the products that the user has added to the database.
+ */
 public class OwnProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
     private FragmentWlasneBinding fragmentWlasneBinding;
 

@@ -32,6 +32,9 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentStorageBinding;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 
+/**
+ * Fragment for storage screen
+ */
 public class StorageFragment extends Fragment {
 
     private FragmentStorageBinding fragmentStorageBinding;

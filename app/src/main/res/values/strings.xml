@@ -189,7 +189,7 @@ zaakceptowane!</string>
 W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc mail na adres</string>
 
     <string name="wprowadz_stare_haslo">Wprowadź stare hasło</string>
-    <string name="uwaga_log_out"> Uwaga!\nZe względów bezpieczeństwa, po zmianie hasła wylogujemy Cię ze wszystkich urządzeń.</string>
+    <string name="uwaga_log_out">Uwaga!\nZe względów bezpieczeństwa, po zmianie hasła wylogujemy Cię ze wszystkich urządzeń.</string>
     <string name="wprowadz_nowe_haslo">Wprowadź nowe hasło</string>
     <string name="wprowadz_nowe_haslo_ponownie">Wprowadź hasło ponownie</string>
     <string name="accept_new_password">Nowe hasło zostało przyjęte\nUwaga!\nZe względów bezpieczeństwa, po zmianie hasła wylogujemy Cię ze wszystkich urządzeń.</string>
@@ -197,6 +197,7 @@ W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc m
     <string name="wprowadz_nowy_emeil_ponownie">Wprowadź email ponownie</string>
     <string name="accept_new_email">Wprowadzony przez ciebie mail został przyjęty!</string>
 
+    <string name="wszystkie_produkty">Wszystkie</string>
 
 
 

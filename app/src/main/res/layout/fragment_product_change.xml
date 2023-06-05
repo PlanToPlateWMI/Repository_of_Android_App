@@ -32,8 +32,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.099" />
 
-    <!-- Wprowadź email2: -->
-
 
     <TextView
         android:id="@+id/baza_text"

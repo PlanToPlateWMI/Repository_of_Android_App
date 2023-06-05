@@ -35,7 +35,9 @@ import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
 import pl.plantoplate.databinding.FragmentDeveloperBinding;
 import pl.plantoplate.databinding.FragmentNameChangeBinding;
 
-
+/**
+ * This fragment is responsible for changing the name of the user.
+ */
 public class ChangeName extends Fragment {
 
     private FragmentNameChangeBinding fragmentNameChangeBinding;

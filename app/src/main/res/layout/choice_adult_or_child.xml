@@ -8,10 +8,7 @@
     android:background="@color/blue_0"
     tools:context="pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity">
 
-    <!-- PlanToPlate -->
 
-
-    <!-- Code generation -->
     <TextView
         android:layout_marginTop="70dp"
         android:id="@+id/plantoplate"
@@ -50,9 +47,6 @@
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
         app:layout_constraintVertical_bias="0.077" />
 
-    <!-- Choose one of the option -->
-
-    <!--Code for adult -->
     <TextView
         android:id="@+id/choose_an_option"
         android:layout_width="wrap_content"
@@ -102,7 +96,7 @@
         app:layout_constraintVertical_bias="0.587"
         app:rippleColor="@color/blue_1" />
 
-    <!--Kod for child-->
+
     <Button
         android:id="@+id/code_for_child"
         android:layout_width="250dp"
@@ -133,7 +127,6 @@
         app:rippleColor="@color/blue_1" />
 
 
-    <!--Uwaga! -->
     <TextView
         android:id="@+id/uwaga"
         android:layout_width="300dp"
@@ -153,12 +146,5 @@
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/code_for_child" />
-
-
-    <!--    app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--    app:layout_constraintEnd_toEndOf="parent"-->
-    <!--    app:layout_constraintStart_toStartOf="parent"-->
-    <!--    app:layout_constraintTop_toTopOf="parent"-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

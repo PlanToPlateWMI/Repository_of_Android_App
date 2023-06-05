@@ -38,6 +38,9 @@ import pl.plantoplate.ui.customViewes.RadioGridGroup;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ChangeCategoryListener;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.EditOwnProductFragment;
 
+/**
+ * This fragment is used to change category of product.
+ */
 public class ChangeCategoryOfProductFragment extends Fragment {
 
     private FragmentChangeCategoryBinding fragmentChangeCategoryBinding;

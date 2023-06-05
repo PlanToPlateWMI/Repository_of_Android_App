@@ -27,7 +27,9 @@ import android.view.ViewGroup;
 
 import pl.plantoplate.databinding.FragmentRecipeBinding;
 
-
+/**
+ * This fragment is responsible for displaying the recipe view.
+ */
 public class RecipeFragment extends Fragment {
 
     private FragmentRecipeBinding recipe_view;

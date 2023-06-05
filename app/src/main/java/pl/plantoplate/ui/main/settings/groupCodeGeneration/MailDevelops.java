@@ -32,7 +32,9 @@ import androidx.fragment.app.Fragment;
 import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
 import pl.plantoplate.databinding.FragmentDeveloperBinding;
 
-
+/**
+ * Class responsible for sending an email to the developers
+ */
 public class MailDevelops extends Fragment {
 
     private FragmentDeveloperBinding fragmentDeveloperBinding;

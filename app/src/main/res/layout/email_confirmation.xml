@@ -7,11 +7,6 @@
     android:background="@color/blue_0"
     tools:context="pl.plantoplate.ui.registration.EmailConfirmActivity">
 
-    <!-- PlanToPlate -->
-
-
-    <!-- Potwierdzenie maila -->
-
     <TextView
         android:id="@+id/plantoplate"
         android:layout_width="wrap_content"
@@ -78,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
         app:layout_constraintVertical_bias="0.295" />
 
-    <!--Wprowadz kod -->
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wprowadz_kod"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -117,7 +112,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <!-- Wyślij ponownie -->
     <TextView
         android:id="@+id/wy_lij_pono"
         android:layout_width="wrap_content"
@@ -145,7 +139,6 @@
         tools:ignore="MissingConstraints" />
 
 
-    <!--Zatwierdz button -->
     <Button
         android:id="@+id/button_zatwierdzenie_link"
         android:layout_width="236dp"

@@ -32,7 +32,9 @@ import androidx.fragment.app.FragmentTransaction;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
 
-
+/**
+ * Fragment that allows the user to change the data.
+ */
 public class ChangeTheData extends Fragment {
 
     private FragmentChangeSelectorBinding fragmentChangeSelectorBinding;

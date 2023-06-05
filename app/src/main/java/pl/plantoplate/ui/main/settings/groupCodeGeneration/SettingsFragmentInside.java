@@ -18,6 +18,9 @@ import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 
+/**
+ * The fragment that is displayed when the user clicks the settings button.
+ */
 public class SettingsFragmentInside extends Fragment{
 
     private FragmentSettingsInsideBinding settings_view;

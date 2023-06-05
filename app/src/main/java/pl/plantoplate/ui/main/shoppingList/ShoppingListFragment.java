@@ -34,6 +34,9 @@ import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
 
+/**
+ * Fragment for shopping list.
+ */
 public class ShoppingListFragment extends Fragment {
 
     private FragmentShoppingListBinding shopping_list_view;

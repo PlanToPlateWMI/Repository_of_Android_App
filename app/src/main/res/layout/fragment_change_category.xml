@@ -386,6 +386,4 @@
         app:strokeColor="@color/blue_2"
         app:strokeWidth="1dp"/>
 
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

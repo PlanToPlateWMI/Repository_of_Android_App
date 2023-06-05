@@ -9,8 +9,6 @@
     tools:context="pl.plantoplate.ui.main.shoppingList.ShoppingListFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <!--Wygenerowanie kodu button -->
-
 
     <TextView
         android:id="@+id/shopping"

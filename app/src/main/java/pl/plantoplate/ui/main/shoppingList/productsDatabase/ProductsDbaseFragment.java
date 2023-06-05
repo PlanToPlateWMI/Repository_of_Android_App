@@ -42,6 +42,9 @@ import pl.plantoplate.ui.main.shoppingList.BoughtProductsFragment;
 import pl.plantoplate.ui.main.shoppingList.BuyProductsFragment;
 import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 
+/**
+ * This fragment is responsible for displaying the products database.
+ */
 public class ProductsDbaseFragment extends Fragment {
 
     private FragmentBazaProduktowBinding bazaProduktowBinding;
