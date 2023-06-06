@@ -32,6 +32,35 @@
         app:layout_constraintVertical_bias="0.333" />
 
     <TextView
+        android:id="@+id/sun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_wb_sunny_24_50"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintEnd_toStartOf="@id/switchButtonChangeColorTheme"/>
+
+
+    <Switch
+        android:id="@+id/switchButtonChangeColorTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:thumbTint="@color/blue_3"
+        android:trackTint="@color/blue_2"
+        app:layout_constraintEnd_toStartOf="@id/moon"
+        tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml"
+        />
+
+    <TextView
+        android:id="@+id/moon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:drawableRight="@drawable/baseline_nights_stay_24"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
         android:id="@+id/imie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -133,31 +162,7 @@
         app:strokeColor="@color/blue_2"
         app:strokeWidth="1dp" />
 
-    <Button
-        android:id="@+id/button_zmiana_tematu"
-        android:layout_width="0dp"
-        android:layout_height="91dp"
-        android:backgroundTint="@color/blue_1"
-        android:clickable="true"
-        android:drawableLeft="@drawable/baseline_wb_sunny_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
-        android:fontFamily="@font/quicksand_medium"
-        android:gravity="left|center_vertical"
-        android:text="@string/zmien_temat"
-        android:textAllCaps="false"
-        android:textColor="@color/black_gray"
-        app:iconPadding="8dp"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_zarzadyanie_uyztkownikamu"
-        app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
-        app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/button_about_us"
@@ -180,7 +185,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_zmiana_tematu"
+        app:layout_constraintTop_toBottomOf="@+id/button_zarzadyanie_uyztkownikamu"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="@color/blue_1"
         app:strokeColor="@color/blue_2"
