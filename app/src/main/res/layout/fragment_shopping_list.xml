@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_0"
+    android:background="?attr/colorPrimary"
     tools:context="pl.plantoplate.ui.main.shoppingList.ShoppingListFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="65dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/selector_buttons"
+        android:background="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:contextClickable="false"
         android:fontFamily="@font/quicksand_semibold"
@@ -26,7 +26,7 @@
         android:insetBottom="0dp"
         android:text="@string/lista_zakupow"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="32dp"
         app:iconPadding="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
@@ -65,13 +65,13 @@
 
         android:padding="4dp"
 
-        android:outlineAmbientShadowColor="@color/black_gray"
-        android:outlineSpotShadowColor="@color/black_gray"
+        android:outlineAmbientShadowColor="?attr/colorSecondaryVariant"
+        android:outlineSpotShadowColor="?attr/colorSecondaryVariant"
 
-        app:itemIconTint="@color/black_gray"
+        app:itemIconTint="?attr/colorSecondaryVariant"
 
-        app:itemRippleColor="@color/blue_0"
-        app:itemTextColor="@color/black_gray"
+        app:itemRippleColor="?attr/colorPrimary"
+        app:itemTextColor="?attr/colorSecondaryVariant"
 
         app:itemTextAppearanceActive="@style/menu_zakupy_active"
         app:itemTextAppearanceInactive="@style/menu_zakupy_no_active"

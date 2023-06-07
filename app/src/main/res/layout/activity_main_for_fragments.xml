@@ -32,7 +32,7 @@
 
         app:itemIconTint="?attr/colorSecondaryVariant"
 
-        app:itemRippleColor="@color/blue_0"
+        app:itemRippleColor="?attr/colorPrimary"
         app:itemTextColor="?attr/colorSecondaryVariant"
 
         app:itemIconSize="24dp"

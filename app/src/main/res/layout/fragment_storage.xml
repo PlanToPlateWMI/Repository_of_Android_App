@@ -5,7 +5,7 @@
     android:id="@+id/frameLayoutStorage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_0"
+    android:background="?attr/colorPrimary"
     tools:context="pl.plantoplate.ui.main.storage.StorageFragment">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_height="65dp"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/selector_buttons"
+        android:background="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:contextClickable="false"
         android:fontFamily="@font/quicksand_semibold"
@@ -25,7 +25,7 @@
         android:insetBottom="0dp"
         android:text="@string/spizarnia"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="32dp"
 
         app:layout_constraintEnd_toEndOf="parent"

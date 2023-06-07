@@ -10,11 +10,12 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/zam_blue_3</item>
         <item name="colorSecondaryVariant">@color/zam_black_gray</item>
-        <item name="colorOnSecondary">@color/zam_blue_3</item>
+        <item name="colorOnSecondary">@color/zam_item</item>
+
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/black_gray</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:navigationBarColor">@color/black_gray</item>
+        <item name="android:navigationBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>
 </resources>

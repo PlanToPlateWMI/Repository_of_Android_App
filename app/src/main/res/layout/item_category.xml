@@ -8,11 +8,11 @@
         android:id="@+id/сategory_of_product"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="@color/blue_1"
+        android:background="?attr/colorPrimaryVariant"
         android:text="Kategoria"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -7,7 +7,7 @@
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
 
-        android:iconTint="@color/black_gray"
+        android:iconTint="?attr/colorSecondaryVariant"
         />
 
     <item android:title="@string/wlasne"
@@ -16,6 +16,6 @@
         android:font="@font/quicksand_regular"
         android:fontFamily="@font/quicksand_regular"
 
-        android:iconTint="@color/black_gray"
+        android:iconTint="?attr/colorSecondaryVariant"
         />
 </menu>
