@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_0"
+    android:background="?attr/colorPrimary"
     tools:context="pl.plantoplate.ui.registration.GroupEnterActivity">
 
     <TextView
@@ -18,7 +18,7 @@
         android:gravity="top"
         android:text="@string/plantoplate"
         android:textAppearance="@style/plantoplate"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
 
         android:text="@string/pomy_lnie_z"
         android:textAppearance="@style/pomy_lnie_z"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -62,7 +62,7 @@
         android:layout_alignParentBottom="true"
         android:fontFamily="@font/quicksand_medium"
         android:textSize="20dp"
-
+        android:textColor="?attr/colorSecondaryVariant"
         android:gravity="center_horizontal|top"
         android:text="@string/wprowad_kod"
         android:textAppearance="@style/wprowad_kod"
@@ -79,12 +79,12 @@
         android:layout_width="236dp"
         android:layout_height="65dp"
         android:hint="@string/wprowadz_kod"
-        android:textColorHint="@color/black_gray"
+        android:textColorHint="?attr/colorSecondaryVariant"
 
         app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/blue_2"
+        app:boxStrokeColor="?attr/colorOnPrimary"
 
-        app:hintTextColor="@color/black_gray"
+        app:hintTextColor="?attr/colorSecondaryVariant"
 
         android:fontFamily="@font/quicksand_regular"
 
@@ -106,7 +106,7 @@
             android:maxLines="1"
             android:singleLine="true"
 
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
 
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="321dp" />
@@ -122,18 +122,17 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
 
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
 
         android:fontFamily="@font/quicksand_medium"
 
         android:text="@string/zatwierdz"
 
-        app:strokeColor="@color/blue_2"
         app:strokeWidth="1dp"
 
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -141,6 +140,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod2"
         app:layout_constraintVertical_bias="0.587"
-        app:rippleColor="@color/blue_1" />
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

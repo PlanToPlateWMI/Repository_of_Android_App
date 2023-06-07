@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_0"
+    android:background="?attr/colorPrimary"
     tools:context="pl.plantoplate.ui.registration.EmailConfirmActivity">
 
     <TextView
@@ -20,7 +20,7 @@
         android:gravity="top"
         android:text="@string/plantoplate"
         android:textAppearance="@style/plantoplate"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
 
         android:text="@string/potwierdzen"
         android:textAppearance="@style/potwierdzen"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -58,7 +58,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-
+        android:textColor="?attr/colorSecondaryVariant"
         android:fontFamily="@font/quicksand_medium"
 
         android:textSize="20dp"
@@ -83,14 +83,14 @@
         android:fontFamily="@font/quicksand_regular"
 
         android:hint="@string/wprowadz_kod"
-        android:textColorHint="@color/black_gray"
+        android:textColorHint="?attr/colorSecondaryVariant"
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="@color/blue_2"
+        app:boxStrokeColor="?attr/colorOnPrimary"
 
 
-        app:hintTextColor="@color/black_gray"
+        app:hintTextColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -105,7 +105,7 @@
             android:singleLine="true"
             android:maxLines="1"
 
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
 
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="321dp" />
@@ -128,7 +128,7 @@
 
         android:gravity="top"
         android:text="@string/wy_lij_pono"
-        android:textColor="@color/blue_3"
+        android:textColor="?attr/colorSecondary"
         android:textAppearance="@style/wy_lij_pono"
         app:layout_constraintBottom_toTopOf="@+id/button_zatwierdzenie_link"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,25 +149,25 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
 
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
 
         android:fontFamily="@font/quicksand_medium"
 
         android:text="@string/zatwierdz"
 
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp"
 
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod"
-        app:layout_constraintVertical_bias="0.658"
-        app:rippleColor="@color/blue_1" />
+        app:layout_constraintVertical_bias="0.658" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

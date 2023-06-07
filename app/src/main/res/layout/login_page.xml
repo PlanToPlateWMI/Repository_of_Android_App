@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_0"
+    android:background="?attr/colorPrimary"
     tools:context="pl.plantoplate.ui.login.LoginActivity">
 
     <TextView
@@ -21,7 +21,7 @@
         android:gravity="top"
         android:text="@string/plantoplate"
         android:textAppearance="@style/plantoplate"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
 
         android:text="@string/logowanie"
         android:textAppearance="@style/rejestracja"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -60,13 +60,13 @@
         android:fontFamily="@font/quicksand_regular"
 
         android:hint="@string/wprowadz_email"
-        android:textColorHint="@color/black_gray"
+        android:textColorHint="?attr/colorSecondaryVariant"
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="@color/blue_2"
+        app:boxStrokeColor="?attr/colorOnPrimary"
 
-        app:hintTextColor="@color/black_gray"
+        app:hintTextColor="?attr/colorSecondaryVariant"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
             android:maxLines="1"
             android:singleLine="true"
 
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
 
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="321dp" />
@@ -104,16 +104,16 @@
 
         android:hint="@string/wprowadz_haslo"
 
-        android:textColorHint="@color/black_gray"
+        android:textColorHint="?attr/colorSecondaryVariant"
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="@color/blue_2"
+        app:boxStrokeColor="?attr/colorOnPrimary"
 
         app:endIconMode="password_toggle"
 
-        app:endIconTint="@color/black_gray"
-        app:hintTextColor="@color/black_gray"
+        app:endIconTint="?attr/colorSecondaryVariant"
+        app:hintTextColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -133,7 +133,7 @@
             android:maxLines="1"
             android:singleLine="true"
 
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="321dp" />
 
@@ -156,7 +156,7 @@
         android:text="@string/przypomnij_haslo"
         android:textAppearance="@style/masz_konto_"
 
-        android:textColor="@color/blue_3"
+        android:textColor="?attr/colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.943"
@@ -180,7 +180,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/nie_masz_konto_"
         android:textAppearance="@style/masz_konto_"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -198,7 +198,7 @@
         android:layout_alignParentBottom="true"
 
 
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
 
         android:fontFamily="@font/quicksand_medium"
@@ -206,7 +206,7 @@
         android:text="@string/zalogowanie"
         android:textAllCaps="false"
 
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
 
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -215,8 +215,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_haslo"
         app:layout_constraintVertical_bias="0.292"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
 

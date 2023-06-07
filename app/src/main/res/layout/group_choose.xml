@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_0"
+    android:background="?attr/colorPrimary"
     tools:context="pl.plantoplate.ui.registration.GroupSelectActivity">
 
     <TextView
@@ -20,14 +20,14 @@
         android:text="@string/plantoplate"
 
         android:textAppearance="@style/plantoplate"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
-        app:strokeColor="@color/blue_2"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
     <TextView
@@ -44,7 +44,7 @@
         android:gravity="center_horizontal|top"
         android:text="@string/pomy_lnie_z"
         android:textAppearance="@style/pomy_lnie_z"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -81,12 +81,12 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="250dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:fontFamily="@font/quicksand_medium"
         android:text="@string/mam_zapr_do_gr"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +94,8 @@
         app:layout_constraintTop_toBottomOf="@+id/wybierz_opcje"
         app:layout_constraintVertical_bias="0.587"
         app:layout_constraintHorizontal_bias="0.497"
-        app:rippleColor="@color/blue_1" />
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary" />
 
     <Button
         android:id="@+id/button_swoja_grupa"
@@ -105,12 +106,12 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="150dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:fontFamily="@font/quicksand_medium"
         android:text="@string/swoja_gr"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +119,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_mam_zaproszenie"
         app:layout_constraintVertical_bias="0.600"
-        app:rippleColor="@color/blue_1" />
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary" />
 
     <TextView
         android:id="@+id/podpowiedz_grupa"
@@ -134,7 +136,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/podpowiedz_gr"
         android:textAppearance="@style/masz_konto_"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.500"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_0"
+    android:background="?attr/colorPrimary"
     tools:context="pl.plantoplate.ui.registration.RegisterActivity">
 
 
@@ -21,7 +21,7 @@
         android:gravity="top"
         android:text="@string/plantoplate"
         android:textAppearance="@style/plantoplate"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
 
         android:text="@string/rejestracja"
         android:textAppearance="@style/rejestracja"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -61,13 +61,13 @@
         android:fontFamily="@font/quicksand_regular"
 
         android:hint="@string/wprowadz_imie"
-        android:textColorHint="@color/black_gray"
+        android:textColorHint="?attr/colorSecondaryVariant"
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="@color/blue_2"
+        app:boxStrokeColor="?attr/colorOnPrimary"
 
-        app:hintTextColor="@color/black_gray"
+        app:hintTextColor="?attr/colorSecondaryVariant"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
             android:maxLines="1"
             android:singleLine="true"
 
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
 
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="321dp" />
@@ -102,13 +102,13 @@
         android:fontFamily="@font/quicksand_regular"
         android:hint="@string/wprowadz_email"
 
-        android:textColorHint="@color/black_gray"
+        android:textColorHint="?attr/colorSecondaryVariant"
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="@color/blue_2"
+        app:boxStrokeColor="?attr/colorOnPrimary"
 
-        app:hintTextColor="@color/black_gray"
+        app:hintTextColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
@@ -126,7 +126,7 @@
             android:maxLines="1"
             android:singleLine="true"
 
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
 
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="321dp" />
@@ -141,16 +141,16 @@
         android:fontFamily="@font/quicksand_regular"
         android:hint="@string/wprowadz_haslo"
 
-        android:textColorHint="@color/black_gray"
+        android:textColorHint="?attr/colorSecondaryVariant"
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="@color/blue_2"
+        app:boxStrokeColor="?attr/colorOnPrimary"
         app:endIconMode="password_toggle"
 
-        app:endIconTint="@color/black_gray"
+        app:endIconTint="?attr/colorSecondaryVariant"
 
-        app:hintTextColor="@color/black_gray"
+        app:hintTextColor="?attr/colorSecondaryVariant"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -171,7 +171,7 @@
 
             android:singleLine="true"
 
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="321dp" />
 
@@ -183,11 +183,11 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_regular"
 
-        android:shadowColor="@color/blue_0"
+        android:shadowColor="?attr/colorPrimary"
 
         android:text="@string/wyra_am_zgo"
         android:textAppearance="@style/wyra_am_zgo"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -213,7 +213,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/masz_konto_"
         android:textAppearance="@style/masz_konto_"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -231,19 +231,18 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
 
-
-        app:strokeColor="@color/blue_2"
         app:strokeWidth="1dp"
 
         android:fontFamily="@font/quicksand_medium"
 
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
 
         android:text="@string/zaloz_konto"
-
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -251,6 +250,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkbox_wyrazam_zgode"
         app:layout_constraintVertical_bias="0.162"
-        app:rippleColor="@color/blue_1" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
