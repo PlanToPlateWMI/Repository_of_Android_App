@@ -25,15 +25,15 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#C6D9FF"
+        android:background="?attr/colorPrimaryVariant"
 
-        android:outlineAmbientShadowColor="@color/black_gray"
-        android:outlineSpotShadowColor="@color/black_gray"
+        android:outlineAmbientShadowColor="?attr/colorSecondaryVariant"
+        android:outlineSpotShadowColor="?attr/colorSecondaryVariant"
 
-        app:itemIconTint="@color/black_gray"
+        app:itemIconTint="?attr/colorSecondaryVariant"
 
         app:itemRippleColor="@color/blue_0"
-        app:itemTextColor="#80231F20"
+        app:itemTextColor="?attr/colorSecondaryVariant"
 
         app:itemIconSize="24dp"
 

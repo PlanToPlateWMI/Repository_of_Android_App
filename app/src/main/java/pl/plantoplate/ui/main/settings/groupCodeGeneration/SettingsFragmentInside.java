@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -63,16 +64,14 @@ public class SettingsFragmentInside extends Fragment{
                 if (isChecked) {
                     // Switch is on
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        window = getActivity().getWindow();
-                        window.setStatusBarColor(getResources().getColor(R.color.black_gray));
-                        window.setNavigationBarColor(getResources().getColor(R.color.black_gray));
+                        int nightMode = isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO;
+                        AppCompatDelegate.setDefaultNightMode(nightMode);
                     }
                 } else {
                     // Switch is off
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        window = getActivity().getWindow();
-                        window.setStatusBarColor(getResources().getColor(R.color.blue_1));
-                        window.setNavigationBarColor(getResources().getColor(R.color.blue_1));
+                        int nightMode = isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO;
+                        AppCompatDelegate.setDefaultNightMode(nightMode);
                     }
                 }
 

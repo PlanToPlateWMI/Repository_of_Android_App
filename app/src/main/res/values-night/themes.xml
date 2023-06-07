@@ -2,15 +2,15 @@
     <!-- Base application theme. -->
     <style name="Theme.PlaneToPlate_App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black_gray</item>
-        <item name="colorPrimaryVariant">@color/black_gray</item>
-        <item name="colorOnPrimary">@color/blue_3</item>
+        <item name="colorPrimary">@color/zam_blue_0</item>
+        <item name="colorPrimaryVariant">@color/zam_blue_1</item>
+        <item name="colorOnPrimary">@color/zam_blue_2</item>
         <item name="android:editTextColor">@color/black_gray</item>
         <item name="android:textColorHint">@color/gray</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/black_gray</item>
-        <item name="colorSecondaryVariant">@color/black_gray</item>
-        <item name="colorOnSecondary">@color/blue_3</item>
+        <item name="colorSecondary">@color/zam_blue_3</item>
+        <item name="colorSecondaryVariant">@color/zam_black_gray</item>
+        <item name="colorOnSecondary">@color/zam_blue_3</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/black_gray</item>
         <!-- Customize your theme here. -->

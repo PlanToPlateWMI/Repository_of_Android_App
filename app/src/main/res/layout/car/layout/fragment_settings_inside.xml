@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout7"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_0">
+    android:background="?attr/colorPrimary">
 
     <TextView
         android:id="@+id/mail"
@@ -22,7 +22,7 @@
 
         android:text="@string/mail"
         android:textAppearance="@style/rejestracja"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/baseline_wb_sunny_24_50"
         tools:ignore="MissingConstraints"
+        android:paddingTop="?android:attr/actionBarSize"
         app:layout_constraintEnd_toStartOf="@id/switchButtonChangeColorTheme"/>
 
 
@@ -45,8 +46,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="true"
-        android:thumbTint="@color/blue_3"
-        android:trackTint="@color/blue_2"
+        android:thumbTint="?attr/colorOnSecondary"
+        android:trackTint="?attr/colorOnPrimary"
+        android:paddingTop="?android:attr/actionBarSize"
         app:layout_constraintEnd_toStartOf="@id/moon"
         tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml"
         />
@@ -58,6 +60,7 @@
         android:layout_marginRight="10dp"
         android:drawableRight="@drawable/baseline_nights_stay_24"
         tools:ignore="MissingConstraints"
+        android:paddingTop="?android:attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
@@ -74,7 +77,7 @@
         android:gravity="top"
         android:text="@string/imie"
         android:textAppearance="@style/rejestracja"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +91,7 @@
         android:id="@+id/button_wygenerowanie_kodu"
         android:layout_width="0dp"
         android:layout_height="90dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/key_24_50"
         android:drawableRight="@drawable/arrow_forward_ios_24_50"
@@ -97,7 +100,7 @@
         android:text="@string/Wygenerowanie_kodu"
         android:textAllCaps="false"
 
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,15 +109,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mail"
         app:layout_constraintVertical_bias="0.051"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/button_zmiana_danych"
         android:layout_width="0dp"
         android:layout_height="91dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/manage_accounts_24_50"
         android:drawableRight="@drawable/arrow_forward_ios_24_50"
@@ -122,7 +125,7 @@
         android:gravity="left|center_vertical"
         android:text="@string/Zmiana_danych"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -132,15 +135,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_wygenerowanie_kodu"
         app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/button_zarzadyanie_uyztkownikamu"
         android:layout_width="0dp"
         android:layout_height="91dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/settings_suggest_24_50"
         android:drawableRight="@drawable/arrow_forward_ios_24_50"
@@ -148,7 +151,7 @@
         android:gravity="left|center_vertical"
         android:text="@string/Zarządzanie_użytkownikami"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -158,8 +161,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_zmiana_danych"
         app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
 
@@ -168,7 +171,7 @@
         android:id="@+id/button_about_us"
         android:layout_width="0dp"
         android:layout_height="91dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/question_mark_24_50"
         android:drawableRight="@drawable/arrow_forward_ios_24_50"
@@ -176,7 +179,7 @@
         android:gravity="left|center_vertical"
         android:text="@string/About_us"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
 
 
@@ -187,15 +190,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_zarzadyanie_uyztkownikamu"
         app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/button_wyloguj"
         android:layout_width="0dp"
         android:layout_height="91dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/exit_to_app_24_50"
         android:drawableRight="@drawable/arrow_forward_ios_24_50"
@@ -203,7 +206,7 @@
         android:gravity="left|center_vertical"
         android:text="@string/Wyłoguj"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -213,8 +216,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_about_us"
         app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
