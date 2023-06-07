@@ -2,11 +2,15 @@ package pl.plantoplate.ui.main.settings.groupCodeGeneration;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -31,6 +35,8 @@ public class SettingsFragmentInside extends Fragment{
     private Button button_zmiana_danych;
     private Button button_about_us;
 
+    private Switch switchButton;
+    Window window;
     private SharedPreferences prefs;
 
 
@@ -47,6 +53,31 @@ public class SettingsFragmentInside extends Fragment{
         button_zarzadyanie_uyztkownikamu = settings_view.buttonZarzadyanieUyztkownikamu;
         button_zmiana_danych = settings_view.buttonZmianaDanych;
         button_about_us = settings_view.buttonAboutUs;
+
+        switchButton=settings_view.switchButtonChangeColorTheme;
+
+        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Handle the switch state change
+                if (isChecked) {
+                    // Switch is on
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        window = getActivity().getWindow();
+                        window.setStatusBarColor(getResources().getColor(R.color.black_gray));
+                        window.setNavigationBarColor(getResources().getColor(R.color.black_gray));
+                    }
+                } else {
+                    // Switch is off
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        window = getActivity().getWindow();
+                        window.setStatusBarColor(getResources().getColor(R.color.blue_1));
+                        window.setNavigationBarColor(getResources().getColor(R.color.blue_1));
+                    }
+                }
+
+            }
+        });
 
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
