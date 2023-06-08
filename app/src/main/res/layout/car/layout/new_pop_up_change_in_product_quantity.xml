@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/blue_0"
+    android:background="?attr/colorPrimary"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +31,7 @@
             android:text="@string/change"
 
             android:textAppearance="@style/rejestracja"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
 
             android:text="@string/ilosc_"
             android:textAppearance="@style/logowanie"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -87,13 +87,13 @@
 
             android:hint="@string/wprowadz_ilosc"
 
-            android:textColorHint="@color/black_gray"
+            android:textColorHint="?attr/colorSecondaryVariant"
 
             app:boxBackgroundMode="outline"
 
-            app:boxStrokeColor="@color/blue_2"
-            app:endIconTint="@color/black_gray"
-            app:hintTextColor="@color/black_gray"
+            app:boxStrokeColor="?attr/colorOnPrimary"
+            app:endIconTint="?attr/colorSecondaryVariant"
+            app:hintTextColor="?attr/colorSecondaryVariant"
             app:layout_constraintBottom_toTopOf="@+id/close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.831"
@@ -117,7 +117,7 @@
 
                 android:textAppearance="@style/wprowadz_ilosc"
 
-                android:textColor="@color/black_gray" />
+                android:textColor="?attr/colorSecondaryVariant" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
@@ -149,7 +149,7 @@
 
             android:text="@string/j_m"
             android:textAppearance="@style/logowanie"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +173,7 @@
             android:text="@string/zamknij"
 
             android:textAppearance="@style/rejestracja"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -195,7 +195,7 @@
             android:text="@string/ok"
 
             android:textAppearance="@style/rejestracja"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
