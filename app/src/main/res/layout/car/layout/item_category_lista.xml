@@ -11,7 +11,7 @@
         android:background="@color/lista_color"
         android:text="Kategoria"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView

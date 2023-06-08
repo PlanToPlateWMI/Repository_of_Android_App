@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout7"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_0">
+    android:background="?attr/colorPrimary">
 
     <TextView
         android:layout_marginTop="70dp"
@@ -18,7 +18,7 @@
         android:gravity="top"
         android:text="@string/plantoplate"
         android:textAppearance="@style/plantoplate"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
         android:fontFamily="@font/quicksand_medium"
         android:text="@string/Zmiana_danych"
         android:textAppearance="@style/pomy_lnie_z"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -50,7 +50,7 @@
         android:id="@+id/zmiana_imienia"
         android:layout_width="0dp"
         android:layout_height="90dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/badge_24_50"
         android:drawableRight="@drawable/arrow_forward_ios_24_50"
@@ -59,7 +59,7 @@
         android:text="@string/zmiana_imienia"
         android:textAllCaps="false"
 
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,15 +68,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zmiana_danych"
         app:layout_constraintVertical_bias="0.133"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/zmiana_email"
         android:layout_width="0dp"
         android:layout_height="91dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/email_24_50"
         android:drawableRight="@drawable/arrow_forward_ios_24_50"
@@ -84,7 +84,7 @@
         android:gravity="left|center_vertical"
         android:text="@string/zmiana_email"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,15 +94,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zmiana_imienia"
         app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/zmiana_hasla"
         android:layout_width="0dp"
         android:layout_height="91dp"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/lock_24_50"
         android:drawableRight="@drawable/arrow_forward_ios_24_50"
@@ -110,7 +110,7 @@
         android:gravity="left|center_vertical"
         android:text="@string/zmiana_hasla"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -120,8 +120,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zmiana_email"
         app:layout_constraintVertical_bias="0.0"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

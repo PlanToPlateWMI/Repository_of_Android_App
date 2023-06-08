@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/zam_blue_0</item>
         <item name="colorPrimaryVariant">@color/zam_blue_1</item>
         <item name="colorOnPrimary">@color/zam_blue_2</item>
+
         <item name="android:editTextColor">@color/black_gray</item>
         <item name="android:textColorHint">@color/gray</item>
         <!-- Secondary brand color. -->

@@ -24,7 +24,7 @@
         android:insetBottom="0dp"
         android:text="@string/baza_produktow"
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -40,7 +40,7 @@
         android:fontFamily="@font/quicksand_semibold"
         android:gravity="center"
         android:text="@string/edycja"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
         android:fontFamily="@font/quicksand_regular"
         android:gravity="center"
         android:text="@string/nowe_jednostki_miary"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
         android:fontFamily="@font/quicksand_regular"
         android:gravity="center"
         android:text="@string/kategoria"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +87,7 @@
         android:fontFamily="@font/quicksand_regular"
         android:gravity="center"
         android:text="Kategoria"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="35dp"
 
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
 
         android:fontFamily="@font/quicksand_medium"
@@ -115,7 +115,7 @@
 
         android:textAllCaps="false"
 
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
 
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -124,8 +124,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_name"
         app:layout_constraintVertical_bias="0.034"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
     <RadioGroup
@@ -155,12 +155,12 @@
             android:insetBottom="0dp"
             android:text="SZT"
             android:textAllCaps="false"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textOff="@string/szt"
             android:textOn="@string/szt"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="@color/blue_1" />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/button_l"
@@ -177,12 +177,12 @@
             android:padding="16dp"
             android:text="L"
             android:textAllCaps="false"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textOff="@string/l"
             android:textOn="@string/l"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="@color/blue_1" />
+            app:rippleColor="?attr/colorPrimaryVariant"  />
 
         <RadioButton
             android:id="@+id/button_ml"
@@ -198,12 +198,12 @@
             android:insetBottom="0dp"
             android:text="ML"
             android:textAllCaps="false"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textOff="@string/ml"
             android:textOn="@string/ml"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="@color/blue_1" />
+            app:rippleColor="?attr/colorPrimaryVariant"  />
 
         <RadioButton
             android:id="@+id/button_kg"
@@ -220,12 +220,12 @@
             android:padding="16dp"
             android:text="KG"
             android:textAllCaps="false"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textOff="@string/kg"
             android:textOn="@string/kg"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="@color/blue_1" />
+            app:rippleColor="?attr/colorPrimaryVariant"  />
 
         <RadioButton
             android:id="@+id/button_gr"
@@ -242,12 +242,12 @@
             android:padding="16dp"
             android:text="GR"
             android:textAllCaps="false"
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
             android:textOff="@string/gr"
             android:textOn="@string/gr"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="@color/blue_1" />
+            app:rippleColor="?attr/colorPrimaryVariant"  />
 
     </RadioGroup>
 
@@ -259,11 +259,11 @@
         android:fontFamily="@font/quicksand_regular"
         android:hint="@string/nazwa_produktu"
 
-        android:textColorHint="@color/black_gray"
+        android:textColorHint="?attr/colorSecondaryVariant"
         app:boxBackgroundMode="outline"
-        app:boxStrokeColor="@color/blue_2"
+        app:boxStrokeColor="?attr/colorOnPrimary"
 
-        app:hintTextColor="@color/black_gray"
+        app:hintTextColor="?attr/colorSecondaryVariant"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -282,7 +282,7 @@
             android:maxLines="1"
             android:singleLine="true"
 
-            android:textColor="@color/black_gray"
+            android:textColor="?attr/colorSecondaryVariant"
 
             tools:layout_editor_absoluteX="62dp"
             tools:layout_editor_absoluteY="321dp" />
@@ -298,7 +298,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
 
         android:clickable="true"
         android:drawableLeft="@drawable/done_24_50"
@@ -308,7 +308,7 @@
 
         android:textAllCaps="false"
 
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
 
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -317,8 +317,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggle_group"
         app:layout_constraintVertical_bias="0.081"
-        app:rippleColor="@color/blue_1"
-        app:strokeColor="@color/blue_2"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
     <Button
@@ -331,12 +331,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
 
         android:clickable="true"
         android:drawableLeft="@drawable/close_24_50"
 
-        app:strokeColor="@color/blue_2"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp"
 
         android:fontFamily="@font/quicksand_medium"
@@ -344,7 +344,7 @@
         android:text="@string/anuluj"
 
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -352,7 +352,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"
         app:layout_constraintVertical_bias="0.08"
-        app:rippleColor="@color/blue_1" />
+        app:rippleColor="?attr/colorPrimaryVariant"  />
 
     <Button
         android:id="@+id/button_usun"
@@ -364,12 +364,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/blue_1"
+        android:backgroundTint="?attr/colorPrimaryVariant"
 
         android:clickable="true"
         android:drawableLeft="@drawable/delete_forever_24_50"
 
-        app:strokeColor="@color/blue_2"
+        app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp"
 
         android:fontFamily="@font/quicksand_medium"
@@ -377,7 +377,7 @@
         android:text="@string/usun"
 
         android:textAllCaps="false"
-        android:textColor="@color/black_gray"
+        android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -385,6 +385,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_anuluj"
         app:layout_constraintVertical_bias="0.272"
-        app:rippleColor="@color/blue_1" />
+        app:rippleColor="?attr/colorPrimaryVariant"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
