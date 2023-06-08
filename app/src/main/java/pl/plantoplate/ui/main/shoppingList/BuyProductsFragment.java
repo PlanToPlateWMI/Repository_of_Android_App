@@ -248,7 +248,7 @@ public class BuyProductsFragment extends Fragment {
 
         categoryRecyclerView = fragmentTrzebaKupicBinding.productsOwnRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(toBuyProductsList, R.layout.item_trzeba_kupic);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(toBuyProductsList, R.layout.item_trzeba_kupic, R.layout.item_category_lista);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {

@@ -32,12 +32,14 @@ import pl.plantoplate.repository.remote.models.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     private ArrayList<Category> categories;
-    private int itemType;
+    private int productItemType;
+    private int categoryItemType;
     private SetupItemButtons listener;
 
-    public CategoryAdapter(ArrayList<Category> categories, int itemType) {
+    public CategoryAdapter(ArrayList<Category> categories, int productItemType, int categoryItemType) {
         this.categories = categories;
-        this.itemType = itemType;
+        this.productItemType = productItemType;
+        this.categoryItemType = categoryItemType;
     }
 
     public void setUpItemButtons(SetupItemButtons listener) {
@@ -56,8 +58,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_category, parent, false);
-        return new CategoryViewHolder(itemView, this.itemType);
+                .inflate(this.categoryItemType, parent, false);
+        return new CategoryViewHolder(itemView, this.productItemType);
     }
 
     @Override

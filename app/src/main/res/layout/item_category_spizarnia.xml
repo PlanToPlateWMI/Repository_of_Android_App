@@ -5,7 +5,7 @@
     android:id="@+id/layoutTrzebaKupic">
 
     <TextView
-        android:id="@+id/сategory_of_product_spizarnia"
+        android:id="@+id/сategory_of_product"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:background="@color/spizarnia_color"

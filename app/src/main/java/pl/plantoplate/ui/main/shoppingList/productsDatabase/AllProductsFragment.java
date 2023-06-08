@@ -257,7 +257,7 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         }
         categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(allProductsList, R.layout.item_wszystkie_produkt);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(allProductsList, R.layout.item_wszystkie_produkt, R.layout.item_category_baza);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupAddToShoppingListButtonClick(View v, Product product) {

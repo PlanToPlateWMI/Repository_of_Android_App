@@ -224,8 +224,8 @@ public class EditOwnProductFragment extends Fragment implements ChangeCategoryLi
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.new_pop_up_delete_product_from_database);
 
-        Button acceptButton = dialog.findViewById(R.id.button_yes);
-        Button cancelButton = dialog.findViewById(R.id.button_no);
+        TextView acceptButton = dialog.findViewById(R.id.button_yes);
+        TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         acceptButton.setOnClickListener(v -> {
             deleteProduct(view);

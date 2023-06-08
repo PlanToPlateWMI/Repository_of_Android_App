@@ -10,6 +10,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -18,6 +20,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.models.UserInfo;
+import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
@@ -32,6 +37,9 @@ public class SettingsInsideFragment extends Fragment{
 
     private FragmentSettingsInsideBinding settings_view;
 
+    private TextView username;
+    private TextView email;
+
     private Button generate_group_code_button;
     private Button exit_account_button;
     private Button button_zarzadzanie_uyztkownikamu;
@@ -41,6 +49,8 @@ public class SettingsInsideFragment extends Fragment{
     private Switch switchButton;
     Window window;
     private SharedPreferences prefs;
+
+    private UserRepository userRepository;
 
 
     @Override
@@ -56,6 +66,12 @@ public class SettingsInsideFragment extends Fragment{
         button_zarzadzanie_uyztkownikamu = settings_view.buttonZarzadyanieUyztkownikamu;
         button_zmiana_danych = settings_view.buttonZmianaDanych;
         button_about_us = settings_view.buttonAboutUs;
+
+        // Get the text views
+        username = settings_view.imie;
+        email = settings_view.mail;
+
+        userRepository = new UserRepository();
 
         switchButton=settings_view.switchButtonChangeColorTheme;
 
@@ -79,6 +95,9 @@ public class SettingsInsideFragment extends Fragment{
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
+        // Get the user info
+        getUserInfo();
+
         // Set the onClickListeners for the buttons
         String role = prefs.getString("role", "");
 
@@ -101,6 +120,37 @@ public class SettingsInsideFragment extends Fragment{
         button_about_us.setOnClickListener(v -> replaceFragment(new MailDevelops()));
 
         return settings_view.getRoot();
+    }
+
+
+    /**
+     * Function that get user info from the server and displays it in the text views.
+     */
+    public void getUserInfo(){
+
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.getUserInfo(token, new ResponseCallback<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo response) {
+
+                String usernameText = username.getText().toString() + " " + response.getUsername();
+                String emailText = email.getText().toString() + " " + response.getEmail();
+
+                username.setText(usernameText);
+                email.setText(emailText);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                Toast.makeText(getContext(), failureMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**

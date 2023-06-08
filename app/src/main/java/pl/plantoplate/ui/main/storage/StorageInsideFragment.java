@@ -285,7 +285,7 @@ public class StorageInsideFragment extends Fragment {
     public void setUpRecyclerView() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(storage, R.layout.item_spizarnia);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(storage, R.layout.item_spizarnia, R.layout.item_category_spizarnia);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupAddToShoppingListButtonClick(View v, Product product) {
