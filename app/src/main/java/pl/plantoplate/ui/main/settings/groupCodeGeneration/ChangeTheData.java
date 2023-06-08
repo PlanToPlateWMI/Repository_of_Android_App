@@ -55,6 +55,8 @@ public class ChangeTheData extends Fragment {
         zmiana_hasla = fragmentChangeSelectorBinding.zmianaHasla;
 
         zmiana_imienia.setOnClickListener(v -> replaceFragment(new ChangeName()));
+        zmiana_emaila.setOnClickListener(v -> replaceFragment(new EmailChangeEnterPassword()));
+        zmiana_hasla.setOnClickListener(v -> replaceFragment(new PasswordChangeOldPassword()));
 
         return fragmentChangeSelectorBinding.getRoot();
     }
