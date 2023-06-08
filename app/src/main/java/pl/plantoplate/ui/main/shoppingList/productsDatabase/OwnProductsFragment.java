@@ -290,12 +290,6 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
 
             @Override
             public void setupProductItemClick(View v, Product product) {
-                //add delay!!!!
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 v.setOnClickListener(view -> showAddProductPopup(product));
             }
         });
