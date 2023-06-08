@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main.settings.groupCodeGeneration;
+package pl.plantoplate.ui.main.settings.accountManagement.changeEmail;
 
 import android.widget.Button;
 
@@ -27,7 +27,7 @@ import com.google.android.material.textfield.TextInputLayout;
  * This class is responsible for changing the email address of the user.
  * It is used in the settings menu.
  */
-public class EmailChangeEnterPassword extends Fragment{
+public class ChangeEmailStep2Fragment extends Fragment{
 
     private Button button_zatwierdz;
     private TextInputLayout wprowadz_haslo;

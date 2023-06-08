@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main.settings.groupCodeGeneration;
+package pl.plantoplate.ui.main.settings.accountManagement.changeEmail;
 
 import android.widget.Button;
 
@@ -24,11 +24,12 @@ import com.google.android.material.textfield.TextInputLayout;
 
 
 /**
- * This fragment is used to change the password.
+ * This class is responsible for changing the user's email address.
  */
-public class PasswordChangeOldPassword extends Fragment{
+public class ChangeEmailStep1Fragment extends Fragment{
 
     private Button button_zatwierdz;
-    private TextInputLayout wprowadz_stare_haslo;
+    private TextInputLayout wprowadz_nowy_email;
+    private TextInputLayout wprowadz_nowy_email_ponownie;
 
 }

@@ -1,8 +1,7 @@
-package pl.plantoplate.ui.main.settings.groupCodeGeneration;
+package pl.plantoplate.ui.main.settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,15 +17,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import pl.plantoplate.R;
-import pl.plantoplate.databinding.FragmentSettingsBinding;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
+import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
+import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
+import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 
 /**
  * The fragment that is displayed when the user clicks the settings button.
  */
-public class SettingsFragmentInside extends Fragment{
+public class SettingsInsideFragment extends Fragment{
 
     private FragmentSettingsInsideBinding settings_view;
 
@@ -63,16 +64,12 @@ public class SettingsFragmentInside extends Fragment{
                 // Handle the switch state change
                 if (isChecked) {
                     // Switch is on
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        int nightMode = isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO;
-                        AppCompatDelegate.setDefaultNightMode(nightMode);
-                    }
+                    int nightMode = AppCompatDelegate.MODE_NIGHT_YES;
+                    AppCompatDelegate.setDefaultNightMode(nightMode);
                 } else {
                     // Switch is off
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        int nightMode = isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO;
-                        AppCompatDelegate.setDefaultNightMode(nightMode);
-                    }
+                    int nightMode = AppCompatDelegate.MODE_NIGHT_NO;
+                    AppCompatDelegate.setDefaultNightMode(nightMode);
                 }
 
             }

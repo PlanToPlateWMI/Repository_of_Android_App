@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main.settings.groupCodeGeneration;
+package pl.plantoplate.ui.main.settings.accountManagement.changePassword;
 
 import android.widget.Button;
 

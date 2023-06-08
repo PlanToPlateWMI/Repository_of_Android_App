@@ -16,8 +16,6 @@
 
 package pl.plantoplate.ui.main.settings;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,20 +25,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentSettingsBinding;
-import pl.plantoplate.databinding.FragmentStorageBinding;
-import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.tools.ApplicationState;
-import pl.plantoplate.tools.ApplicationStateController;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.ChangeTheData;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.SettingsFragmentInside;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
-import pl.plantoplate.ui.main.storage.StorageFragment;
-import pl.plantoplate.ui.main.storage.StorageInsideFragment;
 
 /**
  * A fragment that displays the app settings and allows the user to change them.
@@ -55,7 +42,7 @@ public class SettingsFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         fragmentSettingsBinding = FragmentSettingsBinding.inflate(inflater, container, false);
-        replaceFragment(new SettingsFragmentInside());
+        replaceFragment(new SettingsInsideFragment());
         return fragmentSettingsBinding.getRoot();
     }
 

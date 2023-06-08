@@ -45,7 +45,6 @@ android {
         main {
             res.srcDirs =
                     [
-                            '/src/main/res/layout/car',
                             '/src/main/res'
                     ]
         }

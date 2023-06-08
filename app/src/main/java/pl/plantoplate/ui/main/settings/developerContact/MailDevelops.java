@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main.settings.groupCodeGeneration;
+package pl.plantoplate.ui.main.settings.developerContact;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,32 +29,51 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.textfield.TextInputLayout;
-
 import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
 import pl.plantoplate.databinding.FragmentDeveloperBinding;
-import pl.plantoplate.databinding.FragmentNameChangeBinding;
 
 /**
- * This fragment is responsible for changing the name of the user.
+ * Class responsible for sending an email to the developers
  */
-public class ChangeName extends Fragment {
+public class MailDevelops extends Fragment {
 
-    private FragmentNameChangeBinding fragmentNameChangeBinding;
-
+    private FragmentDeveloperBinding fragmentDeveloperBinding;
+    private TextView dev_adres;
     private Button button_zatwierdz;
-    private TextInputLayout wprowadz_imie;
 
+
+    /**
+     * Create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return the view
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        fragmentNameChangeBinding = FragmentNameChangeBinding.inflate(inflater, container, false);
 
-        button_zatwierdz = fragmentNameChangeBinding.buttonZatwierdz;
-        wprowadz_imie = fragmentNameChangeBinding.wprowadzImie;
+        fragmentDeveloperBinding = FragmentDeveloperBinding.inflate(inflater, container, false);
 
-        return fragmentNameChangeBinding.getRoot();
+        button_zatwierdz = fragmentDeveloperBinding.buttonZatwierdz;
+
+        button_zatwierdz.setOnClickListener(this::sendMail);
+
+        return fragmentDeveloperBinding.getRoot();
+    }
+
+    /**
+     * Send an email to the developers
+     * @param view
+     */
+    public void sendMail(View view) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "plantoplatemobileapp@gmail.com" });
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Plantoplate - question");
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, ""));
     }
 
 }

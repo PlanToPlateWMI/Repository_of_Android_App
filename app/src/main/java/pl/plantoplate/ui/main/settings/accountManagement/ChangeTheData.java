@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.main.settings.groupCodeGeneration;
+package pl.plantoplate.ui.main.settings.accountManagement;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +23,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
+import pl.plantoplate.ui.main.settings.accountManagement.changeEmail.ChangeEmailStep2Fragment;
+import pl.plantoplate.ui.main.settings.accountManagement.changeName.ChangeNameFragment;
+import pl.plantoplate.ui.main.settings.accountManagement.changePassword.PasswordChangeOldPassword;
 
 /**
  * Fragment that allows the user to change the data.
@@ -54,8 +54,8 @@ public class ChangeTheData extends Fragment {
         zmiana_emaila = fragmentChangeSelectorBinding.zmianaEmail;
         zmiana_hasla = fragmentChangeSelectorBinding.zmianaHasla;
 
-        zmiana_imienia.setOnClickListener(v -> replaceFragment(new ChangeName()));
-        zmiana_emaila.setOnClickListener(v -> replaceFragment(new EmailChangeEnterPassword()));
+        zmiana_imienia.setOnClickListener(v -> replaceFragment(new ChangeNameFragment()));
+        zmiana_emaila.setOnClickListener(v -> replaceFragment(new ChangeEmailStep2Fragment()));
         zmiana_hasla.setOnClickListener(v -> replaceFragment(new PasswordChangeOldPassword()));
 
         return fragmentChangeSelectorBinding.getRoot();

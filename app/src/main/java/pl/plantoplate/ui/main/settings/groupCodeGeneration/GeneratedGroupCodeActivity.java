@@ -16,7 +16,6 @@
 
 package pl.plantoplate.ui.main.settings.groupCodeGeneration;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -32,8 +30,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentGeneratedCodeBinding;
-import pl.plantoplate.databinding.FragmentNameChangeBinding;
-import pl.plantoplate.ui.main.ActivityMain;
+import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
 
 /**
  * An activity that displays the generated group code.
@@ -80,7 +77,7 @@ public class GeneratedGroupCodeActivity extends Fragment {
      * @param view The view object that was clicked.
      */
     private void applyCode(View view) {
-        replaceFragment(new SettingsFragmentInside());
+        replaceFragment(new SettingsInsideFragment());
     }
 
     /**
