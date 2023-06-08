@@ -199,7 +199,10 @@ W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc m
 
     <string name="wszystkie_produkty">Wszystkie</string>
 
+    <string name="user_permissions_text">Czy zmienić uprawnienia użytkownika “imie uzytkownika” z “uprawnienia teraz” na “uprawnienie przeciwne”?</string>
 
+    <string name="zmiana_dabych_uzytkownika">Wybierz użytkownika,
+dane którego chcesz zmienić:</string>
 
 </resources>
 

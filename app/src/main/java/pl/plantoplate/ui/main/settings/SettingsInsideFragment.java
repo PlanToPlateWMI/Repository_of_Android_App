@@ -20,6 +20,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
+import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
 import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
@@ -33,7 +34,7 @@ public class SettingsInsideFragment extends Fragment{
 
     private Button generate_group_code_button;
     private Button exit_account_button;
-    private Button button_zarzadyanie_uyztkownikamu;
+    private Button button_zarzadzanie_uyztkownikamu;
     private Button button_zmiana_danych;
     private Button button_about_us;
 
@@ -52,7 +53,7 @@ public class SettingsInsideFragment extends Fragment{
         // Get the buttons
         generate_group_code_button = settings_view.buttonWygenerowanieKodu;
         exit_account_button = settings_view.buttonWyloguj;
-        button_zarzadyanie_uyztkownikamu = settings_view.buttonZarzadyanieUyztkownikamu;
+        button_zarzadzanie_uyztkownikamu = settings_view.buttonZarzadyanieUyztkownikamu;
         button_zmiana_danych = settings_view.buttonZmianaDanych;
         button_about_us = settings_view.buttonAboutUs;
 
@@ -89,10 +90,10 @@ public class SettingsInsideFragment extends Fragment{
             generate_group_code_button.setClickable(false);
         }
         if(role.equals("ROLE_ADMIN")) {
-            //button_zarzadyanie_uyztkownikamu.setOnClickListener(this::zarzadywanieUzytkownikami);
+            button_zarzadzanie_uyztkownikamu.setOnClickListener(v -> replaceFragment(new ChangePermissionsFragment()));
         }else {
-            button_zarzadyanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
-            button_zarzadyanie_uyztkownikamu.setClickable(false);
+            button_zarzadzanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
+            button_zarzadzanie_uyztkownikamu.setClickable(false);
         }
 
         exit_account_button.setOnClickListener(this::exitAccount);
