@@ -13,11 +13,12 @@
         <item name="android:editTextColor">@color/black_gray</item>
         <item name="android:textColorHint">@color/gray</item>
 
+        <item name="colorOnPrimaryFixed">@color/item_n</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/zam_blue_3</item>
         <item name="colorSecondaryVariant">@color/zam_black_gray</item>
-        <item name="colorOnSecondary">@color/zam_item</item>
+        <item name="colorOnSecondary">@color/gray</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>

@@ -13,14 +13,18 @@
         <item name="colorError">@color/baza_color</item>
         <item name="colorOnError">@color/spizarnia_color</item>
 
+        <item name="colorOnPrimaryFixed">@color/item_d</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue_3</item>
         <item name="colorSecondaryVariant">@color/black_gray</item>
-        <item name="colorOnSecondary">@color/item</item>
+        <item name="colorOnSecondary">@color/black_gray</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowLightNavigationBar">true</item>
+
     </style>
 </resources>
