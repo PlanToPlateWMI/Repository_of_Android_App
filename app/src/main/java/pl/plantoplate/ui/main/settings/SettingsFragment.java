@@ -37,6 +37,14 @@ public class SettingsFragment extends Fragment{
     private FragmentSettingsBinding fragmentSettingsBinding;
 
 
+    /**
+     * Creates the view for the fragment.
+     *
+     * @param inflater the layout inflater
+     * @param container the view group container
+     * @param savedInstanceState the saved instance state
+     * @return the view for the fragment
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +54,11 @@ public class SettingsFragment extends Fragment{
         return fragmentSettingsBinding.getRoot();
     }
 
+    /**
+     * Replaces the current fragment with the specified fragment.
+     *
+     * @param fragment the fragment to replace the current fragment with
+     */
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();

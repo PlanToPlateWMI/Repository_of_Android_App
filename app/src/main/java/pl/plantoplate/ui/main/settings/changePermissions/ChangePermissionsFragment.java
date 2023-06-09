@@ -42,6 +42,13 @@ public class ChangePermissionsFragment extends Fragment {
     private SharedPreferences prefs;
     private UserRepository userRepository;
 
+    /**
+     * Create the view for this fragment, get the buttons for choosing group code type and set the
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

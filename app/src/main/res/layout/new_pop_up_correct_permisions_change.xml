@@ -76,7 +76,7 @@
             android:text="@string/zamknij"
 
             android:textAppearance="@style/rejestracja"
-            android:textColor="?attr/colorSecondaryVariant"
+            android:textColor="?attr/colorSecondary"
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

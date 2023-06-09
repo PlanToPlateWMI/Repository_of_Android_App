@@ -46,6 +46,13 @@ public class PasswordChangeOldPassword extends Fragment {
 
     private TextInputLayout wprowadz_stare_haslo;
 
+    /**
+     * Create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

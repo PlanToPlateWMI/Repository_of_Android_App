@@ -45,6 +45,13 @@ public class ChangeTheData extends Fragment {
     private Button zmiana_hasla;
 
 
+    /**
+     * Create the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -50,6 +50,13 @@ public class ChangeNameFragment extends Fragment {
     private SharedPreferences prefs;
     private UserRepository userRepository;
 
+    /**
+     * Create the view for this fragment, get the buttons for choosing group code type and set the
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,6 +77,10 @@ public class ChangeNameFragment extends Fragment {
         return fragmentNameChangeBinding.getRoot();
     }
 
+    /**
+     * This method is called when the user clicks the button to accept the name.
+     * @param view
+     */
     public void onAcceptName(View view) {
         String username = String.valueOf(Objects.requireNonNull(wprowadz_imie.getEditText()).getText());
         if (username.isEmpty()) {

@@ -42,6 +42,13 @@ public class GeneratedGroupCodeActivity extends Fragment {
     private TextInputEditText group_code;
     private Button apply_button;
 
+    /**
+     * Creates the view for the activity.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
