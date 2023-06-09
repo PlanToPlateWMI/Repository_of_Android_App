@@ -26,42 +26,51 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imie"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintVertical_bias="0.493" />
+
 
     <TextView
         android:id="@+id/sun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
         android:drawableLeft="@drawable/baseline_wb_sunny_24_50"
-        tools:ignore="MissingConstraints"
         android:paddingTop="?android:attr/actionBarSize"
-        app:layout_constraintEnd_toStartOf="@id/switchButtonChangeColorTheme"/>
-
+        app:layout_constraintEnd_toStartOf="@id/switchButtonChangeColorTheme"
+        app:layout_constraintHorizontal_bias="0.989"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="-29dp" />
 
     <Switch
         android:id="@+id/switchButtonChangeColorTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:checked="true"
+        android:paddingTop="?android:attr/actionBarSize"
         android:thumbTint="?attr/colorSecondary"
         android:trackTint="?attr/colorOnPrimary"
-        android:paddingTop="?android:attr/actionBarSize"
         app:layout_constraintEnd_toStartOf="@id/moon"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml"
-        />
+        tools:layout_editor_absoluteY="-29dp" />
 
     <TextView
         android:id="@+id/moon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
         android:drawableRight="@drawable/baseline_nights_stay_24"
-        tools:ignore="MissingConstraints"
         android:paddingTop="?android:attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="-29dp" />
 
     <TextView
         android:id="@+id/imie"
@@ -81,11 +90,11 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.117" />
 
     <Button
         android:id="@+id/button_wygenerowanie_kodu"

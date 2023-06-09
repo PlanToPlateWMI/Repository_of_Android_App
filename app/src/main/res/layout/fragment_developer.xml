@@ -29,7 +29,7 @@
 
     <TextView
         android:id="@+id/dev_text"
-        android:layout_width="340dp"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
