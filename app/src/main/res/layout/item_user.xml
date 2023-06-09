@@ -29,7 +29,7 @@
             android:gravity="center_vertical"
             android:text="Imie użytkownika"
             android:textSize="20dp"
-            android:textColor="@color/black" />
+            android:textColor="?attr/colorSecondaryVariant"  />
         <TextView
             android:id="@+id/user_permissions"
             android:layout_width="fill_parent"
@@ -42,7 +42,7 @@
             android:maxLines="1"
             android:text="Rola użytkownika"
             android:textSize="16dp"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorSecondaryVariant"
             />
     </LinearLayout>
 

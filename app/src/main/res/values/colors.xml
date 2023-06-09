@@ -11,9 +11,14 @@
     <color name="item">#BFC6D9FF</color>
     <color name="zam_item">#D92E3846</color>
 
-    <color name="lista_color">#CCA1E6</color>
+    <color name="lista_color">#D894F0</color>
     <color name="baza_color">#AEDE88</color>
-    <color name="spizarnia_color">#C8DFEB</color>
+    <color name="spizarnia_color">#79ABFD</color>
+
+
+    <color name="zam_lista_color">#652D78</color>
+    <color name="zam_baza_color">#0C5023</color>
+    <color name="zam_spizarnia_color">#1F417A</color>
 
 
     <color name="zam_black_gray">#B8BBC7</color>

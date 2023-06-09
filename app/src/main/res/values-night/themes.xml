@@ -6,8 +6,14 @@
         <item name="colorPrimaryVariant">@color/zam_blue_1</item>
         <item name="colorOnPrimary">@color/zam_blue_2</item>
 
+        <item name="colorOnBackground">@color/zam_lista_color</item>
+        <item name="colorError">@color/zam_baza_color</item>
+        <item name="colorOnError">@color/zam_spizarnia_color</item>
+
         <item name="android:editTextColor">@color/black_gray</item>
         <item name="android:textColorHint">@color/gray</item>
+
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/zam_blue_3</item>
         <item name="colorSecondaryVariant">@color/zam_black_gray</item>

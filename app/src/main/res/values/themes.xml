@@ -9,6 +9,10 @@
         <item name="android:editTextColor">@color/black_gray</item>
         <item name="android:textColorHint">@color/gray</item>
 
+        <item name="colorOnBackground">@color/lista_color</item>
+        <item name="colorError">@color/baza_color</item>
+        <item name="colorOnError">@color/spizarnia_color</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue_3</item>
         <item name="colorSecondaryVariant">@color/black_gray</item>

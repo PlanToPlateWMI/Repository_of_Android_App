@@ -16,20 +16,64 @@
 
 package pl.plantoplate.ui.main.settings.accountManagement.changeEmail;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputLayout;
+
+import pl.plantoplate.R;
+import pl.plantoplate.databinding.FragmentEmailChangeBinding;
+import pl.plantoplate.repository.remote.user.UserRepository;
 
 
 /**
  * This class is responsible for changing the user's email address.
  */
-public class ChangeEmailStep1Fragment extends Fragment{
+public class ChangeEmailStep1Fragment extends Fragment {
 
+    private FragmentEmailChangeBinding fragmentEmailChangeBinding;
+    private UserRepository userRepository;
     private Button button_zatwierdz;
-    private TextInputLayout wprowadz_nowy_email;
-    private TextInputLayout wprowadz_nowy_email_ponownie;
+    private TextInputLayout wprowadz_haslo;
 
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        // Inflate the layout using the View Binding Library
+        fragmentEmailChangeBinding = FragmentEmailChangeBinding.inflate(inflater, container, false);
+
+        // Get the button
+        button_zatwierdz = fragmentEmailChangeBinding.buttonZatwierdz;
+
+        // Get the text input
+        wprowadz_haslo = fragmentEmailChangeBinding.wprowadzHaslo;
+
+        button_zatwierdz.setOnClickListener(v -> replaceFragment(new ChangeEmailStep2Fragment()));
+
+        userRepository = new UserRepository();
+
+        return fragmentEmailChangeBinding.getRoot();
+    }
+
+
+    /**
+     * Replaces the current fragment with the specified fragment.
+     *
+     * @param fragment The fragment to replace the current fragment with.
+     */
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.settings_default, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

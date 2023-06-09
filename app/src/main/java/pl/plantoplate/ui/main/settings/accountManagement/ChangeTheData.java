@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
+import pl.plantoplate.ui.main.settings.accountManagement.changeEmail.ChangeEmailStep1Fragment;
 import pl.plantoplate.ui.main.settings.accountManagement.changeEmail.ChangeEmailStep2Fragment;
 import pl.plantoplate.ui.main.settings.accountManagement.changeName.ChangeNameFragment;
 import pl.plantoplate.ui.main.settings.accountManagement.changePassword.PasswordChangeOldPassword;
@@ -55,7 +56,7 @@ public class ChangeTheData extends Fragment {
         zmiana_hasla = fragmentChangeSelectorBinding.zmianaHasla;
 
         zmiana_imienia.setOnClickListener(v -> replaceFragment(new ChangeNameFragment()));
-        zmiana_emaila.setOnClickListener(v -> replaceFragment(new ChangeEmailStep2Fragment()));
+        zmiana_emaila.setOnClickListener(v -> replaceFragment(new ChangeEmailStep1Fragment()));
         zmiana_hasla.setOnClickListener(v -> replaceFragment(new PasswordChangeOldPassword()));
 
         return fragmentChangeSelectorBinding.getRoot();

@@ -19,7 +19,7 @@
         android:layout_height="65dp"
         android:layout_marginTop="-5dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/selector_buttons"
+        android:background="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:contextClickable="false"
         android:fontFamily="@font/quicksand_semibold"
