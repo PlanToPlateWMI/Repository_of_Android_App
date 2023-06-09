@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -178,22 +179,22 @@ public class EditOwnProductFragment extends Fragment implements ChangeCategoryLi
         productRepository.modifyProduct(token, product.getId(), product, new ResponseCallback<ArrayList<Product>>() {
             @Override
             public void onSuccess(ArrayList<Product> response) {
-                Snackbar.make(view, "Pomyślnie zmieniono produkt.", Snackbar.LENGTH_LONG).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), "Pomyślnie zmieniono produkt.", Toast.LENGTH_SHORT).show());
+
+                // Go back to the products database fragment
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
             }
         });
-
-        // Go back to the products database fragment
-        requireActivity().getSupportFragmentManager().popBackStack();
     }
 
     public void applyProductChange(View view) {
@@ -203,11 +204,6 @@ public class EditOwnProductFragment extends Fragment implements ChangeCategoryLi
 
         // Set the product name
         product.setName(product_name);
-        //String category = productPrefs.getString("category", "");
-//        if (category.isEmpty()) {
-//            category = product.getCategory();
-//        }
-        //product.setCategory(category);
 
         // Save the product
         saveProduct(view);
@@ -244,22 +240,22 @@ public class EditOwnProductFragment extends Fragment implements ChangeCategoryLi
         productRepository.deleteProduct(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
             @Override
             public void onSuccess(ArrayList<Product> response) {
-                Snackbar.make(view, "Pomyślnie usunięto produkt.", Snackbar.LENGTH_LONG).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(),"Pomyślnie usunięto produkt.", Toast.LENGTH_SHORT).show());
+
+                // Go back to the products database fragment
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
             }
         });
-
-        // Go back to the products database fragment
-        requireActivity().getSupportFragmentManager().popBackStack();
     }
 
     private void replaceFragment(Fragment fragment) {

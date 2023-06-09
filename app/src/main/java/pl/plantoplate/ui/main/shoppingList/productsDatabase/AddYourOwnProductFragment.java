@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -159,22 +160,23 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
         productRepository.addProduct(token, product, new ResponseCallback<ArrayList<Product>>() {
             @Override
             public void onSuccess(ArrayList<Product> response) {
-                Snackbar.make(v, "Produkt został dodany", Snackbar.LENGTH_LONG).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity().getApplicationContext(), "Produkt został dodany",
+                        Toast.LENGTH_SHORT).show());
+
+                // Go back to the products database fragment
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(v, errorMessage, Snackbar.LENGTH_LONG).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(v, failureMessage, Snackbar.LENGTH_LONG).show();
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
             }
         });
-
-        // Go back to the products database fragment
-        requireActivity().getSupportFragmentManager().popBackStack();
     }
 
 

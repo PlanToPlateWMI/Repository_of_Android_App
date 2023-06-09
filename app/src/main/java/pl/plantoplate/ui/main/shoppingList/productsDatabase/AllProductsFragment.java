@@ -31,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -133,12 +134,16 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
+                }
             }
         });
     }
@@ -179,17 +184,23 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
             @Override
             public void onSuccess(ArrayList<Product> response) {
                 String message = "Produkt " + product.getName() + " w ilości " + product.getAmount() + " " + product.getUnit() + " został dodany do listy zakupów";
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), message, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
+                }
             }
         });
     }
@@ -201,17 +212,23 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
             @Override
             public void onSuccess(ArrayList<Product> response) {
                 String message = "Produkt " + product.getName() + " w ilości " + product.getAmount() + " " + product.getUnit() + " został dodany do spiżarni";
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), message, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
+                }
             }
         });
     }

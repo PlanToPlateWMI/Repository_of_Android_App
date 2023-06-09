@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -109,13 +110,15 @@ public class BuyProductsFragment extends Fragment {
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onFailure(String failureMessage) {
                 if (isAdded()) {
-                    Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -136,12 +139,16 @@ public class BuyProductsFragment extends Fragment {
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
+                }
             }
         });
     }
@@ -160,12 +167,16 @@ public class BuyProductsFragment extends Fragment {
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
+                }
             }
         });
     }
@@ -184,12 +195,16 @@ public class BuyProductsFragment extends Fragment {
 
             @Override
             public void onError(String errorMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), errorMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
+                }
             }
         });
     }
@@ -224,11 +239,7 @@ public class BuyProductsFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //dialog.setContentView(R.layout.pop_up_delete_product_from_shopping_list);
         dialog.setContentView(R.layout.new_pop_up_delete_product_from_shopping_list);
-
-//        Button acceptButton = dialog.findViewById(R.id.button_yes);
-//        Button cancelButton = dialog.findViewById(R.id.button_no);
 
         TextView acceptButton = dialog.findViewById(R.id.button_yes);
         TextView cancelButton = dialog.findViewById(R.id.button_no);

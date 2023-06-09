@@ -1,6 +1,5 @@
 package pl.plantoplate.ui.main.settings;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -79,21 +78,16 @@ public class SettingsInsideFragment extends Fragment{
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Activity activity = requireActivity();
-
-                // Handle the switch state change
                 if (isChecked) {
-                    // Switch is on
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // set dark mode
+                    //System.out.println("Dark mode");
                 } else {
-                    // Switch is off
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // set light mode
+                    //System.out.println("Light mode");
                 }
-
-                // Recreate the activity for the theme change to take effect
-                activity.recreate();
             }
         });
+
 
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
