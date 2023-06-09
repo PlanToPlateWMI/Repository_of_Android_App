@@ -2,7 +2,11 @@ package pl.plantoplate.ui.main.settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +73,7 @@ public class SettingsInsideFragment extends Fragment{
 
         // Get the text views
         username = settings_view.imie;
-        email = settings_view.mail;
+        //email = settings_view.mail;
 
         userRepository = new UserRepository();
 
@@ -131,11 +135,16 @@ public class SettingsInsideFragment extends Fragment{
             @Override
             public void onSuccess(UserInfo response) {
 
-                String usernameText = username.getText().toString() + " " + response.getUsername();
-                String emailText = email.getText().toString() + " " + response.getEmail();
+                Spannable spans = new SpannableString("Imię: " + response.getUsername() + "\n" + "Email: " + response.getEmail());
+                username.setText(spans);
+//                spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                nie_masz_konta.setText(spans);
 
-                username.setText(usernameText);
-                email.setText(emailText);
+//                String usernameText = username.getText().toString() + " " + response.getUsername();
+//                String emailText = email.getText().toString() + " " + response.getEmail();
+//
+//                username.setText(usernameText);
+//                email.setText(emailText);
             }
 
             @Override
