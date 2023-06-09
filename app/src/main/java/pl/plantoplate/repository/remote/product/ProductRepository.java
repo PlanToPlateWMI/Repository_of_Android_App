@@ -14,14 +14,19 @@ import retrofit2.Response;
 public class ProductRepository {
     private ProductService productService;
 
+    //list of all active calls
+    private ArrayList<Call<?>> calls;
+
     public ProductRepository() {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
 
         productService = retrofitClient.getClient().create(ProductService.class);
+        calls = new ArrayList<>();
     }
 
     public void getAllProducts(String token, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = productService.getAllProducts(token, "all");
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -59,6 +64,7 @@ public class ProductRepository {
 
     public void getOwnProducts(String token, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = productService.getAllProducts(token, "group");
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -96,6 +102,7 @@ public class ProductRepository {
 
     public void addProduct(String token, Product product, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = productService.addProduct(token, product);
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -131,6 +138,7 @@ public class ProductRepository {
 
     public void modifyProduct(String token, int productId, Product product, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = productService.changeProduct(token, productId, product);
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -167,6 +175,7 @@ public class ProductRepository {
 
     public void deleteProduct(String token, int productId, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = productService.deleteProduct(token, productId);
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -198,6 +207,12 @@ public class ProductRepository {
                 callback.onFailure("Brak połączenia z serwerem. Sprawdź połączenie z internetem.");
             }
         });
+    }
+
+    public void cancelCalls() {
+        for (Call<?> call : calls) {
+            call.cancel();
+        }
     }
 }
 

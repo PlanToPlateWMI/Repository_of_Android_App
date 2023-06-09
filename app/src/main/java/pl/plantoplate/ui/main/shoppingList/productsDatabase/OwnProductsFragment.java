@@ -296,6 +296,12 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         ownProductsRecyclerView.setAdapter(productAllAdapter);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        productRepository.cancelCalls();
+    }
+
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);

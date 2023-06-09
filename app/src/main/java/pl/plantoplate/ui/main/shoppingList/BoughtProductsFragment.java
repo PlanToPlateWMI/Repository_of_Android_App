@@ -278,6 +278,12 @@ public class BoughtProductsFragment extends Fragment {
         dialog.show();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        shoppingListRepository.cancelCalls();
+    }
+
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);

@@ -2,6 +2,8 @@ package pl.plantoplate.repository.remote.group;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 import pl.plantoplate.repository.remote.models.CodeResponse;
 import pl.plantoplate.repository.remote.models.CreateGroupData;
 import pl.plantoplate.repository.remote.models.JwtResponse;
@@ -15,14 +17,19 @@ import retrofit2.Response;
 public class GroupRepository {
     private GroupService groupService;
 
+    //list of all active calls
+    private ArrayList<Call<?>> calls;
+
     public GroupRepository() {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
 
         groupService = retrofitClient.getClient().create(GroupService.class);
+        calls = new ArrayList<>();
     }
 
     public void createGroup(CreateGroupData createGroupData, ResponseCallback<JwtResponse> callback) {
         Call<JwtResponse> call = groupService.createGroup(createGroupData);
+        calls.add(call);
         call.enqueue(new Callback<JwtResponse>() {
             @Override
             public void onResponse(@NonNull Call<JwtResponse> call, @NonNull Response<JwtResponse> response) {
@@ -59,6 +66,7 @@ public class GroupRepository {
 
     public void joinGroupByCode(UserJoinGroupData userJoinGroupRequest, ResponseCallback<JwtResponse> callback) {
         Call<JwtResponse> call = groupService.joinGroupByCode(userJoinGroupRequest);
+        calls.add(call);
         call.enqueue(new Callback<JwtResponse>() {
             @Override
             public void onResponse(@NonNull Call<JwtResponse> call, @NonNull Response<JwtResponse> response) {
@@ -95,6 +103,7 @@ public class GroupRepository {
 
     public void generateGroupCode(String token, String role, ResponseCallback<String> callback) {
         Call<CodeResponse> call = groupService.generateGroupCode(token, role);
+        calls.add(call);
         call.enqueue(new Callback<CodeResponse>() {
             @Override
             public void onResponse(@NonNull Call<CodeResponse> call, @NonNull Response<CodeResponse> response) {
@@ -127,5 +136,11 @@ public class GroupRepository {
                 callback.onFailure("Brak połączenia z serwerem. Sprawdź połączenie z internetem.");
             }
         });
+    }
+
+    public void cancelCalls() {
+        for (Call<?> call : calls) {
+            call.cancel();
+        }
     }
 }

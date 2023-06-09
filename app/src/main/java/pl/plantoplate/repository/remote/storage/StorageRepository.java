@@ -18,14 +18,19 @@ public class StorageRepository {
     private StorageService storageService;
     private RetrofitClient retrofitClient;
 
+    //list of all active calls
+    private ArrayList<Call<?>> calls;
+
     public StorageRepository() {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
 
         storageService = retrofitClient.getClient().create(StorageService.class);
+        calls = new ArrayList<>();
     }
 
     public void getStorage(String token, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = storageService.getStorage(token);
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -62,6 +67,7 @@ public class StorageRepository {
 
     public void addProductToStorage(String token, Product product, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = storageService.addProductToStorage(token, product);
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -97,6 +103,7 @@ public class StorageRepository {
 
     public void deleteProductStorage(String token, int productId, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = storageService.deleteProductStorage(token, productId);
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -132,6 +139,7 @@ public class StorageRepository {
 
     public void transferBoughtProductsToStorage(String token, ArrayList<Integer> productsIds, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = storageService.transferBoughtProductsToStorage(token, productsIds);
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -168,6 +176,7 @@ public class StorageRepository {
 
     public void changeProductAmountInStorage(String token, int productId, Product product, ResponseCallback<ArrayList<Product>> callback) {
         Call<ArrayList<Product>> call = storageService.changeProductAmountInStorage(token, productId, product);
+        calls.add(call);
         call.enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(@NonNull Call<ArrayList<Product>> call, @NonNull Response<ArrayList<Product>> response) {
@@ -199,5 +208,11 @@ public class StorageRepository {
                 callback.onFailure("Brak połączenia z serwerem. Sprawdź połączenie z internetem.");
             }
         });
+    }
+
+    public void cancelCalls() {
+        for (Call<?> call : calls) {
+            call.cancel();
+        }
     }
 }

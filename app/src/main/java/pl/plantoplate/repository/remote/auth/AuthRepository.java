@@ -2,6 +2,8 @@ package pl.plantoplate.repository.remote.auth;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 import pl.plantoplate.repository.remote.models.CodeResponse;
 import pl.plantoplate.repository.remote.models.Message;
 import pl.plantoplate.repository.remote.ResponseCallback;
@@ -14,16 +16,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AuthRepository {
+
     private AuthService authService;
+
+    //list of all active calls
+    private ArrayList<Call<?>> calls;
 
     public AuthRepository() {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
 
         authService = retrofitClient.getClient().create(AuthService.class);
+        calls = new ArrayList<>();
     }
 
     public void sendUserRegisterData(UserRegisterData info, ResponseCallback<String> callback) {
         Call<CodeResponse> call = authService.sendUserRegisterData(info);
+        calls.add(call);
+
         call.enqueue(new Callback<CodeResponse>() {
             @Override
             public void onResponse(@NonNull Call<CodeResponse> call, @NonNull Response<CodeResponse> response) {
@@ -61,6 +70,7 @@ public class AuthRepository {
 
     public void getEmailConfirmCode(String email, String type, ResponseCallback<String> callback) {
         Call<CodeResponse> call = authService.getEmailConfirmCode(email, type);
+        calls.add(call);
         call.enqueue(new Callback<CodeResponse>() {
             @Override
             public void onResponse(@NonNull Call<CodeResponse> call, @NonNull Response<CodeResponse> response) {
@@ -97,6 +107,7 @@ public class AuthRepository {
 
     public void signIn(SignInData info, ResponseCallback<JwtResponse> callback) {
         Call<JwtResponse> call = authService.signinUser(info);
+        calls.add(call);
         call.enqueue(new Callback<JwtResponse>() {
             @Override
             public void onResponse(@NonNull Call<JwtResponse> call, @NonNull Response<JwtResponse> response) {
@@ -132,6 +143,7 @@ public class AuthRepository {
 
     public void resetPassword(SignInData info, ResponseCallback<Message> callback) {
         Call<Message> call = authService.resetPassword(info);
+        calls.add(call);
         call.enqueue(new Callback<Message>() {
             @Override
             public void onResponse(@NonNull Call<Message> call, @NonNull Response<Message> response) {
@@ -164,6 +176,7 @@ public class AuthRepository {
 
     public void userExists(String email, ResponseCallback<Message> callback) {
         Call<Message> call = authService.userExists(email);
+        calls.add(call);
         call.enqueue(new Callback<Message>() {
             @Override
             public void onResponse(@NonNull Call<Message> call, @NonNull Response<Message> response) {
@@ -192,6 +205,12 @@ public class AuthRepository {
                 callback.onFailure("Brak połączenia z serwerem. Sprawdź połączenie z internetem.");
             }
         });
+    }
+
+    public void cancelCalls() {
+        for (Call<?> call : calls) {
+            call.cancel();
+        }
     }
 }
 

@@ -114,7 +114,9 @@ public class BuyProductsFragment extends Fragment {
 
             @Override
             public void onFailure(String failureMessage) {
-                Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+                if (isAdded()) {
+                    Snackbar.make(requireActivity().findViewById(R.id.frame_layout), failureMessage, Snackbar.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -273,6 +275,12 @@ public class BuyProductsFragment extends Fragment {
             }
         });
         categoryRecyclerView.setAdapter(categoryAdapter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        shoppingListRepository.cancelCalls();
     }
 
     /**

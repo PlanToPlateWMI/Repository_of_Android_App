@@ -1,5 +1,6 @@
 package pl.plantoplate.ui.main.settings;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -78,17 +79,19 @@ public class SettingsInsideFragment extends Fragment{
         switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Activity activity = requireActivity();
+
                 // Handle the switch state change
                 if (isChecked) {
                     // Switch is on
-                    int nightMode = AppCompatDelegate.MODE_NIGHT_YES;
-                    AppCompatDelegate.setDefaultNightMode(nightMode);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // set dark mode
                 } else {
                     // Switch is off
-                    int nightMode = AppCompatDelegate.MODE_NIGHT_NO;
-                    AppCompatDelegate.setDefaultNightMode(nightMode);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // set light mode
                 }
 
+                // Recreate the activity for the theme change to take effect
+                activity.recreate();
             }
         });
 
@@ -143,12 +146,16 @@ public class SettingsInsideFragment extends Fragment{
 
             @Override
             public void onError(String errorMessage) {
-                Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                Toast.makeText(getContext(), failureMessage, Toast.LENGTH_SHORT).show();
+                if (isAdded()) {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), failureMessage, Toast.LENGTH_SHORT).show());
+                }
             }
         });
     }
