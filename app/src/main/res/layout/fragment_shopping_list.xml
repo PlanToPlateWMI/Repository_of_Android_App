@@ -88,7 +88,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
 
-        android:background="@drawable/nowa_lista"
+        android:background="@drawable/lista_removebg"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
