@@ -110,7 +110,10 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
             floatingActionButton_wlasne.setVisibility(View.INVISIBLE);
             floatingActionButton_wlasne.setClickable(false);
         }
-        searchView.setOnQueryTextListener(this);
+
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(this);
+        }
 
         // Get product repository
         productRepository = new ProductRepository();

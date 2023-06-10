@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
 
     /**
      * A method that allows the user to log in to their account.
-     * @param view The view that was clicked.
+     * @param savedInstanceState The saved instance state.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,27 +105,20 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         String password = Objects.requireNonNull(password_field.getText()).toString();
         // remove all whitespaces from email
         email = email.trim();
-        checkMail(email);
-        checkPassword(password, email);
         //stretch password to make it unreadable and secure
-        password = SCryptStretcher.stretch(password, email);
-
+        if (!password.isEmpty()) {
+            password = SCryptStretcher.stretch(password, email);
+        }
 
         return new SignInData(email, password);
     }
 
-    public void checkMail(String email){
-        if(email.isEmpty()) {
-            Snackbar.make(email_field, "Adres mail nie może być pusty!", Snackbar.LENGTH_LONG).show();
-            getUserInfo();
-        }
+    public boolean validMail(String email){
+        return email != null && !email.isEmpty();
     }
 
-    public void checkPassword(String password, String email){
-        if(password.isEmpty()) {
-            Snackbar.make(email_field, "Hasło nie może być pustę!", Snackbar.LENGTH_LONG).show();
-            getUserInfo();
-        }
+    public boolean validPassword(String password){
+        return password != null && !password.isEmpty();
     }
 
     /**
@@ -135,6 +128,18 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
     public void signIn(View view){
 
         SignInData userSignInData = getUserInfo();
+
+        // check if the email and password are not empty
+        if(!validMail(userSignInData.getEmail())){
+            Snackbar.make(view, "Wprowadź adres email", Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        // check if the email and password are not empty
+        if(!validPassword(userSignInData.getPassword())){
+            Snackbar.make(view, "Wprowadź hasło", Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
 
         AuthRepository authRepository = new AuthRepository();
         authRepository.signIn(userSignInData, new ResponseCallback<JwtResponse>() {

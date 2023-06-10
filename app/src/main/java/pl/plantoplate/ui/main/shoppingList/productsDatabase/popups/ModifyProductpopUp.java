@@ -28,7 +28,6 @@ public class ModifyProductpopUp extends Dialog {
     private TextView productUnitTextView;
     public TextView acceptButton;
 
-
     public ModifyProductpopUp(@NonNull Context context, Product product) {
         super(context);
         // set up dialog parameters
@@ -64,8 +63,8 @@ public class ModifyProductpopUp extends Dialog {
                 quantityValue = "0.0";
             }
             if (quantityValue.endsWith(".")) {
-                // Remove the dot
-                quantityValue = quantityValue.substring(0, quantityValue.length() - 1);
+                // add 0
+                quantityValue += "0";
                 this.quantity.setText(quantityValue);
             }
             float quantity = Float.parseFloat(quantityValue);
@@ -78,8 +77,8 @@ public class ModifyProductpopUp extends Dialog {
                 quantityValue = "0.0";
             }
             if (quantityValue.endsWith(".")) {
-                // Remove the dot
-                quantityValue = quantityValue.substring(0, quantityValue.length() - 1);
+                // add 0
+                quantityValue += "0";
                 this.quantity.setText(quantityValue);
             }
             float quantity = Float.parseFloat(quantityValue);
@@ -107,26 +106,46 @@ public class ModifyProductpopUp extends Dialog {
             @Override
             public void afterTextChanged(Editable s) {
                 String input = s.toString();
-                if (!input.isEmpty() && Float.parseFloat(input) > 9999) {
-                    quantity.setText("9999");
-                }
-                if (input.startsWith(".") || input.replaceAll("[^.]", "").length() > 1) {
+
+                // Check if input starts with a "."
+                if (input.startsWith(".")) {
                     // Replace with previous value
                     if (quantity.getTag() == null) {
-                        // If there is no previous value, replace with empty string
+                        // If there is no previous value, replace with an empty string
                         quantity.setText("");
                     } else {
                         // If there is a previous value, replace with it
-                        String previousValue = quantity.getTag().toString();
-                        quantity.setText(previousValue);
-                        // Move the cursor to the end of the text
-                        quantity.setSelection(previousValue.length());
+                        input = quantity.getTag().toString();
+                        quantity.setText(input);
                     }
                 } else {
-                    // Save the current value as the previous value
                     quantity.setTag(input);
+                }
+
+                if (countDots(input) > 1) {
+                    String previousInput = quantity.getTag() != null ? quantity.getTag().toString() : "";
+                    if (!input.equals(previousInput)) {
+                        quantity.setText(previousInput);
+                        // set cursor at the end of the text
+                        quantity.setSelection(Objects.requireNonNull(quantity.getText()).length());
+                    }
+                }
+
+                if (!input.isEmpty() && Float.parseFloat(input) > 9999) {
+                    quantity.setText("9999");
+                    quantity.setSelection(Objects.requireNonNull(quantity.getText()).length());
                 }
             }
         });
+    }
+
+    public int countDots(String input) {
+        int dotCount = 0;
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == '.') {
+                dotCount++;
+            }
+        }
+        return dotCount;
     }
 }

@@ -101,18 +101,12 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         productRepository = new ProductRepository();
 
         // set up listeners
-        searchView.setOnQueryTextListener(this);
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(this);
+        }
 
         // set up recycler view
         setUpRecyclerView();
-
-        //test
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        int backStackEntryCount = fragmentManager.getBackStackEntryCount();
-        for (int i=0; i<backStackEntryCount; i++) {
-            FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(i);
-            System.out.println(entry.getName());
-        }
 
         return fragmentWszystkieBinding.getRoot();
     }
