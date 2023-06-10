@@ -10,7 +10,7 @@
         <item name="colorError">@color/zam_baza_color</item>
         <item name="colorOnError">@color/zam_spizarnia_color</item>
 
-        <item name="android:editTextColor">@color/black_gray</item>
+        <item name="android:editTextColor">@color/gray</item>
         <item name="android:textColorHint">@color/gray</item>
 
         <item name="colorOnPrimaryFixed">@color/item_n</item>
