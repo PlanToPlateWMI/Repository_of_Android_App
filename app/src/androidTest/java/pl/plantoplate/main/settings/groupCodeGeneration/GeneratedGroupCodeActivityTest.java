@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.R;
+import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GeneratedGroupCodeActivity;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -26,19 +27,31 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 public class GeneratedGroupCodeActivityTest {
 
     @Rule
-    public ActivityScenarioRule<GeneratedGroupCodeActivity> activityRule =
-            new ActivityScenarioRule<>(GeneratedGroupCodeActivity.class);
+    public ActivityScenarioRule<ActivityMain> fragmentRule =
+            new ActivityScenarioRule<>(ActivityMain.class);
 
     @Before
     public void setUp() {
         // Initialize Intents before each test
         Intents.init();
+
+        // Navigate to the GeneratedGroupCodeActivity
+        navigateToGeneratedGroupCodeFragment();
     }
 
     @After
     public void cleanup() {
         // Release Intents after each test
         Intents.release();
+    }
+
+    public void navigateToGeneratedGroupCodeFragment() {
+
+        fragmentRule.getScenario().onActivity(activity -> {
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_layout, SettingsFragment.class, null)
+                    .commit();
+        });
     }
 
     @Test

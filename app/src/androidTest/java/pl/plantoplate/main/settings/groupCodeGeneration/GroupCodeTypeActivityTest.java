@@ -16,6 +16,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import pl.plantoplate.R;
+import pl.plantoplate.ui.main.ActivityMain;
+import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GeneratedGroupCodeActivity;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 
@@ -23,18 +25,30 @@ import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity
 public class GroupCodeTypeActivityTest {
 
     @Rule
-    public ActivityScenarioRule<GroupCodeTypeActivity> activityRule = new ActivityScenarioRule<>(GroupCodeTypeActivity.class);
+    public ActivityScenarioRule<ActivityMain> fragmentRule = new ActivityScenarioRule<>(ActivityMain.class);
 
     @Before
     public void setUp() {
         // Initialize Intents before each test
         Intents.init();
+
+        // Navigate to the GroupCodeTypeFragment
+        navigateToGroupCodeTypeFragment();
     }
 
     @After
     public void cleanup() {
         // Release Intents after each test
         Intents.release();
+    }
+
+    public void navigateToGroupCodeTypeFragment() {
+
+        fragmentRule.getScenario().onActivity(activity -> {
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_layout, SettingsFragment.class, null)
+                    .commit();
+        });
     }
 
     @Test
