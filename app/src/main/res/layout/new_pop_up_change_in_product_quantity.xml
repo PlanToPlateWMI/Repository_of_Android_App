@@ -75,7 +75,7 @@
             app:layout_constraintStart_toEndOf="@+id/q"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
             app:layout_constraintVertical_bias="0.294"
-            app:srcCompat="@drawable/remove_24_50" />
+            app:srcCompat="@drawable/remove_24_75" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/wprowadz_ilosc"
@@ -133,7 +133,7 @@
             app:layout_constraintStart_toEndOf="@+id/wprowadz_ilosc"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
             app:layout_constraintVertical_bias="0.294"
-            app:srcCompat="@drawable/add_24_50" />
+            app:srcCompat="@drawable/add_24_75" />
 
         <TextView
             android:id="@+id/unit"

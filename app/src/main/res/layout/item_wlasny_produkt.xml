@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dip"
-        android:src="@drawable/add_24_50" />
+        android:src="@drawable/add_24_75" />
 
 
     <LinearLayout
