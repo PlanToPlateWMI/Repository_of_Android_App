@@ -49,7 +49,7 @@ public class ProductsDbaseFragment extends Fragment {
 
     private FragmentBazaProduktowBinding bazaProduktowBinding;
     private SearchView searchView;
-    private ImageView back;
+    //private ImageView back;
     private ViewPager2 viewPagerBase;
 
     private SharedPreferences prefs;
@@ -90,11 +90,11 @@ public class ProductsDbaseFragment extends Fragment {
         // Get the SearchView
         searchView = bazaProduktowBinding.search;
 
-        back = bazaProduktowBinding.back;
+        //back = bazaProduktowBinding.back;
 
-        back.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack();
-        });
+//        back.setOnClickListener(v -> {
+//            requireActivity().getSupportFragmentManager().popBackStack();
+//        });
 
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {

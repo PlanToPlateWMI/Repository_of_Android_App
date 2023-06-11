@@ -205,6 +205,7 @@ W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc m
 dane którego chcesz zmienić:</string>
     <string name="uwaga_kod">Uwaga! \nKod jest jednorazowy i aktywny w ciągu 30 minut od momentu wygenerowania.</string>
     <string name="kod_zapr">Kod zaproszeniowy</string>
+    <string name="przekarz_kod1">Przekarz kod</string>
     <string name="kod_zapr_text">Aby korzystać z aplikacji wspólnie z innymi osobami trzeba najpierw wygenerować kod i przekazać go wybranym użytkownikom.</string>
 </resources>
 

@@ -26,7 +26,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_medium"
+            android:fontFamily="@font/quicksand_semibold"
             android:gravity="left"
 
             android:text="@string/delete_baze_title"
@@ -76,6 +76,11 @@
 
             android:gravity="center"
 
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+
             android:text="@string/zamknij"
             android:textAppearance="@style/rejestracja"
             android:textColor="?attr/colorSecondary"
@@ -98,6 +103,11 @@
 
             android:gravity="center"
             android:text="@string/ok"
+
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
 
             android:textAppearance="@style/rejestracja"
             android:textColor="?attr/colorSecondary"

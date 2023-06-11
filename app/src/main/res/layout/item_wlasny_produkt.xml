@@ -13,8 +13,14 @@
     <ImageView
         android:id="@+id/addBazaWlasne"
         android:clickable="true"
-        android:layout_width="30dp"
+
+        android:layout_width="50dp"
         android:layout_height="fill_parent"
+        android:paddingLeft="0dp"
+        android:paddingTop="10dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="10dp"
+
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dip"
@@ -26,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_marginStart="16dp">
+        android:layout_marginStart="0dp">
 
         <TextView
             android:id="@+id/nazwaProduktu_wlasny"

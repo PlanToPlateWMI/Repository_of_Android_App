@@ -16,6 +16,7 @@
 
 package pl.plantoplate.ui.main.settings.groupCodeGeneration;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentGeneratedCodeBinding;
@@ -40,7 +43,7 @@ public class GeneratedGroupCodeActivity extends Fragment {
     private FragmentGeneratedCodeBinding generated_code_view;
 
     private TextInputEditText group_code;
-    private Button apply_button;
+    private Button przekarz_button;
 
     /**
      * Creates the view for the activity.
@@ -59,10 +62,10 @@ public class GeneratedGroupCodeActivity extends Fragment {
         group_code = generated_code_view.kod;
 
         // Get the button for accepting the code
-        apply_button = generated_code_view.applyButton;
+        przekarz_button = generated_code_view.applyButton;
 
         // Get the button for accepting the code
-        apply_button.setOnClickListener(this::applyCode);
+        przekarz_button.setOnClickListener(this::sendCode);
 
         setGroupCodeView();
 
@@ -79,12 +82,26 @@ public class GeneratedGroupCodeActivity extends Fragment {
         group_code.setText(groupCode);
     }
 
+//    /**
+//     * Starts the MainActivity.
+//     * @param view The view object that was clicked.
+//     */
+//    private void applyCode(View view) {
+//        replaceFragment(new SettingsInsideFragment());
+//    }
+
     /**
-     * Starts the MainActivity.
-     * @param view The view object that was clicked.
+     * Send a code to anouther user.
+     * @param view
      */
-    private void applyCode(View view) {
-        replaceFragment(new SettingsInsideFragment());
+    public void sendCode(View view) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_TEXT, "Możesz dołączyć do mojej grupy w aplikacji PlanToPlate. Kod zaproszeniowy do grupy: "
+                + Objects.requireNonNull(group_code.getText()).toString() + ".\n\n"
+                + "Pobierz aplikację Plantoplate: tu_musi_byc_link_do_aplikacji");
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, ""));
     }
 
     /**
