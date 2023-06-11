@@ -203,6 +203,7 @@ W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc m
 
     <string name="zmiana_dabych_uzytkownika">Wybierz użytkownika,
 dane którego chcesz zmienić:</string>
+    <string name="uwaga_kod">Uwaga! \nKod jest jednorazowy i aktywny w ciągu 30 minut od momentu wygenerowania.</string>
 
 </resources>
 
