@@ -18,6 +18,7 @@ package pl.plantoplate.ui.main.settings.accountManagement.changePassword;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,7 +41,9 @@ import pl.plantoplate.databinding.FragmentPasswordChangeBinding;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.models.UserInfo;
 import pl.plantoplate.repository.remote.user.UserRepository;
+import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 
 
@@ -124,7 +127,7 @@ public class PasswordChangeNewPasswords extends Fragment {
                     Toast.makeText(requireActivity(), "Hasło zostało zmienione", Toast.LENGTH_SHORT).show();
                 });
 
-                replaceFragment(new ChangeTheData());
+                exitAccount();
             }
 
             @Override
@@ -141,6 +144,38 @@ public class PasswordChangeNewPasswords extends Fragment {
                 });
             }
         });
+    }
+
+    /**
+     * Logs the user out of the app.
+     */
+    public void exitAccount() {
+        //delete the user's data from the shared preferences
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove("name");
+        editor.remove("email");
+        editor.remove("password");
+        editor.remove("role");
+        editor.remove("token");
+        editor.apply();
+
+        //go back to the login screen
+        Intent intent = new Intent(this.getContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+        // save the app state
+        saveAppState(ApplicationState.LOGIN);
+    }
+
+    /**
+     * Saves the app state to the shared preferences.
+     * @param applicationState The app state to save.
+     */
+    public void saveAppState(ApplicationState applicationState) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("applicationState", applicationState.toString());
+        editor.apply();
     }
 
 
