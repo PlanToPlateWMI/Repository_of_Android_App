@@ -16,11 +16,15 @@
 
 package pl.plantoplate.ui.main.settings.accountManagement.changePassword;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,10 +32,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
+
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentPasswordChange2Binding;
 import pl.plantoplate.databinding.FragmentPasswordChangeBinding;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.models.UserInfo;
 import pl.plantoplate.repository.remote.user.UserRepository;
+import pl.plantoplate.tools.SCryptStretcher;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 
 
@@ -50,13 +59,15 @@ public class PasswordChangeNewPasswords extends Fragment {
 
     private TextInputLayout wprowadz_nowe_haslo_ponownie;
 
+    private SharedPreferences prefs;
+
 
     /**
      * Create the view
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater The layout inflater
+     * @param container The container
+     * @param savedInstanceState The saved instance state
+     * @return The view
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -72,12 +83,66 @@ public class PasswordChangeNewPasswords extends Fragment {
         wprowadz_nowe_haslo = fragmentPasswordChange2Binding.wprowadzNoweHaslo;
         wprowadz_nowe_haslo_ponownie = fragmentPasswordChange2Binding.wprowadzNoweHasloPonownie;
 
-        button_zatwierdz.setOnClickListener(v -> replaceFragment(new ChangeTheData()));
-
         userRepository = new UserRepository();
+
+        prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+
+        button_zatwierdz.setOnClickListener(v -> validatePasswords());
 
         return fragmentPasswordChange2Binding.getRoot();
     }
+
+    public void validatePasswords(){
+        String password = Objects.requireNonNull(wprowadz_nowe_haslo.getEditText()).getText().toString();
+        String password2 = Objects.requireNonNull(wprowadz_nowe_haslo_ponownie.getEditText()).getText().toString();
+
+        if (password.isEmpty()) {
+            wprowadz_nowe_haslo.setError("Wprowadź hasło");
+            wprowadz_nowe_haslo.requestFocus();
+            return;
+        } else if (!password.equals(password2)) {
+            wprowadz_nowe_haslo_ponownie.setError("Hasła nie są takie same");
+            wprowadz_nowe_haslo_ponownie.requestFocus();
+            return;
+        }
+
+        String email = prefs.getString("email", "");
+
+        password = SCryptStretcher.stretch(password, email);
+
+        changePassword(password);
+    }
+
+    private void changePassword(String password) {
+
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.changePassword(token, password, new ResponseCallback<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo response) {
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireActivity(), "Hasło zostało zmienione", Toast.LENGTH_SHORT).show();
+                });
+
+                replaceFragment(new ChangeTheData());
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
 
     /**
      * Replaces the current fragment with the specified fragment.

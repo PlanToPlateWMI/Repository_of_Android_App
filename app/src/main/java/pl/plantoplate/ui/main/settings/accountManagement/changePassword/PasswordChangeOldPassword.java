@@ -78,11 +78,11 @@ public class PasswordChangeOldPassword extends Fragment {
         // Get the text input
         wprowadz_stare_haslo = fragmentPasswordChangeBinding.wprowadzStareHaslo;
 
-        button_zatwierdz.setOnClickListener(v -> replaceFragment(new PasswordChangeNewPasswords()));
-
         userRepository = new UserRepository();
 
         prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+
+        button_zatwierdz.setOnClickListener(v -> validatePassword());
 
         return fragmentPasswordChangeBinding.getRoot();
     }
