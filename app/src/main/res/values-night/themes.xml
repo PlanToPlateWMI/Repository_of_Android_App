@@ -2,9 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.PlaneToPlate_App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/zam_blue_0</item>
+        <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryVariant">@color/zam_blue_1</item>
         <item name="colorOnPrimary">@color/zam_blue_2</item>
+        <item name="colorOnTertiary">@color/zam_blue_0</item>
+
 
         <item name="colorOnBackground">@color/zam_lista_color</item>
         <item name="colorTertiary">@color/zam_baza_color</item>

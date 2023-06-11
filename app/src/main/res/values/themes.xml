@@ -2,9 +2,10 @@
     <!-- Base application theme. -->
     <style name="Theme.PlaneToPlate_App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_0</item>
+        <item name="colorPrimary">@color/black_gray</item>
         <item name="colorPrimaryVariant">@color/blue_1</item>
         <item name="colorOnPrimary">@color/blue_2</item>
+        <item name="colorOnTertiary">@color/blue_0</item>
 
         <item name="android:editTextColor">@color/black_gray</item>
         <item name="android:textColorHint">@color/gray</item>
