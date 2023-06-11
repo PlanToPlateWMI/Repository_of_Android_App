@@ -10,9 +10,10 @@
         <item name="android:textColorHint">@color/gray</item>
 
         <item name="colorOnBackground">@color/lista_color</item>
-        <item name="colorError">@color/baza_color</item>
+        <item name="colorTertiary">@color/baza_color</item>
         <item name="colorOnError">@color/spizarnia_color</item>
 
+        <item name="colorError">@color/red</item>
         <item name="colorOnPrimaryFixed">@color/item_d</item>
 
         <!-- Secondary brand color. -->

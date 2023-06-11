@@ -62,7 +62,7 @@
         app:boxBackgroundMode="outline"
 
         app:boxStrokeColor="?attr/colorOnPrimary"
-
+        app:endIconMode="password_toggle"
         app:hintTextColor="?attr/colorSecondaryVariant"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +78,7 @@
             android:layout_height="56dp"
 
             android:fontFamily="@font/quicksand_regular"
-
+            android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
 

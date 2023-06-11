@@ -7,8 +7,10 @@
         <item name="colorOnPrimary">@color/zam_blue_2</item>
 
         <item name="colorOnBackground">@color/zam_lista_color</item>
-        <item name="colorError">@color/zam_baza_color</item>
+        <item name="colorTertiary">@color/zam_baza_color</item>
         <item name="colorOnError">@color/zam_spizarnia_color</item>
+
+        <item name="colorError">@color/red_dark</item>
 
         <item name="android:editTextColor">@color/gray</item>
         <item name="android:textColorHint">@color/gray</item>
