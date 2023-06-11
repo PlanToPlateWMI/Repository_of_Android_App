@@ -3,8 +3,10 @@ package pl.plantoplate.ui.main.shoppingList.productsDatabase.popups;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,6 +54,8 @@ public class ModifyProductpopUp extends Dialog {
 
         quantity.setText(String.valueOf(product.getAmount()));
 
+        quantity.requestFocus();
+
         // set up input type
         setOnlyFloatInput();
 
@@ -60,7 +64,7 @@ public class ModifyProductpopUp extends Dialog {
         plusButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(this.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {
-                quantityValue = "0.0";
+                quantityValue = "1.0";
             }
             if (quantityValue.endsWith(".")) {
                 // add 0
@@ -74,7 +78,7 @@ public class ModifyProductpopUp extends Dialog {
         minusButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(this.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {
-                quantityValue = "0.0";
+                quantityValue = "1.0";
             }
             if (quantityValue.endsWith(".")) {
                 // add 0
@@ -87,6 +91,19 @@ public class ModifyProductpopUp extends Dialog {
                 this.quantity.setText(String.valueOf(quantity));
             }
         });
+
+        this.setOnShowListener(dialog -> {
+
+            // show numeric keyboard
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        });
+
+        setOnDismissListener(dialog -> {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        });
+
 
     }
 

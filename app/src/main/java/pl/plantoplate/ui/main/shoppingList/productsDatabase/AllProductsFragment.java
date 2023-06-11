@@ -243,6 +243,7 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     }
 
     public void showAddProductPopup(Product product) {
+        product.setAmount(1);
         ModifyProductpopUp addToCartPopUp = new ModifyProductpopUp(requireContext(), product);
         addToCartPopUp.acceptButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(addToCartPopUp.quantity.getText()).toString();

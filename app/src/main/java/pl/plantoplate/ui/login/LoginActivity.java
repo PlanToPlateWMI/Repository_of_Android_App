@@ -147,8 +147,10 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
             public void onSuccess(JwtResponse jwtResponse) {
                 // save the token and role in the shared preferences
                 SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("email", userSignInData.getEmail());
                 editor.putString("token", jwtResponse.getToken());
                 editor.putString("role", jwtResponse.getRole());
+                editor.putString("password", userSignInData.getPassword());
                 editor.apply();
 
                 // Start the main activity

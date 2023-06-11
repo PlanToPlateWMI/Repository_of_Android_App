@@ -16,11 +16,16 @@
 
 package pl.plantoplate.ui.main.settings.accountManagement.changePassword;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,10 +33,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
+
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentPasswordChange2Binding;
 import pl.plantoplate.databinding.FragmentPasswordChangeBinding;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.models.UserInfo;
 import pl.plantoplate.repository.remote.user.UserRepository;
+import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 
 
@@ -50,13 +62,15 @@ public class PasswordChangeNewPasswords extends Fragment {
 
     private TextInputLayout wprowadz_nowe_haslo_ponownie;
 
+    private SharedPreferences prefs;
+
 
     /**
      * Create the view
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater The layout inflater
+     * @param container The container
+     * @param savedInstanceState The saved instance state
+     * @return The view
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -72,12 +86,98 @@ public class PasswordChangeNewPasswords extends Fragment {
         wprowadz_nowe_haslo = fragmentPasswordChange2Binding.wprowadzNoweHaslo;
         wprowadz_nowe_haslo_ponownie = fragmentPasswordChange2Binding.wprowadzNoweHasloPonownie;
 
-        button_zatwierdz.setOnClickListener(v -> replaceFragment(new ChangeTheData()));
-
         userRepository = new UserRepository();
+
+        prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+
+        button_zatwierdz.setOnClickListener(v -> validatePasswords());
 
         return fragmentPasswordChange2Binding.getRoot();
     }
+
+    public void validatePasswords(){
+        String password = Objects.requireNonNull(wprowadz_nowe_haslo.getEditText()).getText().toString();
+        String password2 = Objects.requireNonNull(wprowadz_nowe_haslo_ponownie.getEditText()).getText().toString();
+
+        if (password.isEmpty()) {
+            wprowadz_nowe_haslo.setError("Wprowadź hasło");
+            wprowadz_nowe_haslo.requestFocus();
+            return;
+        } else if (!password.equals(password2)) {
+            wprowadz_nowe_haslo_ponownie.setError("Hasła nie są takie same");
+            wprowadz_nowe_haslo_ponownie.requestFocus();
+            return;
+        }
+
+        String email = prefs.getString("email", "");
+
+        password = SCryptStretcher.stretch(password, email);
+
+        changePassword(password);
+    }
+
+    private void changePassword(String password) {
+
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.changePassword(token, password, new ResponseCallback<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo response) {
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireActivity(), "Hasło zostało zmienione", Toast.LENGTH_SHORT).show();
+                });
+
+                exitAccount();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    /**
+     * Logs the user out of the app.
+     */
+    public void exitAccount() {
+        //delete the user's data from the shared preferences
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove("name");
+        editor.remove("email");
+        editor.remove("password");
+        editor.remove("role");
+        editor.remove("token");
+        editor.apply();
+
+        //go back to the login screen
+        Intent intent = new Intent(this.getContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+        // save the app state
+        saveAppState(ApplicationState.LOGIN);
+    }
+
+    /**
+     * Saves the app state to the shared preferences.
+     * @param applicationState The app state to save.
+     */
+    public void saveAppState(ApplicationState applicationState) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("applicationState", applicationState.toString());
+        editor.apply();
+    }
+
 
     /**
      * Replaces the current fragment with the specified fragment.
