@@ -60,9 +60,10 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zmien_kategorie"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintVertical_bias="0.095" />
 
     <TextView
         android:id="@+id/kategoria"
@@ -120,10 +121,10 @@
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_name"
-        app:layout_constraintVertical_bias="0.034"
+        app:layout_constraintVertical_bias="0.081"
         app:rippleColor="?attr/colorPrimaryVariant"
         app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
@@ -139,7 +140,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/jednostki_miary"
-        app:layout_constraintVertical_bias="0.089">
+        app:layout_constraintVertical_bias="0.097">
 
         <RadioButton
             android:id="@+id/button_szt"
@@ -182,7 +183,7 @@
             android:textOn="@string/l"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="?attr/colorPrimaryVariant"  />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/button_ml"
@@ -203,7 +204,7 @@
             android:textOn="@string/ml"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="?attr/colorPrimaryVariant"  />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/button_kg"
@@ -225,7 +226,7 @@
             android:textOn="@string/kg"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="?attr/colorPrimaryVariant"  />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/button_gr"
@@ -247,7 +248,7 @@
             android:textOn="@string/gr"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="?attr/colorPrimaryVariant"  />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
     </RadioGroup>
 
@@ -288,6 +289,39 @@
             tools:layout_editor_absoluteY="321dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!--    <Button-->
+<!--        android:id="@+id/button_anuluj"-->
+<!--        android:layout_width="236dp"-->
+<!--        android:layout_height="70dp"-->
+
+<!--        android:layout_alignParentLeft="true"-->
+
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:backgroundTint="?attr/colorPrimaryVariant"-->
+
+<!--        android:clickable="true"-->
+<!--        android:drawableLeft="@drawable/close_24_50"-->
+
+<!--        app:strokeColor="?attr/colorOnPrimary"-->
+<!--        app:strokeWidth="1dp"-->
+
+<!--        android:fontFamily="@font/quicksand_medium"-->
+
+<!--        android:text="@string/anuluj"-->
+
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="?attr/colorSecondaryVariant"-->
+<!--        app:iconPadding="8dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"-->
+<!--        app:layout_constraintVertical_bias="0.08"-->
+<!--        app:rippleColor="?attr/colorPrimaryVariant"  />-->
+
     <Button
         android:id="@+id/button_zatwierdz"
         android:layout_width="236dp"
@@ -313,46 +347,13 @@
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toggle_group"
-        app:layout_constraintVertical_bias="0.081"
+        app:layout_constraintVertical_bias="0.235"
         app:rippleColor="?attr/colorPrimaryVariant"
         app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
-
-    <Button
-        android:id="@+id/button_anuluj"
-        android:layout_width="236dp"
-        android:layout_height="70dp"
-
-        android:layout_alignParentLeft="true"
-
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:backgroundTint="?attr/colorPrimaryVariant"
-
-        android:clickable="true"
-        android:drawableLeft="@drawable/close_24_50"
-
-        app:strokeColor="?attr/colorOnPrimary"
-        app:strokeWidth="1dp"
-
-        android:fontFamily="@font/quicksand_medium"
-
-        android:text="@string/anuluj"
-
-        android:textAllCaps="false"
-        android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"
-        app:layout_constraintVertical_bias="0.08"
-        app:rippleColor="?attr/colorPrimaryVariant"  />
 
     <Button
         android:id="@+id/button_usun"
@@ -369,22 +370,22 @@
         android:clickable="true"
         android:drawableLeft="@drawable/delete_forever_24_50"
 
-        app:strokeColor="?attr/colorOnPrimary"
-        app:strokeWidth="1dp"
-
         android:fontFamily="@font/quicksand_medium"
-
         android:text="@string/usun"
 
         android:textAllCaps="false"
+
         android:textColor="?attr/colorSecondaryVariant"
+
         app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_anuluj"
-        app:layout_constraintVertical_bias="0.272"
-        app:rippleColor="?attr/colorPrimaryVariant"  />
+        app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"
+        app:layout_constraintVertical_bias="0.244"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

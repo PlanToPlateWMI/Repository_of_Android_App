@@ -58,7 +58,6 @@ public class EditOwnProductFragment extends Fragment implements ChangeCategoryLi
     private RadioGroup choose_product_unit;
     private Button add_product_button;
     private Button change_kategory;
-    private Button cancel_button;
     private Button delete_button;
     private TextInputEditText add_product_name;
     private TextView product_category;
@@ -121,8 +120,6 @@ public class EditOwnProductFragment extends Fragment implements ChangeCategoryLi
         // Set add product button
         add_product_button = fragmentProductChangeBinding.buttonZatwierdz;
 
-        //Set cansel product button
-        cancel_button = fragmentProductChangeBinding.buttonAnuluj;
 
         // Set the product name button
         add_product_name = fragmentProductChangeBinding.enterTheName;
@@ -133,7 +130,6 @@ public class EditOwnProductFragment extends Fragment implements ChangeCategoryLi
 
         // Set the button listener
         add_product_button.setOnClickListener(v -> applyProductChange(requireActivity().findViewById(R.id.frame_layout)));
-        cancel_button.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         change_kategory = fragmentProductChangeBinding.zmienKategorie;
 
