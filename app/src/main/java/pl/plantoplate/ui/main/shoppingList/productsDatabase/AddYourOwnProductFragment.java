@@ -58,7 +58,6 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
     private RadioGroup choose_product_unit;
     private Button add_product_button;
     private Button change_kategory;
-    private Button cancel_button;
     private TextInputEditText add_product_name;
     private TextView product_category;
 
@@ -99,15 +98,11 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
         // Set add product button
         add_product_button = add_own_product_view.buttonZatwierdz;
 
-        //Set cansel product button
-        cancel_button = add_own_product_view.buttonAnuluj;
-
         // Set the product name button
         add_product_name = add_own_product_view.enterTheName;
 
         // Set the button listener
         add_product_button.setOnClickListener(v -> addProduct(requireActivity().findViewById(R.id.frame_layout)));
-        cancel_button.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         change_kategory = add_own_product_view.zmienKategorie;
         change_kategory.findViewById(R.id.zmien_kategorie);

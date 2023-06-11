@@ -105,7 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/zmien_kategorie"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintVertical_bias="0.125" />
 
     <Button
         android:id="@+id/zmien_kategorie"
@@ -134,7 +134,7 @@
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_name"
-        app:layout_constraintVertical_bias="0.034"
+        app:layout_constraintVertical_bias="0.124"
         app:rippleColor="?attr/colorPrimaryVariant"
         app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
@@ -150,10 +150,10 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
+        app:layout_constraintHorizontal_bias="0.158"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_name"
-        app:layout_constraintVertical_bias="0.029" />
+        app:layout_constraintVertical_bias="0.057" />
 
     <TextView
         android:id="@+id/kategoria_napisac"
@@ -169,14 +169,12 @@
         app:layout_constraintHorizontal_bias="0.876"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_name"
-        app:layout_constraintVertical_bias="0.029" />
+        app:layout_constraintVertical_bias="0.057" />
 
     <RadioGroup
         android:id="@+id/toggle_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -184,7 +182,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/kategoria"
-        app:layout_constraintVertical_bias="0.097">
+        app:layout_constraintVertical_bias="0.133">
 
         <RadioButton
             android:id="@+id/button_szt"
@@ -205,7 +203,7 @@
             android:textOn="@string/szt"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="?attr/colorPrimaryVariant"/>
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/button_l"
@@ -248,7 +246,7 @@
             android:textOn="@string/ml"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="?attr/colorPrimaryVariant"/>
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/button_kg"
@@ -292,7 +290,7 @@
             android:textOn="@string/gr"
             android:textSize="13dp"
             app:iconPadding="8dp"
-            app:rippleColor="?attr/colorPrimaryVariant"/>
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
     </RadioGroup>
 
@@ -323,43 +321,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kategoria"
-        app:layout_constraintVertical_bias="0.521"
+        app:layout_constraintTop_toBottomOf="@+id/toggle_group"
+        app:layout_constraintVertical_bias="0.294"
         app:rippleColor="?attr/colorPrimaryVariant"
         app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
 
-    <Button
-        android:id="@+id/button_anuluj"
-        android:layout_width="236dp"
-        android:layout_height="70dp"
+    <!--    <Button-->
+<!--        android:id="@+id/button_anuluj"-->
+<!--        android:layout_width="236dp"-->
+<!--        android:layout_height="70dp"-->
 
-        android:drawableLeft="@drawable/close_24_50"
+<!--        android:drawableLeft="@drawable/close_24_50"-->
 
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+<!--        android:layout_alignParentLeft="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_alignParentBottom="true"-->
 
-        android:backgroundTint="?attr/colorPrimaryVariant"
-        android:clickable="true"
+<!--        android:backgroundTint="?attr/colorPrimaryVariant"-->
+<!--        android:clickable="true"-->
 
-        android:fontFamily="@font/quicksand_medium"
+<!--        android:fontFamily="@font/quicksand_medium"-->
 
-        android:text="@string/anuluj"
+<!--        android:text="@string/anuluj"-->
 
-        app:strokeColor="?attr/colorOnPrimary"
-        app:strokeWidth="1dp"
+<!--        app:strokeColor="?attr/colorOnPrimary"-->
+<!--        app:strokeWidth="1dp"-->
 
-        android:textAllCaps="false"
-        android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"
-        app:layout_constraintVertical_bias="0.297"
-        app:rippleColor="?attr/colorPrimaryVariant" />
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="?attr/colorSecondaryVariant"-->
+<!--        app:iconPadding="8dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"-->
+<!--        app:layout_constraintVertical_bias="0.297"-->
+<!--        app:rippleColor="?attr/colorPrimaryVariant" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
