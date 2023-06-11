@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.023" />
 
     <ImageView
-        android:id="@+id/sun"
+        android:id="@+id/question_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
