@@ -16,11 +16,15 @@
 
 package pl.plantoplate.ui.main.settings.accountManagement.changePassword;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,9 +32,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
+
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentPasswordChangeBinding;
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.models.Message;
 import pl.plantoplate.repository.remote.user.UserRepository;
+import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.ui.main.settings.accountManagement.changeEmail.ChangeEmailStep2Fragment;
 
 
 /**
@@ -46,12 +56,14 @@ public class PasswordChangeOldPassword extends Fragment {
 
     private TextInputLayout wprowadz_stare_haslo;
 
+    private SharedPreferences prefs;
+
     /**
      * Create the view
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container This is the parent view that the fragment's UI should be attached to
+     * @param savedInstanceState This fragment is being re-constructed from a previous saved state as given here
+     * @return Return the View for the fragment's UI, or null
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -70,7 +82,43 @@ public class PasswordChangeOldPassword extends Fragment {
 
         userRepository = new UserRepository();
 
+        prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
+
         return fragmentPasswordChangeBinding.getRoot();
+    }
+
+    public void validatePassword() {
+        String password = Objects.requireNonNull(wprowadz_stare_haslo.getEditText()).getText().toString().trim();
+        if (password.isEmpty()) {
+            wprowadz_stare_haslo.setError("Pole nie może być puste");
+            return;
+        }
+
+        String email = prefs.getString("email", "");
+
+        String passwordStretched = SCryptStretcher.stretch(password, email);
+
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.validatePasswordMatch(token, passwordStretched, new ResponseCallback<Message>() {
+            @Override
+            public void onSuccess(Message response) {
+
+                Fragment fragment = new PasswordChangeNewPasswords();
+
+                replaceFragment(fragment);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
     }
 
     /**

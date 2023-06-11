@@ -10,6 +10,8 @@ public class UserInfo {
     private String email;
     @SerializedName("role")
     private String role;
+    @SerializedName("password")
+    private String password;
 
     public UserInfo() {
         // Default constructor required for deserialization
@@ -57,5 +59,13 @@ public class UserInfo {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
