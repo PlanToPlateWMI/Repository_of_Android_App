@@ -187,8 +187,11 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
      * Starts the EnterEmailActivity to allow the user to reset their password.
      */
     public void remindPassword() {
+        //Get email from user
+        String email = Objects.requireNonNull(email_field.getText()).toString();
         // Create an intent to start the RemindPasswordActivity
         Intent intent = new Intent(this, EnterEmailActivity.class);
+        intent.putExtra("email", email);
         startActivity(intent);
     }
 

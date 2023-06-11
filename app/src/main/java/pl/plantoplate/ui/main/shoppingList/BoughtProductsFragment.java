@@ -49,6 +49,7 @@ import pl.plantoplate.repository.remote.storage.StorageRepository;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.AddYourOwnProductFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
 
 /**
@@ -90,9 +91,6 @@ public class BoughtProductsFragment extends Fragment {
         // get storage repository
         storageRepository = new StorageRepository();
 
-        // set listener for floating action button
-        moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
-
         setUpRecyclerView();
 
         return fragmentKupioneBinding.getRoot();
@@ -105,6 +103,16 @@ public class BoughtProductsFragment extends Fragment {
             @Override
             public void onSuccess(ArrayList<Product> shopList) {
                 boughtProductsList = CategorySorter.sortProductsByName(shopList);
+
+                // Setup listeners
+                if(boughtProductsList.isEmpty()) {
+                    moveToStorageButton.setVisibility(View.INVISIBLE);
+                    moveToStorageButton.setClickable(false);
+                }else{
+                    moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
+                    moveToStorageButton.setVisibility(View.VISIBLE);
+                    moveToStorageButton.setClickable(true);
+                }
 
                 // update recycler view
                 ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
@@ -133,6 +141,16 @@ public class BoughtProductsFragment extends Fragment {
             @Override
             public void onSuccess(ArrayList<Product> shopList) {
                 boughtProductsList = CategorySorter.sortProductsByName(shopList);
+
+                // Setup listeners
+                if(boughtProductsList.isEmpty()) {
+                    moveToStorageButton.setVisibility(View.INVISIBLE);
+                    moveToStorageButton.setClickable(false);
+                }else{
+                    moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
+                    moveToStorageButton.setVisibility(View.VISIBLE);
+                    moveToStorageButton.setClickable(true);
+                }
 
                 // update recycler view
                 ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();

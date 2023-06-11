@@ -53,6 +53,7 @@ public class EnterEmailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String email = getIntent().getStringExtra("email");
 
         // Inflate the layout using view binding
         change_password_view = RemindPassword1Binding.inflate(getLayoutInflater());
@@ -61,6 +62,8 @@ public class EnterEmailActivity extends AppCompatActivity {
         // Define the ui elements
         email_field = change_password_view.enterTheName;
         apply_button = change_password_view.buttonZatwierdz;
+
+        email_field.setText(email);
 
         // Set a click listeners for the buttons
         apply_button.setOnClickListener(this::checkUserExists);

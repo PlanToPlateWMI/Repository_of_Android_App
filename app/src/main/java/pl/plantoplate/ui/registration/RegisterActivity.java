@@ -128,6 +128,16 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
             return;
         }
 
+        if(info.getEmail() == null || info.getEmail().isEmpty()){
+            Snackbar.make(view, "Wprowadż adres email!", Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+        if (info.getPassword() == null || info.getPassword().isEmpty()){
+            Snackbar.make(view, "Wprowadż hasło!", Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
         if(!EmailValidator.isEmail(info.getEmail())){
             Snackbar.make(view, "Email jest niepoprawny!", Snackbar.LENGTH_LONG).show();
             return;

@@ -16,6 +16,7 @@
 
 package pl.plantoplate.ui.main.settings.groupCodeGeneration;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +39,7 @@ import pl.plantoplate.databinding.FragmentChoiceAdultOrChildBinding;
 import pl.plantoplate.databinding.FragmentNameChangeBinding;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.group.GroupRepository;
+import pl.plantoplate.ui.main.storage.StorageFragment;
 
 /**
  * An activity that allows the user to choose the type of group code to generate.
@@ -46,6 +50,7 @@ public class GroupCodeTypeActivity extends Fragment {
 
     private Button child_code_button;
     private Button adult_code_button;
+    private ImageView question_button;
 
     private SharedPreferences prefs;
 
@@ -66,6 +71,7 @@ public class GroupCodeTypeActivity extends Fragment {
         // Get the buttons for choosing group code type
         child_code_button = choose_group_code_type_view.codeForChild;
         adult_code_button = choose_group_code_type_view.codeForAdult;
+        question_button = choose_group_code_type_view.questionButton;
 
         // Get shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -73,6 +79,7 @@ public class GroupCodeTypeActivity extends Fragment {
         // Set the onClickListeners for the buttons
         child_code_button.setOnClickListener(this::generateChildCode);
         adult_code_button.setOnClickListener(this::generateAdultCode);
+        question_button.setOnClickListener(v -> showQuestionPopUp());
 
         return choose_group_code_type_view.getRoot();
     }
@@ -128,6 +135,18 @@ public class GroupCodeTypeActivity extends Fragment {
                 Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void showQuestionPopUp(){
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.new_pop_up_about_kod);
+
+        TextView cancelButton = dialog.findViewById(R.id.button_no);
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 
     /**

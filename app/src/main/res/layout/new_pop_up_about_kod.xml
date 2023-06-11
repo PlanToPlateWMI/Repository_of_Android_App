@@ -63,7 +63,7 @@
             app:layout_constraintVertical_bias="0.233" />
 
         <TextView
-            android:id="@+id/button_close"
+            android:id="@+id/button_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
