@@ -207,7 +207,22 @@ dane którego chcesz zmienić:</string>
     <string name="kod_zapr">Kod zaproszeniowy</string>
     <string name="przekarz_kod1">Przekarz kod</string>
     <string name="kod_zapr_text">Aby korzystać z aplikacji wspólnie z innymi osobami trzeba najpierw wygenerować kod i przekazać go wybranym użytkownikom.</string>
+
+    <string name="konto_dziecko"> Masz konto z rolą "Dziecko"</string>
+    <string name="konto_dziecko_prawa">Możesz robić takie rzeczy:\n
+1. Dodawać produkty do listy zakupów i spiżarni.\n
+2. Dodawać produkty do kupionych.\n
+3. Przenosić produkt z kupionych z powrotem do listy zakupów.\n
+4. Przenosić produkty z kupionych do spiżarni.\n
+5. Edytować ilość produktów w spiżarni i na liście zakupów.
+
+</string>
+
+
 </resources>
+
+
+
 
     <!--<resources>-->
     <!--    <string name="app_name">PlanToPlate</string>-->
