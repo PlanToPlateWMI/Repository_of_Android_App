@@ -19,10 +19,12 @@ package pl.plantoplate;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.util.Objects;
 
@@ -30,7 +32,6 @@ import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.registration.EmailConfirmActivity;
-import pl.plantoplate.ui.registration.GroupEnterActivity;
 import pl.plantoplate.ui.registration.GroupSelectActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 
@@ -68,6 +69,51 @@ public class SplashActivity extends AppCompatActivity {
             // Close the splash activity
             finish();
         }, SPLASH_TIME_OUT);
+
+
+        SharedPreferences.Editor editor = prefs.edit();
+
+        String key = "theme";
+        String light = "light";
+        String dark = "dark";
+
+        //check if SharedPreferences contains information about theme
+        // if not - set default theme of device
+        if (!prefs.contains(key)) {
+
+            // get default theme of device
+            int nightModeFlags =
+                    getApplicationContext().getResources().getConfiguration().uiMode &
+                            Configuration.UI_MODE_NIGHT_MASK;
+
+            // add to SharedPreferences information about theme
+            switch (nightModeFlags) {
+                case Configuration.UI_MODE_NIGHT_YES:
+                    editor.putString(key, dark);
+                    editor.apply();
+                    break;
+
+                case Configuration.UI_MODE_NIGHT_NO:
+                    editor.putString(key, light);
+                    editor.apply();
+
+                    break;
+            }
+
+        // if SharedPreferences contains information about theme - set theme from SharedPreferences
+        }else {
+
+            switch (prefs.getString(key, "")) {
+                case "dark":
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    break;
+
+                case "light":
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    break;
+
+            }
+        }
     }
 
     /**

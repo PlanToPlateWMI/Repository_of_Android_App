@@ -1,7 +1,10 @@
 package pl.plantoplate.ui.main.settings;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -21,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
@@ -77,24 +81,43 @@ public class SettingsInsideFragment extends Fragment{
 
         userRepository = new UserRepository();
 
+        // Get the shared preferences
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
         switchButton=settings_view.switchButtonChangeColorTheme;
 
-        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // set dark mode
-                    //System.out.println("Dark mode");
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // set light mode
-                    //System.out.println("Light mode");
-                }
+        SharedPreferences.Editor editor = prefs.edit();
+
+        String key = "theme";
+
+        // depends on SharedPreferences key set checked of Switch button
+        switch (prefs.getString(key, "")) {
+                case "dark":
+                    switchButton.setChecked(true);
+                    break;
+
+                case "light":
+                    switchButton.setChecked(false);
+                    break;
+        }
+
+
+        // switch listener - change theme and change key of SharedPreferences
+        switchButton.setOnClickListener(view -> {
+            if (switchButton.isChecked()) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); // set dark mode
+                editor.putString("theme", "dark");
+                editor.apply();
+
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // set light mode
+                editor.putString("theme", "light");
+                editor.apply();
+
             }
         });
 
 
-        // Get the shared preferences
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
 
         // Get the user info
         getUserInfo();
