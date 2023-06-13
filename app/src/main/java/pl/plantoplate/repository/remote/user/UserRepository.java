@@ -212,6 +212,42 @@ public class UserRepository {
 
     }
 
+    public void getUsersInfo(String token, ResponseCallback<ArrayList<UserInfo>> callback) {
+        Call<ArrayList<UserInfo>> call = userService.getUsersInfo(token);
+        calls.add(call);
+        call.enqueue(new Callback<ArrayList<UserInfo>>() {
+            @Override
+            public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() == null) {
+                        callback.onError("Coś poszło nie tak!");
+                        return;
+                    }
+                    callback.onSuccess(response.body());
+
+                } else {
+                    int code = response.code();
+                    switch (code) {
+                        case 400:
+                            callback.onError("Użytkownik nie istnieje lub nie ma grupy.");
+                            break;
+                        case 500:
+                            callback.onError("Błąd serwera!");
+                            break;
+                        default:
+                            callback.onError("Wystąpił nieznany błąd.");
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
+                callback.onFailure("Brak połączenia z serwerem. Sprawdź połączenie z internetem.");
+            }
+        });
+    }
+
 
     public void cancelCalls() {
         for (Call<?> call : calls) {

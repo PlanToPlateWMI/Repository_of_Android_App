@@ -1,10 +1,7 @@
 package pl.plantoplate.ui.main.settings;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -24,7 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.preference.PreferenceManager;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
@@ -37,6 +36,9 @@ import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragme
 import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
+import pl.plantoplate.ui.main.settings.viewModels.SettingsViewModel;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
+import pl.plantoplate.ui.main.storage.StorageViewModel;
 
 /**
  * The fragment that is displayed when the user clicks the settings button.
@@ -44,21 +46,17 @@ import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity
 public class SettingsInsideFragment extends Fragment{
 
     private FragmentSettingsInsideBinding settings_view;
+    private SettingsViewModel settingsViewModel;
 
     private TextView username;
-    private TextView email;
-
     private Button generate_group_code_button;
     private Button exit_account_button;
     private Button button_zarzadzanie_uyztkownikamu;
     private Button button_zmiana_danych;
     private Button button_about_us;
-
     private Switch switchButton;
-    Window window;
-    private SharedPreferences prefs;
 
-    private UserRepository userRepository;
+    private SharedPreferences prefs;
 
 
     @Override
@@ -68,18 +66,14 @@ public class SettingsInsideFragment extends Fragment{
         // Inflate the layout using the View Binding Library
         settings_view = FragmentSettingsInsideBinding.inflate(inflater, container, false);
 
-        // Get the buttons
+        // Get views
         generate_group_code_button = settings_view.buttonWygenerowanieKodu;
         exit_account_button = settings_view.buttonWyloguj;
         button_zarzadzanie_uyztkownikamu = settings_view.buttonZarzadyanieUyztkownikamu;
         button_zmiana_danych = settings_view.buttonZmianaDanych;
         button_about_us = settings_view.buttonAboutUs;
-
-        // Get the text views
         username = settings_view.imie;
-        //email = settings_view.mail;
-
-        userRepository = new UserRepository();
+        switchButton=settings_view.switchButtonChangeColorTheme;
 
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -92,13 +86,13 @@ public class SettingsInsideFragment extends Fragment{
 
         // depends on SharedPreferences key set checked of Switch button
         switch (prefs.getString(key, "")) {
-                case "dark":
-                    switchButton.setChecked(true);
-                    break;
+            case "dark":
+                switchButton.setChecked(true);
+                break;
 
-                case "light":
-                    switchButton.setChecked(false);
-                    break;
+            case "light":
+                switchButton.setChecked(false);
+                break;
         }
 
 
@@ -116,11 +110,6 @@ public class SettingsInsideFragment extends Fragment{
 
             }
         });
-
-
-
-        // Get the user info
-        getUserInfo();
 
         // Set the onClickListeners for the buttons
         String role = prefs.getString("role", "");
@@ -143,56 +132,35 @@ public class SettingsInsideFragment extends Fragment{
         button_zmiana_danych.setOnClickListener(v -> replaceFragment(new ChangeTheData()));
         button_about_us.setOnClickListener(v -> replaceFragment(new MailDevelops()));
 
+        setUpViewModel();
+
         return settings_view.getRoot();
     }
 
+    public void setUpViewModel() {
 
-    /**
-     * Function that get user info from the server and displays it in the text views.
-     */
-    public void getUserInfo(){
+        // get storage view model
+        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
 
-        String token = "Bearer " + prefs.getString("token", "");
+        // get storage title
+        settingsViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            Spannable spans = new SpannableString("Imię: " + userInfo.getUsername() + "\n" + "Email: " + userInfo.getEmail());
+            username.setText(spans);
+        });
 
-        userRepository.getUserInfo(token, new ResponseCallback<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo response) {
-
-                Spannable spans = new SpannableString("Imię: " + response.getUsername() + "\n" + "Email: " + response.getEmail());
-                username.setText(spans);
-//                spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                nie_masz_konta.setText(spans);
-
-//                String usernameText = username.getText().toString() + " " + response.getUsername();
-//                String emailText = email.getText().toString() + " " + response.getEmail();
-//
-//                username.setText(usernameText);
-//                email.setText(emailText);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
+        // get success message
+        settingsViewModel.getSuccess().observe(getViewLifecycleOwner(), successMessage -> {
+            if (isAdded()) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), successMessage, Toast.LENGTH_SHORT).show());
             }
         });
-    }
 
-    /**
-     * Starts the GroupCodeTypeActivity.
-     * @param view The view object that was clicked.
-     */
-    public void chooseGroupCodeType(View view) {
-        Intent intent = new Intent(this.getContext(), GroupCodeTypeActivity.class);
-        startActivity(intent);
+        // get error message
+        settingsViewModel.getError().observe(getViewLifecycleOwner(), errorMessage -> {
+            if (isAdded()) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
     }
 
     /**
@@ -200,6 +168,7 @@ public class SettingsInsideFragment extends Fragment{
      * @param view The view object that was clicked.
      */
     public void exitAccount(View view) {
+
         //delete the user's data from the shared preferences
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove("name");

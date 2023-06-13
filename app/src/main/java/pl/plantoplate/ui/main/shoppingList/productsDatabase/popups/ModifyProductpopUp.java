@@ -3,11 +3,9 @@ package pl.plantoplate.ui.main.shoppingList.productsDatabase.popups;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -123,35 +121,35 @@ public class ModifyProductpopUp extends Dialog {
             @Override
             public void afterTextChanged(Editable s) {
                 String input = s.toString();
+                String previousInput = quantity.getTag() != null ? quantity.getTag().toString() : "";
 
-                // Check if input starts with a "."
+                // check if input doesn't start with a dot
                 if (input.startsWith(".")) {
-                    // Replace with previous value
-                    if (quantity.getTag() == null) {
-                        // If there is no previous value, replace with an empty string
-                        quantity.setText("");
-                    } else {
-                        // If there is a previous value, replace with it
-                        input = quantity.getTag().toString();
-                        quantity.setText(input);
-                    }
-                } else {
-                    quantity.setTag(input);
+                    input = previousInput;
                 }
 
+                // check if input doesn't have more than one dot
                 if (countDots(input) > 1) {
-                    String previousInput = quantity.getTag() != null ? quantity.getTag().toString() : "";
-                    if (!input.equals(previousInput)) {
-                        quantity.setText(previousInput);
-                        // set cursor at the end of the text
-                        quantity.setSelection(Objects.requireNonNull(quantity.getText()).length());
+                    input = previousInput;
+                }
+
+                // check if input float <= 9999.99
+                // parse input to float
+                float inputFloat;
+                if (!input.isEmpty()) {
+                    inputFloat = Float.parseFloat(input);
+                    if (inputFloat > 9999.99) {
+                        input = previousInput;
                     }
                 }
 
-                if (!input.isEmpty() && Float.parseFloat(input) > 9999) {
-                    quantity.setText("9999");
-                    quantity.setSelection(Objects.requireNonNull(quantity.getText()).length());
+                // set input
+                if (!input.equals(Objects.requireNonNull(quantity.getText()).toString())) {
+                    quantity.setText(input);
+                    quantity.setSelection(input.length());
                 }
+
+                quantity.setTag(input);
             }
         });
     }

@@ -26,11 +26,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentStorageBinding;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 
 /**
  * Fragment for storage screen
@@ -45,7 +42,7 @@ public class StorageFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         fragmentStorageBinding = FragmentStorageBinding.inflate(inflater, container, false);
-        replaceFragment(new StorageInsideFragment());
+        replaceFragment(new StorageMainFragment());
         return fragmentStorageBinding.getRoot();
     }
 

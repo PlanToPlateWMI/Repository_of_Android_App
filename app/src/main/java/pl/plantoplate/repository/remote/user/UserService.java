@@ -1,5 +1,7 @@
 package pl.plantoplate.repository.remote.user;
 
+import java.util.ArrayList;
+
 import pl.plantoplate.repository.remote.models.JwtResponse;
 import pl.plantoplate.repository.remote.models.Message;
 import pl.plantoplate.repository.remote.models.UserInfo;
@@ -26,4 +28,7 @@ public interface UserService {
 
     @GET("api/users/password/match")
     Call<Message> validatePasswordMatch(@Header("Authorization") String token, @Query("password") String password);
+
+    @GET("api/users/infos")
+    Call<ArrayList<UserInfo>> getUsersInfo(@Header("Authorization") String token);
 }

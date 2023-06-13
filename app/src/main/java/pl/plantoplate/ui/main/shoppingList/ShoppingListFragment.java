@@ -52,6 +52,7 @@ public class ShoppingListFragment extends Fragment {
 
         // Set selected all products fragment by default on restart fragment.
         shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.trzeba_kupic);
+        // Set first visible AllProductsFragment by default
         viewPager.setCurrentItem(0);
     }
 
@@ -60,11 +61,22 @@ public class ShoppingListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Inflate the layout for this fragment
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
 
+        // Setup views
         viewPager = shopping_list_view.viewPager;
-        setupViewPager(viewPager);
 
+        // Setup swipe pager
+        setupViewPager(viewPager);
+        // Setup navigation
+        setupNavigation();
+
+        return shopping_list_view.getRoot();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    private void setupNavigation() {
         shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.trzeba_kupic:
@@ -78,7 +90,16 @@ public class ShoppingListFragment extends Fragment {
             }
             return false;
         });
+    }
 
+    /**
+     * Setup swipe pager for shopping list.
+     *
+     * @param viewPager swipe pager
+     */
+    private void setupViewPager(ViewPager2 viewPager) {
+
+        // Set up change callback to change bottom navigation item when swipe pager
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -92,35 +113,51 @@ public class ShoppingListFragment extends Fragment {
                 }
             }
         });
-
-        return shopping_list_view.getRoot();
-    }
-
-    private void setupViewPager(ViewPager2 viewPager) {
+        // Set up adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         adapter.addFragment(new BuyProductsFragment());
         adapter.addFragment(new BoughtProductsFragment());
         viewPager.setAdapter(adapter);
     }
 
+    /**
+     * Adapter for swipe pager.
+     */
     static class ViewPagerAdapter extends FragmentStateAdapter {
         private final List<Fragment> fragmentList = new ArrayList<>();
+
 
         public ViewPagerAdapter(@NonNull Fragment fragment) {
             super(fragment);
         }
 
+        /**
+         * Create fragment for swipe pager.
+         *
+         * @param position position of fragment
+         * @return fragment
+         */
         @NonNull
         @Override
         public Fragment createFragment(int position) {
             return fragmentList.get(position);
         }
 
+        /**
+         * Get count of fragments.
+         *
+         * @return count of fragments
+         */
         @Override
         public int getItemCount() {
             return fragmentList.size();
         }
 
+        /**
+         * Add fragment to fragment list.
+         *
+         * @param fragment fragment
+         */
         public void addFragment(Fragment fragment) {
             fragmentList.add(fragment);
         }
