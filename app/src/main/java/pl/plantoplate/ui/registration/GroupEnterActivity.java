@@ -141,7 +141,6 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
     /**
      * This method is called when the user clicks the back button.
      * It starts the previous activity.
-     * @param view The view that was clicked
      */
     @Override
     public void saveAppState(ApplicationState applicationState) {

@@ -248,6 +248,41 @@ public class UserRepository {
         });
     }
 
+    public void changePermissions(String token, UserInfo userInfo, ResponseCallback<UserInfo> callback) {
+        Call<UserInfo> call = userService.changePermissions(token, userInfo);
+        calls.add(call);
+        call.enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() == null) {
+                        callback.onError("Coś poszło nie tak!");
+                        return;
+                    }
+                    callback.onSuccess(response.body());
+
+                } else {
+                    int code = response.code();
+                    switch (code) {
+                        case 400:
+                            callback.onError("Użytkownik nie istnieje.");
+                            break;
+                        case 500:
+                            callback.onError("Błąd serwera!");
+                            break;
+                        default:
+                            callback.onError("Wystąpił nieznany błąd.");
+                            break;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+                callback.onFailure("Brak połączenia z serwerem. Sprawdź połączenie z internetem.");
+            }
+        });
+    }
 
     public void cancelCalls() {
         for (Call<?> call : calls) {

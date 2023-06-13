@@ -162,7 +162,6 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     /**
      * Send the user's information to the server and handle the response asynchronously.
      *
-     * @param info The user's information.
      * @param view The view to display the response in (e.g. error using SnackBar).
      */
     public void checkUserExists(View view){
@@ -205,6 +204,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
             public void onSuccess(String code) {
                 // save user data to shared preferences
                 SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("email", userData.getEmail());
                 editor.putString("name", userData.getUsername());
                 editor.putString("password", userData.getPassword());
                 editor.putString("code", code).apply();

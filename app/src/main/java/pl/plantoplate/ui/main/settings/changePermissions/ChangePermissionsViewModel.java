@@ -46,14 +46,15 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
     public MutableLiveData<ArrayList<UserInfo>> getUsersInfo() {
         if (usersInfo == null) {
             usersInfo = new MutableLiveData<>();
-            fetchUserInfo();
+            fetchUsersInfo();
         }
         return usersInfo;
     }
 
-    private void fetchUserInfo() {
+    private void fetchUsersInfo() {
         String token = "Bearer " + prefs.getString("token", "");
         String email = prefs.getString("email", "");
+        System.out.println("email: " + email);
 
         userRepository.getUsersInfo(token, new ResponseCallback<ArrayList<UserInfo>>() {
             @Override
@@ -62,6 +63,7 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
                 for (int i = 0; i < response.size(); i++) {
                     if (response.get(i).getEmail().equals(email)) {
                         response.remove(i);
+                        System.out.println("removed");
                         break;
                     }
                 }

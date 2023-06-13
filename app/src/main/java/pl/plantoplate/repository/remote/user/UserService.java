@@ -31,4 +31,7 @@ public interface UserService {
 
     @GET("api/users/infos")
     Call<ArrayList<UserInfo>> getUsersInfo(@Header("Authorization") String token);
+
+    @PATCH("api/users/roles")
+    Call<UserInfo> changePermissions(@Header("Authorization") String token, @Body UserInfo userInfo);
 }
