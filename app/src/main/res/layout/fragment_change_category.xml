@@ -35,33 +35,34 @@
         android:id="@+id/wybierz_kategorie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/quicksand_regular"
         android:gravity="center"
-        android:layout_marginTop="5dp"
         android:text="Wybierz nową kategorię"
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/radio_group_nowa_kategoria"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/baza_produktow"
-        app:layout_constraintVertical_bias="0.192" />
+        app:layout_constraintVertical_bias="0.259" />
 
     <pl.plantoplate.ui.customViewes.RadioGridGroup
         android:id="@+id/radio_group_nowa_kategoria"
         android:layout_width="363dp"
         android:layout_height="430dp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="5dp"
+        android:columnCount="2"
         android:orientation="horizontal"
+        android:rowCount="6"
         app:layout_constraintBottom_toTopOf="@+id/button_zatwierdz"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/baza_produktow"
-        app:layout_constraintVertical_bias="0.1"
-        android:columnCount="2"
-        android:rowCount="6">
+        app:layout_constraintVertical_bias="0.1">
 
         <RadioButton
             android:id="@+id/kategoria_produkty_mleczne"
@@ -102,8 +103,7 @@
             android:textOff="@string/produkty_miesne"
             android:textOn="@string/produkty_miesne"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/kategoria_wypieki"
@@ -123,8 +123,7 @@
             android:textOff="@string/wypieki"
             android:textOn="@string/wypieki"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/kategoria_warzywa"
@@ -144,8 +143,7 @@
             android:textOff="@string/warzywa"
             android:textOn="@string/warzywa"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/kategoria_produkty_sypkie"
@@ -165,8 +163,7 @@
             android:textOff="@string/produkty_sypkie"
             android:textOn="@string/produkty_sypkie"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/kategoria_owoce"
@@ -186,8 +183,7 @@
             android:textOff="@string/owoce"
             android:textOn="@string/owoce"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
 
         <RadioButton
@@ -208,8 +204,7 @@
             android:textOff="@string/napoje"
             android:textOn="@string/napoje"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/kategoria_ryby"
@@ -229,8 +224,7 @@
             android:textOff="@string/ryby"
             android:textOn="@string/ryby"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
 
         <RadioButton
@@ -251,8 +245,7 @@
             android:textOff="@string/przyprawy"
             android:textOn="@string/przyprawy"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
         <RadioButton
             android:id="@+id/kategoria_bakalie"
@@ -272,8 +265,7 @@
             android:textOff="@string/bakalie"
             android:textOn="@string/bakalie"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
 
         <RadioButton
@@ -294,8 +286,7 @@
             android:textOff="@string/inne"
             android:textOn="@string/inne"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
 
         <RadioButton
@@ -316,8 +307,7 @@
             android:textOff="@string/konserwy"
             android:textOn="@string/konserwy"
             android:textSize="13dp"
-            app:rippleColor="?attr/colorPrimaryVariant"
-            />
+            app:rippleColor="?attr/colorPrimaryVariant" />
 
     </pl.plantoplate.ui.customViewes.RadioGridGroup>
 
@@ -344,46 +334,13 @@
         android:textColor="?attr/colorSecondaryVariant"
 
         app:iconPadding="8dp"
-        app:layout_constraintBottom_toTopOf="@id/button_anuluj"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radio_group_nowa_kategoria"
-        app:layout_constraintVertical_bias="0.378"
         app:rippleColor="?attr/colorPrimaryVariant"
         app:strokeColor="?attr/colorOnPrimary"
         app:strokeWidth="1dp" />
-
-    <Button
-        android:id="@+id/button_anuluj"
-        android:layout_width="236dp"
-        android:layout_height="70dp"
-
-        android:layout_alignParentLeft="true"
-
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:backgroundTint="?attr/colorPrimaryVariant"
-
-        android:clickable="true"
-        android:drawableLeft="@drawable/close_24_50"
-
-        android:fontFamily="@font/quicksand_medium"
-
-        android:text="@string/anuluj"
-
-        android:textAllCaps="false"
-        android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"
-        app:layout_constraintVertical_bias="0.2"
-        app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
-        app:strokeWidth="1dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,6 +70,8 @@ public class ChangeNameFragment extends Fragment {
 
         // get shared preferences object
         prefs = requireActivity().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE);
+//        String username = prefs.getString("username", "");
+//        wprowadz_imie.getEditText().setText(username);
 
         // set listener for the button
         button_zatwierdz.setOnClickListener(this::onAcceptName);

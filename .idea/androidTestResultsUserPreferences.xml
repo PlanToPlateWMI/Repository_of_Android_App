@@ -78,6 +78,20 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1725686846">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1673206282">
           <value>
             <AndroidTestResultsTableState>
@@ -141,6 +155,7 @@
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="15785879900073M" value="120" />
                   <entry key="29161JEGR07305" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="Google&#10; Pixel 6a" value="120" />
@@ -150,6 +165,7 @@
                   <entry key="emulator-5554" value="120" />
                   <entry key="samsung" value="120" />
                   <entry key="samsung&#10; SM-G977N" value="120" />
+                  <entry key="vivo&#10; V2050" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -369,6 +385,20 @@
           </value>
         </entry>
         <entry key="1051022695">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1132756360">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">

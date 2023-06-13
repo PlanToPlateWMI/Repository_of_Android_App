@@ -79,7 +79,7 @@ public class LoginActivityTest {
 
     @Test
     public void testCreateAccountButton() {
-        onView(withId(R.id.button_zaloz_konto)).perform(click());
+        onView(withId(R.id.nie_masz_konta)).perform(click());
         intended(hasComponent(RegisterActivity.class.getName()));
     }
 

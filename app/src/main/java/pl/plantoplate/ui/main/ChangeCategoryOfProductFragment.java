@@ -49,7 +49,6 @@ public class ChangeCategoryOfProductFragment extends Fragment {
 
     private RadioGridGroup categoriesRadioGroup;
     private Button accept_button;
-    private Button cancel_button;
 
     private ChangeCategoryListener changeCategoryListener;
 
@@ -70,11 +69,9 @@ public class ChangeCategoryOfProductFragment extends Fragment {
         // Get references to views
         categoriesRadioGroup = fragmentChangeCategoryBinding.radioGroupNowaKategoria;
         accept_button = fragmentChangeCategoryBinding.buttonZatwierdz;
-        cancel_button = fragmentChangeCategoryBinding.buttonAnuluj;
 
         // Set onClickListeners for buttons
         accept_button.setOnClickListener(v -> applyChanges());
-        cancel_button.setOnClickListener(v -> cancelChanges());
 
 
         return fragmentChangeCategoryBinding.getRoot();

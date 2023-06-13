@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import pl.plantoplate.R;
@@ -55,8 +56,10 @@ public class SettingsInsideFragment extends Fragment{
     private Button button_zmiana_danych;
     private Button button_about_us;
     private Switch switchButton;
+    private UserRepository userRepository;
 
     private SharedPreferences prefs;
+    private int userCount;
 
 
     @Override
@@ -74,6 +77,7 @@ public class SettingsInsideFragment extends Fragment{
         button_about_us = settings_view.buttonAboutUs;
         username = settings_view.imie;
         switchButton=settings_view.switchButtonChangeColorTheme;
+        userRepository = new UserRepository();
 
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -113,6 +117,33 @@ public class SettingsInsideFragment extends Fragment{
 
         // Set the onClickListeners for the buttons
         String role = prefs.getString("role", "");
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.getUsersInfo(token, new ResponseCallback<ArrayList<UserInfo>>() {
+
+            @Override
+            public void onSuccess(ArrayList<UserInfo> response) {
+                userCount = response.size();
+                if(role.equals("ROLE_ADMIN") && userCount > 1) {
+                    button_zarzadzanie_uyztkownikamu.setOnClickListener(v -> replaceFragment(new ChangePermissionsFragment()));
+                }else {
+                    button_zarzadzanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
+                    button_zarzadzanie_uyztkownikamu.setClickable(false);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                checkUsers(role);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                System.out.println(failureMessage);
+                checkUsers(role);
+            }
+        });
 
         if(role.equals("ROLE_ADMIN")) {
             //generate_group_code_button.setOnClickListener(this::chooseGroupCodeType);
@@ -120,12 +151,6 @@ public class SettingsInsideFragment extends Fragment{
         }else {
             generate_group_code_button.setBackgroundColor(getResources().getColor(R.color.gray));
             generate_group_code_button.setClickable(false);
-        }
-        if(role.equals("ROLE_ADMIN")) {
-            button_zarzadzanie_uyztkownikamu.setOnClickListener(v -> replaceFragment(new ChangePermissionsFragment()));
-        }else {
-            button_zarzadzanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
-            button_zarzadzanie_uyztkownikamu.setClickable(false);
         }
 
         exit_account_button.setOnClickListener(this::exitAccount);
@@ -135,6 +160,15 @@ public class SettingsInsideFragment extends Fragment{
         setUpViewModel();
 
         return settings_view.getRoot();
+    }
+
+    public void checkUsers(String role) {
+        if(role.equals("ROLE_ADMIN")) {
+            button_zarzadzanie_uyztkownikamu.setOnClickListener(v -> replaceFragment(new ChangePermissionsFragment()));
+        }else {
+            button_zarzadzanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
+            button_zarzadzanie_uyztkownikamu.setClickable(false);
+        }
     }
 
     public void setUpViewModel() {
