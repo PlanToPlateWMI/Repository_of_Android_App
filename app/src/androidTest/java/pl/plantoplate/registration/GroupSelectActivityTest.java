@@ -78,7 +78,7 @@ public class GroupSelectActivityTest {
     public void testNewGroupButton() {
         onView(withId(R.id.button_swoja_grupa)).perform(click());
         //intended(hasComponent(CalendarFragment.class.getName()));
-        intended(hasComponent(BuyProductsFragment.class.getName()));
+        intended(hasComponent(ActivityMain.class.getName()));
     }
 }
 

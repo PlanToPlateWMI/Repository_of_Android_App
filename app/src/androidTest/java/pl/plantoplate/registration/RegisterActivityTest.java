@@ -69,7 +69,7 @@ public class RegisterActivityTest {
         onView(withId(R.id.enter_password)).check(matches(isDisplayed()));
         onView(withId(R.id.checkbox_wyrazam_zgode)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zaloz_konto)).check(matches(isDisplayed()));
-        onView(withId(R.id.button_zaloguj_sie)).check(matches(isDisplayed()));
+        onView(withId(R.id.masz_konto)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class RegisterActivityTest {
 
     @Test
     public void testCreateAccountButton() {
-        onView(withId(R.id.button_zaloguj_sie)).perform(click());
+        onView(withId(R.id.masz_konto)).perform(click());
         intended(hasComponent(LoginActivity.class.getName()));
     }
 

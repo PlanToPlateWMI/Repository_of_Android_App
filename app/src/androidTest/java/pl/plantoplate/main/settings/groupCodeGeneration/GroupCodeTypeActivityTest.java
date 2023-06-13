@@ -46,7 +46,7 @@ public class GroupCodeTypeActivityTest {
 
         fragmentRule.getScenario().onActivity(activity -> {
             activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, SettingsFragment.class, null)
+                    .replace(R.id.frame_layout, GroupCodeTypeActivity.class, null)
                     .commit();
         });
     }
@@ -65,6 +65,8 @@ public class GroupCodeTypeActivityTest {
     public void generateAdultCodeButtonClicked() {
         // Perform a click on the adult code button
         onView(withId(R.id.code_for_adult)).perform(click());
+
+        intended(hasComponent(GeneratedGroupCodeActivity.class.getName()));
 
         //TODO: check that TextView has the 6-digit code
     }

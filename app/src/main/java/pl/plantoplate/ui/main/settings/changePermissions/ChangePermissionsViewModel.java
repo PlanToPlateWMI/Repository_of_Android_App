@@ -53,21 +53,11 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
 
     private void fetchUsersInfo() {
         String token = "Bearer " + prefs.getString("token", "");
-        String email = prefs.getString("email", "");
-        System.out.println("email: " + email);
 
         userRepository.getUsersInfo(token, new ResponseCallback<ArrayList<UserInfo>>() {
             @Override
             public void onSuccess(ArrayList<UserInfo> response) {
-                // delete current user from list
-                for (int i = 0; i < response.size(); i++) {
-                    if (response.get(i).getEmail().equals(email)) {
-                        response.remove(i);
-                        System.out.println("removed");
-                        break;
-                    }
-                }
-                usersInfo.setValue(response);
+                usersInfo.setValue(filterUsers(response, prefs.getString("email", "")));
             }
 
             @Override
@@ -80,6 +70,45 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
                 error.setValue(failureMessage);
             }
         });
+    }
+
+    public void changePermissions(UserInfo userInfo) {
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.changePermissions(token, userInfo, new ResponseCallback<ArrayList<UserInfo>>() {
+            @Override
+            public void onSuccess(ArrayList<UserInfo> response) {
+                usersInfo.setValue(filterUsers(response, prefs.getString("email", "")));
+                String role = "";
+                if (userInfo.getRole().equals("USER")) {
+                    role = "Użytkownik";
+                } else if (userInfo.getRole().equals("ADMIN")) {
+                    role = "Administrator";
+                }
+                success.setValue("Zmieniono uprawnienia użytkownika " + userInfo.getUsername() + " na " + role);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                error.setValue(errorMessage);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                error.setValue(failureMessage);
+            }
+        });
+    }
+
+    public ArrayList<UserInfo> filterUsers(ArrayList<UserInfo> response, String email){
+        // delete current user from list
+        for (int i = 0; i < response.size(); i++) {
+            if (response.get(i).getEmail().equals(email)) {
+                response.remove(i);
+                break;
+            }
+        }
+        return response;
     }
 
 }

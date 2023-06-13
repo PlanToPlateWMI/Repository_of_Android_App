@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import pl.plantoplate.R;
 import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 
 public class UsersInfoViewHolder extends RecyclerView.ViewHolder {
 
@@ -30,8 +29,16 @@ public class UsersInfoViewHolder extends RecyclerView.ViewHolder {
     public void bind(UserInfo userInfo, SetupUserPermissionsItems listener) {
 
         userName.setText(userInfo.getUsername());
-        userPermissions.setText(userInfo.getRole());
+        String role = "";
+        if (userInfo.getRole().equals("ROLE_ADMIN")){
+            role = "Administrator";
+        } else if (userInfo.getRole().equals("ROLE_USER")){
+            role = "Użytkownik";
+        } else {
+            role = "Nieznana rola";
+        }
+        userPermissions.setText(role);
 
-        editUser.setOnClickListener(listener::setupEditPermissionsButtonClick);
+        listener.setupEditPermissionsButtonClick(editUser, userInfo);
     }
 }

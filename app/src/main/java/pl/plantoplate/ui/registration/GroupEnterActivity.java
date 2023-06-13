@@ -113,9 +113,7 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("token", jwt.getToken());
                 editor.putString("role", jwt.getRole());
-
-                // delete email from shared preferences
-                editor.remove("email").apply();
+                editor.apply();
 
                 // start main activity
                 Intent intent = new Intent(getApplicationContext(), ActivityMain.class);

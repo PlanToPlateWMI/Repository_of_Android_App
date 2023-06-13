@@ -53,6 +53,7 @@ public class ModifyProductpopUp extends Dialog {
         quantity.setText(String.valueOf(product.getAmount()));
 
         quantity.requestFocus();
+        quantity.setTag(product.getAmount());
 
         // set up input type
         setOnlyFloatInput();

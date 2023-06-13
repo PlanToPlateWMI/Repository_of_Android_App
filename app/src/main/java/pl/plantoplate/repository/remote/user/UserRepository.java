@@ -248,12 +248,14 @@ public class UserRepository {
         });
     }
 
-    public void changePermissions(String token, UserInfo userInfo, ResponseCallback<UserInfo> callback) {
-        Call<UserInfo> call = userService.changePermissions(token, userInfo);
+    public void changePermissions(String token, UserInfo userInfo, ResponseCallback<ArrayList<UserInfo>> callback) {
+        ArrayList<UserInfo> userInfos = new ArrayList<>();
+        userInfos.add(userInfo);
+        Call<ArrayList<UserInfo>> call = userService.changePermissions(token, userInfos);
         calls.add(call);
-        call.enqueue(new Callback<UserInfo>() {
+        call.enqueue(new Callback<ArrayList<UserInfo>>() {
             @Override
-            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+            public void onResponse(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Response<ArrayList<UserInfo>> response) {
                 if (response.isSuccessful()) {
                     if (response.body() == null) {
                         callback.onError("Coś poszło nie tak!");
@@ -278,7 +280,7 @@ public class UserRepository {
             }
 
             @Override
-            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ArrayList<UserInfo>> call, @NonNull Throwable t) {
                 callback.onFailure("Brak połączenia z serwerem. Sprawdź połączenie z internetem.");
             }
         });

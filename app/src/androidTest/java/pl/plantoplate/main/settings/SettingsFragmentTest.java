@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
+import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.R;
@@ -68,7 +69,7 @@ public class SettingsFragmentTest {
 
         fragmentRule.getScenario().onActivity(activity -> {
             activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, SettingsFragment.class, null)
+                    .replace(R.id.frame_layout, SettingsInsideFragment.class, null)
                     .commit();
         });
     }

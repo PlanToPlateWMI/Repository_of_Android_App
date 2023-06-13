@@ -23,6 +23,8 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+import android.os.Bundle;
+
 @RunWith(AndroidJUnit4.class)
 public class GeneratedGroupCodeActivityTest {
 
@@ -47,9 +49,14 @@ public class GeneratedGroupCodeActivityTest {
 
     public void navigateToGeneratedGroupCodeFragment() {
 
+        GeneratedGroupCodeActivity generatedGroupCodeActivity = new GeneratedGroupCodeActivity();
+        Bundle bundle = new Bundle();
+        bundle.putString("group_code", "999999");
+        generatedGroupCodeActivity.setArguments(bundle);
+
         fragmentRule.getScenario().onActivity(activity -> {
             activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, SettingsFragment.class, null)
+                    .replace(R.id.frame_layout, generatedGroupCodeActivity, null)
                     .commit();
         });
     }
