@@ -82,6 +82,9 @@ public class UserRepository {
                         case 400:
                             callback.onError("Użytkownik nie istnieje.");
                             break;
+                        case 409:
+                            callback.onError("Podany email jest już zajęty.");
+                            break;
                         case 500:
                             callback.onError("Błąd serwera!");
                             break;

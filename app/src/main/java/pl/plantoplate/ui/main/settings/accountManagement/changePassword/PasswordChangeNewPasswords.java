@@ -101,11 +101,18 @@ public class PasswordChangeNewPasswords extends Fragment {
 
         if (password.isEmpty()) {
             wprowadz_nowe_haslo.setError("Wprowadź hasło");
-            wprowadz_nowe_haslo.requestFocus();
+            //wprowadz_nowe_haslo.requestFocus();
             return;
         } else if (!password.equals(password2)) {
             wprowadz_nowe_haslo_ponownie.setError("Hasła nie są takie same");
-            wprowadz_nowe_haslo_ponownie.requestFocus();
+            //wprowadz_nowe_haslo_ponownie.requestFocus();
+            return;
+        }
+
+        if (password.length() < 7) {
+            System.out.println("Hasło musi mieć co najmniej 7 znaków");
+            wprowadz_nowe_haslo.setError("Hasło musi mieć co najmniej 7 znaków");
+            //wprowadz_nowe_haslo.requestFocus();
             return;
         }
 
