@@ -16,11 +16,13 @@
 
 package pl.plantoplate.ui.registration;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +31,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
+import pl.plantoplate.R;
 import pl.plantoplate.databinding.GroupPageBinding;
 import pl.plantoplate.repository.remote.models.JwtResponse;
 import pl.plantoplate.repository.remote.models.UserJoinGroupData;
@@ -121,13 +124,11 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
                 editor.putString("role", jwt.getRole());
                 editor.apply();
 
-                // start main activity
-                Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-
-                // save app state
-                saveAppState(ApplicationState.MAIN_ACTIVITY);
+                if (jwt.getRole().equals("ROLE_USER")) {
+                    showRoleChildAboutInfoPopUp();
+                } else {
+                    startMainActivity();
+                }
             }
 
             /**
@@ -150,6 +151,29 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
                 Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void startMainActivity(){
+        // start main activity
+        Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+
+        // save app state
+        saveAppState(ApplicationState.MAIN_ACTIVITY);
+    }
+
+    public void showRoleChildAboutInfoPopUp(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.new_pop_up_dziecko);
+
+        TextView acceptButton = dialog.findViewById(R.id.button_yes);
+
+        acceptButton.setOnClickListener(v -> {
+            startMainActivity();
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 
     /**

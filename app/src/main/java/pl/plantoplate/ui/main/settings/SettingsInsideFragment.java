@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -143,14 +144,15 @@ public class SettingsInsideFragment extends Fragment{
                 if(role.equals("ROLE_ADMIN") && userCount > 1) {
                     button_zarzadzanie_uyztkownikamu.setOnClickListener(v -> replaceFragment(new ChangePermissionsFragment()));
                 }else {
-                    button_zarzadzanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
+                    //button_zarzadzanie_uyztkownikamu.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray));
+                    //button_zarzadzanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
                     button_zarzadzanie_uyztkownikamu.setClickable(false);
                 }
             }
 
             @Override
             public void onError(String errorMessage) {
-                Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show();
                 checkUsers(role);
             }
 
