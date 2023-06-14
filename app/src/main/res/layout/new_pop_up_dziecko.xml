@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dialog_add_to_storage"
         android:layout_width="360dp"
-        android:layout_height="520dp"
+        android:layout_height="360dp"
         android:background="?attr/colorPrimaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
