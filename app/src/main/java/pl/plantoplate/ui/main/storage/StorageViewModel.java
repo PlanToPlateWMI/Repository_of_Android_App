@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.models.Category;
 import pl.plantoplate.repository.remote.models.Product;
+import pl.plantoplate.repository.remote.models.UserInfo;
 import pl.plantoplate.repository.remote.storage.StorageRepository;
+import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.tools.CategorySorter;
 
 public class StorageViewModel extends AndroidViewModel {
@@ -40,6 +42,7 @@ public class StorageViewModel extends AndroidViewModel {
     private MutableLiveData<String> error;
     private MutableLiveData<String> storageTitle;
     private MutableLiveData<ArrayList<Category>> storageProducts;
+    private MutableLiveData<UserInfo> userInfo;
 
     /**
      * Constructs a new StorageViewModel object.
@@ -104,6 +107,20 @@ public class StorageViewModel extends AndroidViewModel {
     }
 
     /**
+     * Returns the MutableLiveData object that holds the user info.
+     * If the userInfo object is null, it creates a new instance and fetches the user info.
+     *
+     * @return The MutableLiveData object for the user info.
+     */
+    public MutableLiveData<UserInfo> getUserInfo() {
+        if (userInfo == null) {
+            userInfo = new MutableLiveData<>();
+            fetchUserInfo();
+        }
+        return userInfo;
+    }
+
+    /**
      * Fetches the storage products from the storage repository.
      * It uses the token from shared preferences to authenticate the request.
      * Handles the success, error, and failure cases by updating the corresponding MutableLiveData objects.
@@ -150,6 +167,33 @@ public class StorageViewModel extends AndroidViewModel {
             @Override
             public void onFailure(String failureMessage) {
                 error.setValue(failureMessage);
+            }
+        });
+    }
+
+    public void fetchUserInfo() {
+        UserRepository userRepository = new UserRepository();
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.getUserInfo(token, new ResponseCallback<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo response) {
+                userInfo.setValue(response);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("email", response.getEmail());
+                editor.putString("username", response.getUsername());
+                editor.putString("role", response.getRole());
+                editor.apply();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                //error.setValue(errorMessage);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                //error.setValue(failureMessage);
             }
         });
     }

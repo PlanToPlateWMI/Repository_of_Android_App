@@ -80,6 +80,7 @@ public class BoughtProductsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        shoppingListViewModel.fetchUserInfo();
         shoppingListViewModel.fetchBoughtProducts();
     }
 
@@ -118,6 +119,9 @@ public class BoughtProductsFragment extends Fragment {
      * for success and error operations.
      */
     public void setUpViewModel() {
+        shoppingListViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+        });
+
         // get to buy products
         shoppingListViewModel.getBoughtProducts().observe(getViewLifecycleOwner(), boughtProducts -> {
 

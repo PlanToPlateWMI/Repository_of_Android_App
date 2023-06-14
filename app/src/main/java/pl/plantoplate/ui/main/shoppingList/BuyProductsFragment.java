@@ -91,6 +91,7 @@ public class BuyProductsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        shoppingListViewModel.fetchUserInfo();
         shoppingListViewModel.fetchToBuyProducts();
     }
 
@@ -232,6 +233,9 @@ public class BuyProductsFragment extends Fragment {
      * This method observes the changes in the ViewModel and updates the UI accordingly.
      */
     public void setUpViewModel() {
+        shoppingListViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+        });
+
         // get to buy products
         shoppingListViewModel.getToBuyProducts().observe(getViewLifecycleOwner(), toBuyProducts -> {
 

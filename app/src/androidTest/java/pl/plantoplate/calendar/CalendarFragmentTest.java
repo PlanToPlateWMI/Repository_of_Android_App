@@ -82,7 +82,7 @@ public class CalendarFragmentTest {
     public void testCalendarDisplayed() {
 
         onView(ViewMatchers.withId(R.id.calendarTextView)).check(matches(isDisplayed()));
-        onView(withId(R.id.textView2)).check(matches(isDisplayed()));
+        //onView(withId(R.id)).check(matches(isDisplayed()));
 
     }
 

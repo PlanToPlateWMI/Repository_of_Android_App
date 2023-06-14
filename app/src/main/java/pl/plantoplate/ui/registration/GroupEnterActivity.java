@@ -78,6 +78,8 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
 
     /**
      * This method is called when the activity is resumed.
+     * @param v The view that was clicked
+     * @param code The group code entered by the user
      */
     public void getJoinGroupData(View v, String code) {
         String email = prefs.getString("email", "");

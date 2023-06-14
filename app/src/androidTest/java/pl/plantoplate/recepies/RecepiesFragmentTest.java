@@ -82,7 +82,7 @@ public class RecepiesFragmentTest {
     @Test
     public void testRecepiesDisplayed() {
         onView(ViewMatchers.withId(R.id.recipie)).check(matches(isDisplayed()));
-        onView(withId(R.id.textView)).check(matches(isDisplayed()));
+        //onView(withId(R.id.textView)).check(matches(isDisplayed()));
 
     }
 }

@@ -27,6 +27,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static org.junit.Assert.assertEquals;
+
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -38,7 +40,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
+import mockwebserver3.MockResponse;
+import mockwebserver3.MockWebServer;
+import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
+import pl.plantoplate.repository.remote.models.Message;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 
@@ -49,16 +57,23 @@ public class LoginActivityTest {
     public ActivityScenarioRule<LoginActivity> activityScenarioRule
             = new ActivityScenarioRule<>(LoginActivity.class);
 
+    private MockWebServer server;
+
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         // Initialize Intents
         Intents.init();
+
+        server = new MockWebServer();
+        server.start();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws IOException {
         // Release Intents
         Intents.release();
+
+        server.shutdown();
     }
 
     @Test
@@ -75,6 +90,23 @@ public class LoginActivityTest {
         onView(withId(R.id.enter_mail)).perform(typeText("test@test.com"), closeSoftKeyboard());
         onView(withId(R.id.enter_pass)).perform(typeText("password"), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
+    }
+
+    @Test
+    public void testNoUserExists() throws InterruptedException {
+        MockResponse response = new MockResponse()
+                .setResponseCode(400)
+                .setBody("Account with this email doesn't exist");
+        server.enqueue(response);
+
+        RecordedRequest request = server.takeRequest();
+        assertEquals("/api/endpoint", request.getPath());
+
+        onView(withId(R.id.enter_mail)).perform(typeText("test@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.enter_pass)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.button_zaloguj_sie)).perform(click());
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
     }
 
     @Test

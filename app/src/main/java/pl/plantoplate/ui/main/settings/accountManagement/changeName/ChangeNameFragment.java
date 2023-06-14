@@ -52,10 +52,10 @@ public class ChangeNameFragment extends Fragment {
 
     /**
      * Create the view for this fragment, get the buttons for choosing group code type and set the
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater The layout inflater
+     * @param container The container
+     * @param savedInstanceState The saved instance state
+     * @return The view for this fragment
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

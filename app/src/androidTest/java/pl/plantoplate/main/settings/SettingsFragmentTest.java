@@ -28,7 +28,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 import pl.plantoplate.ui.login.LoginActivity;

@@ -29,7 +29,6 @@ import androidx.fragment.app.FragmentTransaction;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
 import pl.plantoplate.ui.main.settings.accountManagement.changeEmail.ChangeEmailStep1Fragment;
-import pl.plantoplate.ui.main.settings.accountManagement.changeEmail.ChangeEmailStep2Fragment;
 import pl.plantoplate.ui.main.settings.accountManagement.changeName.ChangeNameFragment;
 import pl.plantoplate.ui.main.settings.accountManagement.changePassword.PasswordChangeOldPassword;
 
@@ -47,10 +46,10 @@ public class ChangeTheData extends Fragment {
 
     /**
      * Create the view
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here
+     * @return the view that is created
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

@@ -54,6 +54,9 @@ import pl.plantoplate.ui.main.settings.viewModels.SettingsViewModel;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 
+/**
+ * This fragment is responsible for changing the permissions of the user.
+ */
 public class ChangePermissionsFragment extends Fragment {
 
     private FragmentPermissionsChangeBinding fragmentPermissionsChangeBinding;

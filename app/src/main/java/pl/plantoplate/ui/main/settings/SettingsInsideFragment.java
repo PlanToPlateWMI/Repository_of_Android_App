@@ -53,6 +53,7 @@ import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
 import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
+import pl.plantoplate.ui.main.settings.groupCodeGeneration.GeneratedGroupCodeActivity;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 import pl.plantoplate.ui.main.settings.viewModels.SettingsViewModel;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
@@ -76,8 +77,14 @@ public class SettingsInsideFragment extends Fragment{
     private UserRepository userRepository;
 
     private SharedPreferences prefs;
-    private int userCount;
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        settingsViewModel.fetchUserCount();
+        checkUsers(prefs.getString("role", ""));
+
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -99,14 +106,20 @@ public class SettingsInsideFragment extends Fragment{
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
-        switchButton=settings_view.switchButtonChangeColorTheme;
+        exit_account_button.setOnClickListener(this::exitAccount);
+        button_zmiana_danych.setOnClickListener(v -> replaceFragment(new ChangeTheData()));
+        button_about_us.setOnClickListener(v -> replaceFragment(new MailDevelops()));
 
+        setUpViewModel();
+        setupTheme();
+
+        return settings_view.getRoot();
+    }
+
+    public void setupTheme() {
         SharedPreferences.Editor editor = prefs.edit();
-
-        String key = "theme";
-
         // depends on SharedPreferences key set checked of Switch button
-        switch (prefs.getString(key, "")) {
+        switch (prefs.getString("theme", "")) {
             case "dark":
                 switchButton.setChecked(true);
                 break;
@@ -131,61 +144,14 @@ public class SettingsInsideFragment extends Fragment{
 
             }
         });
-
-        // Set the onClickListeners for the buttons
-        String role = prefs.getString("role", "");
-        String token = "Bearer " + prefs.getString("token", "");
-
-        userRepository.getUsersInfo(token, new ResponseCallback<ArrayList<UserInfo>>() {
-
-            @Override
-            public void onSuccess(ArrayList<UserInfo> response) {
-                userCount = response.size();
-                if(role.equals("ROLE_ADMIN") && userCount > 1) {
-                    button_zarzadzanie_uyztkownikamu.setOnClickListener(v -> replaceFragment(new ChangePermissionsFragment()));
-                }else {
-                    //button_zarzadzanie_uyztkownikamu.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray));
-                    //button_zarzadzanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
-                    button_zarzadzanie_uyztkownikamu.setClickable(false);
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show();
-                checkUsers(role);
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                System.out.println(failureMessage);
-                checkUsers(role);
-            }
-        });
-
-        if(role.equals("ROLE_ADMIN")) {
-            //generate_group_code_button.setOnClickListener(this::chooseGroupCodeType);
-            generate_group_code_button.setOnClickListener(v -> replaceFragment(new GroupCodeTypeActivity()));
-        }else {
-            generate_group_code_button.setBackgroundColor(getResources().getColor(R.color.gray));
-            generate_group_code_button.setClickable(false);
-        }
-
-        exit_account_button.setOnClickListener(this::exitAccount);
-        button_zmiana_danych.setOnClickListener(v -> replaceFragment(new ChangeTheData()));
-        button_about_us.setOnClickListener(v -> replaceFragment(new MailDevelops()));
-
-        setUpViewModel();
-
-        return settings_view.getRoot();
     }
 
     public void checkUsers(String role) {
         if(role.equals("ROLE_ADMIN")) {
-            button_zarzadzanie_uyztkownikamu.setOnClickListener(v -> replaceFragment(new ChangePermissionsFragment()));
+            generate_group_code_button.setOnClickListener(v -> replaceFragment(new GroupCodeTypeActivity()));
         }else {
-            button_zarzadzanie_uyztkownikamu.setBackgroundColor(getResources().getColor(R.color.gray));
-            button_zarzadzanie_uyztkownikamu.setClickable(false);
+            generate_group_code_button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray));
+            generate_group_code_button.setClickable(false);
         }
     }
 
@@ -194,10 +160,28 @@ public class SettingsInsideFragment extends Fragment{
         // get storage view model
         settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
 
-        // get storage title
+        // get user info
         settingsViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             Spannable spans = new SpannableString("Imię: " + userInfo.getUsername() + "\n" + "Email: " + userInfo.getEmail());
             username.setText(spans);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("role", userInfo.getRole());
+            editor.putString("username", userInfo.getUsername());
+            editor.putString("email", userInfo.getEmail());
+            editor.apply();
+
+            checkUsers(userInfo.getRole());
+        });
+
+        // get user count
+        settingsViewModel.getUserCount().observe(getViewLifecycleOwner(), count -> {
+            String role = prefs.getString("role", "");
+            if(role.equals("ROLE_ADMIN") && count > 1) {
+                button_zarzadzanie_uyztkownikamu.setOnClickListener(v -> replaceFragment(new ChangePermissionsFragment()));
+            }else {
+                button_zarzadzanie_uyztkownikamu.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray));
+                button_zarzadzanie_uyztkownikamu.setClickable(false);
+            }
         });
 
         // get success message

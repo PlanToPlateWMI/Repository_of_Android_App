@@ -29,6 +29,9 @@ import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.models.UserInfo;
 import pl.plantoplate.repository.remote.user.UserRepository;
 
+/**
+ * This class is responsible for changing the permissions of the user.
+ */
 public class ChangePermissionsViewModel extends AndroidViewModel {
 
     private UserRepository userRepository;
@@ -88,6 +91,7 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
         });
     }
 
+
     public void changePermissions(UserInfo userInfo) {
         String token = "Bearer " + prefs.getString("token", "");
 
@@ -116,6 +120,13 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
         });
     }
 
+    /**
+     * This method filters the list of users and removes the current user from it.
+     *
+     * @param response list of users
+     * @param email    current user email
+     * @return filtered list of users
+     */
     public ArrayList<UserInfo> filterUsers(ArrayList<UserInfo> response, String email){
         // delete current user from list
         for (int i = 0; i < response.size(); i++) {

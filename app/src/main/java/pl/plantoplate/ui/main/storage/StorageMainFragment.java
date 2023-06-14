@@ -66,7 +66,8 @@ public class StorageMainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        storageViewModel.getStorageProducts();
+        storageViewModel.fetchUserInfo();
+        storageViewModel.fetchStorageProducts();
     }
 
     /**
@@ -240,6 +241,9 @@ public class StorageMainFragment extends Fragment {
     public void setUpViewModel() {
         // get storage view model
         storageViewModel = new ViewModelProvider(this).get(StorageViewModel.class);
+
+        storageViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+        });
 
         // get storage title
         storageViewModel.getStorageTitle().observe(getViewLifecycleOwner(), storageTitle -> storage_title.setText(storageTitle));

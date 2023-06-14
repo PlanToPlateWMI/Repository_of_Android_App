@@ -66,7 +66,12 @@ public class ModifyProductpopUp extends Dialog {
         String unitTitle = productUnitTextView.getText().toString() + " " + product.getUnit();
         productUnitTextView.setText(unitTitle);
 
-        quantity.setText(String.valueOf(product.getAmount()));
+        if(product.getAmount() == 0.0){
+            quantity.setText("");
+        }
+        else{
+            quantity.setText(String.valueOf(product.getAmount()));
+        }
 
         quantity.requestFocus();
         quantity.setTag(product.getAmount());
@@ -79,7 +84,7 @@ public class ModifyProductpopUp extends Dialog {
         plusButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(this.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {
-                quantityValue = "1.0";
+                quantityValue = "0.0";
             }
             if (quantityValue.endsWith(".")) {
                 // add 0
@@ -93,7 +98,7 @@ public class ModifyProductpopUp extends Dialog {
         minusButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(this.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {
-                quantityValue = "1.0";
+                quantityValue = "0.0";
             }
             if (quantityValue.endsWith(".")) {
                 // add 0

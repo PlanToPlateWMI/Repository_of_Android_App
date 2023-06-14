@@ -20,8 +20,10 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -63,6 +65,18 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
 
     private Product product;
     private ProductRepository productRepository;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+       /* OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().getSupportFragmentManager().popBackStack("addOwn", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);*/
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -159,7 +173,7 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
                         Toast.LENGTH_SHORT).show());
 
                 // Go back to the products database fragment
-                requireActivity().getSupportFragmentManager().popBackStack();
+                requireActivity().getSupportFragmentManager().popBackStack("addOwn", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
 
             @Override

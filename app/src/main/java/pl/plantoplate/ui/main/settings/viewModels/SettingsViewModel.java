@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
+
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.models.UserInfo;
 import pl.plantoplate.repository.remote.user.UserRepository;
@@ -36,6 +38,7 @@ public class SettingsViewModel extends AndroidViewModel {
     private MutableLiveData<String> success;
     private MutableLiveData<String> error;
     private MutableLiveData<UserInfo> userInfo;
+    private MutableLiveData<Integer> userCount;
 
     public SettingsViewModel(@NonNull Application application) {
         super(application);
@@ -60,12 +63,43 @@ public class SettingsViewModel extends AndroidViewModel {
     public MutableLiveData<UserInfo> getUserInfo() {
         if (userInfo == null) {
             userInfo = new MutableLiveData<>();
-            fetchUserInfo();
+            fetchUsersInfo();
         }
         return userInfo;
     }
 
-    private void fetchUserInfo() {
+    public MutableLiveData<Integer> getUserCount() {
+        if (userCount == null) {
+            userCount = new MutableLiveData<>();
+            fetchUserCount();
+        }
+        return userCount;
+    }
+
+    public void fetchUserCount() {
+        // Set the onClickListeners for the buttons
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.getUsersInfo(token, new ResponseCallback<ArrayList<UserInfo>>() {
+
+            @Override
+            public void onSuccess(ArrayList<UserInfo> response) {
+                userCount.setValue(response.size());
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                error.setValue(errorMessage);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                error.setValue(failureMessage);
+            }
+        });
+    }
+
+    private void fetchUsersInfo() {
         String token = "Bearer " + prefs.getString("token", "");
 
         userRepository.getUserInfo(token, new ResponseCallback<UserInfo>() {

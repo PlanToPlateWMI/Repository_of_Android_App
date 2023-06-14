@@ -83,16 +83,21 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
     @Override
     public void onResume() {
         super.onResume();
+        productsDbaseViewModel.fetchUserInfo();
         productsDbaseViewModel.fetchOwnProducts();
-        searchView.setOnQueryTextListener(this);
+        if (searchView != null){
+            searchView.setOnQueryTextListener(this);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        searchView.clearFocus();
-        searchView.setQuery("", false);
-        searchView.setOnQueryTextListener(null);
+        if (searchView != null){
+            searchView.clearFocus();
+            searchView.setQuery("", false);
+            searchView.setOnQueryTextListener(null);
+        }
     }
 
     @Override
@@ -108,17 +113,6 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
 
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
-
-        // Set the onClickListeners for the buttons
-        String role = prefs.getString("role", "");
-
-        // Setup listeners
-        if(role.equals("ROLE_ADMIN")) {
-            floatingActionButton_wlasne.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
-        }else {
-            floatingActionButton_wlasne.setVisibility(View.INVISIBLE);
-            floatingActionButton_wlasne.setClickable(false);
-        }
 
         setUpViewModel();
         setupRecyclerView();
@@ -142,7 +136,7 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
     }
 
     public void showAddProductPopup(Product product) {
-        product.setAmount(1);
+        product.setAmount(0);
         ModifyProductpopUp addToCartPopUp = new ModifyProductpopUp(requireContext(), product);
         addToCartPopUp.acceptButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(addToCartPopUp.quantity.getText()).toString();
@@ -177,6 +171,18 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
     }
 
     public void setUpViewModel() {
+        productsDbaseViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+            // Set the onClickListeners for the buttons
+            String role = prefs.getString("role", "");
+
+            // Setup listeners
+            if(role.equals("ROLE_ADMIN")) {
+                floatingActionButton_wlasne.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment(), "addOwn"));
+            }else {
+                floatingActionButton_wlasne.setVisibility(View.INVISIBLE);
+                floatingActionButton_wlasne.setClickable(false);
+            }
+        });
 
         // get to buy products
         productsDbaseViewModel.getOwnProducts().observe(getViewLifecycleOwner(), this::updateRecyclerView);
@@ -219,7 +225,7 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
                 //if admin
                 String role = prefs.getString("role", "");
                 if(role.equals("ROLE_ADMIN")) {
-                    v.setOnClickListener(view -> replaceFragment(new EditOwnProductFragment(product)));
+                    v.setOnClickListener(view -> replaceFragment(new EditOwnProductFragment(product), "editOwn"));
                 }
                 else{
                     //set visibility none
@@ -235,10 +241,10 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         ownProductsRecyclerView.setAdapter(productAllAdapter);
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment, String tag) {
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(tag);
         transaction.commit();
     }
 }

@@ -79,16 +79,21 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     @Override
     public void onResume() {
         super.onResume();
+        productsDbaseViewModel.fetchUserInfo();
         productsDbaseViewModel.fetchAllProducts();
-        searchView.setOnQueryTextListener(this);
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(this);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        searchView.clearFocus();
-        searchView.setQuery("", false);
-        searchView.setOnQueryTextListener(null);
+        if (searchView != null){
+            searchView.clearFocus();
+            searchView.setQuery("", false);
+            searchView.setOnQueryTextListener(null);
+        }
     }
 
     @Override
@@ -124,7 +129,7 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     }
 
     public void showAddProductPopup(Product product) {
-        product.setAmount(1);
+        product.setAmount(0);
         ModifyProductpopUp addToCartPopUp = new ModifyProductpopUp(requireContext(), product);
         addToCartPopUp.acceptButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(addToCartPopUp.quantity.getText()).toString();
@@ -156,6 +161,9 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     }
 
     public void setUpViewModel() {
+
+        productsDbaseViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+        });
 
         // get to buy products
         productsDbaseViewModel.getAllProducts().observe(getViewLifecycleOwner(), products -> {

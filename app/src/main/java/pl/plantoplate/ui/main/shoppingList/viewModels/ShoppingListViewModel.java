@@ -28,8 +28,10 @@ import java.util.ArrayList;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.models.Product;
 import pl.plantoplate.repository.remote.models.ShoppingList;
+import pl.plantoplate.repository.remote.models.UserInfo;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.remote.storage.StorageRepository;
+import pl.plantoplate.repository.remote.user.UserRepository;
 
 public class ShoppingListViewModel extends AndroidViewModel {
 
@@ -42,6 +44,7 @@ public class ShoppingListViewModel extends AndroidViewModel {
     private MutableLiveData<String> boughtProductsOnErrorOperation;
     private MutableLiveData<ArrayList<Product>> toBuyProducts;
     private MutableLiveData<ArrayList<Product>> boughtProducts;
+    private MutableLiveData<UserInfo> userInfo;
 
     public ShoppingListViewModel(@NonNull Application application) {
         super(application);
@@ -96,6 +99,14 @@ public class ShoppingListViewModel extends AndroidViewModel {
         return boughtProducts;
     }
 
+    public MutableLiveData<UserInfo> getUserInfo() {
+        if (userInfo == null) {
+            userInfo = new MutableLiveData<>();
+            fetchUserInfo();
+        }
+        return userInfo;
+    }
+
     public void fetchToBuyProducts() {
         String token = "Bearer " + prefs.getString("token", "");
 
@@ -123,6 +134,9 @@ public class ShoppingListViewModel extends AndroidViewModel {
         shoppingListRepository.getBoughtShoppingList(token, new ResponseCallback<ArrayList<Product>>() {
             @Override
             public void onSuccess(ArrayList<Product> response) {
+                if (boughtProducts == null) {
+                    boughtProducts = new MutableLiveData<>();
+                }
                 boughtProducts.setValue(response);
             }
 
@@ -134,6 +148,33 @@ public class ShoppingListViewModel extends AndroidViewModel {
             @Override
             public void onFailure(String failureMessage) {
                 boughtProductsOnErrorOperation.setValue(failureMessage);
+            }
+        });
+    }
+
+    public void fetchUserInfo() {
+        UserRepository userRepository = new UserRepository();
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.getUserInfo(token, new ResponseCallback<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo response) {
+                userInfo.setValue(response);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("email", response.getEmail());
+                editor.putString("username", response.getUsername());
+                editor.putString("role", response.getRole());
+                editor.apply();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                //error.setValue(errorMessage);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                //error.setValue(failureMessage);
             }
         });
     }

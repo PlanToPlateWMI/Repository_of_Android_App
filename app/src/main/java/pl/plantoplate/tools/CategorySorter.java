@@ -25,8 +25,17 @@ import java.util.Map;
 import pl.plantoplate.repository.remote.models.Product;
 import pl.plantoplate.repository.remote.models.Category;
 
+/**
+ * CategorySorter is a class that sorts categories and products.
+ */
 public class CategorySorter {
 
+    /**
+     * Sorts a list of products by category name and product name.
+     *
+     * @param products The list of products to sort.
+     * @return The sorted list of products.
+     */
     public static ArrayList<Category> sortCategoriesByProduct(ArrayList<Product> products) {
         // Create a map of category names to lists of products
         Map<String, ArrayList<Product>> categoryMap = new HashMap<>();
@@ -53,11 +62,23 @@ public class CategorySorter {
         return categories;
     }
 
+    /**
+     * Sorts a list of products by product name.
+     *
+     * @param products The list of products to sort.
+     * @return The sorted list of products.
+     */
     public static ArrayList<Product> sortProductsByName(ArrayList<Product> products) {
         products.sort(Comparator.comparing(Product::getName));
         return products;
     }
 
+    /**
+     * Filters a list of categories by query
+     * @param products The list of categories to filter.
+     * @param query The query to filter by.
+     * @return The filtered list of categories.
+     */
     public static ArrayList<Product> filterCategoriesBySearch(ArrayList<Category> products, String query) {
         ArrayList<Product> filteredProducts = new ArrayList<>();
         for (Category category : products) {
@@ -70,6 +91,12 @@ public class CategorySorter {
         return filteredProducts;
     }
 
+    /**
+     * Filters a list of products by query
+     * @param products The list of products to filter.
+     * @param query The query to filter by.
+     * @return The filtered list of products.
+     */
     public static ArrayList<Product> filterProductsBySearch(ArrayList<Product> products, String query) {
         ArrayList<Product> filteredProducts= new ArrayList<>();
         for (Product product : products) {

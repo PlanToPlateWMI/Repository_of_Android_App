@@ -11,9 +11,11 @@ import java.util.ArrayList;
 
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.models.Product;
+import pl.plantoplate.repository.remote.models.UserInfo;
 import pl.plantoplate.repository.remote.product.ProductRepository;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.remote.storage.StorageRepository;
+import pl.plantoplate.repository.remote.user.UserRepository;
 
 public class ProductsDbaseViewModel extends AndroidViewModel {
 
@@ -27,6 +29,7 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
     private MutableLiveData<String> ownProductsOnErrorOperation;
     private MutableLiveData<ArrayList<Product>> allProducts;
     private MutableLiveData<ArrayList<Product>> ownProducts;
+    private MutableLiveData<UserInfo> userInfo;
 
     public ProductsDbaseViewModel(@NonNull Application application) {
         super(application);
@@ -80,7 +83,13 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
         return ownProducts;
     }
 
-
+    public MutableLiveData<UserInfo> getUserInfo() {
+        if (userInfo == null) {
+            userInfo = new MutableLiveData<>();
+            fetchUserInfo();
+        }
+        return userInfo;
+    }
 
     public void fetchAllProducts(){
         String token = "Bearer " + prefs.getString("token", "");
@@ -119,6 +128,33 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
             @Override
             public void onFailure(String failureMessage) {
                 ownProductsOnErrorOperation.setValue(failureMessage);
+            }
+        });
+    }
+
+    public void fetchUserInfo() {
+        UserRepository userRepository = new UserRepository();
+        String token = "Bearer " + prefs.getString("token", "");
+
+        userRepository.getUserInfo(token, new ResponseCallback<UserInfo>() {
+            @Override
+            public void onSuccess(UserInfo response) {
+                userInfo.setValue(response);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("email", response.getEmail());
+                editor.putString("username", response.getUsername());
+                editor.putString("role", response.getRole());
+                editor.apply();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                //error.setValue(errorMessage);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                //error.setValue(failureMessage);
             }
         });
     }

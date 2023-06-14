@@ -16,6 +16,9 @@
 
 package pl.plantoplate.tools;
 
+/**
+ * Controller for saving and loading application state.
+ */
 public interface ApplicationStateController {
     void saveAppState(ApplicationState applicationState);
 }

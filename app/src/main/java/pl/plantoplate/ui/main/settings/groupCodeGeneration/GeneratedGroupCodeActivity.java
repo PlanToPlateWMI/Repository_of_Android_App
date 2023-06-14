@@ -33,7 +33,6 @@ import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentGeneratedCodeBinding;
-import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
 
 /**
  * An activity that displays the generated group code.

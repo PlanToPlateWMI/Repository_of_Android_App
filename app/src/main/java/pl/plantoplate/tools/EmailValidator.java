@@ -19,6 +19,9 @@ package pl.plantoplate.tools;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * EmailValidator is a class that provides a method for checking if a given string is a valid email address.
+ */
 public class EmailValidator {
 
     // Define the email regex pattern

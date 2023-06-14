@@ -16,6 +16,9 @@
 
 package pl.plantoplate.tools;
 
+/**
+ * ApplicationState is an enum class that represents the current state of the application.
+ */
 public enum ApplicationState {
     INIT,
     LOGIN,
