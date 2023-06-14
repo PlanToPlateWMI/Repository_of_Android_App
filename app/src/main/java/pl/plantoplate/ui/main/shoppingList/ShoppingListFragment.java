@@ -147,7 +147,11 @@ public class ShoppingListFragment extends Fragment {
     static class ViewPagerAdapter extends FragmentStateAdapter {
         private final List<Fragment> fragmentList = new ArrayList<>();
 
-
+        /**
+         * Constructs a new ViewPagerAdapter.
+         *
+         * @param fragment The fragment associated with the adapter.
+         */
         public ViewPagerAdapter(@NonNull Fragment fragment) {
             super(fragment);
         }
@@ -184,6 +188,12 @@ public class ShoppingListFragment extends Fragment {
         }
     }
 
+    /**
+     * Called when the view previously created by {@link #onCreateView} has been detached from the fragment.
+     * This method is called after {@link #onStop} and before {@link #onDestroy}.
+     * It is recommended to unbind any references or resources associated with the view in this method.
+     * This method should also nullify any view references to prevent potential memory leaks.
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();

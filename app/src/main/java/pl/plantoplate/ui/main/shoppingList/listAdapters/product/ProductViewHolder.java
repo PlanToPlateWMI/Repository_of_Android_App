@@ -42,6 +42,11 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
 
     private LinearLayout layout;
 
+    /**
+     * Constructor for the ProductViewHolder class.
+     *
+     * @param itemView The view representing a single item in the RecyclerView.
+     */
     @SuppressLint("NonConstantResourceId")
     public ProductViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -83,6 +88,12 @@ public class ProductViewHolder extends RecyclerView.ViewHolder{
         }
     }
 
+    /**
+     * Binds the data of a Product object to the views in the view holder.
+     *
+     * @param product  The Product object to bind.
+     * @param listener The listener for the item buttons.
+     */
     @SuppressLint("NonConstantResourceId")
     public void bind(Product product, SetupItemButtons listener) {
         name.setText(product.getName());

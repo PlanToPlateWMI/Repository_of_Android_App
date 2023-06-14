@@ -70,18 +70,40 @@ public class BuyProductsFragment extends Fragment {
 
     private SharedPreferences prefs;
 
+    /**
+     * Called when the fragment is being created.
+     * This method is called after the parent fragment's {@link #onCreateView} has returned.
+     * It is recommended to initialize any necessary resources or variables in this method.
+     * In this case, the method creates an instance of the {@link ShoppingListViewModel} and associates it with the parent fragment.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         shoppingListViewModel = new ViewModelProvider(requireParentFragment()).get(ShoppingListViewModel.class);
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * This method is called after the fragment has been resumed from a paused state.
+     * It is recommended to perform any necessary UI updates or data fetching in this method.
+     * In this case, the method fetches the "to-buy" products using the {@link ShoppingListViewModel}.
+     */
     @Override
     public void onResume() {
         super.onResume();
         shoppingListViewModel.fetchToBuyProducts();
     }
 
+    /**
+     * Called to create the view hierarchy associated with the fragment.
+     * This method is responsible for inflating the fragment's layout, initializing UI elements,
+     * setting up the RecyclerView, setting up the ViewModel, and returning the root view of the fragment.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState A Bundle containing any saved state information.
+     * @return The root view of the fragment.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,6 +120,11 @@ public class BuyProductsFragment extends Fragment {
         return fragmentTrzebaKupicBinding.getRoot();
     }
 
+    /**
+     * Shows a popup dialog for adding a product to the shopping list.
+     *
+     * @param product The product to be added to the shopping list.
+     */
     public void showAddProductPopup(Product product) {
         ModifyProductpopUp addToCartPopUp = new ModifyProductpopUp(requireContext(), product);
         addToCartPopUp.acceptButton.setOnClickListener(v -> {
@@ -116,6 +143,11 @@ public class BuyProductsFragment extends Fragment {
         addToCartPopUp.show();
     }
 
+    /**
+     * Shows a popup dialog for deleting a product from the shopping list.
+     *
+     * @param product The product to be deleted from the shopping list.
+     */
     public void showDeleteProductPopup(Product product) {
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
@@ -139,11 +171,24 @@ public class BuyProductsFragment extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Set up the RecyclerView for displaying the products in the shopping list.
+     * Configures the layout manager, adapter, and item buttons for the RecyclerView.
+     * The visibility of the delete product button depends on the user role.
+     */
     private void setUpRecyclerView() {
         categoryRecyclerView = fragmentTrzebaKupicBinding.productsOwnRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         CategoryAdapter categoryAdapter = new CategoryAdapter(new ArrayList<>(), R.layout.item_trzeba_kupic, R.layout.item_category_lista);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
+
+            /**
+             * Set up the click listener for the delete product button in the shopping list item.
+             * The visibility of the button depends on the user's role.
+             *
+             * @param v       The delete product button view.
+             * @param product The product associated with the button.
+             */
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {
                 String role = prefs.getString("role", "");
@@ -156,11 +201,23 @@ public class BuyProductsFragment extends Fragment {
                 }
             }
 
+            /**
+             * Set up the click listener for the check shopping list button in the shopping list item.
+             *
+             * @param v       The check shopping list button view.
+             * @param product The product associated with the button.
+             */
             @Override
             public void setupCheckShoppingListButtonClick(View v, Product product) {
                 v.setOnClickListener(view -> shoppingListViewModel.moveProductToBought(product));
             }
 
+            /**
+             * Set up the click listener for the product item in the shopping list.
+             *
+             * @param v       The product item view.
+             * @param product The product associated with the item.
+             */
             @Override
             public void setupProductItemClick(View v, Product product) {
                 v.setOnClickListener(view -> showAddProductPopup(product));
@@ -169,6 +226,11 @@ public class BuyProductsFragment extends Fragment {
         categoryRecyclerView.setAdapter(categoryAdapter);
     }
 
+    /**
+     * Set up the ViewModel observers for the shopping list.
+     *
+     * This method observes the changes in the ViewModel and updates the UI accordingly.
+     */
     public void setUpViewModel() {
         // get to buy products
         shoppingListViewModel.getToBuyProducts().observe(getViewLifecycleOwner(), toBuyProducts -> {

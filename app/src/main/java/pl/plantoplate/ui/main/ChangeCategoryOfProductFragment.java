@@ -52,10 +52,23 @@ public class ChangeCategoryOfProductFragment extends Fragment {
 
     private ChangeCategoryListener changeCategoryListener;
 
+    /**
+     * Constructs a new ChangeCategoryOfProductFragment object with the specified change category listener.
+     *
+     * @param changeCategoryListener The change category listener to be set for the fragment.
+     */
     public ChangeCategoryOfProductFragment(ChangeCategoryListener changeCategoryListener) {
         this.changeCategoryListener = changeCategoryListener;
     }
 
+    /**
+     * Called when the fragment should create its view hierarchy.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     * @return The View for the fragment's UI.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,6 +90,14 @@ public class ChangeCategoryOfProductFragment extends Fragment {
         return fragmentChangeCategoryBinding.getRoot();
     }
 
+    /**
+     * Applies the changes made in the fragment.
+     * It retrieves the checked radio button from the categories radio group.
+     * If no radio button is checked, it displays a Snackbar with an error message and returns.
+     * Otherwise, it calls the onCategoryChosen() method of the change category listener,
+     * passing the text of the checked radio button as the chosen category.
+     * Finally, it closes the fragment by popping the back stack of the parent fragment manager.
+     */
     public void applyChanges() {
         RadioButton checkedRadioButton = categoriesRadioGroup.getCheckedRadioButton();
         if (checkedRadioButton == null) {
@@ -90,6 +111,9 @@ public class ChangeCategoryOfProductFragment extends Fragment {
         getParentFragmentManager().popBackStack();
     }
 
+    /**
+     * Cancels the changes made in the fragment and closes the fragment by popping the back stack of the parent fragment manager.
+     */
     public void cancelChanges() {
         // Close fragment
         getParentFragmentManager().popBackStack();

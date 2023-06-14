@@ -25,6 +25,10 @@ public class PlanToPlate extends Application {
 
     private static PlanToPlate instance;
 
+    /**
+     * Called when the application is starting. This is where you should initialize
+     * any resources that your app will need throughout its lifecycle.
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -34,14 +38,29 @@ public class PlanToPlate extends Application {
         }
     }
 
+    /**
+     * Returns the instance of the PlanToPlate class.
+     *
+     * @return The instance of the PlanToPlate class.
+     */
     public static PlanToPlate getInstance(){
         return instance;
     }
 
+    /**
+     * Checks whether the device has network connectivity.
+     *
+     * @return {@code true} if the device has network connectivity, {@code false} otherwise.
+     */
     public static boolean hasNetwork(){
         return instance.isNetworkConnected();
     }
 
+    /**
+     * Checks whether the device is currently connected to a network.
+     *
+     * @return {@code true} if the device is connected to a network, {@code false} otherwise.
+     */
     private boolean isNetworkConnected(){
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -63,6 +63,14 @@ public class StorageMainFragment extends Fragment {
 
     private SharedPreferences prefs;
 
+    /**
+     * Called when the fragment should create its view hierarchy.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     * @return The View for the fragment's UI.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,10 +96,21 @@ public class StorageMainFragment extends Fragment {
         return fragmentStorageInsideBinding.getRoot();
     }
 
+    /**
+     * Called when the "plus" button is clicked.
+     *
+     * @param view The view that was clicked.
+     */
     public void onPlusClicked(View view) {
         ShoppingListRepository shoppingListRepository = new ShoppingListRepository();
         String token = "Bearer " + prefs.getString("token", "");
         shoppingListRepository.getBoughtProductsIds(token, new ResponseCallback<ArrayList<Integer>>() {
+
+            /**
+             * Called when the network request is successful and receives the list of product IDs.
+             *
+             * @param productsIds The list of product IDs.
+             */
             @Override
             public void onSuccess(ArrayList<Integer> productsIds) {
                 if (productsIds.isEmpty()){
@@ -102,6 +121,11 @@ public class StorageMainFragment extends Fragment {
                 }
             }
 
+            /**
+             * Called when an error occurs during the network request.
+             *
+             * @param errorMessage The error message describing the encountered error.
+             */
             @Override
             public void onError(String errorMessage) {
                 if (isAdded()) {
@@ -109,6 +133,11 @@ public class StorageMainFragment extends Fragment {
                 }
             }
 
+            /**
+             * Called when the network request fails.
+             *
+             * @param failureMessage The failure message describing the reason for the failure.
+             */
             @Override
             public void onFailure(String failureMessage) {
                 if (isAdded()) {
@@ -118,6 +147,11 @@ public class StorageMainFragment extends Fragment {
         });
     }
 
+    /**
+     * Shows a custom pop-up dialog for adding products from storage to storage.
+     *
+     * @param productsIds The list of product IDs to add.
+     */
     public void showaddFromPopUp(ArrayList<Integer> productsIds) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.new_pop_up_add_products_from_storage_to_storage);
@@ -138,6 +172,11 @@ public class StorageMainFragment extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Shows a pop-up dialog for modifying a product.
+     *
+     * @param product The product to be modified.
+     */
     public void showModifyProductPopup(Product product) {
         ModifyProductpopUp modifyProductPopUp = new ModifyProductpopUp(requireContext(), product);
         modifyProductPopUp.acceptButton.setOnClickListener(v -> {
@@ -158,7 +197,11 @@ public class StorageMainFragment extends Fragment {
         modifyProductPopUp.show();
     }
 
-
+    /**
+     * Shows a pop-up dialog for deleting a product from storage.
+     *
+     * @param product The product to be deleted.
+     */
     public void showDeleteProductPopup(Product product) {
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
@@ -183,6 +226,11 @@ public class StorageMainFragment extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Set up the view model for the storage.
+     * This method initializes the storage view model, observes different data from the view model,
+     * and updates the UI accordingly.
+     */
     public void setUpViewModel() {
         // get storage view model
         storageViewModel = new ViewModelProvider(this).get(StorageViewModel.class);
@@ -214,23 +262,49 @@ public class StorageMainFragment extends Fragment {
 
     }
 
+    /**
+     * Set up the recycler view for displaying storage products.
+     * This method configures the recycler view with a layout manager,
+     * an adapter, and item button setups.
+     */
     public void setUpRecyclerView() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         CategoryAdapter categoryAdapter = new CategoryAdapter(new ArrayList<>(), R.layout.item_spizarnia, R.layout.item_category_spizarnia);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
+
+            /**
+             * Set up the click listener for the "Add to Shopping List" button in the category adapter.
+             * This method defines the behavior when the button is clicked.
+             *
+             * @param v       The button view.
+             * @param product The product associated with the button.
+             */
             @Override
             public void setupAddToShoppingListButtonClick(View v, Product product) {
                 v.setOnClickListener(view -> {
                 });
             }
 
+            /**
+             * Set up the click listener for the product item in the category adapter.
+             * This method defines the behavior when a product item is clicked.
+             *
+             * @param v       The product item view.
+             * @param product The product associated with the item.
+             */
             @Override
             public void setupProductItemClick(View v, Product product) {
                 v.setOnClickListener(view -> showModifyProductPopup(product));
             }
 
-            //delete product from storage
+            /**
+             * Set up the click listener for the delete product button in the category adapter.
+             * This method defines the behavior when the button is clicked.
+             *
+             * @param v       The button view.
+             * @param product The product associated with the button.
+             */
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {
                 String role = prefs.getString("role", "");
@@ -246,6 +320,11 @@ public class StorageMainFragment extends Fragment {
         recyclerView.setAdapter(categoryAdapter);
     }
 
+    /**
+     * Replaces the current fragment with the specified fragment.
+     *
+     * @param fragment The fragment to be replaced.
+     */
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();

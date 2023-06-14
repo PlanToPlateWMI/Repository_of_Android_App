@@ -134,17 +134,33 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
 
         AuthRepository authRepository = new AuthRepository();
         authRepository.getEmailConfirmCode(email, "registration", new ResponseCallback<String>() {
+
+            /**
+             * Called when the operation is successful and receives a response.
+             *
+             * @param response The response received from the operation.
+             */
             @Override
             public void onSuccess(String response) {
                 // save the code in the shared preferences
                 prefs.edit().putString("code", response).apply();
             }
 
+            /**
+             * Called when an error occurs.
+             *
+             * @param errorMessage The error message to display.
+             */
             @Override
             public void onError(String errorMessage) {
                 Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
             }
 
+            /**
+             * Called when a failure occurs.
+             *
+             * @param failureMessage The failure message to display.
+             */
             @Override
             public void onFailure(String failureMessage) {
                 Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();

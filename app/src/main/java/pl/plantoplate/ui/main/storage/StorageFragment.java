@@ -37,6 +37,14 @@ public class StorageFragment extends Fragment {
     private FragmentStorageBinding fragmentStorageBinding;
 
 
+    /**
+     * Called when the fragment should create its view hierarchy.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state.
+     * @return The View for the fragment's UI.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +54,11 @@ public class StorageFragment extends Fragment {
         return fragmentStorageBinding.getRoot();
     }
 
+    /**
+     * Replaces the current fragment with the specified fragment.
+     *
+     * @param fragment The fragment to be replaced.
+     */
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();

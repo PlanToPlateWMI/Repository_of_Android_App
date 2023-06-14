@@ -17,6 +17,7 @@
 /**
  * This fragment is responsible for changing the permissions of the user.
  */
+
 package pl.plantoplate.ui.main.settings.changePermissions;
 
 import android.app.Dialog;

@@ -107,6 +107,12 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
     public void joinGroup(View view, UserJoinGroupData userJoinGroupdata) {
         GroupRepository groupRepository = new GroupRepository();
         groupRepository.joinGroupByCode(userJoinGroupdata, new ResponseCallback<JwtResponse>() {
+
+            /**
+             * Called when the operation is successful and receives a JwtResponse.
+             *
+             * @param jwt The JwtResponse object containing the token and role.
+             */
             @Override
             public void onSuccess(JwtResponse jwt) {
                 // Save token and role in shared preferences
@@ -124,11 +130,21 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
                 saveAppState(ApplicationState.MAIN_ACTIVITY);
             }
 
+            /**
+             * Called when an error occurs.
+             *
+             * @param errorMessage The error message to display.
+             */
             @Override
             public void onError(String errorMessage) {
                 Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
             }
 
+            /**
+             * Called when a failure occurs.
+             *
+             * @param failureMessage The failure message to display.
+             */
             @Override
             public void onFailure(String failureMessage) {
                 Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();

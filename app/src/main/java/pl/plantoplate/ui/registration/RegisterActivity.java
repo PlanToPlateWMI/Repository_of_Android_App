@@ -200,6 +200,12 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         startActivity(intent);
 
         authRepository.sendUserRegisterData(userData, new ResponseCallback<String>() {
+
+            /**
+             * Called when the operation is successful and receives a code.
+             *
+             * @param code The code received from the operation.
+             */
             @Override
             public void onSuccess(String code) {
                 // save user data to shared preferences
@@ -210,11 +216,21 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
                 editor.putString("code", code).apply();
             }
 
+            /**
+             * Called when an error occurs.
+             *
+             * @param errorMessage The error message to display.
+             */
             @Override
             public void onError(String errorMessage) {
                 Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
             }
 
+            /**
+             * Called when a failure occurs.
+             *
+             * @param failureMessage The failure message to display.
+             */
             @Override
             public void onFailure(String failureMessage) {
                 Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();

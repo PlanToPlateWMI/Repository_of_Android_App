@@ -83,6 +83,11 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         startActivity(intent);
     }
 
+    /**
+     * Retrieves the CreateGroupData object with user credentials.
+     *
+     * @return The CreateGroupData object containing user credentials.
+     */
     public CreateGroupData getCreateGroupData() {
         // get user credentials from shared preferences
         String email = prefs.getString("email", "");
@@ -104,6 +109,12 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         // make API call to create a new group with user credentials
         GroupRepository groupRepository = new GroupRepository();
         groupRepository.createGroup(createGroupData, new ResponseCallback<JwtResponse>() {
+
+            /**
+             * Called when the operation is successful and receives a JwtResponse.
+             *
+             * @param jwt The JwtResponse object containing the token and role.
+             */
             @Override
             public void onSuccess(JwtResponse jwt) {
 
@@ -122,11 +133,21 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
                 saveAppState(ApplicationState.MAIN_ACTIVITY);
             }
 
+            /**
+             * Called when an error occurs.
+             *
+             * @param errorMessage The error message to display.
+             */
             @Override
             public void onError(String errorMessage) {
                 Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
             }
 
+            /**
+             * Called when a failure occurs.
+             *
+             * @param failureMessage The failure message to display.
+             */
             @Override
             public void onFailure(String failureMessage) {
                 Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();

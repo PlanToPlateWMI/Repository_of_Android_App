@@ -60,18 +60,39 @@ public class BoughtProductsFragment extends Fragment {
 
     private SharedPreferences prefs;
 
+    /**
+     * Called when the fragment is being created.
+     * This method initializes the ShoppingListViewModel by obtaining it from the parent fragment's ViewModelProvider.
+     *
+     * @param savedInstanceState The saved instance state bundle.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         shoppingListViewModel = new ViewModelProvider(requireParentFragment()).get(ShoppingListViewModel.class);
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * This method is responsible for fetching the bought products by calling the fetchBoughtProducts method in the ShoppingListViewModel.
+     * This ensures that the latest data is displayed when the fragment is resumed.
+     */
     @Override
     public void onResume() {
         super.onResume();
         shoppingListViewModel.fetchBoughtProducts();
     }
 
+    /**
+     * Called to create the view hierarchy associated with the fragment.
+     * This method inflates the layout for the fragment, sets up the move to storage button,
+     * and initializes the ViewModel and RecyclerView.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container          The parent view that the fragment's UI should be attached to
+     * @param savedInstanceState A Bundle object containing the saved instance state of the fragment
+     * @return                   The inflated root view of the fragment
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -91,6 +112,11 @@ public class BoughtProductsFragment extends Fragment {
         return fragmentKupioneBinding.getRoot();
     }
 
+    /**
+     * Sets up the ViewModel observers to listen for changes in the bought products, success messages,
+     * and error messages. Updates the RecyclerView with the bought products and displays toast messages
+     * for success and error operations.
+     */
     public void setUpViewModel() {
         // get to buy products
         shoppingListViewModel.getBoughtProducts().observe(getViewLifecycleOwner(), boughtProducts -> {
@@ -112,11 +138,24 @@ public class BoughtProductsFragment extends Fragment {
 
     }
 
+    /**
+     * Sets up the RecyclerView to display the bought products. It configures the layout manager,
+     * creates a ProductAdapter, and sets up item buttons for deleting products and moving them back
+     * to the shopping list. The adapter is then set to the RecyclerView.
+     */
     private void setUpRecyclerView() {
         productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
         productsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ProductAdapter productAdapter = new ProductAdapter(new ArrayList<>(), R.layout.item_kupione);
         productAdapter.setUpItemButtons(new SetupItemButtons() {
+            /**
+             * Sets up the delete product button click listener for a specific product item in the RecyclerView.
+             * If the user has the role of "ROLE_ADMIN", clicking the button will show a delete product popup
+             * for the corresponding product. Otherwise, the button's visibility is set to `View.INVISIBLE`.
+             *
+             * @param v       The delete product button view.
+             * @param product The product associated with the button.
+             */
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {
                 String role = prefs.getString("role", "");
@@ -129,6 +168,14 @@ public class BoughtProductsFragment extends Fragment {
                 }
             }
 
+            /**
+             * Sets up the check shopping list button click listener for a specific product item in the RecyclerView.
+             * Clicking the button will trigger the movement of the product back to the shopping list, as handled by the
+             * associated ViewModel.
+             *
+             * @param v       The check shopping list button view.
+             * @param product The product associated with the button.
+             */
             @Override
             public void setupCheckShoppingListButtonClick(View v, Product product) {
                 v.setOnClickListener(view -> shoppingListViewModel.moveProductToBuy(product));
@@ -137,6 +184,12 @@ public class BoughtProductsFragment extends Fragment {
         productsRecyclerView.setAdapter(productAdapter);
     }
 
+    /**
+     * Shows a delete product popup dialog for the specified product.
+     * The popup dialog allows the user to confirm the deletion of the product from the shopping list.
+     *
+     * @param product The product to be deleted.
+     */
     public void showDeleteProductPopup(Product product) {
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
@@ -155,6 +208,11 @@ public class BoughtProductsFragment extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Shows a move product to storage popup dialog.
+     * The popup dialog allows the user to confirm the move of products from the bought list to the storage.
+     * If there are no products in the bought list, a toast message is displayed.
+     */
     public void showMoveProductToStoragePopUp(){
         if (Objects.requireNonNull(shoppingListViewModel.getBoughtProducts().getValue()).isEmpty())
         {
@@ -180,6 +238,11 @@ public class BoughtProductsFragment extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Replaces the current fragment with the specified fragment
+     *
+     * @param fragment the fragment to replace the current fragment with
+     */
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);

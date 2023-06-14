@@ -34,6 +34,14 @@ public class CalendarFragment extends Fragment {
 
     private FragmentCalendarBinding calendar_view;
 
+    /**
+     * Called to create the view hierarchy of the fragment.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState A Bundle object containing the saved state of the fragment.
+     * @return The root View of the fragment's layout.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
