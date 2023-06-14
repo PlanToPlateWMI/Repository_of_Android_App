@@ -121,6 +121,14 @@ public class BoughtProductsFragment extends Fragment {
         // get to buy products
         shoppingListViewModel.getBoughtProducts().observe(getViewLifecycleOwner(), boughtProducts -> {
 
+            // set up move to storage button
+            if (boughtProducts.isEmpty()) {
+                moveToStorageButton.setVisibility(View.INVISIBLE);
+            } else {
+                moveToStorageButton.setVisibility(View.VISIBLE);
+                moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
+            }
+
             // update recycler view
             ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
             Objects.requireNonNull(productAdapter).setProductsList(CategorySorter.sortProductsByName(boughtProducts));
@@ -128,14 +136,17 @@ public class BoughtProductsFragment extends Fragment {
 
         // get success message
         shoppingListViewModel.getBoughtProductsOnSuccessOperation().observe(getViewLifecycleOwner(), successMessage -> {
-            requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), successMessage, Toast.LENGTH_SHORT).show());
+            if (isAdded()) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), successMessage, Toast.LENGTH_SHORT).show());
+            }
         });
 
         // get error message
         shoppingListViewModel.getBoughtProductsOnErrorOperation().observe(getViewLifecycleOwner(), errorMessage -> {
-            requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show());
+            if (isAdded()) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+            }
         });
-
     }
 
     /**

@@ -63,6 +63,12 @@ public class StorageMainFragment extends Fragment {
 
     private SharedPreferences prefs;
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        storageViewModel.getStorageProducts();
+    }
+
     /**
      * Called when the fragment should create its view hierarchy.
      *

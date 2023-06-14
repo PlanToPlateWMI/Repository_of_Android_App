@@ -81,6 +81,7 @@ public class ShoppingListViewModel extends AndroidViewModel {
     public MutableLiveData<ArrayList<Product>> getToBuyProducts() {
         if (toBuyProducts == null) {
             toBuyProducts = new MutableLiveData<>();
+            toBuyProducts.setValue(new ArrayList<>());
             fetchToBuyProducts();
         }
         return toBuyProducts;
@@ -89,6 +90,7 @@ public class ShoppingListViewModel extends AndroidViewModel {
     public MutableLiveData<ArrayList<Product>> getBoughtProducts() {
         if (boughtProducts == null) {
             boughtProducts = new MutableLiveData<>();
+            boughtProducts.setValue(new ArrayList<>());
             fetchBoughtProducts();
         }
         return boughtProducts;
@@ -141,6 +143,14 @@ public class ShoppingListViewModel extends AndroidViewModel {
         shoppingListRepository.changeProductStateInShopList(token, product.getId(), new ResponseCallback<ShoppingList>() {
             @Override
             public void onSuccess(ShoppingList shoppingList) {
+                if (boughtProducts == null) {
+                    boughtProducts = new MutableLiveData<>();
+                    boughtProducts.setValue(new ArrayList<>());
+                }
+                if (toBuyProducts == null) {
+                    toBuyProducts = new MutableLiveData<>();
+                    toBuyProducts.setValue(new ArrayList<>());
+                }
                 boughtProducts.setValue(shoppingList.getBought());
                 toBuyProducts.setValue(shoppingList.getToBuy());
 
@@ -163,6 +173,14 @@ public class ShoppingListViewModel extends AndroidViewModel {
         shoppingListRepository.changeProductStateInShopList(token, product.getId(), new ResponseCallback<ShoppingList>() {
             @Override
             public void onSuccess(ShoppingList shoppingList) {
+                if (boughtProducts == null) {
+                    boughtProducts = new MutableLiveData<>();
+                    boughtProducts.setValue(new ArrayList<>());
+                }
+                if (toBuyProducts == null) {
+                    toBuyProducts = new MutableLiveData<>();
+                    toBuyProducts.setValue(new ArrayList<>());
+                }
                 boughtProducts.setValue(shoppingList.getBought());
                 toBuyProducts.setValue(shoppingList.getToBuy());
 
