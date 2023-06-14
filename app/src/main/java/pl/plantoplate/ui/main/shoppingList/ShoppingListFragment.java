@@ -22,17 +22,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
+import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
+import pl.plantoplate.ui.main.shoppingList.viewModels.ShoppingListViewModel;
 
 /**
  * Fragment for shopping list.
@@ -43,6 +49,11 @@ public class ShoppingListFragment extends Fragment {
     private SharedPreferences prefs;
     private ViewPager2 viewPager;
 
+    /**
+     * Method called on fragment start initialization.
+     * Method initialize SharedPreferences object and set
+     * selected all products fragment by default on restart fragment.
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -56,6 +67,15 @@ public class ShoppingListFragment extends Fragment {
         viewPager.setCurrentItem(0);
     }
 
+    /**
+     * Method called on fragment view creation.
+     * Method initialize fragment view and setup swipe pager and bottom navigation.
+     *
+     * @param inflater layout inflater that can be used to inflate any views in the fragment.
+     * @param container view group container that will contain the fragment.
+     * @param savedInstanceState saved instance state of fragment.
+     * @return root view of fragment.
+     */
     @SuppressLint("NonConstantResourceId")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -71,21 +91,23 @@ public class ShoppingListFragment extends Fragment {
         setupViewPager(viewPager);
         // Setup navigation
         setupNavigation();
-
         return shopping_list_view.getRoot();
     }
 
+    /**
+     * Method called on fragment view creation that setup bottom navigation
+     * listener. If user click on bottom navigation item then we change
+     * current fragment in swipe pager.
+     */
     @SuppressLint("NonConstantResourceId")
     private void setupNavigation() {
         shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.trzeba_kupic:
                     viewPager.setCurrentItem(0);
-                    System.out.println("trzeba kupic");
                     return true;
                 case R.id.kupione:
                     viewPager.setCurrentItem(1);
-                    System.out.println("kupione");
                     return true;
             }
             return false;
@@ -94,7 +116,6 @@ public class ShoppingListFragment extends Fragment {
 
     /**
      * Setup swipe pager for shopping list.
-     *
      * @param viewPager swipe pager
      */
     private void setupViewPager(ViewPager2 viewPager) {
@@ -161,5 +182,12 @@ public class ShoppingListFragment extends Fragment {
         public void addFragment(Fragment fragment) {
             fragmentList.add(fragment);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        System.out.println("ShoppingListFragment.onDestroyView");
+        shopping_list_view = null;
     }
 }

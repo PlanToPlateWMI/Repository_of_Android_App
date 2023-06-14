@@ -102,7 +102,7 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
         add_product_name = add_own_product_view.enterTheName;
 
         // Set the button listener
-        add_product_button.setOnClickListener(v -> addProduct(requireActivity().findViewById(R.id.frame_layout)));
+        add_product_button.setOnClickListener(v -> addProduct());
 
         change_kategory = add_own_product_view.zmienKategorie;
         change_kategory.findViewById(R.id.zmien_kategorie);
@@ -145,7 +145,7 @@ public class AddYourOwnProductFragment extends Fragment implements ChangeCategor
         product_category.setText(category);
     }
 
-    public void addProduct(View v) {
+    public void addProduct() {
         // Set up product
         String product_name = Objects.requireNonNull(add_product_name.getText()).toString();
         product.setName(product_name);

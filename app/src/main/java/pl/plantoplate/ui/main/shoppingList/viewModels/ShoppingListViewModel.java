@@ -1,0 +1,275 @@
+package pl.plantoplate.ui.main.shoppingList.viewModels;
+
+import android.app.Application;
+import android.content.SharedPreferences;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
+
+import pl.plantoplate.repository.remote.ResponseCallback;
+import pl.plantoplate.repository.remote.models.Product;
+import pl.plantoplate.repository.remote.models.ShoppingList;
+import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
+import pl.plantoplate.repository.remote.storage.StorageRepository;
+
+public class ShoppingListViewModel extends AndroidViewModel {
+
+    private final SharedPreferences prefs;
+    private final ShoppingListRepository shoppingListRepository;
+
+    private MutableLiveData<String> toBuyProductsOnSuccessOperation;
+    private MutableLiveData<String> toBuyProductsOnErrorOperation;
+    private MutableLiveData<String> boughtProductsOnSuccessOperation;
+    private MutableLiveData<String> boughtProductsOnErrorOperation;
+    private MutableLiveData<ArrayList<Product>> toBuyProducts;
+    private MutableLiveData<ArrayList<Product>> boughtProducts;
+
+    public ShoppingListViewModel(@NonNull Application application) {
+        super(application);
+        prefs = application.getSharedPreferences("prefs", 0);
+
+        shoppingListRepository = new ShoppingListRepository();
+    }
+
+    public MutableLiveData<String> getToBuyProductsOnSuccessOperation() {
+        if (toBuyProductsOnSuccessOperation == null) {
+            toBuyProductsOnSuccessOperation = new MutableLiveData<>();
+        }
+        return toBuyProductsOnSuccessOperation;
+    }
+
+    public MutableLiveData<String> getToBuyProductsOnErrorOperation() {
+        if (toBuyProductsOnErrorOperation == null) {
+            toBuyProductsOnErrorOperation = new MutableLiveData<>();
+        }
+        return toBuyProductsOnErrorOperation;
+    }
+
+    public MutableLiveData<String> getBoughtProductsOnSuccessOperation() {
+        if (boughtProductsOnSuccessOperation == null) {
+            boughtProductsOnSuccessOperation = new MutableLiveData<>();
+        }
+        return boughtProductsOnSuccessOperation;
+    }
+
+    public MutableLiveData<String> getBoughtProductsOnErrorOperation() {
+        if (boughtProductsOnErrorOperation == null) {
+            boughtProductsOnErrorOperation = new MutableLiveData<>();
+        }
+        return boughtProductsOnErrorOperation;
+    }
+
+    public MutableLiveData<ArrayList<Product>> getToBuyProducts() {
+        if (toBuyProducts == null) {
+            toBuyProducts = new MutableLiveData<>();
+            fetchToBuyProducts();
+        }
+        return toBuyProducts;
+    }
+
+    public MutableLiveData<ArrayList<Product>> getBoughtProducts() {
+        if (boughtProducts == null) {
+            boughtProducts = new MutableLiveData<>();
+            fetchBoughtProducts();
+        }
+        return boughtProducts;
+    }
+
+    public void fetchToBuyProducts() {
+        String token = "Bearer " + prefs.getString("token", "");
+
+        shoppingListRepository.getToBuyShoppingList(token, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                toBuyProducts.setValue(response);
+            }
+
+            @Override
+            public void onError(String message) {
+                toBuyProductsOnErrorOperation.setValue(message);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                toBuyProductsOnErrorOperation.setValue(failureMessage);
+            }
+        });
+    }
+
+    public void fetchBoughtProducts() {
+        String token = "Bearer " + prefs.getString("token", "");
+
+        shoppingListRepository.getBoughtShoppingList(token, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                boughtProducts.setValue(response);
+            }
+
+            @Override
+            public void onError(String message) {
+                boughtProductsOnErrorOperation.setValue(message);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                boughtProductsOnErrorOperation.setValue(failureMessage);
+            }
+        });
+    }
+
+    public void moveProductToBuy(Product product){
+        String token = "Bearer " + prefs.getString("token", "");
+        shoppingListRepository.changeProductStateInShopList(token, product.getId(), new ResponseCallback<ShoppingList>() {
+            @Override
+            public void onSuccess(ShoppingList shoppingList) {
+                boughtProducts.setValue(shoppingList.getBought());
+                toBuyProducts.setValue(shoppingList.getToBuy());
+
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                boughtProductsOnErrorOperation.setValue(errorMessage);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                boughtProductsOnErrorOperation.setValue(failureMessage);
+            }
+        });
+    }
+
+    public void moveProductToBought(Product product){
+        String token = "Bearer " + prefs.getString("token", "");
+        shoppingListRepository.changeProductStateInShopList(token, product.getId(), new ResponseCallback<ShoppingList>() {
+            @Override
+            public void onSuccess(ShoppingList shoppingList) {
+                boughtProducts.setValue(shoppingList.getBought());
+                toBuyProducts.setValue(shoppingList.getToBuy());
+
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                toBuyProductsOnErrorOperation.setValue(errorMessage);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                toBuyProductsOnErrorOperation.setValue(failureMessage);
+            }
+        });
+    }
+
+    public void deleteProductFromList(Product product, String listType){
+        String token = "Bearer " + prefs.getString("token", "");
+        shoppingListRepository.deleteProductFromShopList(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> shopList) {
+                if (listType.equals("toBuy")) {
+                    toBuyProducts.setValue(shopList);
+                    toBuyProductsOnSuccessOperation.setValue("Produkt został usunięty z listy");
+                }
+                else if (listType.equals("bought")){
+                    boughtProducts.setValue(shopList);
+                    boughtProductsOnSuccessOperation.setValue("Produkt został usunięty z listy");
+                }
+
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                if (listType.equals("toBuy")) {
+                    toBuyProductsOnErrorOperation.setValue(errorMessage);
+                }
+                else if (listType.equals("bought")){
+                    boughtProductsOnErrorOperation.setValue(errorMessage);
+                }
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                if (listType.equals("toBuy")) {
+                    toBuyProductsOnErrorOperation.setValue(failureMessage);
+                }
+                else if (listType.equals("bought")){
+                    boughtProductsOnErrorOperation.setValue(failureMessage);
+                }
+            }
+        });
+    }
+
+    public void changeProductAmount(Product product, String listType){
+        String token = "Bearer " + prefs.getString("token", "");
+        shoppingListRepository.changeProductAmountInShopList(token, product.getId(), product, new ResponseCallback<ArrayList<Product>>() {
+            @Override
+            public void onSuccess(ArrayList<Product> shopList) {
+                if (listType.equals("toBuy")) {
+                    toBuyProducts.setValue(shopList);
+                }
+                else if (listType.equals("bought")){
+                    boughtProducts.setValue(shopList);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                if (listType.equals("toBuy")) {
+                    toBuyProductsOnErrorOperation.setValue(errorMessage);
+                }
+                else if (listType.equals("bought")){
+                    boughtProductsOnErrorOperation.setValue(errorMessage);
+                }
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                if (listType.equals("toBuy")) {
+                    toBuyProductsOnErrorOperation.setValue(failureMessage);
+                }
+                else if (listType.equals("bought")){
+                    boughtProductsOnErrorOperation.setValue(failureMessage);
+                }
+            }
+        });
+    }
+
+    public void moveProductsToStorage(){
+        ArrayList<Integer> productsIds = new ArrayList<>();
+        ArrayList<Product> products = this.boughtProducts.getValue();
+        if (products != null) {
+            for (Product product : products) {
+                productsIds.add(product.getId());
+            }
+        }
+
+        String token = "Bearer " + prefs.getString("token", "");
+        StorageRepository storageRepository = new StorageRepository();
+        storageRepository.transferBoughtProductsToStorage(token, productsIds, new ResponseCallback<ArrayList<Product>>(){
+            @Override
+            public void onSuccess(ArrayList<Product> response) {
+                boughtProductsOnSuccessOperation.setValue("Produkty zostały przeniesione do spiżarni");
+                boughtProducts.setValue(response);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                boughtProductsOnErrorOperation.setValue(errorMessage);
+            }
+
+            @Override
+            public void onFailure(String failureMessage) {
+                boughtProductsOnErrorOperation.setValue(failureMessage);
+            }
+        });
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        shoppingListRepository.cancelCalls();
+    }
+}

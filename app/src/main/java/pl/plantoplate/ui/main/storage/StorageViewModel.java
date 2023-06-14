@@ -162,7 +162,9 @@ public class StorageViewModel extends AndroidViewModel {
         });
     }
 
-    public void clear(){
+    @Override
+    protected void onCleared() {
+        super.onCleared();
         storageRepository.cancelCalls();
     }
 }

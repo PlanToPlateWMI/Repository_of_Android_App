@@ -16,14 +16,13 @@
 
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,8 +32,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -42,16 +39,13 @@ import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentWszystkieBinding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.product.ProductRepository;
-import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.remote.models.Product;
-import pl.plantoplate.repository.remote.storage.StorageRepository;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.repository.remote.models.Category;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProductpopUp;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.viewModels.ProductsDbaseViewModel;
 
 /**
  * This fragment is responsible for displaying all products in the database.
@@ -64,10 +58,7 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     private TextView welcomeTextView;
     private SearchView searchView;
 
-    private SharedPreferences prefs;
-    private ProductRepository productRepository;
-
-    private ArrayList<Category> allProductsList;
+    private ProductsDbaseViewModel productsDbaseViewModel;
 
     public AllProductsFragment() {
     }
@@ -80,9 +71,24 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        getProducts();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        productsDbaseViewModel = new ViewModelProvider(requireParentFragment()).get(ProductsDbaseViewModel.class);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        productsDbaseViewModel.fetchAllProducts();
+        searchView.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        searchView.clearFocus();
+        searchView.setQuery("", false);
+        searchView.setOnQueryTextListener(null);
     }
 
     @Override
@@ -94,152 +100,27 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         welcomeTextView = fragmentWszystkieBinding.textView3;
         searchView = requireActivity().findViewById(R.id.search);
 
-        // Get the SharedPreferences object
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
-
-        // get repository
-        productRepository = new ProductRepository();
-
-        // set up listeners
-        if (searchView != null) {
-            searchView.setOnQueryTextListener(this);
-        }
-
         // set up recycler view
+        setUpViewModel();
         setUpRecyclerView();
 
         return fragmentWszystkieBinding.getRoot();
     }
 
-    private void getProducts(){
-        String token = "Bearer " + prefs.getString("token", "");
-        productRepository.getAllProducts(token, new ResponseCallback<ArrayList<Product>>() {
-            @Override
-            public void onSuccess(ArrayList<Product> productsDataBase) {
-                allProductsList = CategorySorter.sortCategoriesByProduct(productsDataBase);
-                if (allProductsList.isEmpty()) {
-                    welcomeTextView.setVisibility(View.VISIBLE);
-                } else {
-                    welcomeTextView.setVisibility(View.GONE);
-                }
-                CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
-                Objects.requireNonNull(categoryAdapter).setCategoriesList(allProductsList);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
-    }
-
     public void addProduct(Product product){
-        String comesFrom = "";
-        if (getArguments() != null) {
-            comesFrom = getArguments().getString("comesFrom");
-        }
-        else{
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            int backStackEntryCount = fragmentManager.getBackStackEntryCount();
-            for (int i=backStackEntryCount - 1; i>0; i--) {
-                FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(i);
-                String name = entry.getName();
-                if (Objects.equals(name, "shoppingList") || Objects.equals(name, "storage")) {
-                    comesFrom = name;
-                }
-            }
-        }
+        String comesFrom = requireArguments().getString("comesFrom");
+
         switch (comesFrom) {
             case "shoppingList":
-                addProductToShoppingList(product);
+                productsDbaseViewModel.addProductToShoppingList(product, "all");
                 break;
             case "storage":
-                addProductToStorage(product);
+                productsDbaseViewModel.addProductToStorage(product, "all");
                 break;
             default:
-                addProductToShoppingList(product);
+                productsDbaseViewModel.addProductToShoppingList(product, "all");
                 break;
         }
-    }
-
-    public void addProductToShoppingList(Product product) {
-        String token = "Bearer " + prefs.getString("token", "");
-        ShoppingListRepository shoppingListRepository = new ShoppingListRepository();
-        shoppingListRepository.addProductToShopList(token, product, new ResponseCallback<ArrayList<Product>>() {
-            @Override
-            public void onSuccess(ArrayList<Product> response) {
-                String message = "Produkt " + product.getName() + " w ilości " + product.getAmount() + " " + product.getUnit() + " został dodany do listy zakupów";
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
-    }
-
-    public void addProductToStorage(Product product){
-        String token = "Bearer " + prefs.getString("token", "");
-        StorageRepository storageRepository = new StorageRepository();
-        storageRepository.addProductToStorage(token, product, new ResponseCallback<ArrayList<Product>>() {
-            @Override
-            public void onSuccess(ArrayList<Product> response) {
-                String message = "Produkt " + product.getName() + " w ilości " + product.getAmount() + " " + product.getUnit() + " został dodany do spiżarni";
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        searchView.clearFocus();
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String query) {
-        ArrayList<Product> filteredProducts = CategorySorter.filterCategoriesBySearch(allProductsList, query);
-        ArrayList<Category> filteredList = CategorySorter.sortCategoriesByProduct(filteredProducts);
-        CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
-        Objects.requireNonNull(categoryAdapter).setCategoriesList(filteredList);
-        return false;
     }
 
     public void showAddProductPopup(Product product) {
@@ -251,10 +132,6 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
                 addToCartPopUp.quantity.setError("Podaj ilość");
                 return;
             }
-            if (quantityValue.endsWith(".")) {
-                // Remove dot at the end
-                quantityValue = quantityValue.substring(0, quantityValue.length() - 1);
-            }
             float quantity = BigDecimal.valueOf(Float.parseFloat(quantityValue)).setScale(3, RoundingMode.HALF_UP).floatValue();
             product.setAmount(quantity);
             addProduct(product);
@@ -263,13 +140,53 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
         addToCartPopUp.show();
     }
 
-    public void setUpRecyclerView() {
-        if (allProductsList == null) {
-            allProductsList = new ArrayList<>();
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        searchView.clearFocus();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        ArrayList<Category> products = CategorySorter.sortCategoriesByProduct(Objects.requireNonNull(productsDbaseViewModel.getAllProducts().getValue()));
+        ArrayList<Product> filteredProducts = CategorySorter.filterCategoriesBySearch(products, query);
+        ArrayList<Category> filteredList = CategorySorter.sortCategoriesByProduct(filteredProducts);
+        updateRecyclerView(filteredList);
+        return false;
+    }
+
+    public void setUpViewModel() {
+
+        // get to buy products
+        productsDbaseViewModel.getAllProducts().observe(getViewLifecycleOwner(), products -> {
+            ArrayList<Category> categories = CategorySorter.sortCategoriesByProduct(products);
+            updateRecyclerView(categories);
+        });
+
+        // get success message
+        productsDbaseViewModel.getAllProductsOnSuccessOperation().observe(getViewLifecycleOwner(), successMessage ->
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()));
+
+        // get error message
+        productsDbaseViewModel.getAllProductsOnErrorOperation().observe(getViewLifecycleOwner(), errorMessage ->
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()));
+
+    }
+
+    private void updateRecyclerView(ArrayList<Category> products) {
+        if (products.isEmpty()) {
+            welcomeTextView.setVisibility(View.VISIBLE);
+        } else {
+            welcomeTextView.setVisibility(View.GONE);
         }
+        CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
+        Objects.requireNonNull(categoryAdapter).setCategoriesList(products);
+    }
+
+    public void setUpRecyclerView() {
         categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(allProductsList, R.layout.item_wszystkie_produkt, R.layout.item_category_baza);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(new ArrayList<>(), R.layout.item_wszystkie_produkt, R.layout.item_category_baza);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupAddToShoppingListButtonClick(View v, Product product) {
@@ -285,18 +202,5 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
             }
         });
         categoryRecyclerView.setAdapter(categoryAdapter);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        productRepository.cancelCalls();
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 }

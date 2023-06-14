@@ -23,6 +23,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,6 +54,8 @@ import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProductpopUp;
+import pl.plantoplate.ui.main.shoppingList.viewModels.ShoppingListViewModel;
+import pl.plantoplate.ui.main.storage.StorageViewModel;
 
 /**
  * This fragment is responsible for displaying the shopping list.
@@ -60,21 +63,23 @@ import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProduct
 public class BuyProductsFragment extends Fragment {
 
     private FragmentTrzebaKupicBinding fragmentTrzebaKupicBinding;
+    private ShoppingListViewModel shoppingListViewModel;
 
     private FloatingActionButton plus_in_trzeba_kupic;
     private RecyclerView categoryRecyclerView;
-    private TextView welcomeTextView;
 
     private SharedPreferences prefs;
 
-    private ArrayList<Category> toBuyProductsList;
-
-    private ShoppingListRepository shoppingListRepository;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        shoppingListViewModel = new ViewModelProvider(requireParentFragment()).get(ShoppingListViewModel.class);
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        getShoppingList();
+        shoppingListViewModel.fetchToBuyProducts();
     }
 
     @Override
@@ -88,125 +93,9 @@ public class BuyProductsFragment extends Fragment {
         // get shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
-        // get shopping list repository
-        shoppingListRepository = new ShoppingListRepository();
-
         setUpRecyclerView();
+        setUpViewModel();
         return fragmentTrzebaKupicBinding.getRoot();
-    }
-
-    public void getShoppingList(){
-        String token = "Bearer " + prefs.getString("token", "");
-
-        shoppingListRepository.getToBuyShoppingList(token, new ResponseCallback<ArrayList<Product>>() {
-            @Override
-            public void onSuccess(ArrayList<Product> shopList) {
-                toBuyProductsList = CategorySorter.sortCategoriesByProduct(shopList);
-
-                // update recycler view
-                CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
-                Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
-    }
-
-    public void moveProductToBought(Product product){
-        String token = "Bearer " + prefs.getString("token", "");
-        shoppingListRepository.changeProductStateInShopList(token, product.getId(), new ResponseCallback<ShoppingList>() {
-            @Override
-            public void onSuccess(ShoppingList shoppingList) {
-                toBuyProductsList = CategorySorter.sortCategoriesByProduct(shoppingList.getToBuy());
-
-                // update recycler view
-                CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
-                Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
-
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
-    }
-
-    public void deleteProductFromList(Product product){
-        String token = "Bearer " + prefs.getString("token", "");
-        shoppingListRepository.deleteProductFromShopList(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
-            @Override
-            public void onSuccess(ArrayList<Product> shopList) {
-                toBuyProductsList = CategorySorter.sortCategoriesByProduct(shopList);
-
-                // update recycler view
-                CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
-                Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
-    }
-
-    public void changeProductAmount(Product product){
-        String token = "Bearer " + prefs.getString("token", "");
-        shoppingListRepository.changeProductAmountInShopList(token, product.getId(), product, new ResponseCallback<ArrayList<Product>>() {
-            @Override
-            public void onSuccess(ArrayList<Product> shopList) {
-                toBuyProductsList = CategorySorter.sortCategoriesByProduct(shopList);
-
-                // update recycler view
-                CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
-                Objects.requireNonNull(categoryAdapter).setCategoriesList(toBuyProductsList);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
     }
 
     public void showAddProductPopup(Product product) {
@@ -217,14 +106,10 @@ public class BuyProductsFragment extends Fragment {
                 addToCartPopUp.quantity.setError("Podaj ilość");
                 return;
             }
-            if (quantityValue.endsWith(".")) {
-                // Remove dot at the end
-                quantityValue = quantityValue.substring(0, quantityValue.length() - 1);
-            }
             float quantity = BigDecimal.valueOf(Float.parseFloat(quantityValue)).setScale(3, RoundingMode.HALF_UP).floatValue();
             product.setAmount(quantity);
-            System.out.println(product.getAmount());
-            changeProductAmount(product);
+
+            shoppingListViewModel.changeProductAmount(product, "toBuy");
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new ShoppingListFragment()).commit();
             addToCartPopUp.dismiss();
         });
@@ -245,7 +130,7 @@ public class BuyProductsFragment extends Fragment {
         TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         acceptButton.setOnClickListener(v -> {
-            deleteProductFromList(product);
+            shoppingListViewModel.deleteProductFromList(product, "toBuy");
             dialog.dismiss();
         });
 
@@ -255,13 +140,9 @@ public class BuyProductsFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        if (toBuyProductsList == null) {
-            toBuyProductsList = new ArrayList<>();
-        }
-
         categoryRecyclerView = fragmentTrzebaKupicBinding.productsOwnRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(toBuyProductsList, R.layout.item_trzeba_kupic, R.layout.item_category_lista);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(new ArrayList<>(), R.layout.item_trzeba_kupic, R.layout.item_category_lista);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {
@@ -277,7 +158,7 @@ public class BuyProductsFragment extends Fragment {
 
             @Override
             public void setupCheckShoppingListButtonClick(View v, Product product) {
-                v.setOnClickListener(view -> moveProductToBought(product));
+                v.setOnClickListener(view -> shoppingListViewModel.moveProductToBought(product));
             }
 
             @Override
@@ -288,10 +169,29 @@ public class BuyProductsFragment extends Fragment {
         categoryRecyclerView.setAdapter(categoryAdapter);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        shoppingListRepository.cancelCalls();
+    public void setUpViewModel() {
+        // get to buy products
+        shoppingListViewModel.getToBuyProducts().observe(getViewLifecycleOwner(), toBuyProducts -> {
+
+            // update recycler view
+            CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
+            Objects.requireNonNull(categoryAdapter).setCategoriesList(CategorySorter.sortCategoriesByProduct(toBuyProducts));
+        });
+
+        // get success message
+        shoppingListViewModel.getToBuyProductsOnSuccessOperation().observe(getViewLifecycleOwner(), successMessage -> {
+            if (isAdded()) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), successMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
+
+        // get error message
+        shoppingListViewModel.getToBuyProductsOnErrorOperation().observe(getViewLifecycleOwner(), errorMessage -> {
+            if (isAdded()) {
+                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
+            }
+        });
+
     }
 
     /**

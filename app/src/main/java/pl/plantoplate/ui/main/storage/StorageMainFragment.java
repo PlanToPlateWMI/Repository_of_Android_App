@@ -88,12 +88,6 @@ public class StorageMainFragment extends Fragment {
         return fragmentStorageInsideBinding.getRoot();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        storageViewModel.clear();
-    }
-
     public void onPlusClicked(View view) {
         ShoppingListRepository shoppingListRepository = new ShoppingListRepository();
         String token = "Bearer " + prefs.getString("token", "");

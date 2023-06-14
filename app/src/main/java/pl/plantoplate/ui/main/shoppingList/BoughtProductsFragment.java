@@ -23,33 +23,28 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
 import pl.plantoplate.repository.remote.models.Product;
-import pl.plantoplate.repository.remote.models.ShoppingList;
-import pl.plantoplate.repository.remote.storage.StorageRepository;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.AddYourOwnProductFragment;
+import pl.plantoplate.ui.main.shoppingList.viewModels.ShoppingListViewModel;
 import pl.plantoplate.ui.main.storage.StorageFragment;
 
 /**
@@ -58,20 +53,23 @@ import pl.plantoplate.ui.main.storage.StorageFragment;
 public class BoughtProductsFragment extends Fragment {
 
     private FragmentKupioneBinding fragmentKupioneBinding;
+    private ShoppingListViewModel shoppingListViewModel;
 
     private RecyclerView productsRecyclerView;
     private FloatingActionButton moveToStorageButton;
 
     private SharedPreferences prefs;
-    private ShoppingListRepository shoppingListRepository;
-    private StorageRepository storageRepository;
 
-    private ArrayList<Product> boughtProductsList;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        shoppingListViewModel = new ViewModelProvider(requireParentFragment()).get(ShoppingListViewModel.class);
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        getShoppingList();
+        shoppingListViewModel.fetchBoughtProducts();
     }
 
     @Override
@@ -85,163 +83,39 @@ public class BoughtProductsFragment extends Fragment {
         // get shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
-        // get shopping list repository
-        shoppingListRepository = new ShoppingListRepository();
+        // set up move to storage button
+        moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
 
-        // get storage repository
-        storageRepository = new StorageRepository();
-
+        setUpViewModel();
         setUpRecyclerView();
-
         return fragmentKupioneBinding.getRoot();
     }
 
-    public void getShoppingList(){
-        String token = "Bearer " + prefs.getString("token", "");
+    public void setUpViewModel() {
+        // get to buy products
+        shoppingListViewModel.getBoughtProducts().observe(getViewLifecycleOwner(), boughtProducts -> {
 
-        shoppingListRepository.getBoughtShoppingList(token, new ResponseCallback<ArrayList<Product>>() {
-            @Override
-            public void onSuccess(ArrayList<Product> shopList) {
-                boughtProductsList = CategorySorter.sortProductsByName(shopList);
-
-                // Setup listeners
-                if(boughtProductsList.isEmpty()) {
-                    moveToStorageButton.setVisibility(View.INVISIBLE);
-                    moveToStorageButton.setClickable(false);
-                }else{
-                    moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
-                    moveToStorageButton.setVisibility(View.VISIBLE);
-                    moveToStorageButton.setClickable(true);
-                }
-
-                // update recycler view
-                ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
-                Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
+            // update recycler view
+            ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
+            Objects.requireNonNull(productAdapter).setProductsList(CategorySorter.sortProductsByName(boughtProducts));
         });
-    }
 
-    public void deleteProductFromList(Product product){
-        String token = "Bearer " + prefs.getString("token", "");
-        shoppingListRepository.deleteProductFromShopList(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
-            @Override
-            public void onSuccess(ArrayList<Product> shopList) {
-                boughtProductsList = CategorySorter.sortProductsByName(shopList);
-
-                // Setup listeners
-                if(boughtProductsList.isEmpty()) {
-                    moveToStorageButton.setVisibility(View.INVISIBLE);
-                    moveToStorageButton.setClickable(false);
-                }else{
-                    moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
-                    moveToStorageButton.setVisibility(View.VISIBLE);
-                    moveToStorageButton.setClickable(true);
-                }
-
-                // update recycler view
-                ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
-                Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
+        // get success message
+        shoppingListViewModel.getBoughtProductsOnSuccessOperation().observe(getViewLifecycleOwner(), successMessage -> {
+            requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), successMessage, Toast.LENGTH_SHORT).show());
         });
-    }
 
-    public void moveProductToBuy(Product product){
-        String token = "Bearer " + prefs.getString("token", "");
-        shoppingListRepository.changeProductStateInShopList(token, product.getId(), new ResponseCallback<ShoppingList>() {
-            @Override
-            public void onSuccess(ShoppingList shoppingList) {
-                boughtProductsList = CategorySorter.sortProductsByName(shoppingList.getBought());
-
-                // update recycler view
-                ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
-                Objects.requireNonNull(productAdapter).setProductsList(boughtProductsList);
-
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
+        // get error message
+        shoppingListViewModel.getBoughtProductsOnErrorOperation().observe(getViewLifecycleOwner(), errorMessage -> {
+            requireActivity().runOnUiThread(() -> Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show());
         });
-    }
 
-    public void moveProductsToStorage(){
-        ArrayList<Integer> productsIds = new ArrayList<>();
-        for (Product storageProduct : boughtProductsList) {
-            productsIds.add(storageProduct.getId());
-        }
-
-        String token = "Bearer " + prefs.getString("token", "");
-        storageRepository.transferBoughtProductsToStorage(token, productsIds, new ResponseCallback<ArrayList<Product>>(){
-            @Override
-            public void onSuccess(ArrayList<Product> response) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(),"Produkty zostały przeniesione do spiżarni" ,
-                            Toast.LENGTH_LONG).show());
-                }
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
     }
 
     private void setUpRecyclerView() {
-        if (boughtProductsList == null) {
-            boughtProductsList = new ArrayList<>();
-        }
-
         productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
         productsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ProductAdapter productAdapter = new ProductAdapter(boughtProductsList, R.layout.item_kupione);
+        ProductAdapter productAdapter = new ProductAdapter(new ArrayList<>(), R.layout.item_kupione);
         productAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {
@@ -257,7 +131,7 @@ public class BoughtProductsFragment extends Fragment {
 
             @Override
             public void setupCheckShoppingListButtonClick(View v, Product product) {
-                v.setOnClickListener(view -> moveProductToBuy(product));
+                v.setOnClickListener(view -> shoppingListViewModel.moveProductToBuy(product));
             }
         });
         productsRecyclerView.setAdapter(productAdapter);
@@ -266,19 +140,13 @@ public class BoughtProductsFragment extends Fragment {
     public void showDeleteProductPopup(Product product) {
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
-        //add delay!!!!
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         dialog.setContentView(R.layout.new_pop_up_delete_product_from_shopping_list);
 
         TextView acceptButton = dialog.findViewById(R.id.button_yes);
         TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         acceptButton.setOnClickListener(v -> {
-            deleteProductFromList(product);
+            shoppingListViewModel.deleteProductFromList(product, "bought");
             dialog.dismiss();
         });
 
@@ -288,6 +156,11 @@ public class BoughtProductsFragment extends Fragment {
     }
 
     public void showMoveProductToStoragePopUp(){
+        if (Objects.requireNonNull(shoppingListViewModel.getBoughtProducts().getValue()).isEmpty())
+        {
+            Toast.makeText(requireContext(), "Nie ma nic do przeniesienia", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.new_pop_up_add_to_storage);
@@ -296,8 +169,7 @@ public class BoughtProductsFragment extends Fragment {
         TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         acceptButton.setOnClickListener(v -> {
-
-            moveProductsToStorage();
+            shoppingListViewModel.moveProductsToStorage();
 
             replaceFragment(new StorageFragment());
             dialog.dismiss();
@@ -306,12 +178,6 @@ public class BoughtProductsFragment extends Fragment {
         cancelButton.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        shoppingListRepository.cancelCalls();
     }
 
     private void replaceFragment(Fragment fragment) {

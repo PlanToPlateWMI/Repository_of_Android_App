@@ -17,30 +17,23 @@
 package pl.plantoplate.ui.main.shoppingList.productsDatabase;
 
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
-import pl.plantoplate.ui.main.shoppingList.BoughtProductsFragment;
-import pl.plantoplate.ui.main.shoppingList.BuyProductsFragment;
-import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 
 /**
  * This fragment is responsible for displaying the products database.
@@ -49,10 +42,7 @@ public class ProductsDbaseFragment extends Fragment {
 
     private FragmentBazaProduktowBinding bazaProduktowBinding;
     private SearchView searchView;
-    //private ImageView back;
     private ViewPager2 viewPagerBase;
-
-    private SharedPreferences prefs;
 
     public ProductsDbaseFragment(String comesFrom) {
         Bundle args = new Bundle();
@@ -65,15 +55,10 @@ public class ProductsDbaseFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        // Get the SharedPreferences object
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
-
-        //Set selected all products fragment by default on restart fragment.
-        bazaProduktowBinding.bottomNavigationView2.setSelectedItemId(R.id.wszystkie);
-        viewPagerBase.setCurrentItem(0);
+    public void onResume() {
+        super.onResume();
+        int fragment = viewPagerBase.getCurrentItem();
+        viewPagerBase.setCurrentItem(fragment);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -85,17 +70,17 @@ public class ProductsDbaseFragment extends Fragment {
         bazaProduktowBinding = FragmentBazaProduktowBinding.inflate(inflater, container, false);
 
         viewPagerBase = bazaProduktowBinding.viewPagerBase;
-        setupViewPager(viewPagerBase);
-
         // Get the SearchView
         searchView = bazaProduktowBinding.search;
 
-        //back = bazaProduktowBinding.back;
+        setupViewPager(viewPagerBase);
+        setupBottomNavigationView();
 
-//        back.setOnClickListener(v -> {
-//            requireActivity().getSupportFragmentManager().popBackStack();
-//        });
+        return bazaProduktowBinding.getRoot();
+    }
 
+    @SuppressLint("NonConstantResourceId")
+    private void setupBottomNavigationView() {
         bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
             switch (item.getItemId()) {
                 case R.id.wszystkie:
@@ -108,6 +93,14 @@ public class ProductsDbaseFragment extends Fragment {
 
             return false;
         });
+    }
+
+    private void setupViewPager(ViewPager2 viewPagerBase) {
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        adapter.addFragment(new AllProductsFragment(requireArguments().getString("comesFrom")));
+        adapter.addFragment(new OwnProductsFragment(requireArguments().getString("comesFrom")));
+        viewPagerBase.setAdapter(adapter);
 
         viewPagerBase.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -122,15 +115,6 @@ public class ProductsDbaseFragment extends Fragment {
                 }
             }
         });
-
-        return bazaProduktowBinding.getRoot();
-    }
-
-    private void setupViewPager(ViewPager2 viewPagerBase) {
-        ProductsDbaseFragment.ViewPagerAdapter adapter = new ProductsDbaseFragment.ViewPagerAdapter(this);
-        adapter.addFragment(new AllProductsFragment(requireArguments().getString("comesFrom")));
-        adapter.addFragment(new OwnProductsFragment(requireArguments().getString("comesFrom")));
-        viewPagerBase.setAdapter(adapter);
     }
 
     static class ViewPagerAdapter extends FragmentStateAdapter {
@@ -154,14 +138,5 @@ public class ProductsDbaseFragment extends Fragment {
         public void addFragment(Fragment fragment) {
             fragmentList.add(fragment);
         }
-    }
-
-
-    private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.baza_def, fragment);
-        //transaction.addToBackStack(null);
-        transaction.commit();
     }
 }
