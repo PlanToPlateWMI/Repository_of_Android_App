@@ -38,6 +38,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
+import mockwebserver3.MockResponse;
+import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.registration.EmailConfirmActivity;
@@ -50,16 +54,26 @@ public class RegisterActivityTest {
     public ActivityScenarioRule<RegisterActivity> activityScenarioRule
             = new ActivityScenarioRule<>(RegisterActivity.class);
 
+    //serwer
+    private MockWebServer server;
+
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         // Initialize Intents
         Intents.init();
+
+        // server
+        server = new MockWebServer();
+        server.start();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws IOException {
         // Release Intents
         Intents.release();
+
+        // Shutdown server
+        server.shutdown();
     }
 
     @Test
@@ -72,13 +86,100 @@ public class RegisterActivityTest {
         onView(withId(R.id.masz_konto)).check(matches(isDisplayed()));
     }
 
+    //not working
     @Test
-    public void testSignInButton() {
-        onView(withId(R.id.enterName)).perform(typeText("Karol"), closeSoftKeyboard());
-        onView(withId(R.id.enter_email)).perform(typeText("test123@test.com"), closeSoftKeyboard());
+    public void testUserIsAlreadyExist() throws InterruptedException {
+        MockResponse response = new MockResponse()
+                .setResponseCode(409)
+                .setBody("Email is already taken");
+        server.enqueue(response);
+
+        onView(withId(R.id.enterName)).perform(typeText("Karyna"), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText("karynayarmosh@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.enter_password)).perform(typeText("password"), closeSoftKeyboard());
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Użytkownik o podanym adresie email już istnieje.")));
+    }
+
+    //not working
+    @Test
+    public void testUserIsRegister() throws InterruptedException {
+        MockResponse response = new MockResponse()
+                .setResponseCode(200)
+                .setBody("User successfully registered and API sends back code that it sends yo user's email");
+        server.enqueue(response);
+
+        onView(withId(R.id.enterName)).perform(typeText("Marina"), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText("marinamarinatestmarina@gmail.com"), closeSoftKeyboard());
+        onView(withId(R.id.enter_password)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.button_zaloz_konto)).perform(click());
+    }
+
+    @Test
+    public void testSignInButton() {
+        onView(withId(R.id.enterName)).perform(typeText("Karol"), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText("test1234@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.enter_password)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.button_zaloz_konto)).perform(click());
+    }
+
+    @Test
+    public void testNoName() {
+        onView(withId(R.id.enterName)).perform(typeText(""), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText("test1234@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.enter_password)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.button_zaloz_konto)).perform(click());
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Wprowadż imię użytkownika!")));
+    }
+
+    @Test
+    public void testNoEmail() {
+        onView(withId(R.id.enterName)).perform(typeText("Karol"), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText(""), closeSoftKeyboard());
+        onView(withId(R.id.enter_password)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.button_zaloz_konto)).perform(click());
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Wprowadż adres email!")));
+    }
+
+    @Test
+    public void testNoPassword() {
+        onView(withId(R.id.enterName)).perform(typeText("Karol"), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText("test1234@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.enter_password)).perform(typeText(""), closeSoftKeyboard());
+        onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.button_zaloz_konto)).perform(click());
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Wprowadż hasło!")));
+    }
+
+    @Test
+    public void testNoLongPassword() {
+        onView(withId(R.id.enterName)).perform(typeText("Karol"), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText("test1234@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.enter_password)).perform(typeText("p"), closeSoftKeyboard());
+        onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.button_zaloz_konto)).perform(click());
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Hasło musi być długie (co najmniej 7 znaków)")));
+    }
+
+    //not working (why?)
+    @Test
+    public void testNoChecked() {
+        onView(withId(R.id.enterName)).perform(typeText("Karol"), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText("test1234@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.enter_password)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.button_zaloz_konto)).perform(click());
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Musisz wyrazić zgodę na przetwarzanie danych osobowych")));
     }
 
     @Test
