@@ -34,6 +34,8 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -88,7 +90,6 @@ public class LoginActivityTest {
         onView(withId(R.id.przyp_haslo)).check(matches(isDisplayed()));
     }
 
-    //magic
     @Test
     public void testNoUserExists() throws InterruptedException {
         MockResponse response = new MockResponse()
@@ -96,29 +97,39 @@ public class LoginActivityTest {
                 .setBody("Account with this email doesn't exist");
         server.enqueue(response);
 
-        //RecordedRequest request = server.takeRequest();
-        //assertEquals("/api/endpoint", request.getPath());
+//        RecordedRequest request = server.takeRequest();
+//        assertEquals("/api/auth/signin", request.getPath());
 
         onView(withId(R.id.enter_mail)).perform(typeText("test@test.com"), closeSoftKeyboard());
         onView(withId(R.id.enter_pass)).perform(typeText("password"), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
+
+        try {
+            Thread.sleep(2000); // Adjust the duration as needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
     }
 
-    //not working
     @Test
     public void testPasswordIsNotCorrect() throws InterruptedException {
-        //in AuthRepository Response code 403 means that password is not correct
-        //in documentation - 409
         MockResponse response = new MockResponse()
-                .setResponseCode(403)
-                .setBody("Password doesn't match with password from DB");
+                .setResponseCode(403);
         server.enqueue(response);
 
         onView(withId(R.id.enter_mail)).perform(typeText("plantoplatemobileapp@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.enter_pass)).perform(typeText("invalid"), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
+
+        try {
+            Thread.sleep(2000); // Adjust the duration as needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Niepoprawne hasło!")));
     }

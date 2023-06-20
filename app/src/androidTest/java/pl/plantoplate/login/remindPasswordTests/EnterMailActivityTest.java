@@ -23,6 +23,7 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -35,6 +36,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
+import mockwebserver3.MockResponse;
+import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.login.remindPassword.EnterEmailActivity;
 
@@ -45,16 +50,26 @@ public class EnterMailActivityTest {
     public ActivityScenarioRule<EnterEmailActivity> activityScenarioRule
             = new ActivityScenarioRule<>(EnterEmailActivity.class);
 
+    //serwer
+    private MockWebServer server;
+
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         // Initialize Intents
         Intents.init();
+
+        // server
+        server = new MockWebServer();
+        server.start();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws IOException {
         // Release Intents
         Intents.release();
+
+        // Shutdown server
+        server.shutdown();
     }
 
 
@@ -71,14 +86,24 @@ public class EnterMailActivityTest {
         onView(withId(R.id.button_zatwierdz)).perform(click());
     }
 
-    //with database
+    @Test
+    public void testNoUserWithSuchMail() throws InterruptedException {
+        MockResponse response = new MockResponse()
+                .setResponseCode(400)
+                .setBody("Account with this email doesn't exist");
+        server.enqueue(response);
 
-//    @Test
-//    public void testInvalidCredentials() {
-//        onView(withId(R.id.enter_the_name)).perform(typeText("testinvalid"), closeSoftKeyboard());
-//        onView(withId(R.id.button_zatwierdz)).perform(click());
-//        onView(withId(com.google.android.material.R.id.snackbar_text))
-//                .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
-//    }
+        onView(withId(R.id.enter_the_name)).perform(typeText("testmailmail@test.com"), closeSoftKeyboard());
+        onView(withId(R.id.button_zatwierdz)).perform(click());
+
+        try {
+            Thread.sleep(2000); // Adjust the duration as needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Użytkownik o podanym adresie email nie istnieje")));
+    }
 }
 

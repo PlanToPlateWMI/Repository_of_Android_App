@@ -21,6 +21,8 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -36,8 +38,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
+import mockwebserver3.MockResponse;
+import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
+import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.login.remindPassword.ChangePasswordActivity;
+import pl.plantoplate.ui.registration.RegisterActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class ChangePasswordActivityTest {
@@ -46,16 +54,48 @@ public class ChangePasswordActivityTest {
     public ActivityScenarioRule<ChangePasswordActivity> activityScenarioRule
             = new ActivityScenarioRule<>(ChangePasswordActivity.class);
 
+    //serwer
+    private MockWebServer server;
+
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         // Initialize Intents
         Intents.init();
+
+        // server
+        server = new MockWebServer();
+        server.start();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws IOException {
         // Release Intents
         Intents.release();
+
+        // Shutdown server
+        server.shutdown();
+    }
+
+    @Test
+    public void testSuccecfulPasswordChange() throws InterruptedException {
+        MockResponse response = new MockResponse()
+                .setResponseCode(200)
+                .setBody("API update password");
+        server.enqueue(response);
+
+        onView(withId(R.id.nowe_haslo)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.nowe_haslo2)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.button_zatwierdzenie)).perform(click());
+
+        try {
+            Thread.sleep(1000); // Adjust the duration as needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Pomyślnie zmieniono hasło!")));
+        intended(hasComponent(LoginActivity.class.getName()));
     }
 
     //remind password 3
@@ -73,14 +113,14 @@ public class ChangePasswordActivityTest {
         onView(withId(R.id.button_zatwierdzenie)).perform(click());
     }
 
-    // eye
+    // eye - not working
     @Test
     public void testInvalidNotTheSameCredentials() {
         onView(withId(R.id.nowe_haslo)).perform(typeText("password"), closeSoftKeyboard());
         onView(withId(R.id.nowe_haslo2)).perform(typeText("password1"), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie)).perform(click());
-//        onView(withId(com.google.android.material.R.id.snackbar_text))
-//                .check(matches(withText("Hasła nie są takie same")));
+        //eye icon error
+        onView(withId(R.id.nowe_haslo2)).check(matches(withText("Hasła nie są takie same")));
     }
 
     @Test

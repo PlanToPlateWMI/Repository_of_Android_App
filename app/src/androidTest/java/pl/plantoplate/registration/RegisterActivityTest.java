@@ -86,7 +86,6 @@ public class RegisterActivityTest {
         onView(withId(R.id.masz_konto)).check(matches(isDisplayed()));
     }
 
-    //not working
     @Test
     public void testUserIsAlreadyExist() throws InterruptedException {
         MockResponse response = new MockResponse()
@@ -99,11 +98,15 @@ public class RegisterActivityTest {
         onView(withId(R.id.enter_password)).perform(typeText("password"), closeSoftKeyboard());
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
+        try {
+            Thread.sleep(2000); // Adjust the duration as needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Użytkownik o podanym adresie email już istnieje.")));
     }
 
-    //not working
     @Test
     public void testUserIsRegister() throws InterruptedException {
         MockResponse response = new MockResponse()
