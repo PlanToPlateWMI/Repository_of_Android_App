@@ -64,7 +64,7 @@ public class RegisterActivityTest {
 
         // server
         server = new MockWebServer();
-        server.start();
+        server.start(8080);
     }
 
     @After

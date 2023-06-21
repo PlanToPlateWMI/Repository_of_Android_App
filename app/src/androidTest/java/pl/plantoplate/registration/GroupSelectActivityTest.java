@@ -34,6 +34,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
+import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
@@ -49,16 +52,26 @@ public class GroupSelectActivityTest {
     public ActivityScenarioRule<GroupSelectActivity> activityScenarioRule
             = new ActivityScenarioRule<>(GroupSelectActivity.class);
 
+    //serwer
+    private MockWebServer server;
+
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         // Initialize Intents
         Intents.init();
+
+        // server
+        server = new MockWebServer();
+        server.start(8080);
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws IOException {
         // Release Intents
         Intents.release();
+
+        // Shutdown server
+        server.shutdown();
     }
 
     @Test

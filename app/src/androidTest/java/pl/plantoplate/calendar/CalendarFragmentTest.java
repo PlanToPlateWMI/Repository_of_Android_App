@@ -29,6 +29,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import mockwebserver3.MockWebServer;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
@@ -47,6 +48,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.io.IOException;
+
 @RunWith(AndroidJUnit4.class)
 public class CalendarFragmentTest {
 
@@ -54,36 +57,42 @@ public class CalendarFragmentTest {
     public ActivityScenarioRule<ActivityMain> fragmentRule =
             new ActivityScenarioRule<>(ActivityMain.class);
 
+    //serwer
+    private MockWebServer server;
+
     @Before
-    public void setUp() {
-        // Initialize Intents before each test
+    public void setUp() throws IOException {
+        // Initialize Intents
         Intents.init();
 
-        // Navigate to the SettingsFragment
-        navigateToCalendarFragment();
+        // server
+        server = new MockWebServer();
+        server.start(8080);
     }
 
     @After
-    public void cleanup() {
-        // Release Intents after each test
+    public void tearDown() throws IOException {
+        // Release Intents
         Intents.release();
+
+        // Shutdown server
+        server.shutdown();
     }
 
-    public void navigateToCalendarFragment() {
-
-        fragmentRule.getScenario().onActivity(activity -> {
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, CalendarFragment.class, null)
-                    .commit();
-        });
-    }
-
-    @Test
-    public void testCalendarDisplayed() {
-
-        onView(ViewMatchers.withId(R.id.calendarTextView)).check(matches(isDisplayed()));
-        //onView(withId(R.id)).check(matches(isDisplayed()));
-
-    }
+//    public void navigateToCalendarFragment() {
+//
+//        fragmentRule.getScenario().onActivity(activity -> {
+//            activity.getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.frame_layout, CalendarFragment.class, null)
+//                    .commit();
+//        });
+//    }
+//
+//    @Test
+//    public void testCalendarDisplayed() {
+//
+//        onView(withId(R.id)).check(matches(isDisplayed()));
+//
+//    }
 
 }

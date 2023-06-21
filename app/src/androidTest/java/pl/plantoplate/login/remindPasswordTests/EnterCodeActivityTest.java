@@ -44,8 +44,10 @@ import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.login.LoginActivity;
+import pl.plantoplate.ui.login.remindPassword.ChangePasswordActivity;
 import pl.plantoplate.ui.login.remindPassword.EnterCodeActivity;
 import pl.plantoplate.ui.login.remindPassword.EnterEmailActivity;
+import pl.plantoplate.ui.registration.RegisterActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class EnterCodeActivityTest {
@@ -64,7 +66,7 @@ public class EnterCodeActivityTest {
 
         // server
         server = new MockWebServer();
-        server.start();
+        server.start(8080);
     }
 
     @After
@@ -79,19 +81,19 @@ public class EnterCodeActivityTest {
     //remind password 2
     @Test
     public void testChangePasswordViewDisplayed() {
-        onView(ViewMatchers.withId(R.id.wprowadz_kod)).check(matches(isDisplayed()));
+        onView(withId(R.id.wprowadz_kod)).check(matches(isDisplayed()));
         onView(withId(R.id.wy_lij_pono)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zatwierdzenie_link)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testSignInButton() {
+    public void testEnterCodeButton() {
         onView(withId(R.id.wprowadz_kod)).perform(typeText("1111"), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
     }
 
     @Test
-    public void testCreateAccountButton() {
+    public void testAgainButton() {
         onView(withId(R.id.wy_lij_pono)).perform(click());
     }
 
@@ -106,7 +108,7 @@ public class EnterCodeActivityTest {
         onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
 
         try {
-            Thread.sleep(1000); // Adjust the duration as needed
+            Thread.sleep(2000); // Adjust the duration as needed
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

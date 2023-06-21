@@ -69,7 +69,7 @@ public class LoginActivityTest {
 
         // server
         server = new MockWebServer();
-        server.start();
+        server.start(8080);
     }
 
     @After
@@ -83,10 +83,10 @@ public class LoginActivityTest {
 
     @Test
     public void testLoginViewDisplayed() {
-        onView(ViewMatchers.withId(R.id.enter_mail)).check(matches(isDisplayed()));
+        onView(withId(R.id.enter_mail)).check(matches(isDisplayed()));
         onView(withId(R.id.enter_pass)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zaloguj_sie)).check(matches(isDisplayed()));
-        onView(withId(R.id.button_zaloz_konto)).check(matches(isDisplayed()));
+        onView(withId(R.id.nie_masz_konta)).check(matches(isDisplayed()));
         onView(withId(R.id.przyp_haslo)).check(matches(isDisplayed()));
     }
 
@@ -97,18 +97,12 @@ public class LoginActivityTest {
                 .setBody("Account with this email doesn't exist");
         server.enqueue(response);
 
-//        RecordedRequest request = server.takeRequest();
-//        assertEquals("/api/auth/signin", request.getPath());
-
         onView(withId(R.id.enter_mail)).perform(typeText("test@test.com"), closeSoftKeyboard());
         onView(withId(R.id.enter_pass)).perform(typeText("password"), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
 
-        try {
-            Thread.sleep(2000); // Adjust the duration as needed
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        RecordedRequest recordedRequest = server.takeRequest();
+        assertEquals("/api/auth/signin", recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
@@ -124,11 +118,8 @@ public class LoginActivityTest {
         onView(withId(R.id.enter_pass)).perform(typeText("invalid"), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
 
-        try {
-            Thread.sleep(2000); // Adjust the duration as needed
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        RecordedRequest recordedRequest = server.takeRequest();
+        assertEquals("/api/auth/signin", recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Niepoprawne hasło!")));
@@ -144,6 +135,9 @@ public class LoginActivityTest {
         onView(withId(R.id.enter_mail)).perform(typeText("plantoplatemobileapp@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.enter_pass)).perform(typeText("plantoplate"), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
+
+        RecordedRequest recordedRequest = server.takeRequest();
+        assertEquals("/api/auth/signin", recordedRequest.getPath());
     }
 
     @Test
@@ -169,20 +163,5 @@ public class LoginActivityTest {
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Wprowadź hasło")));
     }
-
-//    @Test
-//    public void testSignInButton() {
-//        onView(withId(R.id.enter_mail)).perform(typeText("test@test.com"), closeSoftKeyboard());
-//        onView(withId(R.id.enter_pass)).perform(typeText("password"), closeSoftKeyboard());
-//        onView(withId(R.id.button_zaloguj_sie)).perform(click());
-//    }
-//    @Test
-//    public void testInvalidCredentials() {
-//        onView(withId(R.id.enter_mail)).perform(typeText("invalidtest.com"), closeSoftKeyboard());
-//        onView(withId(R.id.enter_pass)).perform(typeText("invalid"), closeSoftKeyboard());
-//        onView(withId(R.id.button_zaloguj_sie)).perform(click());
-//        onView(withId(com.google.android.material.R.id.snackbar_text))
-//                .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
-//    }
 }
 

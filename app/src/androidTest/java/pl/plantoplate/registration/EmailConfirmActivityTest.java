@@ -17,9 +17,15 @@
 package pl.plantoplate.registration;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -32,8 +38,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+
+import mockwebserver3.MockResponse;
+import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.login.remindPassword.EnterCodeActivity;
+import pl.plantoplate.ui.registration.RegisterActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class EmailConfirmActivityTest {
@@ -42,16 +53,26 @@ public class EmailConfirmActivityTest {
     public ActivityScenarioRule<EnterCodeActivity> activityScenarioRule
             = new ActivityScenarioRule<>(EnterCodeActivity.class);
 
+    //serwer
+    private MockWebServer server;
+
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         // Initialize Intents
         Intents.init();
+
+        // server
+        server = new MockWebServer();
+        server.start(8080);
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws IOException {
         // Release Intents
         Intents.release();
+
+        // Shutdown server
+        server.shutdown();
     }
 
     //remind password 2
@@ -62,20 +83,41 @@ public class EmailConfirmActivityTest {
         onView(withId(R.id.button_zatwierdzenie_link)).check(matches(isDisplayed()));
     }
 
-    //no database
-//    @Test
-//    public void testSignInButton() {
-//        onView(withId(R.id.wprowadz_kod)).perform(typeText("1111"), closeSoftKeyboard());
-//        onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
-//    }
-//
+    @Test
+    public void testSignInButton() throws InterruptedException {
+        MockResponse response = new MockResponse()
+                .setResponseCode(200)
+                .setBody("API send back code that it sends to user's email");
+        server.enqueue(response);
 
-    //not implemented
-//    @Test
-//    public void testCreateAccountButton() {
-//        onView(withId(R.id.wy_lij_pono)).perform(click());
-//        intended(hasComponent(EnterEmailActivity.class.getName()));
-//    }
+        onView(withId(R.id.wprowadz_kod)).perform(typeText("1111"), closeSoftKeyboard());
+        onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
+
+        try {
+            Thread.sleep(2000); // Adjust the duration as needed
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Wprowadzony kod jest niepoprawny")));
+    }
+
+
+    @Test
+    public void testSignInButtonCheck() throws InterruptedException {
+        MockResponse response = new MockResponse()
+                .setResponseCode(400)
+                .setBody("Account with this email doesn't exist or type of email is invalid");
+        server.enqueue(response);
+
+        onView(withId(R.id.wy_lij_pono)).perform(click());
+    }
+
+    @Test
+    public void testCreateAccountButton() {
+        onView(withId(R.id.wy_lij_pono)).perform(click());
+    }
 
     //no snackbar
 //    @Test
