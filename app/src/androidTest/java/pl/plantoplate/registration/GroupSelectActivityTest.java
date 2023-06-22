@@ -76,23 +76,27 @@ public class GroupSelectActivityTest {
 
     @Test
     public void testGroupSelectViewDisplayed() {
+
         onView(withId(R.id.button_mam_zaproszenie)).check(matches(isDisplayed()));
         onView(withId(R.id.button_swoja_grupa)).check(matches(isDisplayed()));
+
     }
 
     @Test
     public void testOldGroupButton() {
+
         onView(withId(R.id.button_mam_zaproszenie)).perform(click());
         intended(hasComponent(GroupEnterActivity.class.getName()));
+
     }
 
-    //need database
-    @Test
-    public void testNewGroupButton() {
-        onView(withId(R.id.button_swoja_grupa)).perform(click());
-        //intended(hasComponent(CalendarFragment.class.getName()));
-        intended(hasComponent(ActivityMain.class.getName()));
-    }
+//    @Test
+//    public void testNewGroupButton() {
+//
+//        onView(withId(R.id.button_swoja_grupa)).perform(click());
+//        intended(hasComponent(ShoppingListFragment.class.getName()));
+//
+//    }
 }
 
 

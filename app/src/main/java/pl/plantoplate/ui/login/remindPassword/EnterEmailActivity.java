@@ -88,7 +88,7 @@ public class EnterEmailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Message response) {
                 // user exists
-                Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje!", Snackbar.LENGTH_LONG).show();
             }
 
             @Override

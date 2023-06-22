@@ -81,40 +81,46 @@ public class EnterCodeActivityTest {
     //remind password 2
     @Test
     public void testChangePasswordViewDisplayed() {
+
         onView(withId(R.id.wprowadz_kod)).check(matches(isDisplayed()));
         onView(withId(R.id.wy_lij_pono)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zatwierdzenie_link)).check(matches(isDisplayed()));
+
     }
 
     @Test
     public void testEnterCodeButton() {
-        onView(withId(R.id.wprowadz_kod)).perform(typeText("1111"), closeSoftKeyboard());
+
+        String code = "1111";
+
+        onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
+
     }
 
     @Test
     public void testAgainButton() {
+
         onView(withId(R.id.wy_lij_pono)).perform(click());
+
     }
 
     @Test
     public void testNoSuchUser() throws InterruptedException {
+
+        String code = "1111";
+
         MockResponse response = new MockResponse()
                 .setResponseCode(400)
                 .setBody("Account with this email doesn't exist");
         server.enqueue(response);
 
-        onView(withId(R.id.wprowadz_kod)).perform(typeText("1111"), closeSoftKeyboard());
+        onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
-
-        try {
-            Thread.sleep(2000); // Adjust the duration as needed
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Wprowadzony kod jest niepoprawny")));
+
     }
 }
 

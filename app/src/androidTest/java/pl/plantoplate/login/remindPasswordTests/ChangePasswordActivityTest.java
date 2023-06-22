@@ -23,6 +23,7 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -82,39 +83,57 @@ public class ChangePasswordActivityTest {
     //remind password 3
     @Test
     public void testChangePasswordViewDisplayed() {
+
         onView(withId(R.id.nowe_haslo)).check(matches(isDisplayed()));
         onView(withId(R.id.nowe_haslo2)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zatwierdzenie)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void testInvalidCredentials() {
+        String password = "p";
+
+        onView(withId(R.id.nowe_haslo)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.nowe_haslo2)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.button_zatwierdzenie)).perform(click());
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Hasło musi mieć co najmniej 7 znaków")));
+
     }
 
     @Test
     public void testSignInButton() {
-        onView(withId(R.id.nowe_haslo)).perform(typeText("password"), closeSoftKeyboard());
-        onView(withId(R.id.nowe_haslo2)).perform(typeText("password"), closeSoftKeyboard());
+        String password = "password";
+
+        onView(withId(R.id.nowe_haslo)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.nowe_haslo2)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie)).perform(click());
+
     }
 
-//    // eye - not working
-//    @Test
-//    public void testInvalidNotTheSameCredentials() {
-//        onView(withId(R.id.nowe_haslo)).perform(typeText("password"), closeSoftKeyboard());
-//        onView(withId(R.id.nowe_haslo2)).perform(typeText("password1"), closeSoftKeyboard());
-//        onView(withId(R.id.button_zatwierdzenie)).perform(click());
-//        //eye icon error
-//        onView(withId(R.id.nowe_haslo2)).check(matches(withText("Hasła nie są takie same")));
-//    }
-
     @Test
-    public void testInvalidCredentials() {
-        onView(withId(R.id.nowe_haslo)).perform(typeText("p"), closeSoftKeyboard());
-        onView(withId(R.id.nowe_haslo2)).perform(typeText("p"), closeSoftKeyboard());
+    public void testInvalidNotTheSameCredentials() {
+
+        String password = "password";
+        String password2 = "password1";
+
+        onView(withId(R.id.nowe_haslo)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.nowe_haslo2)).perform(typeText(password2), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie)).perform(click());
-        onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Hasło musi mieć co najmniej 7 znaków")));
+
+        onView(withId(R.id.nowe_haslo2))
+                .check(matches(hasErrorText("Hasła nie są takie same")));
+
     }
 
     @Test
     public void testSuccecfulPasswordChange() throws InterruptedException {
+
+        String password = "password";
+        String baseUrl = "/api/auth/password/reset";
+
         MockResponse response = new MockResponse()
                 .setResponseCode(200)
                 .setBody("{" +
@@ -122,15 +141,16 @@ public class ChangePasswordActivityTest {
                         "}");
         server.enqueue(response);
 
-        onView(withId(R.id.nowe_haslo)).perform(typeText("password"), closeSoftKeyboard());
-        onView(withId(R.id.nowe_haslo2)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.nowe_haslo)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.nowe_haslo2)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie)).perform(click());
 
         RecordedRequest recordedRequest = server.takeRequest();
-        assertEquals("/api/auth/password/reset", recordedRequest.getPath());
+        assertEquals(baseUrl, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Pomyślnie zmieniono hasło!")));
+
     }
 }
 

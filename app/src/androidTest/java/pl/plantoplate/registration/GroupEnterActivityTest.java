@@ -17,9 +17,17 @@
 package pl.plantoplate.registration;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
+import static org.junit.Assert.assertEquals;
+
+import android.net.Uri;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -33,7 +41,9 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
+import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
+import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.registration.GroupEnterActivity;
 
@@ -68,11 +78,30 @@ public class GroupEnterActivityTest {
 
     @Test
     public void testRegisterViewDisplayed() {
+
         onView(withId(R.id.wprowadz_kod)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zatwierdz)).check(matches(isDisplayed()));
+
     }
 
-    //need database
+//    @Test
+//    public void testGroupCode() throws InterruptedException {
+//
+//        String code = "111111";
+//        String baseUrl = "/api/mail/code";
+//
+//        MockResponse response = new MockResponse()
+//                .setResponseCode(200)
+//                .setBody("API send back code that it sends to user's email");
+//        server.enqueue(response);
+//
+//        onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
+//        onView(withId(R.id.button_zatwierdz)).perform(click());
+//
+//        RecordedRequest recordedRequest = server.takeRequest();
+//        assertEquals(baseUrl, recordedRequest.getPath());
+//
+//    }
 }
 
 

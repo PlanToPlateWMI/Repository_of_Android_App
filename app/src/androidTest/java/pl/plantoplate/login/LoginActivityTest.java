@@ -83,26 +83,33 @@ public class LoginActivityTest {
 
     @Test
     public void testLoginViewDisplayed() {
+
         onView(withId(R.id.enter_mail)).check(matches(isDisplayed()));
         onView(withId(R.id.enter_pass)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zaloguj_sie)).check(matches(isDisplayed()));
         onView(withId(R.id.nie_masz_konta)).check(matches(isDisplayed()));
         onView(withId(R.id.przyp_haslo)).check(matches(isDisplayed()));
+
     }
 
     @Test
     public void testNoUserExists() throws InterruptedException {
+
+        String email = "test@test.com";
+        String password = "password";
+        String baseUrl = "/api/auth/signin";
+
         MockResponse response = new MockResponse()
                 .setResponseCode(400)
                 .setBody("Account with this email doesn't exist");
         server.enqueue(response);
 
-        onView(withId(R.id.enter_mail)).perform(typeText("test@test.com"), closeSoftKeyboard());
-        onView(withId(R.id.enter_pass)).perform(typeText("password"), closeSoftKeyboard());
+        onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
 
         RecordedRequest recordedRequest = server.takeRequest();
-        assertEquals("/api/auth/signin", recordedRequest.getPath());
+        assertEquals(baseUrl, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
@@ -110,58 +117,82 @@ public class LoginActivityTest {
 
     @Test
     public void testPasswordIsNotCorrect() throws InterruptedException {
+
+        String email = "plantoplatemobileapp@gmail.com";
+        String password = "invalid";
+        String baseUrl = "/api/auth/signin";
+
         MockResponse response = new MockResponse()
                 .setResponseCode(403);
         server.enqueue(response);
 
-        onView(withId(R.id.enter_mail)).perform(typeText("plantoplatemobileapp@gmail.com"), closeSoftKeyboard());
-        onView(withId(R.id.enter_pass)).perform(typeText("invalid"), closeSoftKeyboard());
+        onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
 
         RecordedRequest recordedRequest = server.takeRequest();
-        assertEquals("/api/auth/signin", recordedRequest.getPath());
+        assertEquals(baseUrl, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Niepoprawne hasło!")));
+
     }
 
     @Test
     public void testUserExists() throws InterruptedException {
+
+        String email = "plantoplatemobileapp@gmail.com";
+        String password = "plantoplate";
+        String baseUrl = "/api/auth/signin";
+
         MockResponse response = new MockResponse()
                 .setResponseCode(200)
                 .setBody("User successfully login and API sends back JWT Token and rolet");
         server.enqueue(response);
 
-        onView(withId(R.id.enter_mail)).perform(typeText("plantoplatemobileapp@gmail.com"), closeSoftKeyboard());
-        onView(withId(R.id.enter_pass)).perform(typeText("plantoplate"), closeSoftKeyboard());
+        onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
 
         RecordedRequest recordedRequest = server.takeRequest();
-        assertEquals("/api/auth/signin", recordedRequest.getPath());
+        assertEquals(baseUrl, recordedRequest.getPath());
+
     }
 
     @Test
     public void testCreateAccountButton() {
+
         onView(withId(R.id.nie_masz_konta)).perform(click());
         intended(hasComponent(RegisterActivity.class.getName()));
+
     }
 
     @Test
     public void testNoEmail() {
-        onView(withId(R.id.enter_mail)).perform(typeText(""), closeSoftKeyboard());
-        onView(withId(R.id.enter_pass)).perform(typeText("password"), closeSoftKeyboard());
+
+        String email = "";
+        String password = "password";
+
+        onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Wprowadź adres email")));
+
     }
 
     @Test
     public void testNoPassword() {
-        onView(withId(R.id.enter_mail)).perform(typeText("test@test.com"), closeSoftKeyboard());
-        onView(withId(R.id.enter_pass)).perform(typeText(""), closeSoftKeyboard());
+
+        String email = "test@test.com";
+        String password = "";
+
+        onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Wprowadź hasło")));
+
     }
 }
 
