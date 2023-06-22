@@ -187,13 +187,13 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         // get to buy products
         productsDbaseViewModel.getOwnProducts().observe(getViewLifecycleOwner(), this::updateRecyclerView);
 
-        // get success message
-        productsDbaseViewModel.getOwnProductsOnSuccessOperation().observe(getViewLifecycleOwner(), successMessage ->
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()));
-
-        // get error message
-        productsDbaseViewModel.getOwnProductsOnErrorOperation().observe(getViewLifecycleOwner(), errorMessage ->
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()));
+//        // get success message
+//        productsDbaseViewModel.getOwnProductsOnSuccessOperation().observe(getViewLifecycleOwner(), successMessage ->
+//                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()));
+//
+//        // get error message
+//        productsDbaseViewModel.getOwnProductsOnErrorOperation().observe(getViewLifecycleOwner(), errorMessage ->
+//                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()));
 
     }
 

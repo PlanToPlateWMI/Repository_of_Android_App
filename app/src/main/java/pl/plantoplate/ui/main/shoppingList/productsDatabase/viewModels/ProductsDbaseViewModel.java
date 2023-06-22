@@ -2,6 +2,7 @@ package pl.plantoplate.ui.main.shoppingList.productsDatabase.viewModels;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -101,12 +102,14 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
 
             @Override
             public void onError(String errorMessage) {
-                allProductsOnErrorOperation.setValue(errorMessage);
+                //allProductsOnErrorOperation.setValue(errorMessage);
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                allProductsOnErrorOperation.setValue(failureMessage);
+                //allProductsOnErrorOperation.setValue(failureMessage);
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -117,17 +120,18 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
             @Override
             public void onSuccess(ArrayList<Product> products) {
                 ownProducts.setValue(products);
-
             }
 
             @Override
             public void onError(String errorMessage) {
-                ownProductsOnErrorOperation.setValue(errorMessage);
+                //ownProductsOnErrorOperation.setValue(errorMessage);
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                ownProductsOnErrorOperation.setValue(failureMessage);
+                //ownProductsOnErrorOperation.setValue(failureMessage);
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -150,11 +154,13 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
             @Override
             public void onError(String errorMessage) {
                 //error.setValue(errorMessage);
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String failureMessage) {
                 //error.setValue(failureMessage);
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -168,29 +174,35 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
                 String message = "Produkt " + product.getName() + " w ilości " +
                         product.getAmount() + " " + product.getUnit() + " został dodany do listy zakupów";
 
-                if (listType.equals("own")) {
-                    ownProductsOnSuccessOperation.setValue(message);
-                } else {
-                    allProductsOnSuccessOperation.setValue(message);
-                }
+//                if (listType.equals("own")) {
+//                    ownProductsOnSuccessOperation.setValue(message);
+//                } else {
+//                    allProductsOnSuccessOperation.setValue(message);
+//                }
+
+                Toast.makeText(getApplication(), message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(String errorMessage) {
-                if (listType.equals("own")) {
-                    ownProductsOnErrorOperation.setValue(errorMessage);
-                } else {
-                    allProductsOnErrorOperation.setValue(errorMessage);
-                }
+//                if (listType.equals("own")) {
+//                    ownProductsOnErrorOperation.setValue(errorMessage);
+//                } else {
+//                    allProductsOnErrorOperation.setValue(errorMessage);
+//                }
+
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                if (listType.equals("own")) {
-                    ownProductsOnErrorOperation.setValue(failureMessage);
-                } else {
-                    allProductsOnErrorOperation.setValue(failureMessage);
-                }
+//                if (listType.equals("own")) {
+//                    ownProductsOnErrorOperation.setValue(failureMessage);
+//                } else {
+//                    allProductsOnErrorOperation.setValue(failureMessage);
+//                }
+
+                    Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -203,29 +215,32 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
             public void onSuccess(ArrayList<Product> response) {
                 String message = "Produkt " + product.getName() + " w ilości "
                         + product.getAmount() + " " + product.getUnit() + " został dodany do spiżarni";
-                if (listType.equals("own")) {
-                    ownProductsOnSuccessOperation.setValue(message);
-                } else {
-                    allProductsOnSuccessOperation.setValue(message);
-                }
+//                if (listType.equals("own")) {
+//                    ownProductsOnSuccessOperation.setValue(message);
+//                } else {
+//                    allProductsOnSuccessOperation.setValue(message);
+//                }
+                Toast.makeText(getApplication(), message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(String errorMessage) {
-                if (listType.equals("own")) {
-                    ownProductsOnErrorOperation.setValue(errorMessage);
-                } else {
-                    allProductsOnErrorOperation.setValue(errorMessage);
-                }
+//                if (listType.equals("own")) {
+//                    ownProductsOnErrorOperation.setValue(errorMessage);
+//                } else {
+//                    allProductsOnErrorOperation.setValue(errorMessage);
+//                }
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                if (listType.equals("own")) {
-                    ownProductsOnErrorOperation.setValue(failureMessage);
-                } else {
-                    allProductsOnErrorOperation.setValue(failureMessage);
-                }
+//                if (listType.equals("own")) {
+//                    ownProductsOnErrorOperation.setValue(failureMessage);
+//                } else {
+//                    allProductsOnErrorOperation.setValue(failureMessage);
+//                }
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -236,30 +251,33 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
             @Override
             public void onSuccess(ArrayList<Product> shopList) {
                 String message = "Produkt " + product.getName() + " został usunięty z listy";
-                if (listType.equals("own")) {
-                    ownProductsOnSuccessOperation.setValue(message);
-                } else {
-                    allProductsOnSuccessOperation.setValue(message);
-                }
+//                if (listType.equals("own")) {
+//                    ownProductsOnSuccessOperation.setValue(message);
+//                } else {
+//                    allProductsOnSuccessOperation.setValue(message);
+//                }
+                Toast.makeText(getApplication(), message, Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onError(String errorMessage) {
-                if (listType.equals("own")) {
-                    ownProductsOnErrorOperation.setValue(errorMessage);
-                } else {
-                    allProductsOnErrorOperation.setValue(errorMessage);
-                }
+//                if (listType.equals("own")) {
+//                    ownProductsOnErrorOperation.setValue(errorMessage);
+//                } else {
+//                    allProductsOnErrorOperation.setValue(errorMessage);
+//                }
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String failureMessage) {
-                if (listType.equals("own")) {
-                    ownProductsOnErrorOperation.setValue(failureMessage);
-                } else {
-                    allProductsOnErrorOperation.setValue(failureMessage);
-                }
+//                if (listType.equals("own")) {
+//                    ownProductsOnErrorOperation.setValue(failureMessage);
+//                } else {
+//                    allProductsOnErrorOperation.setValue(failureMessage);
+//                }
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

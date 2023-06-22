@@ -17,7 +17,9 @@
 package pl.plantoplate.ui.main.storage;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -155,7 +157,8 @@ public class StorageViewModel extends AndroidViewModel {
              */
             @Override
             public void onError(String errorMessage) {
-                error.setValue(errorMessage);
+                //error.setValue(errorMessage);
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             /**
@@ -166,7 +169,8 @@ public class StorageViewModel extends AndroidViewModel {
              */
             @Override
             public void onFailure(String failureMessage) {
-                error.setValue(failureMessage);
+                //error.setValue(failureMessage);
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -189,11 +193,13 @@ public class StorageViewModel extends AndroidViewModel {
             @Override
             public void onError(String errorMessage) {
                 //error.setValue(errorMessage);
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String failureMessage) {
                 //error.setValue(failureMessage);
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -215,7 +221,8 @@ public class StorageViewModel extends AndroidViewModel {
             @Override
             public void onSuccess(ArrayList<Product> products) {
                 storageProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
-                success.setValue("produkt '" + product.getName() + "' został usunięty");
+                //success.setValue("produkt '" + product.getName() + "' został usunięty");
+                Toast.makeText(getApplication(), "produkt '" + product.getName() + "' został usunięty", Toast.LENGTH_SHORT).show();
 
                 if (products.isEmpty()) {
                     storageTitle.setValue("Spiżarnia");
@@ -231,7 +238,8 @@ public class StorageViewModel extends AndroidViewModel {
              */
             @Override
             public void onError(String errorMessage) {
-                error.setValue(errorMessage);
+                //error.setValue(errorMessage);
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             /**
@@ -241,7 +249,8 @@ public class StorageViewModel extends AndroidViewModel {
              */
             @Override
             public void onFailure(String failureMessage) {
-                error.setValue(failureMessage);
+                //error.setValue(failureMessage);
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -263,7 +272,8 @@ public class StorageViewModel extends AndroidViewModel {
             @Override
             public void onSuccess(ArrayList<Product> products) {
                 storageProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
-                success.setValue("produkt '" + product.getName() + "' został zmieniony");
+                //success.setValue("produkt '" + product.getName() + "' został zmieniony");
+                Toast.makeText(getApplication(), "produkt '" + product.getName() + "' został zmieniony", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -274,7 +284,8 @@ public class StorageViewModel extends AndroidViewModel {
              */
             @Override
             public void onError(String errorMessage) {
-                error.setValue(errorMessage);
+                //error.setValue(errorMessage);
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             /**
@@ -284,7 +295,8 @@ public class StorageViewModel extends AndroidViewModel {
              */
             @Override
             public void onFailure(String failureMessage) {
-                error.setValue(failureMessage);
+                //error.setValue(failureMessage);
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -306,7 +318,8 @@ public class StorageViewModel extends AndroidViewModel {
             @Override
             public void onSuccess(ArrayList<Product> products) {
                 storageProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
-                success.setValue("Produkty zostały przeniesione do spiżarni");
+                //success.setValue("Produkty zostały przeniesione do spiżarni");
+                Toast.makeText(getApplication(), "Produkty zostały przeniesione do spiżarni", Toast.LENGTH_SHORT).show();
 
                 if (products.isEmpty()) {
                     storageTitle.setValue("Spiżarnia");
@@ -322,7 +335,8 @@ public class StorageViewModel extends AndroidViewModel {
              */
             @Override
             public void onError(String errorMessage) {
-                error.setValue(errorMessage);
+                //error.setValue(errorMessage);
+                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
             }
 
             /**
@@ -332,7 +346,8 @@ public class StorageViewModel extends AndroidViewModel {
              */
             @Override
             public void onFailure(String failureMessage) {
-                error.setValue(failureMessage);
+                //error.setValue(failureMessage);
+                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

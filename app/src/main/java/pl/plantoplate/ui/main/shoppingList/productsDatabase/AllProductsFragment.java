@@ -171,13 +171,13 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
             updateRecyclerView(categories);
         });
 
-        // get success message
-        productsDbaseViewModel.getAllProductsOnSuccessOperation().observe(getViewLifecycleOwner(), successMessage ->
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()));
-
-        // get error message
-        productsDbaseViewModel.getAllProductsOnErrorOperation().observe(getViewLifecycleOwner(), errorMessage ->
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()));
+//        // get success message
+//        productsDbaseViewModel.getAllProductsOnSuccessOperation().observe(getViewLifecycleOwner(), successMessage ->
+//                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()));
+//
+//        // get error message
+//        productsDbaseViewModel.getAllProductsOnErrorOperation().observe(getViewLifecycleOwner(), errorMessage ->
+//                requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()));
 
     }
 
