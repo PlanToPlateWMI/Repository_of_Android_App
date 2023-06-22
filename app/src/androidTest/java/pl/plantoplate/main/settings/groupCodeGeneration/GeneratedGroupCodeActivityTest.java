@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.R;
-import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GeneratedGroupCodeActivity;
 
 import static androidx.test.espresso.Espresso.onView;

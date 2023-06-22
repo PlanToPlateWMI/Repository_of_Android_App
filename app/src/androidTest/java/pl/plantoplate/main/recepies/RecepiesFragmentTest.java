@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.calendar;
+package pl.plantoplate.main.recepies;
 
 
 import androidx.test.espresso.intent.Intents;
@@ -32,7 +32,9 @@ import org.junit.runner.RunWith;
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
+import pl.plantoplate.ui.main.recepies.RecipeFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
+import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.R;
@@ -51,7 +53,7 @@ import android.content.SharedPreferences;
 import java.io.IOException;
 
 @RunWith(AndroidJUnit4.class)
-public class CalendarFragmentTest {
+public class RecepiesFragmentTest {
 
     @Rule
     public ActivityScenarioRule<ActivityMain> fragmentRule =
@@ -64,6 +66,9 @@ public class CalendarFragmentTest {
     public void setUp() throws IOException {
         // Initialize Intents
         Intents.init();
+
+        // Navigate to the RecepiesFragment
+        navigateToRecepiesFragment();
 
         // server
         server = new MockWebServer();
@@ -79,20 +84,27 @@ public class CalendarFragmentTest {
         server.shutdown();
     }
 
-//    public void navigateToCalendarFragment() {
+    public void navigateToRecepiesFragment() {
+
+        fragmentRule.getScenario().onActivity(activity -> {
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_layout, RecipeFragment.class, null)
+                    .commit();
+        });
+    }
+
+//    public void navigateToRecepiesFragment() {
 //
 //        fragmentRule.getScenario().onActivity(activity -> {
 //            activity.getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.frame_layout, CalendarFragment.class, null)
+//                    .replace(R.id.frame_layout, RecipeFragment.class, null)
 //                    .commit();
 //        });
 //    }
 //
 //    @Test
-//    public void testCalendarDisplayed() {
-//
-//        onView(withId(R.id)).check(matches(isDisplayed()));
-//
+//    public void testRecepiesDisplayed() {
+//        onView(withId(R.id.recipie)).check(matches(isDisplayed()));
 //    }
-
 }
+
