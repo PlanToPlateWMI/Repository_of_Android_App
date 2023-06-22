@@ -1,20 +1,44 @@
-package pl.plantoplate.main.settings.groupCodeGeneration;
+/*
+ * Copyright 2023 the original author or authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package pl.plantoplate.main.settings.developerContact;
 
 import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
+import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.R;
 import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GeneratedGroupCodeActivity;
+import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
+import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
+import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
+import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
+import pl.plantoplate.ui.login.LoginActivity;
+import pl.plantoplate.R;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -24,12 +48,16 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-import android.os.Bundle;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.widget.Button;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import java.io.IOException;
 
 @RunWith(AndroidJUnit4.class)
-public class GeneratedGroupCodeActivityTest {
+public class MainDevelopsTest {
 
     @Rule
     public ActivityScenarioRule<ActivityMain> fragmentRule =
@@ -44,7 +72,7 @@ public class GeneratedGroupCodeActivityTest {
         Intents.init();
 
         // Navigate to the SettingsFragment
-        // navigateTo();
+        navigateToMail();
 
         // server
         server = new MockWebServer();
@@ -60,42 +88,19 @@ public class GeneratedGroupCodeActivityTest {
         server.shutdown();
     }
 
-    public void navigateTo() {
+    public void navigateToMail() {
 
         fragmentRule.getScenario().onActivity(activity -> {
             activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, SettingsInsideFragment.class, null)
+                    .replace(R.id.frame_layout, MailDevelops.class, null)
                     .commit();
         });
     }
 
     @Test
-    public void generatedGroupCodeFragment() {
+    public void testSettingsFragmentInsideViewDisplayed() {
 
-        String groupCode = "999999";
-
-        GeneratedGroupCodeActivity generatedGroupCodeActivity = new GeneratedGroupCodeActivity();
-        Bundle bundle = new Bundle();
-        bundle.putString("group_code", groupCode);
-        generatedGroupCodeActivity.setArguments(bundle);
-
-        fragmentRule.getScenario().onActivity(activity -> {
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, generatedGroupCodeActivity, null)
-                    .commit();
-        });
-    }
-
-    @Test
-    public void applyButtonNavigatesToMainActivity() {
-        // Perform a click on the apply button
-        onView(withId(R.id.apply_button)).perform(click());
-
-        // Check if the MainActivity is displayed
-        //onView(withId(R.layout.activity_main_for_fragments)).check(matches(isDisplayed()));
-        // intended(hasComponent(ActivityMain.class.getName()));
-        navigateTo();
+        onView(withId(R.id.button_zatwierdz)).check(matches(isDisplayed()));
 
     }
 }
-

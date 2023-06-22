@@ -128,9 +128,11 @@
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="15785879900073M" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="Tests" value="360" />
                   <entry key="samsung&#10; SM-G977N" value="120" />
+                  <entry key="vivo&#10; V2050" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -222,7 +224,35 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1436574762">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1429793445">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1415050888">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -498,6 +528,34 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-422031632">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-397375398">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-391278256">
           <value>
             <AndroidTestResultsTableState>
@@ -540,6 +598,20 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-310273759">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-254759184">
           <value>
             <AndroidTestResultsTableState>
@@ -569,6 +641,20 @@
           </value>
         </entry>
         <entry key="-165374337">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-145844455">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -722,6 +808,20 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="545571296">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="669268608">
           <value>
             <AndroidTestResultsTableState>
@@ -795,6 +895,20 @@
           </value>
         </entry>
         <entry key="1051022695">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1054138720">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -994,6 +1108,20 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="1643345513">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="1706633367">
           <value>
             <AndroidTestResultsTableState>
@@ -1017,6 +1145,20 @@
                   <entry key="Tests" value="360" />
                   <entry key="emulator-5554" value="120" />
                   <entry key="samsung&#10; SM-G977N" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1816628386">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -1051,6 +1193,20 @@
           </value>
         </entry>
         <entry key="1872708358">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1907253852">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -1120,6 +1276,20 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="2003027955">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="15785879900073M" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo&#10; V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="2082439917">
           <value>
             <AndroidTestResultsTableState>
@@ -1139,11 +1309,13 @@
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="15785879900073M" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="Tests" value="360" />
                   <entry key="emulator-5554" value="120" />
                   <entry key="samsung" value="120" />
                   <entry key="samsung&#10; SM-G977N" value="120" />
+                  <entry key="vivo&#10; V2050" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
