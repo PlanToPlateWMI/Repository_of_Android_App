@@ -84,7 +84,7 @@ public class EmailConfirmActivityTest {
     @Test
     public void testChangePasswordViewDisplayed() {
 
-        onView(ViewMatchers.withId(R.id.wprowadz_kod)).check(matches(isDisplayed()));
+        onView(withId(R.id.wprowadz_kod)).check(matches(isDisplayed()));
         onView(withId(R.id.wy_lij_pono)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zatwierdzenie_link)).check(matches(isDisplayed()));
 
