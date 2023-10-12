@@ -38,7 +38,7 @@
         android:layout_alignParentBottom="true"
         android:gravity="top"
 
-        android:fontFamily="@font/quicksand_medium"
+        android:fontFamily="@font/quicksand_regular"
 
         android:text="@string/logowanie"
         android:textAppearance="@style/rejestracja"
@@ -64,7 +64,7 @@
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="?attr/colorOnPrimary"
+        app:boxStrokeColor="?attr/colorTertiary"
 
         app:hintTextColor="?attr/colorSecondaryVariant"
 
@@ -108,7 +108,7 @@
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="?attr/colorOnPrimary"
+        app:boxStrokeColor="?attr/colorTertiary"
 
         app:endIconMode="password_toggle"
 
@@ -156,7 +156,7 @@
         android:text="@string/przypomnij_haslo"
         android:textAppearance="@style/masz_konto_"
 
-        android:textColor="?attr/colorSecondary"
+        android:textColor="@color/text_clikable_no_theme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.943"
@@ -216,7 +216,7 @@
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_haslo"
         app:layout_constraintVertical_bias="0.292"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />
 
 

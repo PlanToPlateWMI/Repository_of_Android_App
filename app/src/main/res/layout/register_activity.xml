@@ -38,7 +38,7 @@
         android:layout_alignParentBottom="true"
         android:gravity="top"
 
-        android:fontFamily="@font/quicksand_medium"
+        android:fontFamily="@font/quicksand_regular"
 
         android:text="@string/rejestracja"
         android:textAppearance="@style/rejestracja"
@@ -65,7 +65,7 @@
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="?attr/colorOnPrimary"
+        app:boxStrokeColor="?attr/colorTertiary"
 
         app:hintTextColor="?attr/colorSecondaryVariant"
 
@@ -106,7 +106,7 @@
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="?attr/colorOnPrimary"
+        app:boxStrokeColor="?attr/colorTertiary"
 
         app:hintTextColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -145,7 +145,7 @@
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="?attr/colorOnPrimary"
+        app:boxStrokeColor="?attr/colorTertiary"
         app:endIconMode="password_toggle"
 
         app:endIconTint="?attr/colorSecondaryVariant"
@@ -183,7 +183,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_regular"
 
-        android:shadowColor="?attr/colorPrimary"
+        android:shadowColor="?attr/colorTertiary"
 
         android:text="@string/wyra_am_zgo"
         android:textAppearance="@style/wyra_am_zgo"
@@ -240,7 +240,7 @@
 
         android:text="@string/zaloz_konto"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"

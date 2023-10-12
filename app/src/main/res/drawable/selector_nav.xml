@@ -4,6 +4,6 @@
         android:drawable="@color/blue_2"
         android:state_checked="true"/>
     <item
-        android:drawable="@color/blue_1"
+        android:drawable="@color/navigation_bar_buttons"
         android:state_checked="false"/>
 </selector>

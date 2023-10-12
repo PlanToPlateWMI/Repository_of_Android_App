@@ -238,7 +238,6 @@ public class BuyProductsFragment extends Fragment {
 
         // get to buy products
         shoppingListViewModel.getToBuyProducts().observe(getViewLifecycleOwner(), toBuyProducts -> {
-
             // update recycler view
             CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
             Objects.requireNonNull(categoryAdapter).setCategoriesList(CategorySorter.sortCategoriesByProduct(toBuyProducts));

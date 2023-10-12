@@ -25,14 +25,14 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_semibold"
+            android:fontFamily="@font/quicksand_medium"
             android:gravity="left"
 
             android:text="@string/z_kup"
 
             android:textAppearance="@style/rejestracja"
             android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="24dp"
+            android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_medium"
+            android:fontFamily="@font/quicksand_regular"
 
             android:gravity="left"
 
@@ -69,7 +69,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_medium"
+            android:fontFamily="@font/quicksand_light"
 
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
@@ -77,11 +77,11 @@
             android:paddingBottom="10dp"
 
             android:gravity="center"
-            android:textSize="24dp"
+            android:textSize="22dp"
 
             android:text="@string/zamknij"
             android:textAppearance="@style/rejestracja"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="@color/text_clikable_no_theme"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.651"
@@ -97,7 +97,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_medium"
+            android:fontFamily="@font/quicksand_light"
 
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
@@ -108,8 +108,8 @@
             android:text="@string/ok"
 
             android:textAppearance="@style/rejestracja"
-            android:textColor="?attr/colorSecondary"
-            android:textSize="24dp"
+            android:textColor="@color/text_clikable_no_theme"
+            android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"

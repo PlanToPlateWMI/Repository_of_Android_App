@@ -124,7 +124,6 @@ public class BoughtProductsFragment extends Fragment {
 
         // get to buy products
         shoppingListViewModel.getBoughtProducts().observe(getViewLifecycleOwner(), boughtProducts -> {
-
             // set up move to storage button
             if (boughtProducts.isEmpty()) {
                 moveToStorageButton.setVisibility(View.INVISIBLE);

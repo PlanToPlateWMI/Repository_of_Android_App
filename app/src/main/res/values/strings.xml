@@ -125,7 +125,7 @@ ze spiżarni?</string>
     <string name="delete_shopping_list_title">Usunięcie z listy zakupów</string>
     <string name="delete_shopping_list_body">Czy napewno chcesz usunąć ten produkt z listy zakupów?</string>
 
-    <string name="change">Zmiana ilości produktu</string>
+    <string name="change">Zmiana ilości produktu:</string>
     <string name="ilosc_">Ilość:</string>
     <string name="j_m">Jednostki miary:</string>
 

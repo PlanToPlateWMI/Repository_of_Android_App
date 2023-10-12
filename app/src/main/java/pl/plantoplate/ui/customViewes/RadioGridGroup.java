@@ -92,4 +92,14 @@ public class RadioGridGroup extends GridLayout implements RadioGroup.OnCheckedCh
         }
         return null;
     }
+
+    /**
+     Set a specific radio button as checked by its ID.
+     @param checkedId The ID of the radio button to set as checked.
+     */
+    public void setCheckedRadioButtonById(int checkedId) {
+        for (RadioButton radioButton : radioButtons) {
+            radioButton.setChecked(radioButton.getId() == checkedId);
+        }
+    }
 }

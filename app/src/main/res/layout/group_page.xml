@@ -38,7 +38,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:fontFamily="@font/quicksand_medium"
+        android:fontFamily="@font/quicksand_regular"
 
         android:gravity="center_horizontal|top"
 
@@ -60,7 +60,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:fontFamily="@font/quicksand_medium"
+
+        android:fontFamily="@font/quicksand_regular"
+
         android:textSize="20dp"
         android:textColor="?attr/colorSecondaryVariant"
         android:gravity="center_horizontal|top"
@@ -82,7 +84,7 @@
         android:textColorHint="?attr/colorSecondaryVariant"
 
         app:boxBackgroundMode="outline"
-        app:boxStrokeColor="?attr/colorOnPrimary"
+        app:boxStrokeColor="?attr/colorTertiary"
 
         app:hintTextColor="?attr/colorSecondaryVariant"
 
@@ -141,6 +143,7 @@
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod2"
         app:layout_constraintVertical_bias="0.587"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"/>
+        app:strokeColor="?attr/colorPrimaryVariant"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

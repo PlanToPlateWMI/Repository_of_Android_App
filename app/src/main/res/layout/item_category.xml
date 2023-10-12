@@ -12,6 +12,8 @@
         android:text="Kategoria"
         android:layout_marginTop="5dp"
         android:gravity="center"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20dp" />
 

@@ -41,9 +41,11 @@ import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentStorageInsideBinding;
+import pl.plantoplate.repository.remote.models.Category;
 import pl.plantoplate.repository.remote.models.Product;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
+import pl.plantoplate.ui.customViewes.RadioGridGroup;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
 import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
@@ -60,6 +62,7 @@ public class StorageMainFragment extends Fragment {
     private TextView storage_title;
     private FloatingActionButton plus_in_storage;
     private RecyclerView recyclerView;
+    private RadioGridGroup radioGridGroup;
 
     private SharedPreferences prefs;
 
@@ -264,7 +267,6 @@ public class StorageMainFragment extends Fragment {
 
         // get storage
         storageViewModel.getStorageProducts().observe(getViewLifecycleOwner(), storageProducts -> {
-
             // update recycler view
             CategoryAdapter categoryAdapter = (CategoryAdapter) recyclerView.getAdapter();
             Objects.requireNonNull(categoryAdapter).setCategoriesList(storageProducts);

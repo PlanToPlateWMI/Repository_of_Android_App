@@ -3,7 +3,7 @@
     <gradient
         android:endColor="?attr/colorOnTertiary"
         android:startColor="?attr/colorOnTertiary" />
-    <stroke android:color="?attr/colorSecondary"
+    <stroke android:color="?attr/boxStrokeColor"
         android:width="1dp"/>
     <corners android:radius="4dp" />
 </shape>

@@ -2,27 +2,34 @@
     <!-- Base application theme. -->
     <style name="Theme.PlaneToPlate_App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black_gray</item>
-        <item name="colorPrimaryVariant">@color/zam_blue_1</item>
-        <item name="colorOnPrimary">@color/zam_blue_2</item>
-        <item name="colorOnTertiary">@color/zam_blue_0</item>
+        <item name="colorPrimaryVariant">@color/zam_navigation_bar_buttons</item>
+        <item name="colorOnTertiary">@color/zam_background_color</item>
+
+        <item name="colorOnPrimaryFixed">@color/zam_item_kupione_trzeba_kupic</item>
+        <item name="boxStrokeColor">@color/zam_greeen_stroke</item>
+
+        <item name="colorOnPrimary">@color/zam_red_stroke</item>
+        <item name="color">@color/zam_item_spizarnia</item>
+
+        <item name="colorOnError">@color/zam_item_baza</item>
+        <item name="colorError">@color/zam_baza_stroke</item>
+
+        <item name="android:editTextColor">@color/zam_text_color</item>
+
+        <item name="colorOnBackground">@color/zam_item_user</item>
+
+        <item name="colorSecondary">@color/zam_checkbox</item>
+        <item name="colorPrimary">@color/zam_search_color</item>
+        <item name="colorTertiary">@color/zam_stroke_checkbox</item>
+
+        <item name="colorContainer">@color/zam_stroke_button_radio_baza</item>
 
 
-        <item name="colorOnBackground">@color/zam_lista_color</item>
-        <item name="colorTertiary">@color/zam_baza_color</item>
-        <item name="colorOnError">@color/zam_spizarnia_color</item>
-
-        <item name="colorError">@color/red_dark</item>
-
-        <item name="android:editTextColor">@color/gray</item>
         <item name="android:textColorHint">@color/gray</item>
 
-        <item name="colorOnPrimaryFixed">@color/item_n</item>
-
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/zam_blue_3</item>
-        <item name="colorSecondaryVariant">@color/zam_black_gray</item>
-        <item name="colorOnSecondary">@color/gray</item>
+        <item name="colorSecondaryVariant">@color/zam_text_color</item>
+        <item name="colorOnSecondary">@color/zam_text_color</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>

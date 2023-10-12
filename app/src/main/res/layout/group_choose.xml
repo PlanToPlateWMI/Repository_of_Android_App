@@ -40,7 +40,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:fontFamily="@font/quicksand_medium"
+
+        android:fontFamily="@font/quicksand_regular"
+
         android:gravity="center_horizontal|top"
         android:text="@string/pomy_lnie_z"
         android:textAppearance="@style/pomy_lnie_z"
@@ -59,7 +61,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:fontFamily="@font/quicksand_medium"
+
+        android:fontFamily="@font/quicksand_regular"
+
         android:gravity="center_horizontal|top"
         android:text="@string/wybierz_jadna_opcje"
         android:textAppearance="@style/wprowad_kod"
@@ -94,7 +98,8 @@
         app:layout_constraintTop_toBottomOf="@+id/wybierz_opcje"
         app:layout_constraintVertical_bias="0.492"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary" />
+        app:strokeColor="?attr/colorPrimaryVariant"
+        />
 
     <Button
         android:id="@+id/button_swoja_grupa"
@@ -119,7 +124,8 @@
         app:layout_constraintTop_toBottomOf="@+id/button_mam_zaproszenie"
         app:layout_constraintVertical_bias="0.447"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary" />
+        app:strokeColor="?attr/colorPrimaryVariant"
+        />
 
     <TextView
         android:id="@+id/podpowiedz_grupa"
@@ -130,7 +136,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
 
-        android:fontFamily="@font/quicksand_medium"
+        android:fontFamily="@font/quicksand_regular"
 
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/podpowiedz_gr"

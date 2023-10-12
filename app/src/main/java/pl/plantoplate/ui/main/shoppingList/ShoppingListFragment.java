@@ -19,6 +19,7 @@ package pl.plantoplate.ui.main.shoppingList;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,9 @@ import java.util.Objects;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
 import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.ui.customViewes.RadioGridGroup;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.ChangeCategoryListener;
 import pl.plantoplate.ui.main.shoppingList.viewModels.ShoppingListViewModel;
 
 /**
@@ -48,6 +51,7 @@ public class ShoppingListFragment extends Fragment {
     private FragmentShoppingListBinding shopping_list_view;
     private SharedPreferences prefs;
     private ViewPager2 viewPager;
+    private RadioGridGroup radioGridGroup;
 
     /**
      * Method called on fragment start initialization.
@@ -58,13 +62,6 @@ public class ShoppingListFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        // Get the SharedPreferences object
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
-
-        // Set selected all products fragment by default on restart fragment.
-        shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.trzeba_kupic);
-        // Set first visible AllProductsFragment by default
-        viewPager.setCurrentItem(0);
     }
 
     /**
@@ -84,8 +81,20 @@ public class ShoppingListFragment extends Fragment {
         // Inflate the layout for this fragment
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
 
+        // Get the SharedPreferences object
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
         // Setup views
         viewPager = shopping_list_view.viewPager;
+
+        // Set selected all products fragment by default on restart fragment.
+        radioGridGroup = shopping_list_view.radioGroup;
+
+        //make radio button checked
+        radioGridGroup.setCheckedRadioButtonById(R.id.trzeba_kupic_button);
+
+        // Set first visible AllProductsFragment by default
+        viewPager.setCurrentItem(0);
 
         // Setup swipe pager
         setupViewPager(viewPager);
@@ -101,16 +110,19 @@ public class ShoppingListFragment extends Fragment {
      */
     @SuppressLint("NonConstantResourceId")
     private void setupNavigation() {
-        shopping_list_view.bottomNavigationView2.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.trzeba_kupic:
+        radioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            Log.d("RadioGridGroup", "Checked ID: " + checkedId); // Debugging
+            switch (checkedId) {
+                case R.id.trzeba_kupic_button:
                     viewPager.setCurrentItem(0);
-                    return true;
-                case R.id.kupione:
+                    break;
+                case R.id.kupione_button:
                     viewPager.setCurrentItem(1);
-                    return true;
+                    break;
+                default:
+                    Log.d("RadioGridGroup", "Unhandled ID: " + checkedId); // Debugging
+                    break;
             }
-            return false;
         });
     }
 
@@ -126,10 +138,12 @@ public class ShoppingListFragment extends Fragment {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.trzeba_kupic);
+                        //shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.trzeba_kupic);
+                        shopping_list_view.radioGroup.setCheckedRadioButtonById(R.id.trzeba_kupic_button);
                         break;
                     case 1:
-                        shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.kupione);
+                        //shopping_list_view.bottomNavigationView2.setSelectedItemId(R.id.kupione);
+                        shopping_list_view.radioGroup.setCheckedRadioButtonById(R.id.kupione_button);
                         break;
                 }
             }

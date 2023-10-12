@@ -27,8 +27,8 @@
         android:layout_marginBottom="72dp"
         android:clickable="true"
         android:iconTint="?attr/colorSecondaryVariant"
-        android:backgroundTint="?attr/colorPrimaryVariant"
-        app:backgroundTint="?attr/colorSecondary"
+        android:backgroundTint="?attr/colorOnPrimary"
+        app:backgroundTint="?attr/colorOnPrimary"
 
         android:src="@drawable/add_24_50"
         app:layout_constraintBottom_toBottomOf="parent"

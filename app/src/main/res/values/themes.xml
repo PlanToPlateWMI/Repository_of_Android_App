@@ -2,31 +2,40 @@
     <!-- Base application theme. -->
     <style name="Theme.PlaneToPlate_App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_2</item>
-        <item name="colorPrimaryVariant">@color/blue_1</item>
-        <item name="colorOnPrimary">@color/blue_2</item>
-        <item name="colorOnTertiary">@color/blue_0</item>
+        <item name="colorPrimaryVariant">@color/navigation_bar_buttons</item>
+        <item name="colorOnTertiary">@color/background_color</item>
 
-        <item name="android:editTextColor">@color/black_gray</item>
+        <item name="colorOnPrimaryFixed">@color/item_kupione_trzeba_kupic</item>
+        <item name="boxStrokeColor">@color/greeen_stroke</item>
+
+        <item name="colorOnPrimary">@color/red_stroke</item>
+        <item name="color">@color/item_spizarnia</item>
+
+        <item name="colorOnError">@color/item_baza</item>
+        <item name="colorError">@color/baza_stroke</item>
+
+        <item name="android:editTextColor">@color/text_color</item>
+
+        <item name="colorOnBackground">@color/item_user</item>
+
+        <item name="colorSecondary">@color/checkbox</item>
+        <item name="colorPrimary">@color/search_color</item>
+        <item name="colorTertiary">@color/stroke_checkbox</item>
+
+        <item name="colorContainer">@color/stroke_button_radio_baza</item>
+
+
         <item name="android:textColorHint">@color/gray</item>
 
-        <item name="colorOnBackground">@color/lista_color</item>
-        <item name="colorTertiary">@color/baza_color</item>
-        <item name="colorOnError">@color/spizarnia_color</item>
-
-        <item name="colorError">@color/red</item>
-        <item name="colorOnPrimaryFixed">@color/item_d</item>
-
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue_3</item>
-        <item name="colorSecondaryVariant">@color/black_gray</item>
-        <item name="colorOnSecondary">@color/black_gray</item>
+        <item name="colorSecondaryVariant">@color/text_color</item>
+        <item name="colorOnSecondary">@color/text_color</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:windowLightNavigationBar">true</item>
-
     </style>
+
 </resources>

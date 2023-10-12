@@ -110,15 +110,15 @@
 
     <TextView
         android:id="@+id/imie"
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
 
-        android:fontFamily="@font/quicksand_medium"
+        android:fontFamily="@font/quicksand_regular"
 
         android:gravity="top"
         android:text="@string/imie"
@@ -127,16 +127,16 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.117" />
+        app:layout_constraintVertical_bias="0.109" />
 
     <Button
         android:id="@+id/button_wygenerowanie_kodu"
         android:layout_width="0dp"
-        android:layout_height="90dp"
+        android:layout_height="84dp"
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/key_24_50"
@@ -156,13 +156,13 @@
         app:layout_constraintTop_toBottomOf="@+id/imie"
         app:layout_constraintVertical_bias="0.051"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/button_zmiana_danych"
         android:layout_width="0dp"
-        android:layout_height="91dp"
+        android:layout_height="84dp"
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/manage_accounts_24_50"
@@ -182,13 +182,13 @@
         app:layout_constraintTop_toBottomOf="@+id/button_wygenerowanie_kodu"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/button_zarzadyanie_uyztkownikamu"
         android:layout_width="0dp"
-        android:layout_height="91dp"
+        android:layout_height="84dp"
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/settings_suggest_24_50"
@@ -208,7 +208,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button_zmiana_danych"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />
 
 
@@ -216,7 +216,7 @@
     <Button
         android:id="@+id/button_about_us"
         android:layout_width="0dp"
-        android:layout_height="91dp"
+        android:layout_height="84dp"
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/question_mark_24_50"
@@ -237,13 +237,13 @@
         app:layout_constraintTop_toBottomOf="@+id/button_zarzadyanie_uyztkownikamu"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />
 
     <Button
         android:id="@+id/button_wyloguj"
         android:layout_width="0dp"
-        android:layout_height="91dp"
+        android:layout_height="84dp"
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/exit_to_app_24_50"
@@ -263,7 +263,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button_about_us"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

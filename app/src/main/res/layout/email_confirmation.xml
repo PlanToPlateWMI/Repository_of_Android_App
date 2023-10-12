@@ -37,7 +37,7 @@
         android:layout_alignParentBottom="true"
         android:gravity="top"
 
-        android:fontFamily="@font/quicksand_medium"
+        android:fontFamily="@font/quicksand_regular"
 
         android:text="@string/potwierdzen"
         android:textAppearance="@style/potwierdzen"
@@ -59,7 +59,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:textColor="?attr/colorSecondaryVariant"
-        android:fontFamily="@font/quicksand_medium"
+        android:fontFamily="@font/quicksand_regular"
 
         android:textSize="20dp"
 
@@ -87,7 +87,7 @@
 
         app:boxBackgroundMode="outline"
 
-        app:boxStrokeColor="?attr/colorOnPrimary"
+        app:boxStrokeColor="?attr/colorTertiary"
 
 
         app:hintTextColor="?attr/colorSecondaryVariant"
@@ -113,6 +113,7 @@
             tools:layout_editor_absoluteY="321dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <TextView
         android:id="@+id/wy_lij_pono"
         android:layout_width="wrap_content"
@@ -125,20 +126,19 @@
 
         android:layout_alignParentBottom="true"
 
-        android:fontFamily="@font/quicksand_regular"
+        android:fontFamily="@font/quicksand_medium"
 
         android:gravity="top"
         android:text="@string/wy_lij_pono"
-        android:textColor="?attr/colorSecondary"
         android:textAppearance="@style/wy_lij_pono"
+        android:textColor="@color/text_clikable_no_theme"
         app:layout_constraintBottom_toTopOf="@+id/button_zatwierdzenie_link"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.764"
+        app:layout_constraintHorizontal_bias="0.833"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
-
 
     <Button
         android:id="@+id/button_zatwierdzenie_link"
@@ -168,7 +168,7 @@
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_kod"
         app:layout_constraintVertical_bias="0.612"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

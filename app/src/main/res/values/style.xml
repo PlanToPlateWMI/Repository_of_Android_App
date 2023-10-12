@@ -60,7 +60,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#231F20</item>
         <item name="android:fontFamily">@font/quicksand_semibold</item>
-        <item name="android:tint">@color/blue_3</item>
+        <item name="android:tint">@color/checkbox</item>
         <item name="android:radius">8dp</item>
     </style>
     <style name="menu_zakupy_no_active">

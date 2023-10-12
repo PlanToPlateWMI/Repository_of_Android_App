@@ -16,13 +16,13 @@
     <TextView
         android:id="@+id/baza_produktow"
         android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="-5dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="5dp"
-        android:background="?attr/colorPrimaryVariant"
+        android:background="?attr/colorOnTertiary"
         android:clickable="true"
         android:contextClickable="false"
-        android:fontFamily="@font/quicksand_semibold"
+        android:fontFamily="@font/quicksand_light"
         android:gravity="center"
         android:insetLeft="0dp"
         android:insetTop="0dp"
@@ -31,7 +31,7 @@
         android:text="@string/baza_produktow"
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="32dp"
+        android:textSize="22dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,14 +43,15 @@
         android:id="@+id/baza_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/quicksand_semibold"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/quicksand_regular"
         android:gravity="center"
         android:text="@string/text_baza"
         android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="32dp"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/baza_produktow"
         app:layout_constraintVertical_bias="0.0" />
@@ -136,7 +137,7 @@
         app:layout_constraintTop_toBottomOf="@+id/enter_name"
         app:layout_constraintVertical_bias="0.124"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />
 
     <TextView
@@ -189,7 +190,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="11dp"
-            android:background="@drawable/state_list_button"
+            android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
             android:clickable="true"
             android:fontFamily="@font/quicksand_medium"
@@ -210,7 +211,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="11dp"
-            android:background="@drawable/state_list_button"
+            android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
             android:clickable="true"
             android:fontFamily="@font/quicksand_medium"
@@ -232,7 +233,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="11dp"
-            android:background="@drawable/state_list_button"
+            android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
             android:clickable="true"
             android:fontFamily="@font/quicksand_medium"
@@ -253,7 +254,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="11dp"
-            android:background="@drawable/state_list_button"
+            android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
             android:clickable="true"
             android:fontFamily="@font/quicksand_medium"
@@ -275,7 +276,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="11dp"
-            android:background="@drawable/state_list_button"
+            android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
             android:clickable="true"
             android:fontFamily="@font/quicksand_medium"
@@ -324,40 +325,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toggle_group"
         app:layout_constraintVertical_bias="0.294"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorOnPrimary"
+        app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />
-
-    <!--    <Button-->
-<!--        android:id="@+id/button_anuluj"-->
-<!--        android:layout_width="236dp"-->
-<!--        android:layout_height="70dp"-->
-
-<!--        android:drawableLeft="@drawable/close_24_50"-->
-
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-
-<!--        android:backgroundTint="?attr/colorPrimaryVariant"-->
-<!--        android:clickable="true"-->
-
-<!--        android:fontFamily="@font/quicksand_medium"-->
-
-<!--        android:text="@string/anuluj"-->
-
-<!--        app:strokeColor="?attr/colorOnPrimary"-->
-<!--        app:strokeWidth="1dp"-->
-
-<!--        android:textAllCaps="false"-->
-<!--        android:textColor="?attr/colorSecondaryVariant"-->
-<!--        app:iconPadding="8dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.497"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/button_zatwierdz"-->
-<!--        app:layout_constraintVertical_bias="0.297"-->
-<!--        app:rippleColor="?attr/colorPrimaryVariant" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

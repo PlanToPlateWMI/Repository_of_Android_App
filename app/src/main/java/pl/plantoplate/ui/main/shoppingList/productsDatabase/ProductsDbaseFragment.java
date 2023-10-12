@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
+import pl.plantoplate.ui.customViewes.RadioGridGroup;
 
 /**
  * This fragment is responsible for displaying the products database.
@@ -43,6 +45,7 @@ public class ProductsDbaseFragment extends Fragment {
     private FragmentBazaProduktowBinding bazaProduktowBinding;
     private SearchView searchView;
     private ViewPager2 viewPagerBase;
+    private RadioGridGroup radioGridGroup;
 
     public ProductsDbaseFragment(String comesFrom) {
         Bundle args = new Bundle();
@@ -74,24 +77,38 @@ public class ProductsDbaseFragment extends Fragment {
         searchView = bazaProduktowBinding.search;
 
         setupViewPager(viewPagerBase);
-        setupBottomNavigationView();
 
+        // Set selected all products fragment by default on restart fragment.
+        radioGridGroup = bazaProduktowBinding.radioGroupBaza;
+
+        //make radio button checked
+        radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
+
+        // Set up the search view
+        setupNavigation();
         return bazaProduktowBinding.getRoot();
     }
 
+    /**
+     * Method called on fragment view creation that setup bottom navigation
+     * listener. If user click on bottom navigation item then we change
+     * current fragment in swipe pager.
+     */
     @SuppressLint("NonConstantResourceId")
-    private void setupBottomNavigationView() {
-        bazaProduktowBinding.bottomNavigationView2.setOnItemSelectedListener(item ->{
-            switch (item.getItemId()) {
-                case R.id.wszystkie:
+    private void setupNavigation() {
+        radioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            Log.d("RadioGridGroup", "Checked ID: " + checkedId); // Debugging
+            switch (checkedId) {
+                case R.id.wszystkie_button:
                     viewPagerBase.setCurrentItem(0);
-                    return true;
-                case R.id.wlasne:
+                    break;
+                case R.id.wlasne_button:
                     viewPagerBase.setCurrentItem(1);
-                    return true;
+                    break;
+                default:
+                    Log.d("RadioGridGroup", "Unhandled ID: " + checkedId); // Debugging
+                    break;
             }
-
-            return false;
         });
     }
 
@@ -107,10 +124,10 @@ public class ProductsDbaseFragment extends Fragment {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        bazaProduktowBinding.bottomNavigationView2.setSelectedItemId(R.id.wszystkie);
+                        bazaProduktowBinding.radioGroupBaza.setCheckedRadioButtonById(R.id.wszystkie_button);
                         break;
                     case 1:
-                        bazaProduktowBinding.bottomNavigationView2.setSelectedItemId(R.id.wlasne);
+                        bazaProduktowBinding.radioGroupBaza.setCheckedRadioButtonById(R.id.wlasne_button);
                         break;
                 }
             }

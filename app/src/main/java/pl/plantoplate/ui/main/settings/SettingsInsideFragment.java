@@ -150,7 +150,7 @@ public class SettingsInsideFragment extends Fragment{
         if(role.equals("ROLE_ADMIN")) {
             generate_group_code_button.setOnClickListener(v -> replaceFragment(new GroupCodeTypeActivity()));
         }else {
-            generate_group_code_button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray));
+            generate_group_code_button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.back_pop_ups));
             generate_group_code_button.setClickable(false);
         }
     }
@@ -179,7 +179,7 @@ public class SettingsInsideFragment extends Fragment{
             if(role.equals("ROLE_ADMIN") && count > 1) {
                 button_zarzadzanie_uyztkownikamu.setOnClickListener(v -> replaceFragment(new ChangePermissionsFragment()));
             }else {
-                button_zarzadzanie_uyztkownikamu.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray));
+                button_zarzadzanie_uyztkownikamu.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.back_pop_ups));
                 button_zarzadzanie_uyztkownikamu.setClickable(false);
             }
         });

@@ -1,26 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFFFF</color>
-    <color name="rose">#FFB8DA</color>
-    <color name="black_gray">#231F20</color>
-    <color name="blue_3">#6692EA</color>
+    <color name="navigation_bar_buttons">#E7F0FF</color>
+    <color name="background_color">#EEF2FA</color>
+
+    <color name="item_kupione_trzeba_kupic">#D7EBD2</color>
+    <color name="greeen_stroke">#B6D7AD</color>
+
+    <color name="item_spizarnia">#EBD2D2</color>
+    <color name="red_stroke">#E2B6B6</color>
+
+    <color name="item_baza">#BFEAE7</color>
+    <color name="baza_stroke">#83BEBA</color>
+
+    <color name="text_color">#231F20</color>
+
+    <color name="item_user">#B7E7FB</color>
+
+    <color name="text_clikable_no_theme">#6692EA</color>
+    <color name="stroke_button_radio_baza">#79ABFD</color>
+
+    <color name="search_color">#E059616A</color>
+    <color name="checkbox">#E059616A</color>
+    <color name="stroke_checkbox">#E059616A</color>
+
+
+    <color name="zam_navigation_bar_buttons">#1F2732</color>
+    <color name="zam_background_color">#2E3846</color>
+
+    <color name="zam_item_kupione_trzeba_kupic">#3C5136</color>
+    <color name="zam_greeen_stroke">#609352</color>
+
+    <color name="zam_item_spizarnia">#7F4444</color>
+    <color name="zam_red_stroke">#A13F3F</color>
+
+    <color name="zam_item_baza">#31736E</color>
+    <color name="zam_baza_stroke">#77E2DB</color>
+
+    <color name="zam_text_color">#E7EFEA</color>
+
+    <color name="zam_item_user">#3882A1</color>
+
+    <color name="zam_text_clikable_no_theme">#6692EA</color>
+    <color name="zam_stroke_button_radio_baza">#4E6585</color>
+
+    <color name="zam_search_color">#E7EFEA</color>
+    <color name="zam_checkbox">#E7EFEA</color>
+    <color name="zam_stroke_checkbox">#E7EFEA</color>
+
+
+
     <color name="blue_2">#77A0F2</color>
-    <color name="blue_1">#C6D9FF</color>
-    <color name="blue_0">#E7F0FF</color>
 
     <color name="item">#BFC6D9FF</color>
     <color name="zam_item">#D92E3846</color>
-
-    <color name="lista_color">#D894F0</color>
-    <color name="baza_color">#AEDE88</color>
-    <color name="spizarnia_color">#79ABFD</color>
-
-
-    <color name="zam_lista_color">#652D78</color>
-    <color name="zam_baza_color">#0C5023</color>
-    <color name="zam_spizarnia_color">#1F417A</color>
-
-    <color name="item_d">#E0EFF3FA</color>
     <color name="item_n">#E059616A</color>
 
     <color name="zam_black_gray">#B8BBC7</color>
@@ -29,13 +61,7 @@
     <color name="zam_blue_1">#2E3846</color>
     <color name="zam_blue_0">#1F2732</color>
 
-
-    
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="gray">#D9D9D9</color>
-    <color name="red">#DDFF0000</color>
-    <color name="red_dark">#DDCF0505</color>
     <color name="back_pop_ups">#80C6D9FF</color>
 </resources>

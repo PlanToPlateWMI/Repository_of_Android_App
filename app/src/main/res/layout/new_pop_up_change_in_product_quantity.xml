@@ -25,14 +25,14 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_semibold"
+            android:fontFamily="@font/quicksand_medium"
             android:gravity="left"
 
             android:text="@string/change"
 
             android:textAppearance="@style/rejestracja"
             android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="24dp"
+            android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_medium"
+            android:fontFamily="@font/quicksand_regular"
 
             android:gravity="left"
 
@@ -91,7 +91,7 @@
 
             app:boxBackgroundMode="outline"
 
-            app:boxStrokeColor="?attr/colorOnPrimary"
+            app:boxStrokeColor="?attr/colorTertiary"
             app:endIconTint="?attr/colorSecondaryVariant"
             app:hintTextColor="?attr/colorSecondaryVariant"
             app:layout_constraintBottom_toTopOf="@+id/close"
@@ -143,7 +143,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_medium"
+            android:fontFamily="@font/quicksand_regular"
 
             android:gravity="left"
 
@@ -166,7 +166,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_medium"
+            android:fontFamily="@font/quicksand_light"
 
             android:paddingLeft="5dp"
             android:paddingTop="5dp"
@@ -178,8 +178,8 @@
             android:text="@string/zamknij"
 
             android:textAppearance="@style/rejestracja"
-            android:textColor="?attr/colorSecondary"
-            android:textSize="20dp"
+            android:textColor="@color/text_clikable_no_theme"
+            android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.669"
@@ -194,7 +194,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_medium"
+            android:fontFamily="@font/quicksand_light"
 
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
@@ -205,8 +205,8 @@
             android:text="@string/ok"
 
             android:textAppearance="@style/rejestracja"
-            android:textColor="?attr/colorSecondary"
-            android:textSize="20dp"
+            android:textColor="@color/text_clikable_no_theme"
+            android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"
