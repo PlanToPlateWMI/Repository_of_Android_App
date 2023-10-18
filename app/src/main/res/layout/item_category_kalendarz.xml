@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/layoutTrzebaKupic">
+
+    <TextView
+        android:id="@+id/сategory_of_product"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="?attr/colorOnTertiary"
+        android:fontFamily="@font/quicksand_semibold"
+        android:gravity="left"
+        android:text="Kategoria"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="20dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/product_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

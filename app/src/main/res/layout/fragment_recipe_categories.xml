@@ -2,78 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout4"
+    android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="?attr/colorOnTertiary"
-    tools:context="pl.plantoplate.ui.main.calendar.CalendarFragment">
-
-    <TextView
-        android:id="@+id/calendarTextView"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="5dp"
-        android:background="?attr/colorOnTertiary"
-        android:clickable="true"
-        android:contextClickable="false"
-        android:fontFamily="@font/quicksand_light"
-        android:gravity="center"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/kalendarz"
-        android:textAllCaps="false"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="22dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/searchtext"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_margin="1dp"
-
-        android:textAppearance="@style/wy_lij_pono"
-        app:iconifiedByDefault="false"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarTextView"
-        app:queryHint="@string/search_hint" />
-
-    <TextView
-        android:id="@+id/kalendarz_tutaj"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="5dp"
-        android:background="@drawable/rounded_kalendarz"
-
-        android:textAppearance="@style/wy_lij_pono"
-        app:iconifiedByDefault="false"
-        android:text="TUTAJ BĘDZIE KALENDARZ"
-        android:textSize="34dp"
-        android:gravity="center"
-
-        app:layout_constraintBottom_toTopOf="@+id/scroll"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchtext"/>
-
+    tools:context="pl.plantoplate.ui.main.recepies.RecipeFragment">
 
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/kalendarz_przep"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kalendarz_tutaj"
         tools:ignore="MissingConstraints">
 
         <HorizontalScrollView
@@ -82,11 +20,11 @@
             android:layout_height="50dp">
 
             <pl.plantoplate.ui.customViewes.RadioGridGroup
-                android:id="@+id/radio_group_baza"
-                android:layout_width="wrap_content"
+                android:id="@+id/radio_group_recipe"
+                android:layout_width="500dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="2dp"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginRight="2dp"
                 android:columnCount="4"
                 android:orientation="horizontal"
@@ -95,8 +33,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/kalendarz_przep"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/kalendarz_tutaj"
-
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0">
 
                 <RadioButton
@@ -104,7 +41,7 @@
                     android:layout_width="91dp"
                     android:layout_height="36dp"
                     android:layout_margin="4dp"
-                    android:background="@drawable/state_list_button_calendar"
+                    android:background="@drawable/state_list_button_recipe_category"
                     android:button="@null"
                     android:clickable="true"
                     android:fontFamily="@font/quicksand_medium"
@@ -120,18 +57,18 @@
                     app:rippleColor="?attr/colorOnPrimaryFixed" />
 
                 <RadioButton
-                    android:id="@+id/sniadanie"
+                    android:id="@+id/napoje"
                     android:layout_width="91dp"
                     android:layout_height="36dp"
                     android:layout_margin="4dp"
-                    android:background="@drawable/state_list_button_calendar"
+                    android:background="@drawable/state_list_button_recipe_category"
                     android:button="@null"
                     android:clickable="true"
                     android:fontFamily="@font/quicksand_medium"
                     android:gravity="center_horizontal|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Śniadanie"
+                    android:text="Napoje"
                     android:textAllCaps="false"
                     android:textColor="?attr/colorSecondaryVariant"
                     android:textOff="@string/produkty_mleczne"
@@ -140,18 +77,18 @@
                     app:rippleColor="?attr/colorOnPrimaryFixed" />
 
                 <RadioButton
-                    android:id="@+id/obiad"
+                    android:id="@+id/zupy"
                     android:layout_width="91dp"
                     android:layout_height="36dp"
                     android:layout_margin="4dp"
-                    android:background="@drawable/state_list_button_calendar"
+                    android:background="@drawable/state_list_button_recipe_category"
                     android:button="@null"
                     android:clickable="true"
                     android:fontFamily="@font/quicksand_medium"
                     android:gravity="center_horizontal|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Obiad"
+                    android:text="Zupy"
                     android:textAllCaps="false"
                     android:textColor="?attr/colorSecondaryVariant"
                     android:textOff="@string/produkty_mleczne"
@@ -160,18 +97,18 @@
                     app:rippleColor="?attr/colorOnPrimaryFixed" />
 
                 <RadioButton
-                    android:id="@+id/kolacja"
+                    android:id="@+id/desery"
                     android:layout_width="91dp"
                     android:layout_height="36dp"
                     android:layout_margin="4dp"
-                    android:background="@drawable/state_list_button_calendar"
+                    android:background="@drawable/state_list_button_recipe_category"
                     android:button="@null"
                     android:clickable="true"
                     android:fontFamily="@font/quicksand_medium"
                     android:gravity="center_horizontal|center_vertical"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Kolacja"
+                    android:text="Desery"
                     android:textAllCaps="false"
                     android:textColor="?attr/colorSecondaryVariant"
                     android:textOff="@string/produkty_mleczne"
@@ -179,30 +116,30 @@
                     android:textSize="16dp"
                     app:rippleColor="?attr/colorOnPrimaryFixed" />
 
+<!--                <RadioButton-->
+<!--                    android:id="@+id/dania_miesne"-->
+<!--                    android:layout_width="91dp"-->
+<!--                    android:layout_height="36dp"-->
+<!--                    android:layout_margin="4dp"-->
+<!--                    android:background="@drawable/state_list_button_calendar"-->
+<!--                    android:button="@null"-->
+<!--                    android:clickable="true"-->
+<!--                    android:fontFamily="@font/quicksand_medium"-->
+<!--                    android:gravity="center_horizontal|center_vertical"-->
+<!--                    android:insetTop="0dp"-->
+<!--                    android:insetBottom="0dp"-->
+<!--                    android:text="Mięsne"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="?attr/colorSecondaryVariant"-->
+<!--                    android:textOff="@string/produkty_mleczne"-->
+<!--                    android:textOn="@string/produkty_mleczne"-->
+<!--                    android:textSize="16dp"-->
+<!--                    app:rippleColor="?attr/colorOnPrimaryFixed" />-->
 
             </pl.plantoplate.ui.customViewes.RadioGridGroup>
-
         </HorizontalScrollView>
 
     </ScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/plus_in_kalendarz"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
-        android:clickable="true"
-        android:iconTint="?attr/colorSecondaryVariant"
-        android:backgroundTint="?attr/colorOutline"
-        app:backgroundTint="?attr/colorOutline"
-
-        android:src="@drawable/add_24_50"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.921"
-        app:layout_constraintStart_toStartOf="parent"
-        app:maxImageSize="32dp"
-        tools:ignore="MissingConstraints" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -226,5 +163,6 @@
             tools:layout_editor_absoluteY="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

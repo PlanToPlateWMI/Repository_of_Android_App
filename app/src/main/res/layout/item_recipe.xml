@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutKupioneProdukty"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="180dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="190dp"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_kalendarz"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp">
+
+    <ImageView
+        android:id="@+id/iconUncheck_kupione"
+
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="0dp"
+        android:clickable="true"
+        android:contentDescription="TODO"
+
+
+        android:paddingLeft="0dp"
+        android:paddingTop="10dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/jedzenie" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="7dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_regular"
+            android:gravity="center"
+            android:text="Nazwa przepisu"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_regular"
+            android:gravity="center"
+            android:text="Czas ugotowania"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="12dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -4,17 +4,32 @@
     <color name="background_color">#EEF2FA</color>
 
     <color name="item_kupione_trzeba_kupic">#D7EBD2</color>
-    <color name="greeen_stroke">#B6D7AD</color>
+    <color name="greeen_stroke">#A8C99F</color>
 
-    <color name="item_spizarnia">#EBD2D2</color>
-    <color name="red_stroke">#E2B6B6</color>
+    <color name="item_user_new">#EAEBC0</color>
+    <color name="blue_stroke">#319CC8</color>
 
     <color name="item_baza">#BFEAE7</color>
     <color name="baza_stroke">#83BEBA</color>
 
+    <color name="item_kalendarz">#ECE4F8</color>
+    <color name="zam_item_kalendarz">#8C8498</color>
+
+    <color name="stroke_kalendarz">#AA95BB</color>
+    <color name="zam_stroke_kalendarz">#E1CCF2</color>
+
+    <color name="stroke_rec_cat">#C2985A</color>
+    <color name="zam_stroke_rec_cat">#D1B894</color>
+
+    <color name="rec">#EFD6B2</color>
+    <color name="zam_rec">#A87E40</color>
+
+    <color name="stroke_yellow">#DADB95</color>
+    <color name="zam_stroke_yellow">#B5B670</color>
+
     <color name="text_color">#231F20</color>
 
-    <color name="item_user">#B7E7FB</color>
+    <color name="item_spizarnia">#B7E7FB</color>
 
     <color name="text_clikable_no_theme">#6692EA</color>
     <color name="stroke_button_radio_baza">#79ABFD</color>
@@ -30,15 +45,15 @@
     <color name="zam_item_kupione_trzeba_kupic">#3C5136</color>
     <color name="zam_greeen_stroke">#609352</color>
 
-    <color name="zam_item_spizarnia">#7F4444</color>
-    <color name="zam_red_stroke">#A13F3F</color>
+    <color name="zam_item_user_new">#9A9B70</color>
+    <color name="zam_blue_stroke">#54BFEB</color>
 
     <color name="zam_item_baza">#31736E</color>
-    <color name="zam_baza_stroke">#77E2DB</color>
+    <color name="zam_baza_stroke">#7FBAB6</color>
 
     <color name="zam_text_color">#E7EFEA</color>
 
-    <color name="zam_item_user">#3882A1</color>
+    <color name="zam_item_spizarnia">#57879B</color>
 
     <color name="zam_text_clikable_no_theme">#6692EA</color>
     <color name="zam_stroke_button_radio_baza">#4E6585</color>

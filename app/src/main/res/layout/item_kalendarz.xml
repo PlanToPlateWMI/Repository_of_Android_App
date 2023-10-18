@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/layoutKupioneProdukty"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="76dp"
+    android:orientation="horizontal"
+    android:background="@drawable/rounded_kalendarz"
+    android:padding="10dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp">
+
+    <ImageView
+        android:id="@+id/iconUncheck_kupione"
+
+        android:layout_width="50dp"
+        android:layout_height="fill_parent"
+        android:paddingLeft="0dp"
+        android:paddingTop="10dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="10dp"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="6dip"
+        android:clickable="true"
+        android:contentDescription="TODO"
+        android:src="@drawable/check_box_outline_blank_24_50" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="0dp">
+
+        <TextView
+            android:id="@+id/nazwaPrzepisu"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/addBazaWlasne"
+            android:fontFamily="@font/quicksand_regular"
+            android:gravity="center_vertical"
+            android:text="Nazwa przepisu"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/czas_ugotowania"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/addBazaWlasne"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:fontFamily="@font/quicksand_medium"
+            android:maxLines="1"
+            android:text="Czas ugotowania"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iconDelete_kupione"
+        android:clickable="true"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="35dp"
+        android:layout_marginLeft="-45dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp"
+        android:layout_toRightOf="@+id/firstLine"
+        android:src="@drawable/delete_forever_24_50" />
+
+</LinearLayout>

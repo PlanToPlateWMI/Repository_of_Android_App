@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class RetrofitClient {
 
     //private static final String BASE_URL = "https://ambient-elf-336514.lm.r.appspot.com/";
-    private static final String BASE_URL = "http://192.168.0.100:8080/";
+    private static final String BASE_URL = "http://192.168.0.104:8080/";
     private static RetrofitClient instance = null;
     private final Retrofit client;
     private static final long cacheSize = 5 * 1024 * 1024; // 5 MB

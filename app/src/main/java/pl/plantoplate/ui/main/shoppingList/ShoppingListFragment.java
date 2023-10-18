@@ -98,8 +98,10 @@ public class ShoppingListFragment extends Fragment {
 
         // Setup swipe pager
         setupViewPager(viewPager);
+
         // Setup navigation
         setupNavigation();
+
         return shopping_list_view.getRoot();
     }
 

@@ -33,18 +33,128 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/searchtext"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_margin="1dp"
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:fontFamily="@font/quicksand_semibold"-->
-<!--        android:text="@string/przepisy"-->
-<!--        android:textSize="32dp"-->
-<!--        android:textColor="?attr/colorSecondaryVariant"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+        android:textAppearance="@style/wy_lij_pono"
+        app:iconifiedByDefault="false"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipie"
+        app:queryHint="@string/search_hint" />
+
+    <pl.plantoplate.ui.customViewes.RadioGridGroup
+        android:id="@+id/radio_group_baza"
+        android:layout_width="363dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="5dp"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:rowCount="6"
+
+        app:layout_constraintBottom_toTopOf="@+id/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/searchtext"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioButton
+            android:id="@+id/wszystkie_button"
+            android:layout_width="165dp"
+            android:layout_height="36dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/state_list_button_recipe"
+            android:button="@null"
+            android:clickable="true"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Wszystkie"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textOff="@string/produkty_mleczne"
+            android:textOn="@string/produkty_mleczne"
+            android:textSize="16dp"
+            app:rippleColor="?attr/colorOnPrimaryFixed" />
+
+        <RadioButton
+            android:id="@+id/ulubione_button"
+            android:layout_width="165dp"
+            android:layout_height="36dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/state_list_button_recipe"
+            android:button="@null"
+            android:clickable="true"
+            android:fontFamily="@font/quicksand_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Ulubione"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:textOff="@string/produkty_miesne"
+            android:textOn="@string/produkty_miesne"
+            android:textSize="16dp"
+            app:rippleColor="?attr/colorOnPrimaryFixed" />
+
+    </pl.plantoplate.ui.customViewes.RadioGridGroup>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+
+        android:background="@drawable/search_view_selector"
+        android:foregroundTint="?attr/colorSecondaryVariant"
+        android:outlineAmbientShadowColor="?attr/colorSecondaryVariant"
+        android:outlineSpotShadowColor="?attr/colorSecondaryVariant"
+
+        app:itemIconTint="?attr/colorSecondaryVariant"
+
+        app:itemRippleColor="?attr/colorSecondary"
+        app:itemTextColor="?attr/colorSecondaryVariant"
+
+        android:textAppearance="@style/wy_lij_pono"
+        app:iconifiedByDefault="false"
+
+        app:layout_constraintBottom_toTopOf="@+id/baza_def"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radio_group_baza"
+        app:queryHint="@string/search_hint"
+        android:textColor="?attr/colorSecondaryVariant"
+
+        app:searchHintIcon="?attr/colorSecondaryVariant"
+        app:searchIcon="@drawable/search_24_75" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/baza_def"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagerBase"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
