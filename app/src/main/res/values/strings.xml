@@ -48,14 +48,17 @@ Aby dodać produkty do spiżarni, kliknij znak plus.</string>
 wróć do listy zakupów i zaznacz wybrany produkt haczykiem.</string>
 
     <string name="wprowadzenie_baza_wlasne">Zostaną dodane produkty przez Ciebie lub Twoją grupę.
-Aby dodać nowy produkt kliknij znak plus.
+Aby dodać nowy produkt, kliknij znak plus.
 Uwaga!
 Użytkownik z rolą "dziecko" nie może dodać nowego produktu.</string>
 
-    <string name="wprowadzenie_przepisy_wszystkie">Usuń</string>
-    <string name="wprowadzenie_przepisy_wlasne">Usuń</string>
+    <string name="wprowadzenie_przepisy_wszystkie">Aby dodać przepis do listy, przejdź do ustawień
+i wybierz kategorię „Opcje przepisów”.</string>
+    <string name="wprowadzenie_przepisy_ulubione">Aby dodać przepis do kategorii ulubionych,
+przejdź do dowolnego przepisu znajdującego się w kategorii „Wszystkie”
+i kliknij ikonkę "serca" w prawym górnym rogu.</string>
 
-    <string name="wprowadzenie_kalendarz">Usuń</string>
+    <string name="wprowadzenie_kalendarz">Aby zaplanować przepis, przejdź do kategorii przepisy</string>
 
 
     <string name="zmien_kategorie">Zmień kategorie</string>
