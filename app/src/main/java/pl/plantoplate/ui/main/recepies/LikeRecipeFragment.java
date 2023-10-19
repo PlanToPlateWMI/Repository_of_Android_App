@@ -10,16 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import pl.plantoplate.R;
-import pl.plantoplate.databinding.FragmentCalendarInsideBldBinding;
-import pl.plantoplate.databinding.FragmentRecipeCategoriesBinding;
-import pl.plantoplate.databinding.FragmentRecipeInsideBinding;
+import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
+import pl.plantoplate.databinding.FragmentRecipeInsideLikeBinding;
 
-public class LikeAndAllRecipeFragment extends Fragment {
+public class LikeRecipeFragment extends Fragment {
 
-    private FragmentRecipeInsideBinding fragmentRecipeInsideBinding;
+    private FragmentRecipeInsideLikeBinding fragmentRecipeInsideLikeBinding;
 
     private SharedPreferences prefs;
 
@@ -27,7 +24,7 @@ public class LikeAndAllRecipeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        fragmentRecipeInsideBinding = FragmentRecipeInsideBinding.inflate(inflater, container, false);
+        fragmentRecipeInsideLikeBinding = FragmentRecipeInsideLikeBinding.inflate(inflater, container, false);
         // = FragmentRecipeCategoriesBinding.inflate(inflater, container, false);
         //plus_in_kalendarz = fragmentCalendarInsideBldBinding.plusInKalendarz;
         //plus_in_kalendarz.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment("shoppingList")));
@@ -35,7 +32,7 @@ public class LikeAndAllRecipeFragment extends Fragment {
         // get shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
-        return fragmentRecipeInsideBinding.getRoot();
+        return fragmentRecipeInsideLikeBinding.getRoot();
         //return fragmentRecipeCategoriesBinding.getRoot();
     }
 

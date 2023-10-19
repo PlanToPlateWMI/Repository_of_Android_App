@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.shoppingList.BoughtProductsFragment">
 
+
+    <TextView
+        android:id="@+id/textViewKupione"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_regular"
+        android:text=""
+        android:textSize="18dp"
+        android:visibility="visible"
+
+        app:layout_constraintBottom_toBottomOf="@+id/category_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/category_recycler_view"
+        app:layout_constraintVertical_bias="0.388"
+        tools:ignore="MissingConstraints" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"

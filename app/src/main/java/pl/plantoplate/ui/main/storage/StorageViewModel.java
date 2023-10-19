@@ -27,6 +27,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 
+import pl.plantoplate.R;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.models.Category;
 import pl.plantoplate.repository.remote.models.Product;
@@ -39,6 +40,7 @@ public class StorageViewModel extends AndroidViewModel {
 
     private SharedPreferences prefs;
     private StorageRepository storageRepository;
+    private Context context;
 
     private MutableLiveData<String> success;
     private MutableLiveData<String> error;
@@ -54,6 +56,7 @@ public class StorageViewModel extends AndroidViewModel {
     public StorageViewModel(@NonNull Application application) {
         super(application);
         prefs = application.getSharedPreferences("prefs", 0);
+        context = application.getApplicationContext();
 
         storageRepository = new StorageRepository();
     }
@@ -143,7 +146,7 @@ public class StorageViewModel extends AndroidViewModel {
                 storageProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
 
                 if (products.isEmpty()) {
-                    storageTitle.setValue("Spiżarnia");
+                    storageTitle.setValue(context.getString(R.string.wprowadzenie_spizarnia));
                 } else {
                     storageTitle.setValue("");
                 }

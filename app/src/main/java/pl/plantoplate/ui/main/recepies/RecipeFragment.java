@@ -22,7 +22,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -37,9 +36,6 @@ import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeBinding;
 import pl.plantoplate.ui.customViewes.RadioGridGroup;
-import pl.plantoplate.ui.main.calendar.AllCategoryProductsFragment;
-import pl.plantoplate.ui.main.calendar.BreakfastLunchDinnerCategoryProductsFragment;
-import pl.plantoplate.ui.main.calendar.CalendarFragment;
 
 /**
  * This fragment is responsible for displaying the recipe view.
@@ -50,6 +46,7 @@ public class RecipeFragment extends Fragment {
     private SharedPreferences prefs;
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
+    private RadioGridGroup radioGridGroupCategories;
 
     /**
      * Called to create the view hierarchy of the fragment.
@@ -73,9 +70,11 @@ public class RecipeFragment extends Fragment {
 
         // Set selected all products fragment by default on restart fragment.
         radioGridGroup = recipe_view.radioGroupBaza;
+        radioGridGroupCategories = recipe_view.radioGroupRecipe;
 
         //make radio button checked
         radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
+        radioGridGroupCategories.setCheckedRadioButtonById(R.id.wszystkie);
 
         // Set first visible AllProductsFragment by default
         viewPager.setCurrentItem(0);
@@ -134,8 +133,8 @@ public class RecipeFragment extends Fragment {
         });
         // Set up adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
-        adapter.addFragment(new LikeAndAllRecipeFragment());
-        adapter.addFragment(new LikeAndAllRecipeFragment());
+        adapter.addFragment(new AllRecipeFragment());
+        adapter.addFragment(new LikeRecipeFragment());
         viewPager.setAdapter(adapter);
     }
 

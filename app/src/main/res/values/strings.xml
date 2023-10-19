@@ -39,6 +39,25 @@ danych osobowych</string>
     <string name="anuluj">Anuluj</string>
     <string name="usun">Usuń</string>
 
+
+    <string name="wprowadzenie_spizarnia">Tutaj możesz zobaczyć produkty, które są przechowywane w Twoim domu.
+Aby dodać produkty do spiżarni, kliknij znak plus.</string>
+
+    <string name="wprowadzenie_lista_zakupow_trzeba_kupic">Aby dodać produkty do listy zakupów, kliknij znak plus.</string>
+    <string name="wprowadzenie_lista_zakupow_kupione">Aby dodać produkty do listy zakupionych,
+wróć do listy zakupów i zaznacz wybrany produkt haczykiem.</string>
+
+    <string name="wprowadzenie_baza_wlasne">Zostaną dodane produkty przez Ciebie lub Twoją grupę.
+Aby dodać nowy produkt kliknij znak plus.
+Uwaga!
+Użytkownik z rolą "dziecko" nie może dodać nowego produktu.</string>
+
+    <string name="wprowadzenie_przepisy_wszystkie">Usuń</string>
+    <string name="wprowadzenie_przepisy_wlasne">Usuń</string>
+
+    <string name="wprowadzenie_kalendarz">Usuń</string>
+
+
     <string name="zmien_kategorie">Zmień kategorie</string>
     <string name="wprowadz_email">Wprowadź e-mail</string>
     <string name="zalogowanie">Załoguj się</string>

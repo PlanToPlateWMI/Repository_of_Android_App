@@ -251,22 +251,15 @@ public class StorageMainFragment extends Fragment {
         // get storage title
         storageViewModel.getStorageTitle().observe(getViewLifecycleOwner(), storageTitle -> storage_title.setText(storageTitle));
 
-//        // get success message
-//        storageViewModel.getSuccess().observe(getViewLifecycleOwner(), successMessage -> {
-//            if (isAdded()) {
-//                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), successMessage, Toast.LENGTH_SHORT).show());
-//            }
-//        });
-//
-//        // get error message
-//        storageViewModel.getError().observe(getViewLifecycleOwner(), errorMessage -> {
-//            if (isAdded()) {
-//                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-//            }
-//        });
-
         // get storage
         storageViewModel.getStorageProducts().observe(getViewLifecycleOwner(), storageProducts -> {
+
+            if (storageProducts != null){
+                if (storageProducts.isEmpty()){
+
+                }
+            }
+
             // update recycler view
             CategoryAdapter categoryAdapter = (CategoryAdapter) recyclerView.getAdapter();
             Objects.requireNonNull(categoryAdapter).setCategoriesList(storageProducts);

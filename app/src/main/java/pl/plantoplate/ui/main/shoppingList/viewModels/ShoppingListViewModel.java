@@ -25,6 +25,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 
+import pl.plantoplate.R;
 import pl.plantoplate.repository.remote.ResponseCallback;
 import pl.plantoplate.repository.remote.models.Product;
 import pl.plantoplate.repository.remote.models.ShoppingList;
@@ -112,8 +113,8 @@ public class ShoppingListViewModel extends AndroidViewModel {
 
         shoppingListRepository.getToBuyShoppingList(token, new ResponseCallback<ArrayList<Product>>() {
             @Override
-            public void onSuccess(ArrayList<Product> response) {
-                toBuyProducts.setValue(response);
+            public void onSuccess(ArrayList<Product> products) {
+                toBuyProducts.setValue(products);
             }
 
             @Override
