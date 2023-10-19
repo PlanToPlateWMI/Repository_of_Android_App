@@ -19,7 +19,7 @@ import pl.plantoplate.databinding.FragmentRecipeInsideBinding;
 
 public class LikeAndAllRecipeFragment extends Fragment {
 
-    private FragmentRecipeCategoriesBinding fragmentRecipeCategoriesBinding;
+    private FragmentRecipeInsideBinding fragmentRecipeInsideBinding;
 
     private SharedPreferences prefs;
 
@@ -27,16 +27,16 @@ public class LikeAndAllRecipeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // fragmentCalendarInsideBldBinding = FragmentRecipeInsideBinding.inflate(inflater, container, false);
-        fragmentRecipeCategoriesBinding = FragmentRecipeCategoriesBinding.inflate(inflater, container, false);
+        fragmentRecipeInsideBinding = FragmentRecipeInsideBinding.inflate(inflater, container, false);
+        // = FragmentRecipeCategoriesBinding.inflate(inflater, container, false);
         //plus_in_kalendarz = fragmentCalendarInsideBldBinding.plusInKalendarz;
         //plus_in_kalendarz.setOnClickListener(v -> replaceFragment(new ProductsDbaseFragment("shoppingList")));
 
         // get shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
-        //return fragmentCalendarInsideBldBinding.getRoot();
-        return fragmentRecipeCategoriesBinding.getRoot();
+        return fragmentRecipeInsideBinding.getRoot();
+        //return fragmentRecipeCategoriesBinding.getRoot();
     }
 
     /**
