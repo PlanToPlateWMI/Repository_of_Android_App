@@ -22,6 +22,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -30,12 +31,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentCalendarBinding;
 import pl.plantoplate.ui.customViewes.RadioGridGroup;
+import pl.plantoplate.ui.main.recepies.RecipeFragment;
+import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
 
 /**
  * This fragment is responsible for displaying calendar view.
@@ -46,6 +51,7 @@ public class CalendarFragment extends Fragment {
     private SharedPreferences prefs;
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
+    private FloatingActionButton plus;
 
     /**
      * Called to create the view hierarchy of the fragment.
@@ -61,6 +67,10 @@ public class CalendarFragment extends Fragment {
 
         // Inflate the layout for this fragment
         calendar_view = FragmentCalendarBinding.inflate(inflater, container, false);
+
+        plus = calendar_view.plusInKalendarz;
+
+        plus.setOnClickListener(v -> replaceFragment(new RecipeFragment()));
 
         // Get the SharedPreferences object
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -209,6 +219,14 @@ public class CalendarFragment extends Fragment {
         super.onDestroyView();
         System.out.println("ShoppingListFragment.onDestroyView");
         calendar_view = null;
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        // Start a new fragment transaction and replace the current fragment with the specified fragment
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment);
+        transaction.addToBackStack("calendarFragment");
+        transaction.commit();
     }
 
 }

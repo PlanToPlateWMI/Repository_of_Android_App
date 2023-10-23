@@ -8,6 +8,23 @@
     android:backgroundTint="?attr/colorOnTertiary"
     tools:context="pl.plantoplate.ui.main.calendar.CalendarFragment">
 
+    <TextView
+        android:id="@+id/welcome_recipe_all"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/quicksand_regular"
+        android:text=""
+        android:textSize="18dp"
+        android:visibility="visible"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.371"
+        tools:ignore="MissingConstraints" />
+
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/welcome_recipe_like"
@@ -26,23 +43,24 @@
         app:layout_constraintVertical_bias="0.371"
         tools:ignore="MissingConstraints" />
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/plus_in_kalendarz"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="72dp"-->
-<!--        android:clickable="true"-->
-<!--        android:iconTint="?attr/colorSecondaryVariant"-->
-<!--        android:backgroundTint="?attr/colorOnContainerUnchecked"-->
-<!--        app:backgroundTint="?attr/colorOnContainerUnchecked"-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/plus_in_kalendarz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:clickable="true"
+        android:iconTint="?attr/colorSecondaryVariant"
+        android:backgroundTint="?attr/colorOnContainerUnchecked"
+        app:backgroundTint="?attr/colorOnContainerUnchecked"
 
-<!--        android:src="@drawable/add_24_50"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.921"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:maxImageSize="32dp"-->
-<!--        tools:ignore="MissingConstraints" />-->
+        android:src="@drawable/add_24_50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.921"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxImageSize="32dp"
+        tools:ignore="MissingConstraints" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/products_own_recycler_view"
