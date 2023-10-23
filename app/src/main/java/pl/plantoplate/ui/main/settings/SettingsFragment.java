@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentSettingsBinding;
+import timber.log.Timber;
 
 /**
  * A fragment that displays the app settings and allows the user to change them.
@@ -48,6 +49,8 @@ public class SettingsFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Timber.d("onCreate() called");
 
         fragmentSettingsBinding = FragmentSettingsBinding.inflate(inflater, container, false);
         replaceFragment(new SettingsInsideFragment());

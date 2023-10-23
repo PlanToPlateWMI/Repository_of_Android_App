@@ -26,9 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.R;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
-import pl.plantoplate.repository.remote.models.Category;
+import pl.plantoplate.data.remote.models.Category;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     private ArrayList<Category> categories;

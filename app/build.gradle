@@ -56,6 +56,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //crypto tools
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.70'
@@ -78,6 +79,18 @@ dependencies {
     //database
     implementation 'androidx.room:room-runtime:2.5.1'
     implementation 'androidx.room:room-ktx:2.5.1'
+
+    //eventbus
+    implementation 'org.greenrobot:eventbus:3.2.0'
+
+    //rxjava
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.2'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+
+    //logging
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
     //tests
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'

@@ -23,56 +23,42 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
-
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.user.UserRepository;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.repository.UserRepository;
 
 public class SettingsViewModel extends AndroidViewModel {
 
+    private final CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
-
     private SharedPreferences prefs;
 
-    private MutableLiveData<String> success;
-    private MutableLiveData<String> error;
+    private MutableLiveData<String> responseMessage;
     private MutableLiveData<UserInfo> userInfo;
     private MutableLiveData<Integer> userCount;
 
     public SettingsViewModel(@NonNull Application application) {
         super(application);
+
         prefs = application.getSharedPreferences("prefs", 0);
         userRepository = new UserRepository();
+        compositeDisposable = new CompositeDisposable();
+
+        responseMessage = new MutableLiveData<>();
+        userInfo = new MutableLiveData<>();
+        userCount = new MutableLiveData<>();
     }
 
-    public MutableLiveData<String> getSuccess() {
-        if (success == null) {
-            success = new MutableLiveData<>();
-        }
-        return success;
-    }
-
-    public MutableLiveData<String> getError() {
-        if (error == null) {
-            error = new MutableLiveData<>();
-        }
-        return error;
+    public MutableLiveData<String> getResponseMessage() {
+        return responseMessage;
     }
 
     public MutableLiveData<UserInfo> getUserInfo() {
-        if (userInfo == null) {
-            userInfo = new MutableLiveData<>();
-            fetchUsersInfo();
-        }
         return userInfo;
     }
 
     public MutableLiveData<Integer> getUserCount() {
-        if (userCount == null) {
-            userCount = new MutableLiveData<>();
-            fetchUserCount();
-        }
         return userCount;
     }
 
@@ -80,43 +66,36 @@ public class SettingsViewModel extends AndroidViewModel {
         // Set the onClickListeners for the buttons
         String token = "Bearer " + prefs.getString("token", "");
 
-        userRepository.getUsersInfo(token, new ResponseCallback<ArrayList<UserInfo>>() {
+        Disposable disposable = userRepository.getUsersInfo(token)
+                .subscribe(requestUsersInfo -> {
+                    // On success
+                    userCount.setValue(requestUsersInfo.size());
+                }, throwable -> {
+                    // On error
+                    responseMessage.postValue(throwable.getMessage());
+                });
 
-            @Override
-            public void onSuccess(ArrayList<UserInfo> response) {
-                userCount.setValue(response.size());
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                error.setValue(errorMessage);
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                error.setValue(failureMessage);
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
-    private void fetchUsersInfo() {
+    public void fetchUserInfo() {
         String token = "Bearer " + prefs.getString("token", "");
 
-        userRepository.getUserInfo(token, new ResponseCallback<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo response) {
-                userInfo.setValue(response);
-            }
+        Disposable disposable = userRepository.getUserInfo(token)
+                .subscribe(requestUserInfo -> {
+                    // On success
+                    userInfo.setValue(requestUserInfo);
+                }, throwable -> {
+                    // On error
+                    responseMessage.setValue(throwable.getMessage());
+                });
 
-            @Override
-            public void onError(String errorMessage) {
-                error.setValue(errorMessage);
-            }
+        compositeDisposable.add(disposable);
+    }
 
-            @Override
-            public void onFailure(String failureMessage) {
-                error.setValue(failureMessage);
-            }
-        });
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        compositeDisposable.clear();
     }
 }

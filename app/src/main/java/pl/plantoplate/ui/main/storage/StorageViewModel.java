@@ -17,7 +17,6 @@
 package pl.plantoplate.ui.main.storage;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
@@ -27,24 +26,23 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.R;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.Category;
-import pl.plantoplate.repository.remote.models.Product;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.storage.StorageRepository;
-import pl.plantoplate.repository.remote.user.UserRepository;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.ResponseCallback;
+import pl.plantoplate.data.remote.models.Category;
+import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.repository.StorageRepository;
+import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.tools.CategorySorter;
 
 public class StorageViewModel extends AndroidViewModel {
 
+    private CompositeDisposable compositeDisposable;
     private SharedPreferences prefs;
     private StorageRepository storageRepository;
-    private Context context;
 
-    private MutableLiveData<String> success;
-    private MutableLiveData<String> error;
-    private MutableLiveData<String> storageTitle;
+    private MutableLiveData<String> responseMessage;
     private MutableLiveData<ArrayList<Category>> storageProducts;
     private MutableLiveData<UserInfo> userInfo;
 
@@ -55,22 +53,14 @@ public class StorageViewModel extends AndroidViewModel {
      */
     public StorageViewModel(@NonNull Application application) {
         super(application);
+        compositeDisposable = new CompositeDisposable();
         prefs = application.getSharedPreferences("prefs", 0);
-        context = application.getApplicationContext();
+
+        responseMessage = new MutableLiveData<>();
+        storageProducts = new MutableLiveData<>(new ArrayList<>());
+        userInfo = new MutableLiveData<>();
 
         storageRepository = new StorageRepository();
-    }
-
-    /**
-     * Returns the MutableLiveData object that holds the storage title.
-     *
-     * @return The MutableLiveData object for the storage title.
-     */
-    public MutableLiveData<String> getStorageTitle() {
-        if (storageTitle == null) {
-            storageTitle = new MutableLiveData<>();
-        }
-        return storageTitle;
     }
 
     /**
@@ -78,23 +68,8 @@ public class StorageViewModel extends AndroidViewModel {
      *
      * @return The MutableLiveData object for the success message.
      */
-    public MutableLiveData<String> getSuccess() {
-        if (success == null) {
-            success = new MutableLiveData<>();
-        }
-        return success;
-    }
-
-    /**
-     * Returns the MutableLiveData object that holds the error message.
-     *
-     * @return The MutableLiveData object for the error message.
-     */
-    public MutableLiveData<String> getError() {
-        if (error == null) {
-            error = new MutableLiveData<>();
-        }
-        return error;
+    public MutableLiveData<String> getResponseMessage() {
+        return responseMessage;
     }
 
     /**
@@ -104,10 +79,6 @@ public class StorageViewModel extends AndroidViewModel {
      * @return The MutableLiveData object for the list of storage products.
      */
     public MutableLiveData<ArrayList<Category>> getStorageProducts() {
-        if (storageProducts == null) {
-            storageProducts = new MutableLiveData<>();
-            fetchStorageProducts();
-        }
         return storageProducts;
     }
 
@@ -118,10 +89,6 @@ public class StorageViewModel extends AndroidViewModel {
      * @return The MutableLiveData object for the user info.
      */
     public MutableLiveData<UserInfo> getUserInfo() {
-        if (userInfo == null) {
-            userInfo = new MutableLiveData<>();
-            fetchUserInfo();
-        }
         return userInfo;
     }
 
@@ -132,79 +99,33 @@ public class StorageViewModel extends AndroidViewModel {
      */
     public void fetchStorageProducts(){
         String token = "Bearer " + prefs.getString("token", "");
-        storageRepository.getStorage(token, new ResponseCallback<ArrayList<Product>>() {
 
-            /**
-             * Handles the success case of fetching storage products from the storage repository.
-             * Updates the storageProducts MutableLiveData object with the sorted categories by product.
-             * Sets the storageTitle value based on the presence of products in the storage.
-             *
-             * @param products The list of products fetched from the storage repository
-             */
-            @Override
-            public void onSuccess(ArrayList<Product> products) {
-                storageProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
+        Disposable disposable = storageRepository.getStorage(token)
+                .subscribe(response -> storageProducts.setValue(CategorySorter.sortCategoriesByProduct(response)),
+                           throwable -> responseMessage.setValue(throwable.getMessage())
+                );
 
-                if (products.isEmpty()) {
-                    storageTitle.setValue(context.getString(R.string.wprowadzenie_spizarnia));
-                } else {
-                    storageTitle.setValue("");
-                }
-            }
+        compositeDisposable.add(disposable);
 
-            /**
-             * Handles the error case of fetching storage products from the storage repository.
-             * Updates the error MutableLiveData object with the provided error message.
-             *
-             * @param errorMessage The error message received from the storage repository
-             */
-            @Override
-            public void onError(String errorMessage) {
-                //error.setValue(errorMessage);
-                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
-            }
-
-            /**
-             * Handles the failure case of fetching storage products from the storage repository.
-             * Updates the error MutableLiveData object with the provided failure message.
-             *
-             * @param failureMessage The failure message received from the storage repository
-             */
-            @Override
-            public void onFailure(String failureMessage) {
-                //error.setValue(failureMessage);
-                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void fetchUserInfo() {
         UserRepository userRepository = new UserRepository();
         String token = "Bearer " + prefs.getString("token", "");
 
-        userRepository.getUserInfo(token, new ResponseCallback<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo response) {
-                userInfo.setValue(response);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("email", response.getEmail());
-                editor.putString("username", response.getUsername());
-                editor.putString("role", response.getRole());
-                editor.apply();
-            }
+        Disposable disposable = userRepository.getUserInfo(token)
+                .subscribe(response -> {
+                        userInfo.setValue(response);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("email", response.getEmail());
+                        editor.putString("username", response.getUsername());
+                        editor.putString("role", response.getRole());
+                        editor.apply();
+                    },
+                    throwable -> responseMessage.setValue(throwable.getMessage())
+                );
 
-            @Override
-            public void onError(String errorMessage) {
-                //error.setValue(errorMessage);
-                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                //error.setValue(failureMessage);
-                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
     /**
@@ -214,48 +135,16 @@ public class StorageViewModel extends AndroidViewModel {
      */
     public void deleteProductFromStorage(Product product) {
         String token = "Bearer " + prefs.getString("token", "");
-        storageRepository.deleteProductStorage(token, product.getId(), new ResponseCallback<ArrayList<Product>>() {
 
-            /**
-             * Callback method called when the product is successfully deleted from the storage.
-             *
-             * @param products The updated list of products in the storage
-             */
-            @Override
-            public void onSuccess(ArrayList<Product> products) {
-                storageProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
-                //success.setValue("produkt '" + product.getName() + "' został usunięty");
-                Toast.makeText(getApplication(), "produkt '" + product.getName() + "' został usunięty", Toast.LENGTH_SHORT).show();
+        Disposable disposable = storageRepository.deleteProductFromStorage(token, product.getId())
+                .subscribe(response -> {
+                            storageProducts.setValue(CategorySorter.sortCategoriesByProduct(response));
+                            responseMessage.setValue("produkt '" + product.getName() + "' został usunięty");
+                        },
+                        throwable -> responseMessage.setValue(throwable.getMessage())
+                );
 
-                if (products.isEmpty()) {
-                    storageTitle.setValue("Spiżarnia");
-                } else {
-                    storageTitle.setValue("");
-                }
-            }
-
-            /**
-             * Callback method called when an error occurs while deleting the product from the storage.
-             *
-             * @param errorMessage The error message describing the cause of the error
-             */
-            @Override
-            public void onError(String errorMessage) {
-                //error.setValue(errorMessage);
-                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
-            }
-
-            /**
-             * Callback method called when the deletion of the product from the storage fails.
-             *
-             * @param failureMessage The failure message describing the reason for the failure
-             */
-            @Override
-            public void onFailure(String failureMessage) {
-                //error.setValue(failureMessage);
-                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
     /**
@@ -265,43 +154,16 @@ public class StorageViewModel extends AndroidViewModel {
      */
     public void changeProductAmount(Product product){
         String token = "Bearer " + prefs.getString("token", "");
-        storageRepository.changeProductAmountInStorage(token, product.getId(), product, new ResponseCallback<ArrayList<Product>>() {
 
-            /**
-             * Changes the amount of a product in the storage.
-             *
-             * @param products The product to be updated.
-             */
-            @Override
-            public void onSuccess(ArrayList<Product> products) {
-                storageProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
-                //success.setValue("produkt '" + product.getName() + "' został zmieniony");
-                Toast.makeText(getApplication(), "produkt '" + product.getName() + "' został zmieniony", Toast.LENGTH_SHORT).show();
+        Disposable disposable = storageRepository.changeProductAmountInStorage(token, product.getId(), product)
+                .subscribe(response -> {
+                            storageProducts.setValue(CategorySorter.sortCategoriesByProduct(response));
+                            responseMessage.setValue("produkt '" + product.getName() + "' został zmieniony");
+                        },
+                        throwable -> responseMessage.setValue(throwable.getMessage())
+                );
 
-            }
-
-            /**
-             * Called when an error occurs during the product change operation.
-             *
-             * @param errorMessage The error message describing the encountered error.
-             */
-            @Override
-            public void onError(String errorMessage) {
-                //error.setValue(errorMessage);
-                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
-            }
-
-            /**
-             * Called when the product change operation fails.
-             *
-             * @param failureMessage The failure message describing the reason for the failure.
-             */
-            @Override
-            public void onFailure(String failureMessage) {
-                //error.setValue(failureMessage);
-                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
     /**
@@ -311,48 +173,16 @@ public class StorageViewModel extends AndroidViewModel {
      */
     public void moveProductsToStorage(ArrayList<Integer> productsIds){
         String token = "Bearer " + prefs.getString("token", "");
-        storageRepository.transferBoughtProductsToStorage(token, productsIds, new ResponseCallback<ArrayList<Product>>(){
 
-            /**
-             * Called when the products have been successfully moved to the storage.
-             *
-             * @param products The list of products that have been successfully moved to the storage.
-             */
-            @Override
-            public void onSuccess(ArrayList<Product> products) {
-                storageProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
-                //success.setValue("Produkty zostały przeniesione do spiżarni");
-                Toast.makeText(getApplication(), "Produkty zostały przeniesione do spiżarni", Toast.LENGTH_SHORT).show();
+        Disposable disposable = storageRepository.transferBoughtProductsToStorage(token, productsIds)
+                .subscribe(response -> {
+                            storageProducts.setValue(CategorySorter.sortCategoriesByProduct(response));
+                            responseMessage.setValue("Produkty zostały przeniesione do spiżarni");
+                        },
+                        throwable -> responseMessage.setValue(throwable.getMessage())
+                );
 
-                if (products.isEmpty()) {
-                    storageTitle.setValue("Spiżarnia");
-                } else {
-                    storageTitle.setValue("");
-                }
-            }
-
-            /**
-             * Called when an error occurs during the move of products to the storage.
-             *
-             * @param errorMessage The error message indicating the cause of the error.
-             */
-            @Override
-            public void onError(String errorMessage) {
-                //error.setValue(errorMessage);
-                Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_SHORT).show();
-            }
-
-            /**
-             * Called when the move of products to the storage fails.
-             *
-             * @param failureMessage The failure message indicating the reason for the failure.
-             */
-            @Override
-            public void onFailure(String failureMessage) {
-                //error.setValue(failureMessage);
-                Toast.makeText(getApplication(), failureMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
     /**
@@ -362,6 +192,6 @@ public class StorageViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        storageRepository.cancelCalls();
+        compositeDisposable.clear();
     }
 }

@@ -36,6 +36,7 @@ import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentCalendarBinding;
 import pl.plantoplate.ui.customViewes.RadioGridGroup;
+import timber.log.Timber;
 
 /**
  * This fragment is responsible for displaying calendar view.
@@ -58,6 +59,8 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Timber.d("onCreate() called");
 
         // Inflate the layout for this fragment
         calendar_view = FragmentCalendarBinding.inflate(inflater, container, false);

@@ -5,7 +5,7 @@
     android:id="@+id/product_change_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.shoppingList.productsDatabase.EditOwnProductFragment">
+    tools:context=".ui.main.productsDatabase.EditOwnProductFragment">
 
     <TextView
         android:id="@+id/baza_produktow"

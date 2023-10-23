@@ -18,17 +18,13 @@ package pl.plantoplate.ui.main.settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,24 +36,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
 import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GeneratedGroupCodeActivity;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 import pl.plantoplate.ui.main.settings.viewModels.SettingsViewModel;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
-import pl.plantoplate.ui.main.storage.StorageViewModel;
+import timber.log.Timber;
 
 /**
  * The fragment that is displayed when the user clicks the settings button.
@@ -74,7 +62,6 @@ public class SettingsInsideFragment extends Fragment{
     private Button button_zmiana_danych;
     private Button button_about_us;
     private Switch switchButton;
-    private UserRepository userRepository;
 
     private SharedPreferences prefs;
 
@@ -82,6 +69,7 @@ public class SettingsInsideFragment extends Fragment{
     public void onResume() {
         super.onResume();
         settingsViewModel.fetchUserCount();
+        settingsViewModel.fetchUserInfo();
         checkUsers(prefs.getString("role", ""));
 
     }
@@ -89,6 +77,8 @@ public class SettingsInsideFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Timber.d("onCreate() called");
 
         // Inflate the layout using the View Binding Library
         settings_view = FragmentSettingsInsideBinding.inflate(inflater, container, false);
@@ -101,7 +91,8 @@ public class SettingsInsideFragment extends Fragment{
         button_about_us = settings_view.buttonAboutUs;
         username = settings_view.imie;
         switchButton=settings_view.switchButtonChangeColorTheme;
-        userRepository = new UserRepository();
+
+        username.setVisibility(View.GONE);
 
         // Get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
@@ -164,6 +155,7 @@ public class SettingsInsideFragment extends Fragment{
         settingsViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             Spannable spans = new SpannableString("Imię: " + userInfo.getUsername() + "\n" + "Email: " + userInfo.getEmail());
             username.setText(spans);
+            username.setVisibility(View.VISIBLE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("role", userInfo.getRole());
             editor.putString("username", userInfo.getUsername());
@@ -184,19 +176,9 @@ public class SettingsInsideFragment extends Fragment{
             }
         });
 
-        // get success message
-        settingsViewModel.getSuccess().observe(getViewLifecycleOwner(), successMessage -> {
-            if (isAdded()) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), successMessage, Toast.LENGTH_SHORT).show());
-            }
-        });
-
-        // get error message
-        settingsViewModel.getError().observe(getViewLifecycleOwner(), errorMessage -> {
-            if (isAdded()) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-            }
-        });
+        // get response message
+        settingsViewModel.getResponseMessage().observe(getViewLifecycleOwner(), successMessage ->
+                Toast.makeText(requireActivity(), successMessage, Toast.LENGTH_SHORT).show());
     }
 
     /**

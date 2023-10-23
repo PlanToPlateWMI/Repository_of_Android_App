@@ -9,16 +9,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentCalendarInsideAllBinding;
-import pl.plantoplate.databinding.FragmentCalendarInsideBldBinding;
-import pl.plantoplate.databinding.FragmentTrzebaKupicBinding;
-import pl.plantoplate.ui.main.shoppingList.viewModels.ShoppingListViewModel;
+import timber.log.Timber;
 
 public class AllCategoryProductsFragment extends Fragment {
 
@@ -31,6 +27,9 @@ public class AllCategoryProductsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Timber.d("onCreate() called");
+
         // Inflate the layout for this fragment
         fragmentCalendarInsideBldBinding = FragmentCalendarInsideAllBinding.inflate(inflater, container, false);
         //plus_in_kalendarz = fragmentCalendarInsideBldBinding.plusInKalendarz;

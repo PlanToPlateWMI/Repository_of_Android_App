@@ -26,11 +26,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.ResponseCallback;
+import pl.plantoplate.data.remote.models.CreateGroupData;
+import pl.plantoplate.data.remote.models.JwtResponse;
+import pl.plantoplate.data.remote.repository.GroupRepository;
 import pl.plantoplate.databinding.GroupChooseBinding;
-import pl.plantoplate.repository.remote.models.JwtResponse;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.group.GroupRepository;
-import pl.plantoplate.repository.remote.models.CreateGroupData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.ui.main.ActivityMain;
@@ -42,11 +43,9 @@ import pl.plantoplate.ui.main.ActivityMain;
  user's email and password as credentials.
  */
 public class GroupSelectActivity extends AppCompatActivity implements ApplicationStateController {
-    private GroupChooseBinding group_select_view;
 
     private Button enter_group;
     private Button create_group;
-
     private SharedPreferences prefs;
 
     /**
@@ -58,29 +57,29 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Inflate the layout using the View Binding Library
-        group_select_view = GroupChooseBinding.inflate(getLayoutInflater());
+        GroupChooseBinding group_select_view = GroupChooseBinding.inflate(getLayoutInflater());
         setContentView(group_select_view.getRoot());
 
-        // find views
+        initViews(group_select_view);
+        setClickListeners();
+        prefs = getSharedPreferences("prefs", 0);
+    }
+
+    private void initViews(GroupChooseBinding group_select_view) {
         enter_group = group_select_view.buttonMamZaproszenie;
         create_group = group_select_view.buttonSwojaGrupa;
+    }
 
-        // set buttons onClickListeners
+    private void setClickListeners() {
         enter_group.setOnClickListener(v -> goToGroupEnterActivity());
         create_group.setOnClickListener(this::createGroup);
-
-        // get shared preferences
-        prefs = getSharedPreferences("prefs", 0);
     }
 
     /**
      * This method starts the GroupEnterActivity to allow the user to enter an existing group.
      */
     public void goToGroupEnterActivity() {
-        Intent intent = new Intent(getApplicationContext(), GroupEnterActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, GroupEnterActivity.class));
     }
 
     /**
@@ -89,11 +88,8 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
      * @return The CreateGroupData object containing user credentials.
      */
     public CreateGroupData getCreateGroupData() {
-        // get user credentials from shared preferences
         String email = prefs.getString("email", "");
         String password = prefs.getString("password", "");
-
-        // create a new CreateGroupData object with user credentials
         return new CreateGroupData(email, password);
     }
 
@@ -105,54 +101,34 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
      */
     public void createGroup(View view) {
         CreateGroupData createGroupData = getCreateGroupData();
-
-        // make API call to create a new group with user credentials
         GroupRepository groupRepository = new GroupRepository();
-        groupRepository.createGroup(createGroupData, new ResponseCallback<JwtResponse>() {
 
-            /**
-             * Called when the operation is successful and receives a JwtResponse.
-             *
-             * @param jwt The JwtResponse object containing the token and role.
-             */
-            @Override
-            public void onSuccess(JwtResponse jwt) {
+        Disposable disposable = groupRepository.createGroup(createGroupData)
+                .subscribe(
+                        jwt -> {
+                            saveUserData(jwt);
+                            startMainActivity();
+                            saveAppState(ApplicationState.MAIN_ACTIVITY);
+                        },
+                        error -> showSnackbar(view, error.getMessage())
+                );
+    }
 
-                // save user token and role in shared preferences
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("token", jwt.getToken());
-                editor.putString("role", jwt.getRole());
-                editor.apply();
+    private void saveUserData(JwtResponse jwt) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("token", jwt.getToken());
+        editor.putString("role", jwt.getRole());
+        editor.apply();
+    }
 
-                // start main activity
-                Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+    private void startMainActivity() {
+        Intent intent = new Intent(this, ActivityMain.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 
-                // save app state
-                saveAppState(ApplicationState.MAIN_ACTIVITY);
-            }
-
-            /**
-             * Called when an error occurs.
-             *
-             * @param errorMessage The error message to display.
-             */
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            /**
-             * Called when a failure occurs.
-             *
-             * @param failureMessage The failure message to display.
-             */
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+    private void showSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
 
     /**

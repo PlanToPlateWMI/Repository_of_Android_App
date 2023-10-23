@@ -17,7 +17,6 @@
 package pl.plantoplate.main.settings;
 
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -30,7 +29,6 @@ import org.junit.runner.RunWith;
 
 import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
-import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
@@ -50,9 +48,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Button;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import java.io.IOException;
 

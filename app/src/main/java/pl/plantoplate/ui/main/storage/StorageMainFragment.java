@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,17 +40,17 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.databinding.FragmentStorageInsideBinding;
-import pl.plantoplate.repository.remote.models.Category;
-import pl.plantoplate.repository.remote.models.Product;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.shoppingList.ShoppingListRepository;
-import pl.plantoplate.ui.customViewes.RadioGridGroup;
+import pl.plantoplate.ui.main.productsDatabase.popups.DeleteProductPopUp;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.popups.ModifyProductpopUp;
+import pl.plantoplate.ui.main.productsDatabase.ProductsDbaseFragment;
+import pl.plantoplate.ui.main.productsDatabase.popups.ModifyProductPopUp;
+import timber.log.Timber;
 
 /**
  * This fragment is responsible for displaying the storage.
@@ -58,11 +59,9 @@ public class StorageMainFragment extends Fragment {
 
     private FragmentStorageInsideBinding fragmentStorageInsideBinding;
     private StorageViewModel storageViewModel;
-
-    private TextView storage_title;
     private FloatingActionButton plus_in_storage;
     private RecyclerView recyclerView;
-    private RadioGridGroup radioGridGroup;
+    //private ProgressBar progressBar;
 
     private SharedPreferences prefs;
 
@@ -71,6 +70,7 @@ public class StorageMainFragment extends Fragment {
         super.onResume();
         storageViewModel.fetchUserInfo();
         storageViewModel.fetchStorageProducts();
+        //progressBar.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -85,13 +85,16 @@ public class StorageMainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Timber.d("onCreate() called");
+
         // Inflate the layout for this fragment
         fragmentStorageInsideBinding = FragmentStorageInsideBinding.inflate(inflater, container, false);
+        //progressBar = requireActivity().findViewById(R.id.progressBar);
+        //progressBar.setVisibility(View.VISIBLE);
 
         // Get views
         plus_in_storage = fragmentStorageInsideBinding.plusInStorage;
         recyclerView = fragmentStorageInsideBinding.productsStorage;
-        storage_title = fragmentStorageInsideBinding.textView4;
 
         // Set up click listeners
         plus_in_storage.setOnClickListener(this::onPlusClicked);
@@ -114,47 +117,21 @@ public class StorageMainFragment extends Fragment {
     public void onPlusClicked(View view) {
         ShoppingListRepository shoppingListRepository = new ShoppingListRepository();
         String token = "Bearer " + prefs.getString("token", "");
-        shoppingListRepository.getBoughtProductsIds(token, new ResponseCallback<ArrayList<Integer>>() {
 
-            /**
-             * Called when the network request is successful and receives the list of product IDs.
-             *
-             * @param productsIds The list of product IDs.
-             */
-            @Override
-            public void onSuccess(ArrayList<Integer> productsIds) {
-                if (productsIds.isEmpty()){
-                    replaceFragment(new ProductsDbaseFragment("storage"));
-                }
-                else{
-                   showaddFromPopUp(productsIds);
-                }
-            }
-
-            /**
-             * Called when an error occurs during the network request.
-             *
-             * @param errorMessage The error message describing the encountered error.
-             */
-            @Override
-            public void onError(String errorMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-
-            /**
-             * Called when the network request fails.
-             *
-             * @param failureMessage The failure message describing the reason for the failure.
-             */
-            @Override
-            public void onFailure(String failureMessage) {
-                if (isAdded()) {
-                    requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-                }
-            }
-        });
+        Disposable disposable = shoppingListRepository.getBoughtProductsIds(token)
+                .subscribe(productsIds -> {
+                    if (productsIds.isEmpty()) {
+                        Bundle args = new Bundle();
+                        args.putString("comesFrom", "storage");
+                        Fragment fragment = new ProductsDbaseFragment();
+                        fragment.setArguments(args);
+                        replaceFragment(fragment);
+                    } else {
+                        showaddFromPopUp(productsIds);
+                    }
+                }, throwable -> {
+                    Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     /**
@@ -175,7 +152,11 @@ public class StorageMainFragment extends Fragment {
         });
 
         go_to_products_database.setOnClickListener(v -> {
-            replaceFragment(new ProductsDbaseFragment("storage"));
+            Bundle args = new Bundle();
+            args.putString("comesFrom", "storage");
+            Fragment fragment = new ProductsDbaseFragment();
+            fragment.setArguments(args);
+            replaceFragment(fragment);
             dialog.dismiss();
         });
 
@@ -188,7 +169,7 @@ public class StorageMainFragment extends Fragment {
      * @param product The product to be modified.
      */
     public void showModifyProductPopup(Product product) {
-        ModifyProductpopUp modifyProductPopUp = new ModifyProductpopUp(requireContext(), product);
+        ModifyProductPopUp modifyProductPopUp = new ModifyProductPopUp(requireContext(), product);
         modifyProductPopUp.acceptButton.setOnClickListener(v -> {
             String quantityValue = Objects.requireNonNull(modifyProductPopUp.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {
@@ -208,35 +189,6 @@ public class StorageMainFragment extends Fragment {
     }
 
     /**
-     * Shows a pop-up dialog for deleting a product from storage.
-     *
-     * @param product The product to be deleted.
-     */
-    public void showDeleteProductPopup(Product product) {
-        Dialog dialog = new Dialog(getContext());
-        dialog.setCancelable(true);
-        //add delay!!!!
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        dialog.setContentView(R.layout.new_pop_up_delete_from_storage);
-
-        TextView acceptButton = dialog.findViewById(R.id.button_yes);
-        TextView cancelButton = dialog.findViewById(R.id.button_no);
-
-        acceptButton.setOnClickListener(v -> dialog.dismiss());
-        acceptButton.setOnClickListener(v -> {
-            storageViewModel.deleteProductFromStorage(product);
-           dialog.dismiss();
-        });
-
-        cancelButton.setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
-    }
-
-    /**
      * Set up the view model for the storage.
      * This method initializes the storage view model, observes different data from the view model,
      * and updates the UI accordingly.
@@ -248,22 +200,25 @@ public class StorageMainFragment extends Fragment {
         storageViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
         });
 
-        // get storage title
-        storageViewModel.getStorageTitle().observe(getViewLifecycleOwner(), storageTitle -> storage_title.setText(storageTitle));
-
         // get storage
         storageViewModel.getStorageProducts().observe(getViewLifecycleOwner(), storageProducts -> {
 
-            if (storageProducts != null){
-                if (storageProducts.isEmpty()){
-
-                }
+            Timber.e("Storage products: %s", storageProducts);
+            if (storageProducts.isEmpty()) {
+                Timber.e("Storage is empty");
+                fragmentStorageInsideBinding.textView4.setText(R.string.wprowadzenie_spizarnia);
+            } else {
+                fragmentStorageInsideBinding.textView4.setText("");
             }
 
             // update recycler view
             CategoryAdapter categoryAdapter = (CategoryAdapter) recyclerView.getAdapter();
             Objects.requireNonNull(categoryAdapter).setCategoriesList(storageProducts);
+            //progressBar.setVisibility(View.INVISIBLE);
         });
+
+        storageViewModel.getResponseMessage().observe(getViewLifecycleOwner(), responseMessage ->
+                Toast.makeText(requireActivity(), responseMessage, Toast.LENGTH_SHORT).show());
 
     }
 
@@ -278,43 +233,23 @@ public class StorageMainFragment extends Fragment {
         CategoryAdapter categoryAdapter = new CategoryAdapter(new ArrayList<>(), R.layout.item_spizarnia, R.layout.item_category_spizarnia);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
 
-            /**
-             * Set up the click listener for the "Add to Shopping List" button in the category adapter.
-             * This method defines the behavior when the button is clicked.
-             *
-             * @param v       The button view.
-             * @param product The product associated with the button.
-             */
             @Override
             public void setupAddToShoppingListButtonClick(View v, Product product) {
                 v.setOnClickListener(view -> {
                 });
             }
 
-            /**
-             * Set up the click listener for the product item in the category adapter.
-             * This method defines the behavior when a product item is clicked.
-             *
-             * @param v       The product item view.
-             * @param product The product associated with the item.
-             */
             @Override
             public void setupProductItemClick(View v, Product product) {
                 v.setOnClickListener(view -> showModifyProductPopup(product));
             }
 
-            /**
-             * Set up the click listener for the delete product button in the category adapter.
-             * This method defines the behavior when the button is clicked.
-             *
-             * @param v       The button view.
-             * @param product The product associated with the button.
-             */
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {
                 String role = prefs.getString("role", "");
                 if(role.equals("ROLE_ADMIN")) {
-                    v.setOnClickListener(view -> showDeleteProductPopup(product));
+                    v.setOnClickListener(view -> new DeleteProductPopUp(requireContext(),
+                                            view1 -> storageViewModel.deleteProductFromStorage(product)).show());
                 }
                 else{
                     //set visibility none

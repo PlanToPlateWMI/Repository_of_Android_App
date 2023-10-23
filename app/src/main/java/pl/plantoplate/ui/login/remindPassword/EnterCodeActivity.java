@@ -29,9 +29,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.databinding.RemindPassword2Binding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.auth.AuthRepository;
+import pl.plantoplate.data.remote.ResponseCallback;
+import pl.plantoplate.data.remote.repository.AuthRepository;
 
 /**
  * This activity is responsible for handling the user input of the code sent to the user's email
@@ -108,23 +111,14 @@ public class EnterCodeActivity extends AppCompatActivity {
         String email = prefs.getString("email", "");
 
         AuthRepository repository = new AuthRepository();
-        repository.getEmailConfirmCode(email, "reset", new ResponseCallback<String>() {
-            @Override
-            public void onSuccess(String code) {
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("code", code);
-                editor.apply();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        Disposable disposable = repository.getEmailConfirmCode(email, "reset")
+                .subscribe(
+                        response -> {
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("code", response.getCode());
+                            editor.apply();
+                        },
+                        error -> Snackbar.make(view, Objects.requireNonNull(error.getMessage()), Snackbar.LENGTH_LONG).show()
+                );
     }
 }

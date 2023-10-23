@@ -32,11 +32,10 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentEmailChangeBinding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.Message;
-import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.tools.SCryptStretcher;
 
 
@@ -95,29 +94,18 @@ public class ChangeEmailStep1Fragment extends Fragment {
 
         String token = "Bearer " + sharedPreferences.getString("token", "");
 
-        userRepository.validatePasswordMatch(token, passwordStretched, new ResponseCallback<Message>() {
-            @Override
-            public void onSuccess(Message response) {
+        Disposable disposable = userRepository.validatePasswordMatch(token, passwordStretched)
+                .subscribe(response -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("password", password);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("password", password);
+                    Fragment fragment = new ChangeEmailStep2Fragment();
+                    fragment.setArguments(bundle);
 
-                Fragment fragment = new ChangeEmailStep2Fragment();
-                fragment.setArguments(bundle);
-
-                replaceFragment(fragment);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-            }
-        });
+                    replaceFragment(fragment);
+                }, throwable -> {
+                    Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
 

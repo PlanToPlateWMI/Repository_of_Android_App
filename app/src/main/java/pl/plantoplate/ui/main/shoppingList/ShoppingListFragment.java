@@ -23,25 +23,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
-import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.customViewes.RadioGridGroup;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.ChangeCategoryListener;
-import pl.plantoplate.ui.main.shoppingList.viewModels.ShoppingListViewModel;
+import timber.log.Timber;
 
 /**
  * Fragment for shopping list.
@@ -78,6 +72,8 @@ public class ShoppingListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Timber.d("onCreate() called");
+
         // Inflate the layout for this fragment
         shopping_list_view = FragmentShoppingListBinding.inflate(inflater, container, false);
 
@@ -113,7 +109,7 @@ public class ShoppingListFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     private void setupNavigation() {
         radioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            Log.d("RadioGridGroup", "Checked ID: " + checkedId); // Debugging
+            Timber.tag("RadioGridGroup").d("Checked ID: %s", checkedId); // Debugging
             switch (checkedId) {
                 case R.id.trzeba_kupic_button:
                     viewPager.setCurrentItem(0);
@@ -122,7 +118,7 @@ public class ShoppingListFragment extends Fragment {
                     viewPager.setCurrentItem(1);
                     break;
                 default:
-                    Log.d("RadioGridGroup", "Unhandled ID: " + checkedId); // Debugging
+                    Timber.tag("RadioGridGroup").d("Unhandled ID: %s", checkedId); // Debugging
                     break;
             }
         });
@@ -213,7 +209,6 @@ public class ShoppingListFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("ShoppingListFragment.onDestroyView");
         shopping_list_view = null;
     }
 }

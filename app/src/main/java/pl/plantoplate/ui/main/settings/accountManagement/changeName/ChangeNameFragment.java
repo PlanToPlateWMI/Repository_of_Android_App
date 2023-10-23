@@ -32,10 +32,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentNameChangeBinding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.user.UserRepository;
 
 /**
  * This fragment is responsible for changing the name of the user.
@@ -92,29 +91,16 @@ public class ChangeNameFragment extends Fragment {
 
         String token = "Bearer " + prefs.getString("token", "");
 
-        userRepository.changeUsername(token, username, new ResponseCallback<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo response) {
-                requireActivity().runOnUiThread(() -> {
-                    prefs.edit().putString("username", username).apply();
-                    Toast.makeText(requireActivity(), "Imię zostało zmienione na: " + username, Toast.LENGTH_SHORT).show();
-                    requireActivity().getSupportFragmentManager().popBackStack();
+        Disposable disposable = userRepository.changeUsername(token, username)
+                .subscribe(userInfo -> {
+                    requireActivity().runOnUiThread(() -> {
+                        prefs.edit().putString("username", username).apply();
+                        Toast.makeText(requireActivity(), "Imię zostało zmienione na: " + username, Toast.LENGTH_SHORT).show();
+                        requireActivity().getSupportFragmentManager().popBackStack();
+                    });
+                }, throwable -> {
+                    Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                 });
-
-                // pop the fragment from the back stack
-                requireActivity().getSupportFragmentManager().popBackStack();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 

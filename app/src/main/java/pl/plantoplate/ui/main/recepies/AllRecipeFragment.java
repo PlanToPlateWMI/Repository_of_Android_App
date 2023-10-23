@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
+import timber.log.Timber;
 
 public class AllRecipeFragment extends Fragment {
 
@@ -22,6 +23,9 @@ public class AllRecipeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Timber.d("onCreate() called");
+
         // Inflate the layout for this fragment
         fragmentRecipeInsideAllBinding = FragmentRecipeInsideAllBinding.inflate(inflater, container, false);
         // = FragmentRecipeCategoriesBinding.inflate(inflater, container, false);

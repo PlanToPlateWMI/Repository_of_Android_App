@@ -18,6 +18,7 @@ package pl.plantoplate.ui.main;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ import pl.plantoplate.ui.main.recepies.RecipeFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
+import timber.log.Timber;
 
 /**
  * This is the main activity of the application. It is responsible for displaying the bottom navigation bar and
@@ -56,6 +58,8 @@ public class ActivityMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Timber.d("onCreate() called");
+
         // Inflate the layout using view binding
         binding = ActivityMainForFragmentsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -77,8 +81,9 @@ public class ActivityMain extends AppCompatActivity {
      */
     @SuppressLint("NonConstantResourceId")
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Log the selected navigation item
+        Timber.d("Selected navigation item: %s", item.getTitle());
 
-        // Replace the current fragment with the selected fragment based on its ID
         switch (item.getItemId()) {
             case R.id.calendar:
                 replaceFragment(new CalendarFragment(), "calendar");
@@ -105,11 +110,12 @@ public class ActivityMain extends AppCompatActivity {
      * @param fragment The fragment to replace the current fragment with.
      */
     private void replaceFragment(Fragment fragment, String tag) {
+        // Log the fragment replacement
+        Timber.d("Replacing fragment with tag: %s", tag);
 
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
-        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
-        //transaction.addToBackStack(tag);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
     }
 }

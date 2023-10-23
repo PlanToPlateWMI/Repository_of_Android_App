@@ -25,9 +25,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.user.UserRepository;
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.repository.UserRepository;
 
 /**
  * This class is responsible for changing the permissions of the user.
@@ -73,51 +73,31 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
     private void fetchUsersInfo() {
         String token = "Bearer " + prefs.getString("token", "");
 
-        userRepository.getUsersInfo(token, new ResponseCallback<ArrayList<UserInfo>>() {
-            @Override
-            public void onSuccess(ArrayList<UserInfo> response) {
-                usersInfo.setValue(filterUsers(response, prefs.getString("email", "")));
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                error.setValue(errorMessage);
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                error.setValue(failureMessage);
-            }
-        });
+        Disposable disposable = userRepository.getUsersInfo(token)
+                .subscribe(userInfo -> {
+                    usersInfo.setValue(filterUsers(userInfo, prefs.getString("email", "")));
+                }, throwable -> {
+                    error.setValue(throwable.getMessage());
+                });
     }
 
 
     public void changePermissions(UserInfo userInfo) {
         String token = "Bearer " + prefs.getString("token", "");
 
-        userRepository.changePermissions(token, userInfo, new ResponseCallback<ArrayList<UserInfo>>() {
-            @Override
-            public void onSuccess(ArrayList<UserInfo> response) {
-                usersInfo.setValue(filterUsers(response, prefs.getString("email", "")));
-                String role = "";
-                if (userInfo.getRole().equals("USER")) {
-                    role = "Użytkownik";
-                } else if (userInfo.getRole().equals("ADMIN")) {
-                    role = "Administrator";
-                }
-                success.setValue("Zmieniono uprawnienia użytkownika " + userInfo.getUsername() + " na " + role);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                error.setValue(errorMessage);
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                error.setValue(failureMessage);
-            }
-        });
+        Disposable disposable = userRepository.changePermissions(token, userInfo)
+                .subscribe(response -> {
+                    usersInfo.setValue(filterUsers(response, prefs.getString("email", "")));
+                    String role = "";
+                    if (userInfo.getRole().equals("USER")) {
+                        role = "Użytkownik";
+                    } else if (userInfo.getRole().equals("ADMIN")) {
+                        role = "Administrator";
+                    }
+                    success.setValue("Zmieniono uprawnienia użytkownika " + userInfo.getUsername() + " na " + role);
+                }, throwable -> {
+                    error.setValue(throwable.getMessage());
+                });
     }
 
     /**

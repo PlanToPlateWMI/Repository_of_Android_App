@@ -34,11 +34,14 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.databinding.LoginPageBinding;
-import pl.plantoplate.repository.remote.models.JwtResponse;
-import pl.plantoplate.repository.remote.models.SignInData;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.auth.AuthRepository;
+import pl.plantoplate.data.remote.models.JwtResponse;
+import pl.plantoplate.data.remote.models.SignInData;
+import pl.plantoplate.data.remote.ResponseCallback;
+import pl.plantoplate.data.remote.repository.AuthRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;
@@ -140,38 +143,30 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
             return;
         }
 
-
         AuthRepository authRepository = new AuthRepository();
-        authRepository.signIn(userSignInData, new ResponseCallback<JwtResponse>() {
-            @Override
-            public void onSuccess(JwtResponse jwtResponse) {
-                // save the token and role in the shared preferences
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("email", userSignInData.getEmail());
-                editor.putString("token", jwtResponse.getToken());
-                editor.putString("role", jwtResponse.getRole());
-                editor.putString("password", userSignInData.getPassword());
-                editor.apply();
+        Disposable disposable = authRepository.signIn(userSignInData)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jwtResponse -> {
+                    // save the token and role in the shared preferences
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("email", userSignInData.getEmail());
+                    editor.putString("token", jwtResponse.getToken());
+                    editor.putString("role", jwtResponse.getRole());
+                    editor.putString("password", userSignInData.getPassword());
+                    editor.apply();
 
-                // Start the main activity
-                Intent intent = new Intent(view.getContext(), ActivityMain.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                view.getContext().startActivity(intent);
+                    // Start the main activity
+                    Intent intent = new Intent(view.getContext(), ActivityMain.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    view.getContext().startActivity(intent);
 
-                // save the app state
-                saveAppState(ApplicationState.MAIN_ACTIVITY);
-            }
+                    // save the app state
+                    saveAppState(ApplicationState.MAIN_ACTIVITY);
+                }, throwable -> {
+                    Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show();
+                });
 
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
     }
 
 

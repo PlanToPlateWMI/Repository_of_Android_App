@@ -25,9 +25,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentStorageBinding;
+import timber.log.Timber;
 
 /**
  * Fragment for storage screen
@@ -49,6 +51,8 @@ public class StorageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Timber.d("onCreate() called");
+
         fragmentStorageBinding = FragmentStorageBinding.inflate(inflater, container, false);
         replaceFragment(new StorageMainFragment());
         return fragmentStorageBinding.getRoot();
@@ -61,9 +65,9 @@ public class StorageFragment extends Fragment {
      */
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.storage_default, fragment);
-        //transaction.addToBackStack(null);
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.storage_default, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 

@@ -14,7 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentCalendarInsideBldBinding;
-
+import timber.log.Timber;
 
 
 public class BreakfastLunchDinnerCategoryProductsFragment extends Fragment {
@@ -28,6 +28,9 @@ public class BreakfastLunchDinnerCategoryProductsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Timber.d("onCreate() called");
+
         // Inflate the layout for this fragment
         fragmentCalendarInsideBldBinding = FragmentCalendarInsideBldBinding.inflate(inflater, container, false);
         //plus_in_kalendarz = fragmentCalendarInsideBldBinding.plusInKalendarz;

@@ -28,11 +28,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.databinding.RemindPassword3Binding;
-import pl.plantoplate.repository.remote.models.Message;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.auth.AuthRepository;
-import pl.plantoplate.repository.remote.models.SignInData;
+import pl.plantoplate.data.remote.models.Message;
+import pl.plantoplate.data.remote.ResponseCallback;
+import pl.plantoplate.data.remote.repository.AuthRepository;
+import pl.plantoplate.data.remote.models.SignInData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;
@@ -105,26 +108,16 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
      */
     private void sendNewPassword(SignInData userSignInData, View view) {
         AuthRepository authRepository = new AuthRepository();
-        authRepository.resetPassword(userSignInData, new ResponseCallback<Message>() {
-            @Override
-            public void onSuccess(Message message) {
-                // Start the login activity
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                Snackbar.make(view, "Pomyślnie zmieniono hasło!", Snackbar.LENGTH_LONG).show();
-                new Handler().postDelayed(() -> view.getContext().startActivity(intent), 500);
-            }
 
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        Disposable disposable = authRepository.resetPassword(userSignInData)
+                .subscribe(message -> {
+                    // Start the login activity
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    Snackbar.make(view, "Pomyślnie zmieniono hasło!", Snackbar.LENGTH_LONG).show();
+                    new Handler().postDelayed(() -> view.getContext().startActivity(intent), 500);
+                }, throwable ->
+                        Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show());
     }
 
     /**

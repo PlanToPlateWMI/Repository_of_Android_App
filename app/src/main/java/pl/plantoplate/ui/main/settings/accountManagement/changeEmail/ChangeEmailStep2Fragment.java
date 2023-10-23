@@ -32,16 +32,12 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentEmailChange2Binding;
-import pl.plantoplate.databinding.FragmentEmailChangeBinding;
-import pl.plantoplate.repository.local.models.User;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.JwtResponse;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.tools.SCryptStretcher;
-import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 
 
@@ -131,66 +127,46 @@ public class ChangeEmailStep2Fragment extends Fragment {
         setNewPassword(newEmail);
     }
 
-    public void setNewPassword(String newEmail){
+    public void setNewPassword(String newEmail) {
         String token = "Bearer " + prefs.getString("token", "");
-
         String newPassword = SCryptStretcher.stretch(requireArguments().getString("password"), newEmail);
 
-        userRepository.changePassword(token, newPassword, new ResponseCallback<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo response) {
-                UserInfo userInfo = new UserInfo();
-                userInfo.setEmail(newEmail);
-                userInfo.setPassword(newPassword);
+        Disposable disposable = userRepository.changePassword(token, newPassword)
+                .subscribe(userInfo -> {
+                    // On success
+                    UserInfo updatedUserInfo = new UserInfo();
+                    updatedUserInfo.setEmail(newEmail);
+                    updatedUserInfo.setPassword(newPassword);
 
-                setNewEmail(token, userInfo);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-            }
-        });
+                    setNewEmail(token, updatedUserInfo);
+                }, throwable -> {
+                    // On error
+                    Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
+
 
     public void setNewEmail(String token, UserInfo userInfo){
 
-        userRepository.changeEmail(token, userInfo, new ResponseCallback<JwtResponse>() {
-            @Override
-            public void onSuccess(JwtResponse jwt) {
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireContext(), "Email został zmieniony", Toast.LENGTH_LONG).show();
+        Disposable disposable = userRepository.changeEmail(token, userInfo)
+                .subscribe(jwt -> {
+                    // On success
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Email został zmieniony", Toast.LENGTH_LONG).show();
+                    });
+
+                    // save new email and role in shared preferences
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("email", userInfo.getEmail());
+                    editor.putString("role", jwt.getRole());
+                    editor.putString("token", jwt.getToken());
+                    editor.apply();
+
+                    replaceFragment(new ChangeTheData());
+                }, throwable -> {
+                    // On error
+                    Toast.makeText(requireContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
                 });
-
-                // save new email and role in shared preferences
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("email", userInfo.getEmail());
-                editor.putString("role", jwt.getRole());
-                editor.putString("token", jwt.getToken());
-                editor.apply();
-
-                replaceFragment(new ChangeTheData());
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show();
-                });
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireContext(), failureMessage, Toast.LENGTH_LONG).show();
-                });
-            }
-        });
     }
 
     /**

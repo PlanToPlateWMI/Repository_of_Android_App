@@ -27,7 +27,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import pl.plantoplate.R;
-import pl.plantoplate.repository.remote.models.Product;
+import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder{

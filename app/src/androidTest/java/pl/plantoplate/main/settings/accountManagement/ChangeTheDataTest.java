@@ -17,27 +17,18 @@
 package pl.plantoplate.main.settings.accountManagement;
 
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
-import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
-import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
-import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
-import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.R;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -47,12 +38,6 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.widget.Button;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import java.io.IOException;
 

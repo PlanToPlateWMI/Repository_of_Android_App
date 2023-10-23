@@ -17,7 +17,6 @@
 package pl.plantoplate.ui.main.settings.groupCodeGeneration;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,18 +27,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Objects;
+
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentChoiceAdultOrChildBinding;
-import pl.plantoplate.databinding.FragmentNameChangeBinding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.group.GroupRepository;
-import pl.plantoplate.ui.main.storage.StorageFragment;
+import pl.plantoplate.data.remote.ResponseCallback;
+import pl.plantoplate.data.remote.repository.GroupRepository;
 
 /**
  * An activity that allows the user to choose the type of group code to generate.
@@ -56,10 +55,10 @@ public class GroupCodeTypeActivity extends Fragment {
 
     /**
      * Create the view for this fragment, get the buttons for choosing group code type and set the
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * @param inflater The layout inflater
+     * @param container The container for the fragment
+     * @param savedInstanceState The saved instance state
+     * @return The view for this fragment
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -114,27 +113,18 @@ public class GroupCodeTypeActivity extends Fragment {
         String token = "Bearer " + prefs.getString("token", "");
 
         GroupRepository groupRepository = new GroupRepository();
-        groupRepository.generateGroupCode(token, role, new ResponseCallback<String>() {
 
-            @Override
-            public void onSuccess(String groupCode) {
-                Fragment fragment = new GeneratedGroupCodeActivity();
-                Bundle bundle = new Bundle();
-                bundle.putString("group_code", groupCode);
-                fragment.setArguments(bundle);
-                replaceFragment(fragment);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        Disposable disposable = groupRepository.generateGroupCode(token, role)
+                .subscribe(
+                        groupCode -> {
+                            Fragment fragment = new GeneratedGroupCodeActivity();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("group_code", groupCode.getCode());
+                            fragment.setArguments(bundle);
+                            replaceFragment(fragment);
+                        },
+                        throwable -> Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show()
+                );
     }
 
     public void showQuestionPopUp(){

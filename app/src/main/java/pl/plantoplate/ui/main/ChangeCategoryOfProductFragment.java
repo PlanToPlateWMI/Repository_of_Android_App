@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,11 +31,9 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import pl.plantoplate.R;
-import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
 import pl.plantoplate.databinding.FragmentChangeCategoryBinding;
 import pl.plantoplate.ui.customViewes.RadioGridGroup;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.ChangeCategoryListener;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.EditOwnProductFragment;
+import pl.plantoplate.ui.main.productsDatabase.ChangeCategoryListener;
 
 /**
  * This fragment is used to change category of product.

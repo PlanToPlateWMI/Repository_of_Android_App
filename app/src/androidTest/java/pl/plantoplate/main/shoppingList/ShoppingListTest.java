@@ -64,7 +64,7 @@ public class ShoppingListTest {
     @Test
     public void testShoppingListDisplayed() {
         onView(ViewMatchers.withId(R.id.shopping)).check(matches(isDisplayed()));
-        onView(withId(R.id.bottomNavigationView2)).check(matches(isDisplayed()));
+        onView(withId(R.id.bottomNavigationView)).check(matches(isDisplayed()));
         onView(withId(R.id.shopping_list_default)).check(matches(isDisplayed()));
     }
 

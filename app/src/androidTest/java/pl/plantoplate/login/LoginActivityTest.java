@@ -30,11 +30,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import org.junit.After;
 import org.junit.Before;
@@ -48,7 +45,6 @@ import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
-import pl.plantoplate.repository.remote.models.Message;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 

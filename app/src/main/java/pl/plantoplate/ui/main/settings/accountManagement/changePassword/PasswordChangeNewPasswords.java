@@ -35,16 +35,13 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentPasswordChange2Binding;
-import pl.plantoplate.databinding.FragmentPasswordChangeBinding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.SCryptStretcher;
 import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 
 
 /**
@@ -127,30 +124,17 @@ public class PasswordChangeNewPasswords extends Fragment {
 
         String token = "Bearer " + prefs.getString("token", "");
 
-        userRepository.changePassword(token, password, new ResponseCallback<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo response) {
-                requireActivity().runOnUiThread(() -> {
+        Disposable disposable = userRepository.changePassword(token, password)
+                .subscribe(userInfo -> {
+
                     Toast.makeText(requireActivity(), "Hasło zostało zmienione", Toast.LENGTH_SHORT).show();
-                });
+                    exitAccount();
 
-                exitAccount();
-            }
+                }, throwable -> {
 
-            @Override
-            public void onError(String errorMessage) {
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show();
-                });
-            }
+                    Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
 
-            @Override
-            public void onFailure(String failureMessage) {
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show();
                 });
-            }
-        });
     }
 
     /**

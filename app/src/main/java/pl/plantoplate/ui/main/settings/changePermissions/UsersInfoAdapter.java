@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.repository.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.UserInfo;
 
 public class UsersInfoAdapter extends RecyclerView.Adapter<UsersInfoViewHolder>{
 

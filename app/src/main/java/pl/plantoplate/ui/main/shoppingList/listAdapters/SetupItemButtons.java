@@ -18,7 +18,7 @@ package pl.plantoplate.ui.main.shoppingList.listAdapters;
 
 import android.view.View;
 
-import pl.plantoplate.repository.remote.models.Product;
+import pl.plantoplate.data.remote.models.Product;
 
 public interface SetupItemButtons {
     default void setupAddToShoppingListButtonClick(View v, Product product) {

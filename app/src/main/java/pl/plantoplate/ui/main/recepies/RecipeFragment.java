@@ -36,6 +36,7 @@ import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeBinding;
 import pl.plantoplate.ui.customViewes.RadioGridGroup;
+import timber.log.Timber;
 
 /**
  * This fragment is responsible for displaying the recipe view.
@@ -59,6 +60,8 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Timber.d("onCreate() called");
 
         recipe_view = FragmentRecipeBinding.inflate(inflater, container, false);
 

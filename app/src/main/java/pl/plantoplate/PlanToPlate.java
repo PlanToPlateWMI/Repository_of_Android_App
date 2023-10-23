@@ -21,6 +21,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import timber.log.Timber;
+
 public class PlanToPlate extends Application {
 
     private static PlanToPlate instance;
@@ -36,6 +38,11 @@ public class PlanToPlate extends Application {
         if(instance == null){
             instance = this;
         }
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+
     }
 
     /**

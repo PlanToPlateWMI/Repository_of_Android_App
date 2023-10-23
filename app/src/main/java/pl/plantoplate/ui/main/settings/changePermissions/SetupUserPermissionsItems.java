@@ -18,7 +18,7 @@ package pl.plantoplate.ui.main.settings.changePermissions;
 
 import android.view.View;
 
-import pl.plantoplate.repository.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.UserInfo;
 
 public interface SetupUserPermissionsItems {
 

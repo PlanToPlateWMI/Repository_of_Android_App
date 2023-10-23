@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import pl.plantoplate.repository.remote.models.Product;
-import pl.plantoplate.repository.remote.models.Category;
+import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.Category;
 
 /**
  * CategorySorter is a class that sorts categories and products.

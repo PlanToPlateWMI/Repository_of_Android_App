@@ -23,36 +23,25 @@ package pl.plantoplate.ui.main.settings.changePermissions;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.textfield.TextInputLayout;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
 import pl.plantoplate.R;
-import pl.plantoplate.databinding.FragmentNameChangeBinding;
 import pl.plantoplate.databinding.FragmentPermissionsChangeBinding;
-import pl.plantoplate.repository.remote.models.Product;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.user.UserRepository;
-import pl.plantoplate.ui.main.settings.viewModels.SettingsViewModel;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
+import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.repository.UserRepository;
 
 /**
  * This fragment is responsible for changing the permissions of the user.

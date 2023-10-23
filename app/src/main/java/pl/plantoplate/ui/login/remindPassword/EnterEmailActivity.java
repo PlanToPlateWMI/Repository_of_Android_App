@@ -27,10 +27,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.databinding.RemindPassword1Binding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.auth.AuthRepository;
-import pl.plantoplate.repository.remote.models.Message;
+import pl.plantoplate.data.remote.ResponseCallback;
+import pl.plantoplate.data.remote.repository.AuthRepository;
+import pl.plantoplate.data.remote.models.Message;
 
 /**
  * A class that is responsible for the first step of the password remind process.
@@ -82,26 +85,17 @@ public class EnterEmailActivity extends AppCompatActivity {
      */
     public void checkUserExists(View view){
         String email = String.valueOf(email_field.getText());
-
-        authRepository.userExists(email, new ResponseCallback<Message>() {
-
-            @Override
-            public void onSuccess(Message response) {
-                // user exists
-                Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje!", Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                // user don't exists
-                validateEmail(view);
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        Disposable disposable = authRepository.userExists(email)
+                .subscribe(
+                        response -> {
+                            // user exists
+                            Snackbar.make(view, "Użytkownik o podanym adresie email nie istnieje!", Snackbar.LENGTH_LONG).show();
+                        },
+                        error -> {
+                            // user don't exists
+                            validateEmail(view);
+                        }
+                );
     }
 
     /**
@@ -123,21 +117,16 @@ public class EnterEmailActivity extends AppCompatActivity {
         startActivity(intent);
 
         AuthRepository authRepository = new AuthRepository();
-        authRepository.getEmailConfirmCode(email, "reset", new ResponseCallback<String>() {
-            @Override
-            public void onSuccess(String code) {
-                prefs.edit().putString("code", code).apply();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(v, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(v, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        Disposable disposable = authRepository.getEmailConfirmCode(email, "reset")
+                .subscribe(
+                        response -> {
+                            // save the code in the shared preferences
+                            prefs.edit().putString("code", response.getCode()).apply();
+                        },
+                        error -> {
+                            // show the error message
+                            Snackbar.make(v, Objects.requireNonNull(error.getMessage()), Snackbar.LENGTH_LONG).show();
+                        }
+                );
     }
 }
