@@ -13,11 +13,13 @@ import java.util.ArrayList;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.models.Category;
 import pl.plantoplate.data.remote.models.ListType;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.data.remote.models.UserInfo;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.data.remote.repository.UserRepository;
+import pl.plantoplate.tools.CategorySorter;
 
 public class ToBuyProductsListViewModel extends AndroidViewModel {
 
@@ -26,7 +28,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
     private final ShoppingListRepository shoppingListRepository;
 
     private final MutableLiveData<String> responseMessage;
-    private final MutableLiveData<ArrayList<Product>> toBuyProducts;
+    private final MutableLiveData<ArrayList<Category>> toBuyProducts;
     private final MutableLiveData<UserInfo> userInfo;
 
     public ToBuyProductsListViewModel(@NonNull Application application) {
@@ -37,7 +39,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         compositeDisposable = new CompositeDisposable();
 
         responseMessage = new MutableLiveData<>();
-        toBuyProducts = new MutableLiveData<>(new ArrayList<>());
+        toBuyProducts = new MutableLiveData<>();
         userInfo = new MutableLiveData<>();
     }
 
@@ -45,7 +47,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         return responseMessage;
     }
 
-    public MutableLiveData<ArrayList<Product>> getToBuyProducts(){
+    public MutableLiveData<ArrayList<Category>> getToBuyProducts(){
         return toBuyProducts;
     }
 
@@ -57,7 +59,9 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.getToBuyShoppingList(token)
-                .subscribe(toBuyProducts::setValue, throwable -> responseMessage.setValue(throwable.getMessage()));
+                .subscribe(response ->{
+                    toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(response));
+                }, throwable -> responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }
@@ -85,7 +89,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         Disposable disposable = shoppingListRepository.changeProductStateInShopList(token, product.getId())
                 .subscribe(shoppingList -> {
                     EventBus.getDefault().post(new ProductsListChangedEvent(shoppingList.getBought(), ListType.BOUGHT));
-                    toBuyProducts.setValue(shoppingList.getToBuy());
+                    toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(shoppingList.getToBuy()));
                 }, throwable -> responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
@@ -95,8 +99,8 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.deleteProductFromShoppingList(token, product.getId())
-                .subscribe(shoppingList -> {
-                    toBuyProducts.setValue(shoppingList);
+                .subscribe(products -> {
+                    toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
                     responseMessage.setValue("Produkt został usunięty z listy");
 
                 }, throwable -> responseMessage.setValue(throwable.getMessage()));
@@ -108,12 +112,10 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.changeProductAmountInShopList(token, product.getId(), product)
-                .subscribe(shoppingList -> {
-                    System.out.println("SUCCESS - changeProductAmountInShopList");
-                    toBuyProducts.setValue(shoppingList);
+                .subscribe(products -> {
+                    toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
                     responseMessage.setValue("Ilość produktu została zmieniona");
                 }, throwable -> {
-                    System.out.println("ERROR: " + throwable.getMessage());
                     responseMessage.setValue(throwable.getMessage());
                 });
 

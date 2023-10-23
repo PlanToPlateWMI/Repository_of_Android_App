@@ -18,17 +18,12 @@ package pl.plantoplate.ui.main.storage;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-
 import java.util.ArrayList;
-
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import pl.plantoplate.data.remote.ResponseCallback;
 import pl.plantoplate.data.remote.models.Category;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.data.remote.models.UserInfo;
@@ -38,13 +33,12 @@ import pl.plantoplate.tools.CategorySorter;
 
 public class StorageViewModel extends AndroidViewModel {
 
-    private CompositeDisposable compositeDisposable;
-    private SharedPreferences prefs;
-    private StorageRepository storageRepository;
-
-    private MutableLiveData<String> responseMessage;
-    private MutableLiveData<ArrayList<Category>> storageProducts;
-    private MutableLiveData<UserInfo> userInfo;
+    private final CompositeDisposable compositeDisposable;
+    private final SharedPreferences prefs;
+    private final StorageRepository storageRepository;
+    private final MutableLiveData<String> responseMessage;
+    private final MutableLiveData<ArrayList<Category>> storageProducts;
+    private final MutableLiveData<UserInfo> userInfo;
 
     /**
      * Constructs a new StorageViewModel object.
@@ -55,12 +49,11 @@ public class StorageViewModel extends AndroidViewModel {
         super(application);
         compositeDisposable = new CompositeDisposable();
         prefs = application.getSharedPreferences("prefs", 0);
+        storageRepository = new StorageRepository();
 
         responseMessage = new MutableLiveData<>();
-        storageProducts = new MutableLiveData<>(new ArrayList<>());
+        storageProducts = new MutableLiveData<>();
         userInfo = new MutableLiveData<>();
-
-        storageRepository = new StorageRepository();
     }
 
     /**

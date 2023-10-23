@@ -58,19 +58,10 @@ public class BuyProductsFragment extends Fragment {
 
     private FragmentTrzebaKupicBinding fragmentTrzebaKupicBinding;
     private ToBuyProductsListViewModel toBuyProductsListViewModel;
-
     private FloatingActionButton plus_in_trzeba_kupic;
     private RecyclerView categoryRecyclerView;
-
     private SharedPreferences prefs;
-
     private CategoryAdapter categoryAdapter;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        toBuyProductsListViewModel = new ViewModelProvider(requireParentFragment()).get(ToBuyProductsListViewModel.class);
-    }
 
     @Override
     public void onResume() {
@@ -138,7 +129,7 @@ public class BuyProductsFragment extends Fragment {
      */
     private void setUpRecyclerView() {
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<Category> categories = CategorySorter.sortCategoriesByProduct(Objects.requireNonNull(toBuyProductsListViewModel.getToBuyProducts().getValue()));
+        ArrayList<Category> categories = toBuyProductsListViewModel.getToBuyProducts().getValue();
         categoryAdapter = new CategoryAdapter(categories, R.layout.item_trzeba_kupic, R.layout.item_category_lista);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
@@ -173,6 +164,7 @@ public class BuyProductsFragment extends Fragment {
      * This method observes the changes in the ViewModel and updates the UI accordingly.
      */
     public void setUpViewModel() {
+        toBuyProductsListViewModel = new ViewModelProvider(requireActivity()).get(ToBuyProductsListViewModel.class);
         toBuyProductsListViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
         });
 
@@ -184,7 +176,7 @@ public class BuyProductsFragment extends Fragment {
                     else{
                         fragmentTrzebaKupicBinding.textViewTrzebaKupic.setText("");
                     }
-                    categoryAdapter.setCategoriesList(CategorySorter.sortCategoriesByProduct(toBuyProducts));
+                    categoryAdapter.setCategoriesList(toBuyProducts);
                 });
 
         // get response message

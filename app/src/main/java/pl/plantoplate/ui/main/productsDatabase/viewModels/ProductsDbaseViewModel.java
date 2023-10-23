@@ -31,8 +31,8 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
         prefs = application.getSharedPreferences("prefs", 0);
         productRepository = new ProductRepository();
 
-        allProducts = new MutableLiveData<>(new ArrayList<>());
-        ownProducts = new MutableLiveData<>(new ArrayList<>());
+        allProducts = new MutableLiveData<>();
+        ownProducts = new MutableLiveData<>();
         userInfo = new MutableLiveData<>();
     }
 

@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private SharedPreferences prefs;
 
-    private static final int SPLASH_TIME_OUT = 1000;
+    private static final int SPLASH_TIME_OUT = 500;
 
     /**
      * This method is responsible for displaying the splash screen and initializing the application.

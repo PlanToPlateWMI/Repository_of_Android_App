@@ -29,7 +29,7 @@ public class DeleteProductPopUp extends Dialog {
         super(context);
         setCancelable(true);
         setContentView(R.layout.new_pop_up_delete_product_from_shopping_list);
-        getWindow().setWindowAnimations(R.style.DialogAnimation);
+        //getWindow().setWindowAnimations(R.style.DialogAnimation);
 
         TextView acceptButton = findViewById(R.id.button_yes);
         TextView cancelButton = findViewById(R.id.button_no);

@@ -268,7 +268,7 @@ public class StorageMainFragment extends Fragment {
     private void replaceFragment(Fragment fragment) {
         // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayoutStorage, fragment);
+        transaction.add(R.id.frameLayoutStorage, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

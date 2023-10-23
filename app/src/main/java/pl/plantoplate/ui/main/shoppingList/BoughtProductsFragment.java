@@ -63,18 +63,6 @@ public class BoughtProductsFragment extends Fragment {
     private ProductAdapter productListAdapter;
 
     /**
-     * Called when the fragment is being created.
-     * This method initializes the ShoppingListViewModel by obtaining it from the parent fragment's ViewModelProvider.
-     *
-     * @param savedInstanceState The saved instance state bundle.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        boughtProductsListViewModel = new ViewModelProvider(requireParentFragment()).get(BoughtProductsListViewModel.class);
-    }
-
-    /**
      * Called when the fragment is visible to the user and actively running.
      * This method is responsible for fetching the bought products by calling the fetchBoughtProducts method in the ShoppingListViewModel.
      * This ensures that the latest data is displayed when the fragment is resumed.
@@ -124,6 +112,7 @@ public class BoughtProductsFragment extends Fragment {
      * for success and error operations.
      */
     public void setUpViewModel() {
+        boughtProductsListViewModel = new ViewModelProvider(requireParentFragment()).get(BoughtProductsListViewModel.class);
         boughtProductsListViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
         });
 

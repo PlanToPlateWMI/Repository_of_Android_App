@@ -38,7 +38,7 @@ public class BoughtProductsListViewModel extends AndroidViewModel {
         shoppingListRepository = new ShoppingListRepository();
 
         responseMessage = new MutableLiveData<>();
-        boughtProducts = new MutableLiveData<>(new ArrayList<>());
+        boughtProducts = new MutableLiveData<>();
         userInfo = new MutableLiveData<>();
 
     }
