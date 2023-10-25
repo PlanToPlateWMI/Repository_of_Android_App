@@ -18,6 +18,9 @@
     <color name="stroke_kalendarz">#AA95BB</color>
     <color name="zam_stroke_kalendarz">#E1CCF2</color>
 
+    <color name="color_kalendarz">#363636</color>
+    <color name="zam_color_kalendarz">#BAB9BF</color>
+
     <color name="stroke_rec_cat">#C2985A</color>
     <color name="zam_stroke_rec_cat">#D1B894</color>
 

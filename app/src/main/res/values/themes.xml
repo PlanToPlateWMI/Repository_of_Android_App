@@ -24,6 +24,8 @@
 
         <item name="colorContainer">@color/stroke_button_radio_baza</item>
 
+        <item name="tickColor">@color/color_kalendarz</item>
+
         <item name="colorAccent">@color/item_kalendarz</item>
         <item name="colorOutline">@color/stroke_kalendarz</item>
 
