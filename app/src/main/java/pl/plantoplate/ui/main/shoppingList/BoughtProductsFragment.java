@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.shoppingList;
 
 import android.app.Dialog;
@@ -24,55 +23,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
-
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.recyclerViews.adapters.ProductAdapter;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
-import pl.plantoplate.ui.main.productsDatabase.popups.DeleteProductPopUp;
+import pl.plantoplate.ui.main.popUps.DeleteProductPopUp;
 import pl.plantoplate.ui.main.shoppingList.viewModels.BoughtProductsListViewModel;
 import pl.plantoplate.ui.main.storage.StorageFragment;
-import timber.log.Timber;
 
 /**
  * This fragment is responsible for displaying bought products.
  */
 public class BoughtProductsFragment extends Fragment {
 
-    private FragmentKupioneBinding fragmentKupioneBinding;
     private BoughtProductsListViewModel boughtProductsListViewModel;
-
     private RecyclerView productsRecyclerView;
     private FloatingActionButton moveToStorageButton;
-
+    private TextView titleTextView;
     private SharedPreferences prefs;
-
     private ProductAdapter productListAdapter;
-
-    /**
-     * Called when the fragment is visible to the user and actively running.
-     * This method is responsible for fetching the bought products by calling the fetchBoughtProducts method in the ShoppingListViewModel.
-     * This ensures that the latest data is displayed when the fragment is resumed.
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        boughtProductsListViewModel.fetchUserInfo();
-        boughtProductsListViewModel.fetchBoughtProducts();
-    }
 
     /**
      * Called to create the view hierarchy associated with the fragment.
@@ -87,23 +66,31 @@ public class BoughtProductsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        Timber.d("onCreate() called");
-
-        // Inflate the layout for this fragment
-        fragmentKupioneBinding = FragmentKupioneBinding.inflate(inflater, container, false);
-        moveToStorageButton = fragmentKupioneBinding.floatingActionButton;
-        productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
-
-        // get shared preferences
+        FragmentKupioneBinding fragmentKupioneBinding = FragmentKupioneBinding.inflate(inflater, container, false);
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
-        // set up move to storage button
-        moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
-
+        initViews(fragmentKupioneBinding);
+        setClickListeners();
         setUpViewModel();
         setUpRecyclerView();
         return fragmentKupioneBinding.getRoot();
+    }
+
+    private void initViews(FragmentKupioneBinding fragmentKupioneBinding) {
+        moveToStorageButton = fragmentKupioneBinding.floatingActionButton;
+        productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
+        titleTextView = fragmentKupioneBinding.textViewKupione;
+    }
+
+    private void setClickListeners() {
+        moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boughtProductsListViewModel.fetchUserInfo();
+        boughtProductsListViewModel.fetchBoughtProducts();
     }
 
     /**
@@ -115,23 +102,19 @@ public class BoughtProductsFragment extends Fragment {
         boughtProductsListViewModel = new ViewModelProvider(requireParentFragment()).get(BoughtProductsListViewModel.class);
         boughtProductsListViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
         });
-
-        // get to buy products
         boughtProductsListViewModel.getBoughtProducts().observe(getViewLifecycleOwner(), boughtProducts -> {
             if(boughtProducts.isEmpty()){
                 moveToStorageButton.setVisibility(View.INVISIBLE);
                 moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
-                fragmentKupioneBinding.textViewKupione.setText(R.string.wprowadzenie_lista_zakupow_kupione);
+                titleTextView.setText(R.string.wprowadzenie_lista_zakupow_kupione);
             }
             else{
                 moveToStorageButton.setVisibility(View.VISIBLE);
                 moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
-                fragmentKupioneBinding.textViewKupione.setText("");
+                titleTextView.setText("");
             }
             productListAdapter.setProductsList(CategorySorter.sortProductsByName(boughtProducts));
         });
-
-        // get success message
         boughtProductsListViewModel.getResponseMessage().observe(getViewLifecycleOwner(), responseMessage ->
                 Toast.makeText(requireActivity(), responseMessage, Toast.LENGTH_SHORT).show());
 

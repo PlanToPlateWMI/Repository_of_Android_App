@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.login.remindPassword;
 
 import android.content.Intent;
@@ -23,17 +22,12 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.Objects;
-
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.databinding.RemindPassword3Binding;
-import pl.plantoplate.data.remote.models.Message;
-import pl.plantoplate.data.remote.ResponseCallback;
 import pl.plantoplate.data.remote.repository.AuthRepository;
 import pl.plantoplate.data.remote.models.SignInData;
 import pl.plantoplate.tools.ApplicationState;
@@ -46,12 +40,9 @@ import pl.plantoplate.ui.login.LoginActivity;
  */
 public class ChangePasswordActivity extends AppCompatActivity implements ApplicationStateController {
 
-    private RemindPassword3Binding change_password_view;
-
-    private EditText new_password_field1;
-    private EditText new_password_field2;
-    private Button apply_button;
-
+    private CompositeDisposable compositeDisposable;
+    private EditText newPasswordEditText, repeatNewPasswordEditText;
+    private Button applyButton;
     private SharedPreferences prefs;
 
     /**
@@ -61,21 +52,23 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Inflate the layout using view binding
-        change_password_view = RemindPassword3Binding.inflate(getLayoutInflater());
-        setContentView(change_password_view.getRoot());
-
-        // Define the ui elements
-        new_password_field1 = change_password_view.wprowadzNoweHaslo.getEditText();
-        new_password_field2 = change_password_view.wprowadzNoweHaslo2.getEditText();
-        apply_button = change_password_view.buttonZatwierdzenie;
-
-        // Get the shared preferences
+        RemindPassword3Binding remindPassword3Binding = RemindPassword3Binding.inflate(getLayoutInflater());
+        setContentView(remindPassword3Binding.getRoot());
+        compositeDisposable = new CompositeDisposable();
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
-        // Set a click listeners for the buttons
-        apply_button.setOnClickListener(this::validatePassword);
+        initViews(remindPassword3Binding);
+        setClickListeners();
+    }
+
+    public void initViews(RemindPassword3Binding remindPassword3Binding){
+        newPasswordEditText = remindPassword3Binding.wprowadzNoweHaslo.getEditText();
+        repeatNewPasswordEditText = remindPassword3Binding.wprowadzNoweHaslo2.getEditText();
+        applyButton = remindPassword3Binding.buttonZatwierdzenie;
+    }
+
+    public void setClickListeners(){
+        applyButton.setOnClickListener(this::validatePassword);
     }
 
     /**
@@ -83,13 +76,13 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
      * @param view The view that was clicked.
      */
     private void validatePassword(View view) {
-        String new_password1 = new_password_field1.getText().toString();
-        String new_password2 = new_password_field2.getText().toString();
+        String new_password1 = newPasswordEditText.getText().toString();
+        String new_password2 = repeatNewPasswordEditText.getText().toString();
 
         if (new_password1.equals(new_password2)) {
             String email = prefs.getString("email", "");
             if (new_password1.length() < 7) {
-                Snackbar.make(view, "Hasło musi mieć co najmniej 7 znaków", Snackbar.LENGTH_LONG).show();
+                showSnackbar(view, "Hasło musi mieć co najmniej 7 znaków");
                 return;
             }
 
@@ -97,7 +90,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
             sendNewPassword(userSignInData, view);
         }
         else {
-            new_password_field2.setError("Hasła nie są takie same");
+            repeatNewPasswordEditText.setError("Hasła nie są takie same");
         }
     }
 
@@ -111,13 +104,17 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
 
         Disposable disposable = authRepository.resetPassword(userSignInData)
                 .subscribe(message -> {
-                    // Start the login activity
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    Snackbar.make(view, "Pomyślnie zmieniono hasło!", Snackbar.LENGTH_LONG).show();
+                    showSnackbar(view, "Pomyślnie zmieniono hasło!");
                     new Handler().postDelayed(() -> view.getContext().startActivity(intent), 500);
-                }, throwable ->
-                        Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show());
+                }, throwable -> showSnackbar(view, Objects.requireNonNull(throwable.getMessage())));
+
+        compositeDisposable.add(disposable);
+    }
+
+    private void showSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
 
     /**
@@ -129,5 +126,11 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("applicationState", applicationState.toString());
         editor.apply();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }

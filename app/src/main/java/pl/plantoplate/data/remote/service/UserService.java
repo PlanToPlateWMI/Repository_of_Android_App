@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.data.remote.service;
 
 import java.util.ArrayList;
-
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.JwtResponse;
 import pl.plantoplate.data.remote.models.Message;

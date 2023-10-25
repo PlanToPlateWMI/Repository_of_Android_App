@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.viewModels;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.models.UserInfo;
@@ -31,12 +28,11 @@ import pl.plantoplate.data.remote.repository.UserRepository;
 public class SettingsViewModel extends AndroidViewModel {
 
     private final CompositeDisposable compositeDisposable;
-    private UserRepository userRepository;
-    private SharedPreferences prefs;
-
-    private MutableLiveData<String> responseMessage;
-    private MutableLiveData<UserInfo> userInfo;
-    private MutableLiveData<Integer> userCount;
+    private final UserRepository userRepository;
+    private final SharedPreferences prefs;
+    private final MutableLiveData<String> responseMessage;
+    private final MutableLiveData<UserInfo> userInfo;
+    private final MutableLiveData<Integer> userCount;
 
     public SettingsViewModel(@NonNull Application application) {
         super(application);
@@ -44,7 +40,6 @@ public class SettingsViewModel extends AndroidViewModel {
         prefs = application.getSharedPreferences("prefs", 0);
         userRepository = new UserRepository();
         compositeDisposable = new CompositeDisposable();
-
         responseMessage = new MutableLiveData<>();
         userInfo = new MutableLiveData<>();
         userCount = new MutableLiveData<>();
@@ -63,32 +58,19 @@ public class SettingsViewModel extends AndroidViewModel {
     }
 
     public void fetchUserCount() {
-        // Set the onClickListeners for the buttons
         String token = "Bearer " + prefs.getString("token", "");
-
         Disposable disposable = userRepository.getUsersInfo(token)
-                .subscribe(requestUsersInfo -> {
-                    // On success
-                    userCount.setValue(requestUsersInfo.size());
-                }, throwable -> {
-                    // On error
-                    responseMessage.postValue(throwable.getMessage());
-                });
+                .subscribe(requestUsersInfo -> userCount.setValue(requestUsersInfo.size()),
+                            throwable -> responseMessage.postValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }
 
     public void fetchUserInfo() {
         String token = "Bearer " + prefs.getString("token", "");
-
         Disposable disposable = userRepository.getUserInfo(token)
-                .subscribe(requestUserInfo -> {
-                    // On success
-                    userInfo.setValue(requestUserInfo);
-                }, throwable -> {
-                    // On error
-                    responseMessage.setValue(throwable.getMessage());
-                });
+                .subscribe(userInfo::setValue,
+                        throwable -> responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }

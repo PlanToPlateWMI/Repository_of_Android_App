@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.data.remote.service;
 
 import java.util.ArrayList;
-
 import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.Product;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -32,21 +29,15 @@ import retrofit2.http.Query;
 
 public interface ProductService {
 
-    int maxAge = 3600 * 24 * 30;
-
-    //@Headers("Cache-Control: max-age=" + maxAge)
     @GET("api/products")
-    Single<ArrayList<Product>> getAllProducts(@Header("Authorization") String token, @Query("type") String type);
+    Single<ArrayList<Product>> getProducts(@Header("Authorization") String token, @Query("type") String type);
 
-    //@Headers("Cache-Control: max-age=" + maxAge)
     @POST("api/products")
     Single<ArrayList<Product>> addProduct(@Header("Authorization") String token, @Body Product product);
 
-    //@Headers("Cache-Control: max-age=" + maxAge)
     @PATCH("api/products/{id}")
     Single<ArrayList<Product>> changeProduct(@Header("Authorization") String token, @Path("id") int productId, @Body Product product);
 
-    //@Headers("Cache-Control: max-age=" + maxAge)
     @DELETE("api/products/{id}")
     Single<ArrayList<Product>> deleteProduct(@Header("Authorization") String token, @Path("id") int productId);
 }

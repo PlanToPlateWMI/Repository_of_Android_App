@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.recyclerViews.listeners;
 
 import android.view.View;
-
 import pl.plantoplate.data.remote.models.Product;
 
 public interface SetupItemButtons {

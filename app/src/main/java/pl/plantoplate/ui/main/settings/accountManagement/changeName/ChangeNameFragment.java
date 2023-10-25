@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.accountManagement.changeName;
 
 import android.content.SharedPreferences;
@@ -22,16 +21,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.Objects;
-
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentNameChangeBinding;
@@ -41,11 +37,10 @@ import pl.plantoplate.databinding.FragmentNameChangeBinding;
  */
 public class ChangeNameFragment extends Fragment {
 
-    private FragmentNameChangeBinding fragmentNameChangeBinding;
-
-    private Button button_zatwierdz;
-    private TextInputLayout wprowadz_imie;
-
+    private CompositeDisposable compositeDisposable;
+    private Button acceptButton;
+    private TextInputLayout enterNameInputLayout;
+    private EditText enterNameEditText;
     private SharedPreferences prefs;
     private UserRepository userRepository;
 
@@ -59,49 +54,52 @@ public class ChangeNameFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        fragmentNameChangeBinding = FragmentNameChangeBinding.inflate(inflater, container, false);
-
-        button_zatwierdz = fragmentNameChangeBinding.buttonZatwierdz;
-        wprowadz_imie = fragmentNameChangeBinding.wprowadzImie;
-
+        FragmentNameChangeBinding fragmentNameChangeBinding = FragmentNameChangeBinding.inflate(inflater, container, false);
+        compositeDisposable = new CompositeDisposable();
         userRepository = new UserRepository();
-
-        // get shared preferences object
         prefs = requireActivity().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE);
-//        String username = prefs.getString("username", "");
-//        wprowadz_imie.getEditText().setText(username);
 
-        // set listener for the button
-        button_zatwierdz.setOnClickListener(this::onAcceptName);
-
+        initViews(fragmentNameChangeBinding);
+        setClickListeners();
         return fragmentNameChangeBinding.getRoot();
+    }
+
+    public void initViews(FragmentNameChangeBinding fragmentNameChangeBinding){
+        acceptButton = fragmentNameChangeBinding.buttonZatwierdz;
+        enterNameInputLayout = fragmentNameChangeBinding.wprowadzImie;
+        enterNameEditText = fragmentNameChangeBinding.wprowadzImie.getEditText();
+    }
+
+    private void setClickListeners() {
+        acceptButton.setOnClickListener(this::onAcceptName);
     }
 
     /**
      * This method is called when the user clicks the button to accept the name.
-     * @param view
+     * @param view The view that was clicked
      */
     public void onAcceptName(View view) {
-        String username = String.valueOf(Objects.requireNonNull(wprowadz_imie.getEditText()).getText());
+        String username = String.valueOf(enterNameEditText.getText());
         if (username.isEmpty()) {
-            wprowadz_imie.setError("Pole nie może być puste");
+            enterNameInputLayout.setError("Pole nie może być puste");
             return;
         }
 
         String token = "Bearer " + prefs.getString("token", "");
-
         Disposable disposable = userRepository.changeUsername(token, username)
                 .subscribe(userInfo -> {
-                    requireActivity().runOnUiThread(() -> {
                         prefs.edit().putString("username", username).apply();
                         Toast.makeText(requireActivity(), "Imię zostało zmienione na: " + username, Toast.LENGTH_SHORT).show();
-                        requireActivity().getSupportFragmentManager().popBackStack();
-                    });
-                }, throwable -> {
-                    Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                        requireParentFragment().getParentFragmentManager().popBackStack();
+                },
+                        throwable -> Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 
+        compositeDisposable.add(disposable);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
 }

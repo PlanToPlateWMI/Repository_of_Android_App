@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.data.remote.service;
 
 import java.util.ArrayList;
-
 import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.Product;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -31,7 +28,6 @@ import retrofit2.http.Path;
 
 public interface StorageService {
 
-    int maxAge = 3600 * 24 * 30;
 
     @GET("api/pantry/")
     Single<ArrayList<Product>> getStorage(@Header("Authorization") String token);

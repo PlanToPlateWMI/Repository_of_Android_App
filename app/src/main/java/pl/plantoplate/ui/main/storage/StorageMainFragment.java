@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.storage;
 
 import android.app.Dialog;
@@ -22,47 +21,43 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.databinding.FragmentStorageInsideBinding;
-import pl.plantoplate.ui.main.productsDatabase.popups.DeleteProductPopUp;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
+import pl.plantoplate.ui.main.popUps.DeleteProductPopUp;
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+import pl.plantoplate.ui.main.recyclerViews.adapters.CategoryAdapter;
 import pl.plantoplate.ui.main.productsDatabase.ProductsDbaseFragment;
-import pl.plantoplate.ui.main.productsDatabase.popups.ModifyProductPopUp;
-import timber.log.Timber;
+import pl.plantoplate.ui.main.popUps.ModifyProductPopUp;
 
 /**
  * This fragment is responsible for displaying the storage.
  */
 public class StorageMainFragment extends Fragment {
 
-    private FragmentStorageInsideBinding fragmentStorageInsideBinding;
+    private CompositeDisposable compositeDisposable;
     private StorageViewModel storageViewModel;
-    private FloatingActionButton plus_in_storage;
+    private FloatingActionButton addProductButton;
+    private TextView storageTitleTextView;
     private RecyclerView recyclerView;
-    //private ProgressBar progressBar;
-
+    private CategoryAdapter categoryAdapter;
     private SharedPreferences prefs;
 
     @Override
@@ -70,7 +65,6 @@ public class StorageMainFragment extends Fragment {
         super.onResume();
         storageViewModel.fetchUserInfo();
         storageViewModel.fetchStorageProducts();
-        //progressBar.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -84,29 +78,25 @@ public class StorageMainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        Timber.d("onCreate() called");
-
-        // Inflate the layout for this fragment
-        fragmentStorageInsideBinding = FragmentStorageInsideBinding.inflate(inflater, container, false);
-        //progressBar = requireActivity().findViewById(R.id.progressBar);
-        //progressBar.setVisibility(View.VISIBLE);
-
-        // Get views
-        plus_in_storage = fragmentStorageInsideBinding.plusInStorage;
-        recyclerView = fragmentStorageInsideBinding.productsStorage;
-
-        // Set up click listeners
-        plus_in_storage.setOnClickListener(this::onPlusClicked);
-
-        // Set up recycler view
-        setUpRecyclerView();
-        // Set up view model
-        setUpViewModel();
-
-        // Get shared preferences
+        FragmentStorageInsideBinding fragmentStorageInsideBinding = FragmentStorageInsideBinding.inflate(inflater, container, false);
+        compositeDisposable = new CompositeDisposable();
         prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        initViews(fragmentStorageInsideBinding);
+        setClickListeners();
+        setUpRecyclerView();
+        setUpViewModel();
         return fragmentStorageInsideBinding.getRoot();
+    }
+
+    public void initViews(FragmentStorageInsideBinding fragmentStorageInsideBinding){
+        addProductButton = fragmentStorageInsideBinding.plusInStorage;
+        recyclerView = fragmentStorageInsideBinding.productsStorage;
+        storageTitleTextView = fragmentStorageInsideBinding.textView4;
+    }
+
+    private void setClickListeners() {
+        addProductButton.setOnClickListener(this::addProductsToStorage);
     }
 
     /**
@@ -114,24 +104,20 @@ public class StorageMainFragment extends Fragment {
      *
      * @param view The view that was clicked.
      */
-    public void onPlusClicked(View view) {
+    public void addProductsToStorage(View view) {
         ShoppingListRepository shoppingListRepository = new ShoppingListRepository();
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.getBoughtProductsIds(token)
                 .subscribe(productsIds -> {
                     if (productsIds.isEmpty()) {
-                        Bundle args = new Bundle();
-                        args.putString("comesFrom", "storage");
-                        Fragment fragment = new ProductsDbaseFragment();
-                        fragment.setArguments(args);
-                        replaceFragment(fragment);
+                        goToProductsDatabase();
                     } else {
                         showaddFromPopUp(productsIds);
                     }
-                }, throwable -> {
-                    Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                }, throwable -> Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
+
+        compositeDisposable.add(disposable);
     }
 
     /**
@@ -152,15 +138,19 @@ public class StorageMainFragment extends Fragment {
         });
 
         go_to_products_database.setOnClickListener(v -> {
-            Bundle args = new Bundle();
-            args.putString("comesFrom", "storage");
-            Fragment fragment = new ProductsDbaseFragment();
-            fragment.setArguments(args);
-            replaceFragment(fragment);
+            goToProductsDatabase();
             dialog.dismiss();
         });
 
         dialog.show();
+    }
+
+    private void goToProductsDatabase() {
+        Bundle args = new Bundle();
+        args.putString("comesFrom", "storage");
+        Fragment fragment = new ProductsDbaseFragment();
+        fragment.setArguments(args);
+        replaceFragment(fragment);
     }
 
     /**
@@ -177,7 +167,6 @@ public class StorageMainFragment extends Fragment {
                 return;
             }
             if (quantityValue.endsWith(".")) {
-                // Remove dot at the end
                 quantityValue = quantityValue.substring(0, quantityValue.length() - 1);
             }
             float quantity = BigDecimal.valueOf(Float.parseFloat(quantityValue)).setScale(3, RoundingMode.HALF_UP).floatValue();
@@ -194,32 +183,17 @@ public class StorageMainFragment extends Fragment {
      * and updates the UI accordingly.
      */
     public void setUpViewModel() {
-        // get storage view model
         storageViewModel = new ViewModelProvider(this).get(StorageViewModel.class);
-
         storageViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
         });
 
-        // get storage
         storageViewModel.getStorageProducts().observe(getViewLifecycleOwner(), storageProducts -> {
-
-            Timber.e("Storage products: %s", storageProducts);
-            if (storageProducts.isEmpty()) {
-                Timber.e("Storage is empty");
-                fragmentStorageInsideBinding.textView4.setText(R.string.wprowadzenie_spizarnia);
-            } else {
-                fragmentStorageInsideBinding.textView4.setText("");
-            }
-
-            // update recycler view
-            CategoryAdapter categoryAdapter = (CategoryAdapter) recyclerView.getAdapter();
-            Objects.requireNonNull(categoryAdapter).setCategoriesList(storageProducts);
-            //progressBar.setVisibility(View.INVISIBLE);
+            storageTitleTextView.setText(storageProducts.isEmpty() ? getString(R.string.wprowadzenie_spizarnia) : "");
+            categoryAdapter.setCategoriesList(storageProducts);
         });
 
         storageViewModel.getResponseMessage().observe(getViewLifecycleOwner(), responseMessage ->
                 Toast.makeText(requireActivity(), responseMessage, Toast.LENGTH_SHORT).show());
-
     }
 
     /**
@@ -228,9 +202,8 @@ public class StorageMainFragment extends Fragment {
      * an adapter, and item button setups.
      */
     public void setUpRecyclerView() {
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(new ArrayList<>(), R.layout.item_spizarnia, R.layout.item_category_spizarnia);
+        categoryAdapter = new CategoryAdapter(new ArrayList<>(), R.layout.item_spizarnia, R.layout.item_category_spizarnia);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
 
             @Override
@@ -252,7 +225,6 @@ public class StorageMainFragment extends Fragment {
                                             view1 -> storageViewModel.deleteProductFromStorage(product)).show());
                 }
                 else{
-                    //set visibility none
                     v.setVisibility(View.INVISIBLE);
                 }
             }
@@ -266,10 +238,15 @@ public class StorageMainFragment extends Fragment {
      * @param fragment The fragment to be replaced.
      */
     private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frameLayoutStorage, fragment);
+        transaction.replace(R.id.frame_layout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }

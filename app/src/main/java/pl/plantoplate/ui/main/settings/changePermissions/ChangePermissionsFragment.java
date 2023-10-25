@@ -13,35 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * This fragment is responsible for changing the permissions of the user.
- */
-
 package pl.plantoplate.ui.main.settings.changePermissions;
 
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import java.util.Objects;
-
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentPermissionsChangeBinding;
 import pl.plantoplate.data.remote.models.UserInfo;
-import pl.plantoplate.data.remote.repository.UserRepository;
 
 /**
  * This fragment is responsible for changing the permissions of the user.
@@ -49,12 +38,14 @@ import pl.plantoplate.data.remote.repository.UserRepository;
 public class ChangePermissionsFragment extends Fragment {
 
     private FragmentPermissionsChangeBinding fragmentPermissionsChangeBinding;
-    private SharedPreferences prefs;
-    private UserRepository userRepository;
-
-    private RecyclerView usersRecyclerView;
-
     private ChangePermissionsViewModel changePermissionsViewModel;
+    private UsersInfoAdapter usersInfoAdapter;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        changePermissionsViewModel.fetchUsersInfo();
+    }
 
     /**
      * Create the view for this fragment, get the buttons for choosing group code type and set the
@@ -66,35 +57,22 @@ public class ChangePermissionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         fragmentPermissionsChangeBinding = FragmentPermissionsChangeBinding.inflate(inflater, container, false);
-
-        userRepository = new UserRepository();
-
-        // get the recycler view
-        usersRecyclerView = fragmentPermissionsChangeBinding.usersRecyclerView;
-
-        // get shared preferences object
-        // prefs = requireActivity().getSharedPreferences("prefs", AppCompatActivity.MODE_PRIVATE);
 
         setUpRecyclerView();
         setUpViewModel();
-
         return fragmentPermissionsChangeBinding.getRoot();
     }
 
     public void showChangePermissionsPopUp(UserInfo userInfo){
         Dialog dialog = new Dialog(requireActivity());
         dialog.setContentView(R.layout.new_pop_up_permissions_change);
-
         TextView info = dialog.findViewById(R.id.text_permissions);
         TextView button_no = dialog.findViewById(R.id.button_no);
         TextView button_yes = dialog.findViewById(R.id.button_yes);
 
         String perm_from = userInfo.getRole().equals("USER") ? "Użytkownik": "Administrator";
         String perm_to = perm_from.equals("Użytkownik") ? "Administrator": "Użytkownik";
-
-        // set info message
         String msg = "Czy zmienić uprawnienia użytkownika " + userInfo.getUsername() + " z " + perm_to +
                 " na " + perm_from + " ?";
         info.setText(msg);
@@ -104,7 +82,6 @@ public class ChangePermissionsFragment extends Fragment {
             changePermissionsViewModel.changePermissions(userInfo);
             dialog.dismiss();
         });
-
         dialog.show();
     }
 
@@ -120,53 +97,29 @@ public class ChangePermissionsFragment extends Fragment {
     }
 
     public void setUpViewModel() {
-
-        // get storage view model
         changePermissionsViewModel = new ViewModelProvider(this).get(ChangePermissionsViewModel.class);
+        changePermissionsViewModel.getUsersInfo().observe(getViewLifecycleOwner(),
+                userInfo -> usersInfoAdapter.setUserInfosList(userInfo));
 
-        // get storage title
-        changePermissionsViewModel.getUsersInfo().observe(getViewLifecycleOwner(), userInfo -> {
-
-            // update recycler view
-            UsersInfoAdapter usersInfoAdapter = (UsersInfoAdapter) usersRecyclerView.getAdapter();
-            Objects.requireNonNull(usersInfoAdapter).setUserInfosList(userInfo);
-        });
-
-        changePermissionsViewModel.getSuccess().observe(getViewLifecycleOwner(), successMessage -> {
-            showSuccessPopUp();
-        });
-
-        // get error message
-        changePermissionsViewModel.getError().observe(getViewLifecycleOwner(), errorMessage -> {
-            if (isAdded()) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-            }
-        });
+        changePermissionsViewModel.getResponseMessage().observe(getViewLifecycleOwner(), responseMessage ->
+                Toast.makeText(requireActivity(), responseMessage, Toast.LENGTH_SHORT).show());
     }
 
     private void setUpRecyclerView() {
-
-        usersRecyclerView = fragmentPermissionsChangeBinding.usersRecyclerView;
+        RecyclerView usersRecyclerView = fragmentPermissionsChangeBinding.usersRecyclerView;
         usersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        UsersInfoAdapter usersInfoAdapter = new UsersInfoAdapter(new ArrayList<>(), R.layout.item_user);
-        usersInfoAdapter.setUpItemButtons(new SetupUserPermissionsItems() {
-            @Override
-            public void setupEditPermissionsButtonClick(View v, UserInfo userInfo) {
-                UserInfo newUserInfo = new UserInfo();
-                newUserInfo.setEmail(userInfo.getEmail());
-                newUserInfo.setUsername(userInfo.getUsername());
-                if (userInfo.getRole().equals("ROLE_ADMIN")) {
-                    newUserInfo.setRole("USER");
-                } else {
-                    newUserInfo.setRole("ADMIN");
-                }
-                v.setOnClickListener(view -> showChangePermissionsPopUp(newUserInfo));
+        usersInfoAdapter = new UsersInfoAdapter(new ArrayList<>(), R.layout.item_user);
+        usersInfoAdapter.setUpItemButtons((v, userInfo) -> {
+            UserInfo newUserInfo = new UserInfo();
+            newUserInfo.setEmail(userInfo.getEmail());
+            newUserInfo.setUsername(userInfo.getUsername());
+            if (userInfo.getRole().equals("ROLE_ADMIN")) {
+                newUserInfo.setRole("USER");
+            } else {
+                newUserInfo.setRole("ADMIN");
             }
+            v.setOnClickListener(view -> showChangePermissionsPopUp(newUserInfo));
         });
         usersRecyclerView.setAdapter(usersInfoAdapter);
     }
-
-
-
-
 }

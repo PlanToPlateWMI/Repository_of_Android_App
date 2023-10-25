@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.data.remote.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import java.io.Serializable;
 
 /**
  * Class representing a product returned from the API server.
  */
 @Entity(tableName = "products")
-public class Product {
+public class Product implements Parcelable, Serializable {
 
     @PrimaryKey
     private int id;
@@ -31,18 +33,8 @@ public class Product {
     private String category;
     private float amount;
     private String unit;
-    private boolean isOwn = false;
 
     public Product() {
-    }
-
-    public Product(int id, String name, String category, float amount, String unit, boolean isOwn) { 
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.amount = amount;
-        this.unit = unit;
-        this.isOwn = isOwn;
     }
 
     public Product(int id, String name, String category, int amount, String unit) {
@@ -60,6 +52,40 @@ public class Product {
         this.amount = 0;
         this.unit = unit;
     }
+
+    public Product(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        category = in.readString();
+        amount = in.readFloat();
+        unit = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(category);
+        dest.writeFloat(amount);
+        dest.writeString(unit);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -100,5 +126,4 @@ public class Product {
     public void setUnit(String unit) {
         this.unit = unit;
     }
-
 }

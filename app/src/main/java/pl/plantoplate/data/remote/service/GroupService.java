@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.data.remote.service;
 
 import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.CodeResponse;
-import pl.plantoplate.data.remote.models.CreateGroupData;
+import pl.plantoplate.data.remote.models.UserCredentials;
 import pl.plantoplate.data.remote.models.JwtResponse;
 import pl.plantoplate.data.remote.models.UserJoinGroupData;
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -31,7 +29,7 @@ import retrofit2.http.Query;
 public interface GroupService {
 
     @POST("api/auth/group")
-    Single<JwtResponse> createGroup(@Body CreateGroupData createGroupRequest);
+    Single<JwtResponse> createGroup(@Body UserCredentials createGroupRequest);
 
     @POST("api/invite-codes")
     Single<JwtResponse> joinGroupByCode(@Body UserJoinGroupData userJoinGroupRequest);

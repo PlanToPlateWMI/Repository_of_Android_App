@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.tools;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.data.remote.models.Category;
 

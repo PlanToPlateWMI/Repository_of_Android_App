@@ -1,3 +1,18 @@
+/*
+ * Copyright 2023 the original author or authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package pl.plantoplate.ui.main.productsDatabase.viewModels;
 
 import android.app.Application;
@@ -16,28 +31,22 @@ import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.data.remote.repository.StorageRepository;
 import pl.plantoplate.data.remote.repository.UserRepository;
 
-public class ProductsDbaseViewModel extends AndroidViewModel {
+public class OwnProductsViewModel extends AndroidViewModel {
 
     private final CompositeDisposable compositeDisposable;
     private final SharedPreferences prefs;
     private final ProductRepository productRepository;
-    private final MutableLiveData<ArrayList<Product>> allProducts;
     private final MutableLiveData<ArrayList<Product>> ownProducts;
     private final MutableLiveData<UserInfo> userInfo;
 
-    public ProductsDbaseViewModel(@NonNull Application application) {
+    public OwnProductsViewModel(@NonNull Application application) {
         super(application);
         compositeDisposable = new CompositeDisposable();
         prefs = application.getSharedPreferences("prefs", 0);
         productRepository = new ProductRepository();
 
-        allProducts = new MutableLiveData<>();
         ownProducts = new MutableLiveData<>();
         userInfo = new MutableLiveData<>();
-    }
-
-    public MutableLiveData<ArrayList<Product>> getAllProducts() {
-        return allProducts;
     }
 
     public MutableLiveData<ArrayList<Product>> getOwnProducts() {
@@ -48,24 +57,12 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
         return userInfo;
     }
 
-    public void fetchAllProducts(){
-        String token = "Bearer " + prefs.getString("token", "");
-
-        Disposable disposable = productRepository.getAllProducts(token)
-                .subscribe(allProducts::setValue, throwable -> {
-                    Toast.makeText(getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-
-        compositeDisposable.add(disposable);
-    }
-
     public void fetchOwnProducts(){
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = productRepository.getOwnProducts(token)
-                .subscribe(ownProducts::setValue, throwable -> {
-                    Toast.makeText(getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                .subscribe(ownProducts::setValue, throwable ->
+                        Toast.makeText(getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 
         compositeDisposable.add(disposable);
     }
@@ -82,9 +79,8 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
                     editor.putString("username", userInfo.getUsername());
                     editor.putString("role", userInfo.getRole());
                     editor.apply();
-                }, throwable -> {
-                    Toast.makeText(getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                }, throwable ->
+                        Toast.makeText(getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 
         compositeDisposable.add(disposable);
     }
@@ -99,9 +95,8 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
                             product.getAmount() + " " + product.getUnit() + " został dodany do listy zakupów";
 
                     Toast.makeText(getApplication(), message, Toast.LENGTH_SHORT).show();
-                }, throwable -> {
-                    Toast.makeText(getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                }, throwable ->
+                        Toast.makeText(getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 
         compositeDisposable.add(disposable);
     }
@@ -115,9 +110,8 @@ public class ProductsDbaseViewModel extends AndroidViewModel {
                     String message = "Produkt " + product.getName() + " w ilości "
                             + product.getAmount() + " " + product.getUnit() + " został dodany do spiżarni";
                     Toast.makeText(getApplication(), message, Toast.LENGTH_SHORT).show();
-                }, throwable -> {
-                    Toast.makeText(getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                }, throwable ->
+                        Toast.makeText(getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 
         compositeDisposable.add(disposable);
     }

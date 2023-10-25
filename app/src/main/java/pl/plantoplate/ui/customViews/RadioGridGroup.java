@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.ui.customViewes;
+package pl.plantoplate.ui.customViews;
 
 import android.content.Context;
 import android.util.AttributeSet;

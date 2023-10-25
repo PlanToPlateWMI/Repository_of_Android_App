@@ -1,16 +1,26 @@
+/*
+ * Copyright 2023 the original author or authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package pl.plantoplate.ui.main.shoppingList.viewModels;
-
 import android.app.Application;
 import android.content.SharedPreferences;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
-
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.models.Category;
@@ -43,15 +53,15 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         userInfo = new MutableLiveData<>();
     }
 
-    public MutableLiveData<String> getResponseMessage(){
+    public MutableLiveData<String> getResponseMessage() {
         return responseMessage;
     }
 
-    public MutableLiveData<ArrayList<Category>> getToBuyProducts(){
+    public MutableLiveData<ArrayList<Category>> getToBuyProducts() {
         return toBuyProducts;
     }
 
-    public MutableLiveData<UserInfo> getUserInfo(){
+    public MutableLiveData<UserInfo> getUserInfo() {
         return userInfo;
     }
 
@@ -59,9 +69,8 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.getToBuyShoppingList(token)
-                .subscribe(response ->{
-                    toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(response));
-                }, throwable -> responseMessage.setValue(throwable.getMessage()));
+                .subscribe(response -> toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(response)),
+                        throwable -> responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }
@@ -83,7 +92,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void moveProductToBought(Product product){
+    public void moveProductToBought(Product product) {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.changeProductStateInShopList(token, product.getId())
@@ -95,7 +104,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void deleteProductFromList(Product product){
+    public void deleteProductFromList(Product product) {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.deleteProductFromShoppingList(token, product.getId())
@@ -108,16 +117,14 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
     }
 
-    public void changeProductAmount(Product product){
+    public void changeProductAmount(Product product) {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.changeProductAmountInShopList(token, product.getId(), product)
                 .subscribe(products -> {
                     toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(products));
                     responseMessage.setValue("Ilość produktu została zmieniona");
-                }, throwable -> {
-                    responseMessage.setValue(throwable.getMessage());
-                });
+                }, throwable -> responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }
@@ -127,6 +134,4 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         super.onCleared();
         compositeDisposable.clear();
     }
-
 }
-

@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.changePermissions;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-
 import java.util.ArrayList;
-
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.models.UserInfo;
 import pl.plantoplate.data.remote.repository.UserRepository;
@@ -34,53 +31,39 @@ import pl.plantoplate.data.remote.repository.UserRepository;
  */
 public class ChangePermissionsViewModel extends AndroidViewModel {
 
-    private UserRepository userRepository;
-
-    private SharedPreferences prefs;
-
-    private MutableLiveData<String> success;
-    private MutableLiveData<String> error;
-    private MutableLiveData<ArrayList<UserInfo>> usersInfo;
+    private final CompositeDisposable compositeDisposable;
+    private final UserRepository userRepository;
+    private final SharedPreferences prefs;
+    private final MutableLiveData<String> responseMessage;
+    private final MutableLiveData<ArrayList<UserInfo>> usersInfo;
 
     public ChangePermissionsViewModel(@NonNull Application application) {
         super(application);
         prefs = application.getSharedPreferences("prefs", 0);
         userRepository = new UserRepository();
+        compositeDisposable = new CompositeDisposable();
+
+        responseMessage = new MutableLiveData<>();
+        usersInfo = new MutableLiveData<>();
     }
 
-    public MutableLiveData<String> getSuccess() {
-        if (success == null) {
-            success = new MutableLiveData<>();
-        }
-        return success;
-    }
-
-    public MutableLiveData<String> getError() {
-        if (error == null) {
-            error = new MutableLiveData<>();
-        }
-        return error;
+    public MutableLiveData<String> getResponseMessage() {
+        return responseMessage;
     }
 
     public MutableLiveData<ArrayList<UserInfo>> getUsersInfo() {
-        if (usersInfo == null) {
-            usersInfo = new MutableLiveData<>();
-            fetchUsersInfo();
-        }
         return usersInfo;
     }
 
-    private void fetchUsersInfo() {
+    public void fetchUsersInfo() {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = userRepository.getUsersInfo(token)
-                .subscribe(userInfo -> {
-                    usersInfo.setValue(filterUsers(userInfo, prefs.getString("email", "")));
-                }, throwable -> {
-                    error.setValue(throwable.getMessage());
-                });
-    }
+                .subscribe(userInfo -> usersInfo.setValue(filterUsers(userInfo, prefs.getString("email", ""))),
+                        throwable -> responseMessage.setValue(throwable.getMessage()));
 
+        compositeDisposable.add(disposable);
+    }
 
     public void changePermissions(UserInfo userInfo) {
         String token = "Bearer " + prefs.getString("token", "");
@@ -94,10 +77,10 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
                     } else if (userInfo.getRole().equals("ADMIN")) {
                         role = "Administrator";
                     }
-                    success.setValue("Zmieniono uprawnienia użytkownika " + userInfo.getUsername() + " na " + role);
-                }, throwable -> {
-                    error.setValue(throwable.getMessage());
-                });
+                    responseMessage.setValue("Zmieniono uprawnienia użytkownika " + userInfo.getUsername() + " na " + role);
+                }, throwable -> responseMessage.setValue(throwable.getMessage()));
+
+        compositeDisposable.add(disposable);
     }
 
     /**
@@ -108,7 +91,6 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
      * @return filtered list of users
      */
     public ArrayList<UserInfo> filterUsers(ArrayList<UserInfo> response, String email){
-        // delete current user from list
         for (int i = 0; i < response.size(); i++) {
             if (response.get(i).getEmail().equals(email)) {
                 response.remove(i);
@@ -118,4 +100,9 @@ public class ChangePermissionsViewModel extends AndroidViewModel {
         return response;
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        compositeDisposable.clear();
+    }
 }

@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.registration;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,22 +24,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.repository.AuthRepository;
 import pl.plantoplate.databinding.EmailConfirmationBinding;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
+import timber.log.Timber;
 
 /**
  * This activity is responsible for handling the email confirmation process.
  */
 public class EmailConfirmActivity extends AppCompatActivity implements ApplicationStateController {
 
+    private CompositeDisposable compositeDisposable;
     private SharedPreferences prefs;
-    private TextView email_info;
-    private EditText enter_code;
-    private Button confirm_button;
-    private TextView resend_code_button;
+    private TextView emailInfoTextView;
+    private EditText enterCodeEditText;
+    private Button confirmButton;
+    private TextView resendCodeButton;
 
     /**
      * This method is called when the activity is created.
@@ -54,27 +55,32 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         setContentView(email_confirm_view.getRoot());
 
         initViews(email_confirm_view);
-        setClickListeners();
-        prefs = getSharedPreferences("prefs", 0);
         setEmailInfoText();
+        setClickListeners();
+        compositeDisposable = new CompositeDisposable();
+        prefs = getSharedPreferences("prefs", 0);
+        Timber.d("Activity created");
     }
 
     private void initViews(EmailConfirmationBinding email_confirm_view) {
-        email_info = email_confirm_view.skorzystajZLinku;
-        enter_code = email_confirm_view.wprowadzKod.getEditText();
-        confirm_button = email_confirm_view.buttonZatwierdzenieLink;
-        resend_code_button = email_confirm_view.wyLijPono;
+        Timber.d("Initializing views...");
+        emailInfoTextView = email_confirm_view.skorzystajZLinku;
+        enterCodeEditText = email_confirm_view.wprowadzKod.getEditText();
+        confirmButton = email_confirm_view.buttonZatwierdzenieLink;
+        resendCodeButton = email_confirm_view.wyLijPono;
+    }
+
+    private void setEmailInfoText() {
+        Timber.d("Setting email info text...");
+        String email = prefs.getString("email", "");
+        String text  = emailInfoTextView.getText() + "\n" + email;
+        emailInfoTextView.setText(text);
     }
 
     private void setClickListeners() {
-        confirm_button.setOnClickListener(this::checkCode);
-        resend_code_button.setOnClickListener(this::getNewConfirmCode);
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void setEmailInfoText() {
-        String email = prefs.getString("email", "");
-        email_info.setText(email_info.getText() + "\n" + email);
+        Timber.d("Setting click listeners...");
+        confirmButton.setOnClickListener(this::checkCode);
+        resendCodeButton.setOnClickListener(this::getNewConfirmCode);
     }
 
     /**
@@ -83,7 +89,8 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
      * @param view The view that was clicked.
      */
     public void checkCode(View view) {
-        String entered_code = enter_code.getText().toString();
+        Timber.d("Checking email confirm code...");
+        String entered_code = enterCodeEditText.getText().toString();
         String correct_code = prefs.getString("code", "");
         if (correct_code.equals(entered_code)) {
             prefs.edit().remove("code").apply();
@@ -99,18 +106,21 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
      * @param view The view that was clicked.
      */
     public void getNewConfirmCode(View view) {
+        Timber.d("Getting new confirm code...");
         String email = prefs.getString("email", "");
-        enter_code.setText("");
+        enterCodeEditText.setText("");
         AuthRepository authRepository = new AuthRepository();
         Disposable disposable = authRepository.getEmailConfirmCode(email, "registration")
                 .subscribe(
                         response -> prefs.edit().putString("code", response.getCode()).apply(),
                         error -> showSnackbar(view, error.getMessage())
                 );
+        compositeDisposable.add(disposable);
         showSnackbar(view, "Wysłano nowy kod");
     }
 
     public void startGroupSelectActivity() {
+        Timber.d("Starting group select activity...");
         Intent intent = new Intent(this, GroupSelectActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -127,8 +137,16 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
      */
     @Override
     public void saveAppState(ApplicationState applicationState) {
+        Timber.d("Saving application state: %s", applicationState.toString());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("applicationState", applicationState.toString());
         editor.apply();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Timber.d("Destroying activity...");
+        compositeDisposable.dispose();
     }
 }

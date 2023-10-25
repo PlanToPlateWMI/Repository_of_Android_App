@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.data.remote.repository;
 
 import java.util.HashMap;
@@ -23,13 +22,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.service.GroupService;
 import pl.plantoplate.data.remote.models.CodeResponse;
-import pl.plantoplate.data.remote.models.CreateGroupData;
+import pl.plantoplate.data.remote.models.UserCredentials;
 import pl.plantoplate.data.remote.models.JwtResponse;
 import pl.plantoplate.data.remote.models.UserJoinGroupData;
 import pl.plantoplate.data.remote.RetrofitClient;
 
 public class GroupRepository {
-    private GroupService groupService;
+    private final GroupService groupService;
 
     public GroupRepository() {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
@@ -37,8 +36,8 @@ public class GroupRepository {
         groupService = retrofitClient.getClient().create(GroupService.class);
     }
 
-    public Single<JwtResponse> createGroup(CreateGroupData createGroupData){
-        return groupService.createGroup(createGroupData)
+    public Single<JwtResponse> createGroup(UserCredentials userCredentials){
+        return groupService.createGroup(userCredentials)
                 .onErrorResumeNext(throwable -> new ErrorHandler<JwtResponse>().
                         handleHttpError(throwable, new HashMap<Integer, String>() {{
                             put(400, "Użytkownik o podanym adresie email nie istnieje.");

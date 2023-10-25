@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.accountManagement.changeEmail;
 
 import android.content.SharedPreferences;
@@ -22,33 +21,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.Objects;
-
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentEmailChangeBinding;
 import pl.plantoplate.tools.SCryptStretcher;
 
-
 /**
  * This class is responsible for changing the user's email address.
  */
 public class ChangeEmailStep1Fragment extends Fragment {
 
-    private FragmentEmailChangeBinding fragmentEmailChangeBinding;
-
+    private CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
-    private Button button_zatwierdz;
-    private TextInputLayout wprowadz_haslo;
+    private Button acceptButton;
+    private TextInputLayout enterPasswordInputLayout;
+    private EditText passwordEditText;
 
     private SharedPreferences sharedPreferences;
 
@@ -62,36 +58,35 @@ public class ChangeEmailStep1Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout using the View Binding Library
-        fragmentEmailChangeBinding = FragmentEmailChangeBinding.inflate(inflater, container, false);
-
-        // Get the button
-        button_zatwierdz = fragmentEmailChangeBinding.buttonZatwierdz;
-
-        // Get the text input
-        wprowadz_haslo = fragmentEmailChangeBinding.wprowadzHaslo;
-
-        button_zatwierdz.setOnClickListener(v -> validatePassword());
-
+        FragmentEmailChangeBinding fragmentEmailChangeBinding = FragmentEmailChangeBinding.inflate(inflater, container, false);
+        compositeDisposable = new CompositeDisposable();
         userRepository = new UserRepository();
-
         sharedPreferences = requireActivity().getSharedPreferences("prefs", 0);
 
+        initViews(fragmentEmailChangeBinding);
+        setClickListeners();
         return fragmentEmailChangeBinding.getRoot();
     }
 
-    public void validatePassword() {
-        String password = Objects.requireNonNull(wprowadz_haslo.getEditText()).getText().toString().trim();
+    public void initViews(FragmentEmailChangeBinding fragmentEmailChangeBinding){
+        acceptButton = fragmentEmailChangeBinding.buttonZatwierdz;
+        enterPasswordInputLayout = fragmentEmailChangeBinding.wprowadzHaslo;
+        passwordEditText = enterPasswordInputLayout.getEditText();
+    }
+
+    public void setClickListeners(){
+        acceptButton.setOnClickListener(v -> validatePasswordMatch());
+    }
+
+    public void validatePasswordMatch() {
+        String password = passwordEditText.getText().toString().trim();
         if (password.isEmpty()) {
-            wprowadz_haslo.setError("Pole nie może być puste");
+            enterPasswordInputLayout.setError("Pole nie może być puste");
             return;
         }
 
         String email = sharedPreferences.getString("email", "");
-
         String passwordStretched = SCryptStretcher.stretch(password, email);
-
         String token = "Bearer " + sharedPreferences.getString("token", "");
 
         Disposable disposable = userRepository.validatePasswordMatch(token, passwordStretched)
@@ -103,11 +98,10 @@ public class ChangeEmailStep1Fragment extends Fragment {
                     fragment.setArguments(bundle);
 
                     replaceFragment(fragment);
-                }, throwable -> {
-                    Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
+                }, throwable -> Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 
+        compositeDisposable.add(disposable);
+    }
 
     /**
      * Replaces the current fragment with the specified fragment.
@@ -115,10 +109,15 @@ public class ChangeEmailStep1Fragment extends Fragment {
      * @param fragment The fragment to replace the current fragment with.
      */
     private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.settings_default, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }

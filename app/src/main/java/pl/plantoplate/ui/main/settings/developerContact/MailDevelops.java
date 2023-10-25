@@ -13,23 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.developerContact;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
 import pl.plantoplate.databinding.FragmentDeveloperBinding;
 
 /**
@@ -37,37 +30,37 @@ import pl.plantoplate.databinding.FragmentDeveloperBinding;
  */
 public class MailDevelops extends Fragment {
 
-    private FragmentDeveloperBinding fragmentDeveloperBinding;
-    private TextView dev_adres;
-    private Button button_zatwierdz;
-
+    private Button acceptButton;
 
     /**
      * Create the view
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return the view
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container  If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState  If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return the view of the fragment
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FragmentDeveloperBinding fragmentDeveloperBinding = FragmentDeveloperBinding.inflate(inflater, container, false);
 
-
-        fragmentDeveloperBinding = FragmentDeveloperBinding.inflate(inflater, container, false);
-
-        button_zatwierdz = fragmentDeveloperBinding.buttonZatwierdz;
-
-        button_zatwierdz.setOnClickListener(this::sendMail);
-
+        initViews(fragmentDeveloperBinding);
+        setClickListeners();
         return fragmentDeveloperBinding.getRoot();
+    }
+
+    public void initViews(FragmentDeveloperBinding fragmentDeveloperBinding) {
+        acceptButton = fragmentDeveloperBinding.buttonZatwierdz;
+    }
+
+    public void setClickListeners() {
+        acceptButton.setOnClickListener(v -> sendMail());
     }
 
     /**
      * Send an email to the developers
-     * @param view
      */
-    public void sendMail(View view) {
+    public void sendMail() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "plantoplatemobileapp@gmail.com" });
@@ -75,5 +68,4 @@ public class MailDevelops extends Fragment {
         intent.setType("message/rfc822");
         startActivity(Intent.createChooser(intent, ""));
     }
-
 }

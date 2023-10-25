@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.tools;
 
 /**
  * ApplicationState is an enum class that represents the current state of the application.
  */
 public enum ApplicationState {
-    INIT,
     LOGIN,
     REGISTER,
     CONFIRM_MAIL,

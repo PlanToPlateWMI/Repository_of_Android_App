@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.productsDatabase;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,218 +26,167 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.Objects;
-
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.ProductRepository;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.databinding.FragmentProductChangeBinding;
-import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
+import pl.plantoplate.ui.main.productsDatabase.events.ChangeCategoryEvent;
 
 /**
  * This fragment is used to edit the product.
  */
-public class EditOwnProductFragment extends Fragment implements ChangeCategoryListener{
+public class EditOwnProductFragment extends Fragment {
 
-    private FragmentProductChangeBinding fragmentProductChangeBinding;
-
+    private CompositeDisposable compositeDisposable;
     private SharedPreferences prefs;
-    private SharedPreferences productPrefs;
-
-    private RadioGroup choose_product_unit;
-    private Button add_product_button;
-    private Button change_kategory;
-    private Button delete_button;
-    private TextInputEditText add_product_name;
-    private TextView product_category;
-
+    private RadioGroup productUnitRadioGroup;
+    private Button applyChangesButton, changeCategoryButton, deleteProductButton;
+    private TextInputEditText productNameEditText;
+    private TextView productCategoryTextView;
     private Product product;
     private ProductRepository productRepository;
 
-    public EditOwnProductFragment(Product product) {
-        this.product = product;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+        product = requireArguments().getParcelable("product");
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FragmentProductChangeBinding fragmentProductChangeBinding = FragmentProductChangeBinding.inflate(inflater, container, false);
+        compositeDisposable = new CompositeDisposable();
+        productRepository = new ProductRepository();
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        initViews(fragmentProductChangeBinding);
+        setClickListeners();
+        return fragmentProductChangeBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        productNameEditText.setText(product.getName());
+        setupProductUnit();
+    }
 
-        // Set the product name
-        add_product_name.setText(product.getName());
+    public void initViews(FragmentProductChangeBinding fragmentProductChangeBinding) {
+        productUnitRadioGroup = fragmentProductChangeBinding.toggleGroup;
+        applyChangesButton = fragmentProductChangeBinding.buttonZatwierdz;
+        productNameEditText = fragmentProductChangeBinding.enterTheName;
+        changeCategoryButton = fragmentProductChangeBinding.zmienKategorie;
+        productCategoryTextView = fragmentProductChangeBinding.kategoriaNapis;
+        deleteProductButton = fragmentProductChangeBinding.buttonUsun;
 
-        // Set the product unit
-        switch (product.getUnit()) {
-            case "SZT":
-                choose_product_unit.check(R.id.button_szt);
-                break;
+        productCategoryTextView.setText(product.getCategory());
+    }
 
-            case "L":
-                choose_product_unit.check(R.id.button_l);
-                break;
+    private void setClickListeners() {
+        productUnitRadioGroup.setOnCheckedChangeListener((group, checkedId) -> setProductUnit(checkedId));
+        applyChangesButton.setOnClickListener(v -> applyProductChange());
+        changeCategoryButton.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
+        deleteProductButton.setOnClickListener(v -> showConfirmDeleteProductPopUp());
+    }
 
-            case "KG":
-                choose_product_unit.check(R.id.button_kg);
-                break;
-
-            case "GR":
-                choose_product_unit.check(R.id.button_gr);
-                break;
-            case "ML":
-                choose_product_unit.check(R.id.button_ml);
-                break;
+    public void setupProductUnit() {
+        Map<String, Integer> unitToButtonId = new HashMap<>();
+        unitToButtonId.put("SZT", R.id.button_szt);
+        unitToButtonId.put("L", R.id.button_l);
+        unitToButtonId.put("KG", R.id.button_kg);
+        unitToButtonId.put("GR", R.id.button_gr);
+        unitToButtonId.put("ML", R.id.button_ml);
+        Integer buttonId = unitToButtonId.get(product.getUnit());
+        if (buttonId != null) {
+            productUnitRadioGroup.check(buttonId);
         }
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        fragmentProductChangeBinding = FragmentProductChangeBinding.inflate(inflater, container, false);
-
-        // Get the shared preferences
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
-        productPrefs = requireActivity().getSharedPreferences("product", 0);
-
-        // Get the radio group
-        choose_product_unit = fragmentProductChangeBinding.toggleGroup;
-
-        // Set the radio group listener
-        choose_product_unit.setOnCheckedChangeListener((group, checkedId) -> setProductUnit(checkedId));
-
-        // Set add product button
-        add_product_button = fragmentProductChangeBinding.buttonZatwierdz;
-
-
-        // Set the product name button
-        add_product_name = fragmentProductChangeBinding.enterTheName;
-
-        // Set the product category
-        product_category = fragmentProductChangeBinding.kategoriaNapis;
-        product_category.setText(product.getCategory());
-
-        // Set the button listener
-        add_product_button.setOnClickListener(v -> applyProductChange(requireActivity().findViewById(R.id.frame_layout)));
-
-        change_kategory = fragmentProductChangeBinding.zmienKategorie;
-
-        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment(this)));
-
-        delete_button = fragmentProductChangeBinding.buttonUsun;
-        delete_button.setOnClickListener(v -> showConfirmDeleteProductPopUp(requireActivity().findViewById(R.id.frame_layout)));
-
-
-
-        // Get the product repository
-        productRepository = new ProductRepository();
-
-
-        return fragmentProductChangeBinding.getRoot();
-    }
-
-    @SuppressLint("NonConstantResourceId")
     public void setProductUnit(int checkedId) {
-        switch (checkedId) {
-            case R.id.button_szt:
-                product.setUnit("SZT");
-                break;
-            case R.id.button_l:
-                product.setUnit("L");
-                break;
-            case R.id.button_kg:
-                product.setUnit("KG");
-                break;
-            case R.id.button_gr:
-                product.setUnit("GR");
-                break;
-            case R.id.button_ml:
-                product.setUnit("ML");
-                break;
+        SparseArray<String> unitMapping = new SparseArray<>();
+        unitMapping.put(R.id.button_szt, "SZT");
+        unitMapping.put(R.id.button_l, "L");
+        unitMapping.put(R.id.button_kg, "KG");
+        unitMapping.put(R.id.button_gr, "GR");
+        unitMapping.put(R.id.button_ml, "ML");
+        String selectedUnit = unitMapping.get(checkedId);
+        if (selectedUnit != null) {
+            product.setUnit(selectedUnit);
         }
     }
 
-    public void saveProduct(View view){
+    public void applyProductChange() {
+        String productName = Optional.ofNullable(productNameEditText.getText()).map(CharSequence::toString)
+                .orElse("");
+        product.setName(productName);
+        saveProduct();
+    }
 
-        // Get the token
+    public void showConfirmDeleteProductPopUp() {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.new_pop_up_delete_product_from_database);
+        TextView acceptButton = dialog.findViewById(R.id.button_yes);
+        TextView cancelButton = dialog.findViewById(R.id.button_no);
+
+        acceptButton.setOnClickListener(v -> {
+            deleteProduct();
+            dialog.dismiss();
+        });
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
+    }
+
+    public void saveProduct() {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = productRepository.modifyProduct(token, product.getId(), product)
                 .subscribe(
                         response -> {
                             Toast.makeText(requireActivity(), "Pomyślnie zmieniono produkt.", Toast.LENGTH_SHORT).show();
-
-                            // Go back to the products database fragment
                             requireActivity().getSupportFragmentManager().popBackStack();
                         },
                         error -> Toast.makeText(requireActivity(), error.getMessage(), Toast.LENGTH_SHORT).show()
                 );
 
+        compositeDisposable.add(disposable);
     }
 
-    public void applyProductChange(View view) {
-
-        // Get the product name
-        String product_name = Objects.requireNonNull(add_product_name.getText()).toString();
-
-        // Set the product name
-        product.setName(product_name);
-
-        // Save the product
-        saveProduct(view);
-    }
-
-    public void showConfirmDeleteProductPopUp(View view) {
-        //add delay!!!!
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Dialog dialog = new Dialog(getContext());
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.new_pop_up_delete_product_from_database);
-
-        TextView acceptButton = dialog.findViewById(R.id.button_yes);
-        TextView cancelButton = dialog.findViewById(R.id.button_no);
-
-        acceptButton.setOnClickListener(v -> {
-            deleteProduct(view);
-            dialog.dismiss();
-        });
-
-        cancelButton.setOnClickListener(v -> dialog.dismiss());
-
-        dialog.show();
-    }
-
-    public void deleteProduct(View view) {
-
-        // Get the token
+    public void deleteProduct() {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = productRepository.deleteProduct(token, product.getId())
                 .subscribe(
                         response -> {
                             Toast.makeText(requireActivity(), "Pomyślnie usunięto produkt.", Toast.LENGTH_SHORT).show();
-
-                            // Go back to the products database fragment
                             requireActivity().getSupportFragmentManager().popBackStack();
                         },
                         error -> Toast.makeText(requireActivity(), error.getMessage(), Toast.LENGTH_SHORT).show()
                 );
+
+        compositeDisposable.add(disposable);
+    }
+
+    @Subscribe
+    public void onCategoryChosen(ChangeCategoryEvent event) {
+        product.setCategory(event.getCategory());
+        productCategoryTextView.setText(event.getCategory());
     }
 
     private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
         transaction.addToBackStack(null);
@@ -246,8 +194,9 @@ public class EditOwnProductFragment extends Fragment implements ChangeCategoryLi
     }
 
     @Override
-    public void onCategoryChosen(String category) {
-        product.setCategory(category);
-        //product_category.setText(category);
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+        EventBus.getDefault().unregister(this);
     }
 }

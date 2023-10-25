@@ -96,7 +96,7 @@
         app:srcCompat="@drawable/baseline_wb_sunny_24_50"
         tools:ignore="MissingConstraints" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchButtonChangeColorTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

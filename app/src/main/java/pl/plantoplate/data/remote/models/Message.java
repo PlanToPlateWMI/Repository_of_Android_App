@@ -30,8 +30,4 @@ public class Message {
     public String getMessage() {
         return this.message;
     }
-
-    public void setMessage(){
-        this.message = message;
-    }
 }

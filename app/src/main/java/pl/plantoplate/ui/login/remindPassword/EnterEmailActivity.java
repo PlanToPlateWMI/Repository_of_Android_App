@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.login.remindPassword;
 
 import android.content.Intent;
@@ -21,19 +20,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.Objects;
-
+import java.util.Optional;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.databinding.RemindPassword1Binding;
-import pl.plantoplate.data.remote.ResponseCallback;
 import pl.plantoplate.data.remote.repository.AuthRepository;
-import pl.plantoplate.data.remote.models.Message;
+import timber.log.Timber;
 
 /**
  * A class that is responsible for the first step of the password remind process.
@@ -41,11 +37,9 @@ import pl.plantoplate.data.remote.models.Message;
  */
 public class EnterEmailActivity extends AppCompatActivity {
 
-    private RemindPassword1Binding change_password_view;
-
-    private TextInputEditText email_field;
-    private Button apply_button;
-
+    private CompositeDisposable compositeDisposable;
+    private TextInputEditText emailTextInput;
+    private Button applyButton;
     private SharedPreferences prefs;
     private AuthRepository authRepository;
 
@@ -56,27 +50,27 @@ public class EnterEmailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String email = getIntent().getStringExtra("email");
-
-        // Inflate the layout using view binding
-        change_password_view = RemindPassword1Binding.inflate(getLayoutInflater());
-        setContentView(change_password_view.getRoot());
-
-        // Define the ui elements
-        email_field = change_password_view.enterTheName;
-        apply_button = change_password_view.buttonZatwierdz;
-
-        email_field.setText(email);
-
-        // Set a click listeners for the buttons
-        apply_button.setOnClickListener(this::checkUserExists);
-
-        // Get the shared preferences
+        RemindPassword1Binding remindPassword1Binding = RemindPassword1Binding.inflate(getLayoutInflater());
+        setContentView(remindPassword1Binding.getRoot());
+        compositeDisposable = new CompositeDisposable();
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-
-        // Create the auth repository
         authRepository = new AuthRepository();
 
+        initViews(remindPassword1Binding);
+        setClickListeners();
+    }
+
+    private void initViews(RemindPassword1Binding remindPassword1Binding) {
+        Timber.d("Initializing views...");
+        emailTextInput = remindPassword1Binding.enterTheName;
+        applyButton = remindPassword1Binding.buttonZatwierdz;
+
+        String email = getIntent().getStringExtra("email");
+        emailTextInput.setText(email);
+    }
+
+    private void setClickListeners() {
+        applyButton.setOnClickListener(this::checkUserExists);
     }
 
     /**
@@ -84,7 +78,7 @@ public class EnterEmailActivity extends AppCompatActivity {
      * @param view The view that was clicked.
      */
     public void checkUserExists(View view){
-        String email = String.valueOf(email_field.getText());
+        String email = String.valueOf(emailTextInput.getText());
         Disposable disposable = authRepository.userExists(email)
                 .subscribe(
                         response -> {
@@ -93,40 +87,36 @@ public class EnterEmailActivity extends AppCompatActivity {
                         },
                         error -> {
                             // user don't exists
-                            validateEmail(view);
+                            getConfirmCode(view);
                         }
                 );
+
+        compositeDisposable.add(disposable);
     }
 
     /**
-     * A method that validates the email and sends it to the server, to get a email confirmation code.
+     * A method that is responsible for getting the confirm code from the server.
      * @param v The view that was clicked.
      */
-    public void validateEmail(View v) {
-        // Get the email from the text field.
-        String email = email_field.getText() != null ? email_field.getText().toString() : "";
-
-        // remove whitespaces
-        email = email.trim();
-
-        // Save the email in the shared preferences.
+    public void getConfirmCode(View v) {
+        String email = Optional.ofNullable(emailTextInput.getText()).map(Objects::toString).orElse("").trim();
         prefs.edit().putString("email", email).apply();
-
-        // start the next activity
         Intent intent = new Intent(getApplicationContext(), EnterCodeActivity.class);
         startActivity(intent);
 
         AuthRepository authRepository = new AuthRepository();
         Disposable disposable = authRepository.getEmailConfirmCode(email, "reset")
                 .subscribe(
-                        response -> {
-                            // save the code in the shared preferences
-                            prefs.edit().putString("code", response.getCode()).apply();
-                        },
-                        error -> {
-                            // show the error message
-                            Snackbar.make(v, Objects.requireNonNull(error.getMessage()), Snackbar.LENGTH_LONG).show();
-                        }
+                        response -> prefs.edit().putString("code", response.getCode()).apply(),
+                        error -> Snackbar.make(v, Objects.requireNonNull(error.getMessage()), Snackbar.LENGTH_LONG).show()
                 );
+
+        compositeDisposable.add(disposable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }

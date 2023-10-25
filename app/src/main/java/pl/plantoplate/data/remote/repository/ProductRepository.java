@@ -13,25 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.data.remote.repository;
-
-import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.models.Product;
-import pl.plantoplate.data.remote.ResponseCallback;
 import pl.plantoplate.data.remote.RetrofitClient;
 import pl.plantoplate.data.remote.service.ProductService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProductRepository {
     private final ProductService productService;
@@ -42,9 +34,9 @@ public class ProductRepository {
     }
 
     public Single<ArrayList<Product>> getAllProducts(String token){
-        return productService.getAllProducts(token, "all")
+        return productService.getProducts(token, "all")
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Użytkownik o podanym adresie email nie istnieje.");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
@@ -53,9 +45,9 @@ public class ProductRepository {
     }
 
     public Single<ArrayList<Product>> getOwnProducts(String token){
-        return productService.getAllProducts(token, "group")
+        return productService.getProducts(token, "group")
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Użytkownik o podanym adresie email nie istnieje.");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
@@ -66,7 +58,7 @@ public class ProductRepository {
     public Single<ArrayList<Product>> addProduct(String token, Product product){
         return productService.addProduct(token, product)
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Produkt o podanej nazwie już istnieje.");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
@@ -77,7 +69,7 @@ public class ProductRepository {
     public Single<ArrayList<Product>> modifyProduct(String token, int productId, Product product){
         return productService.changeProduct(token, productId, product)
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Produkt z takimi parametrami już istnieje.");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
@@ -88,7 +80,7 @@ public class ProductRepository {
     public Single<ArrayList<Product>> deleteProduct(String token, int productId){
         return productService.deleteProduct(token, productId)
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Próba usunięcia produktu z bazy wszystkich produktów.");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
@@ -96,4 +88,3 @@ public class ProductRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }
-

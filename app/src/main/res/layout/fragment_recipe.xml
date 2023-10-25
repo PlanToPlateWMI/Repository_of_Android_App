@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recipie"
         app:queryHint="@string/search_hint" />
 
-    <pl.plantoplate.ui.customViewes.RadioGridGroup
+    <pl.plantoplate.ui.customViews.RadioGridGroup
         android:id="@+id/radio_group_baza"
         android:layout_width="363dp"
         android:layout_height="50dp"
@@ -105,7 +105,7 @@
             android:textSize="16dp"
             app:rippleColor="?attr/colorOnPrimaryFixed" />
 
-    </pl.plantoplate.ui.customViewes.RadioGridGroup>
+    </pl.plantoplate.ui.customViews.RadioGridGroup>
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search"
@@ -150,7 +150,7 @@
             android:layout_marginTop="10dp"
             android:layout_height="50dp">
 
-            <pl.plantoplate.ui.customViewes.RadioGridGroup
+            <pl.plantoplate.ui.customViews.RadioGridGroup
                 android:id="@+id/radio_group_recipe"
                 android:layout_width="500dp"
                 android:layout_height="60dp"
@@ -287,7 +287,7 @@
                     android:textSize="16dp"
                     app:rippleColor="?attr/colorOnPrimaryFixed" />
 
-            </pl.plantoplate.ui.customViewes.RadioGridGroup>
+            </pl.plantoplate.ui.customViews.RadioGridGroup>
         </HorizontalScrollView>
 
     </ScrollView>

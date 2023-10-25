@@ -13,37 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.productsDatabase;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
-
+import java.util.Optional;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.databinding.FragmentWszystkieBinding;
-import pl.plantoplate.ui.main.productsDatabase.popups.ModifyProductPopUp;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
+import pl.plantoplate.ui.main.popUps.ModifyProductPopUp;
+import pl.plantoplate.ui.main.productsDatabase.viewModels.AllProductsViewModel;
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.data.remote.models.Category;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.category.CategoryAdapter;
+import pl.plantoplate.ui.main.recyclerViews.adapters.CategoryAdapter;
 import pl.plantoplate.tools.CategorySorter;
-import pl.plantoplate.ui.main.productsDatabase.viewModels.ProductsDbaseViewModel;
 
 /**
  * This fragment is responsible for displaying all products in the database.
@@ -51,72 +46,40 @@ import pl.plantoplate.ui.main.productsDatabase.viewModels.ProductsDbaseViewModel
 public class AllProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     private FragmentWszystkieBinding fragmentWszystkieBinding;
-
-    private RecyclerView categoryRecyclerView;
-    private TextView welcomeTextView;
-    private SearchView searchView;
-
-    private ProductsDbaseViewModel productsDbaseViewModel;
-
-    public AllProductsFragment() {
-    }
-
-    public AllProductsFragment(String comesFrom) {
-
-        Bundle bundle = new Bundle();
-        bundle.putString("comesFrom", comesFrom);
-        this.setArguments(bundle);
-    }
+    private SearchView productsSearchView;
+    private AllProductsViewModel allProductsViewModel;
+    private CategoryAdapter categoryAdapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        productsDbaseViewModel = new ViewModelProvider(requireParentFragment()).get(ProductsDbaseViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragmentWszystkieBinding = FragmentWszystkieBinding.inflate(inflater, container, false);
+        productsSearchView = requireActivity().findViewById(R.id.search);
+
+        setUpViewModel();
+        setUpRecyclerView();
+        return fragmentWszystkieBinding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        productsDbaseViewModel.fetchUserInfo();
-        productsDbaseViewModel.fetchAllProducts();
-        if (searchView != null) {
-            searchView.setOnQueryTextListener(this);
-        }
+        allProductsViewModel.fetchAllProducts();
+        productsSearchView.setOnQueryTextListener(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (searchView != null){
-            searchView.clearFocus();
-            searchView.setQuery("", false);
-            searchView.setOnQueryTextListener(null);
-        }
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        fragmentWszystkieBinding = FragmentWszystkieBinding.inflate(inflater, container, false);
-
-        // get views
-        welcomeTextView = fragmentWszystkieBinding.textView3;
-        searchView = requireActivity().findViewById(R.id.search);
-
-        // set up recycler view
-        setUpViewModel();
-        setUpRecyclerView();
-
-        return fragmentWszystkieBinding.getRoot();
+        productsSearchView.clearFocus();
+        productsSearchView.setQuery("", false);
+        productsSearchView.setOnQueryTextListener(null);
     }
 
     public void addProduct(Product product){
-        String comesFrom = requireArguments().getString("comesFrom");
-
-        if ("storage".equals(comesFrom)) {
-            productsDbaseViewModel.addProductToStorage(product);
+        if ("storage".equals(requireArguments().getString("comesFrom"))) {
+            allProductsViewModel.addProductToStorage(product);
         } else {
-            productsDbaseViewModel.addProductToShoppingList(product);
+            allProductsViewModel.addProductToShoppingList(product);
         }
     }
 
@@ -139,46 +102,29 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        searchView.clearFocus();
+        productsSearchView.clearFocus();
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String query) {
-        ArrayList<Category> products = CategorySorter.sortCategoriesByProduct(Objects.requireNonNull(productsDbaseViewModel.getAllProducts().getValue()));
-        ArrayList<Product> filteredProducts = CategorySorter.filterCategoriesBySearch(products, query);
+        Optional<ArrayList<Category>> products = Optional.ofNullable(allProductsViewModel.getAllProducts().getValue());
+        ArrayList<Product> filteredProducts = CategorySorter.filterCategoriesBySearch(products.orElse(new ArrayList<>()), query);
         ArrayList<Category> filteredList = CategorySorter.sortCategoriesByProduct(filteredProducts);
-        updateRecyclerView(filteredList);
+        categoryAdapter.setCategoriesList(filteredList);
         return false;
     }
 
     public void setUpViewModel() {
-
-        productsDbaseViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
-        });
-
-        // get to buy products
-        productsDbaseViewModel.getAllProducts().observe(getViewLifecycleOwner(), products -> {
-            ArrayList<Category> categories = CategorySorter.sortCategoriesByProduct(products);
-            updateRecyclerView(categories);
-        });
-
-    }
-
-    private void updateRecyclerView(ArrayList<Category> products) {
-        if (products.isEmpty()) {
-            welcomeTextView.setVisibility(View.VISIBLE);
-        } else {
-            welcomeTextView.setVisibility(View.GONE);
-        }
-        CategoryAdapter categoryAdapter = (CategoryAdapter) categoryRecyclerView.getAdapter();
-        Objects.requireNonNull(categoryAdapter).setCategoriesList(products);
+        allProductsViewModel = new ViewModelProvider(requireParentFragment()).get(AllProductsViewModel.class);
+        allProductsViewModel.getAllProducts().observe(getViewLifecycleOwner(), products ->
+                categoryAdapter.setCategoriesList(products));
     }
 
     public void setUpRecyclerView() {
-        categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
+        RecyclerView categoryRecyclerView = fragmentWszystkieBinding.categoryRecyclerView;
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(new ArrayList<>(), R.layout.item_wszystkie_produkt, R.layout.item_category_baza);
+        categoryAdapter = new CategoryAdapter(new ArrayList<>(), R.layout.item_wszystkie_produkt, R.layout.item_category_baza);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupAddToShoppingListButtonClick(View v, Product product) {

@@ -21,7 +21,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * A class that represents the data required to create a new group.
  */
-public class CreateGroupData {
+public class UserCredentials {
 
     /**
      * The email address of the group creator.
@@ -41,7 +41,7 @@ public class CreateGroupData {
      * @param email    The email address of the group creator.
      * @param password The password for the group creator.
      */
-    public CreateGroupData(String email, String password) {
+    public UserCredentials(String email, String password) {
         this.email = email;
         this.password = password;
     }

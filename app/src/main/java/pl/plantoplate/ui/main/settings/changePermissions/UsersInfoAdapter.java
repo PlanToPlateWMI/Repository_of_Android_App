@@ -13,26 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.changePermissions;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import pl.plantoplate.data.remote.models.UserInfo;
 
 public class UsersInfoAdapter extends RecyclerView.Adapter<UsersInfoViewHolder>{
 
+    private final int itemType;
     private ArrayList<UserInfo> userInfos;
-    private int itemType;
-
     private SetupUserPermissionsItems listener;
 
     public UsersInfoAdapter(ArrayList<UserInfo> products, int itemType) {
@@ -55,7 +50,7 @@ public class UsersInfoAdapter extends RecyclerView.Adapter<UsersInfoViewHolder>{
     public UsersInfoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(this.itemType, parent, false);
-        return new UsersInfoViewHolder(itemView, this.itemType);
+        return new UsersInfoViewHolder(itemView);
     }
 
     @Override

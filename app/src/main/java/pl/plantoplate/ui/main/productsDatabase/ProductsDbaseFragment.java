@@ -13,29 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.productsDatabase;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentBazaProduktowBinding;
-import pl.plantoplate.ui.customViewes.RadioGridGroup;
+import pl.plantoplate.ui.customViews.RadioGridGroup;
 import timber.log.Timber;
 
 /**
@@ -43,38 +36,35 @@ import timber.log.Timber;
  */
 public class ProductsDbaseFragment extends Fragment {
 
-    private FragmentBazaProduktowBinding bazaProduktowBinding;
-    private ViewPager2 viewPagerBase;
-    private RadioGridGroup radioGridGroup;
+    private static final int ALL_PRODUCTS_FRAGMENT = R.id.wszystkie_button;
+    private static final int OWN_PRODUCTS_FRAGMENT = R.id.wlasne_button;
+    private ViewPager2 productsDbaseViewPager;
+    private RadioGridGroup menuRadioGridGroup;
 
     @Override
     public void onResume() {
         super.onResume();
-        int fragment = viewPagerBase.getCurrentItem();
-        viewPagerBase.setCurrentItem(fragment);
+        int fragment = productsDbaseViewPager.getCurrentItem();
+        productsDbaseViewPager.setCurrentItem(fragment);
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FragmentBazaProduktowBinding fragmentBazaProduktowBinding = FragmentBazaProduktowBinding.inflate(inflater, container, false);
 
-
-        bazaProduktowBinding = FragmentBazaProduktowBinding.inflate(inflater, container, false);
-
-        viewPagerBase = bazaProduktowBinding.viewPagerBase;
-
-        setupViewPager(viewPagerBase);
-
-        // Set selected all products fragment by default on restart fragment.
-        radioGridGroup = bazaProduktowBinding.radioGroupBaza;
-
-        //make radio button checked
-        radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
-
-        // Set up the search view
+        initViews(fragmentBazaProduktowBinding);
+        setupViewPager(productsDbaseViewPager);
         setupNavigation();
-        return bazaProduktowBinding.getRoot();
+        return fragmentBazaProduktowBinding.getRoot();
+    }
+
+    public void initViews(FragmentBazaProduktowBinding fragmentBazaProduktowBinding){
+        productsDbaseViewPager = fragmentBazaProduktowBinding.viewPagerBase;
+        menuRadioGridGroup = fragmentBazaProduktowBinding.radioGroupBaza;
+
+        menuRadioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
     }
 
     /**
@@ -82,16 +72,14 @@ public class ProductsDbaseFragment extends Fragment {
      * listener. If user click on bottom navigation item then we change
      * current fragment in swipe pager.
      */
-    @SuppressLint("NonConstantResourceId")
     private void setupNavigation() {
-        radioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            Timber.tag("RadioGridGroup").d("Checked ID: %s", checkedId); // Debugging
+        menuRadioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
-                case R.id.wszystkie_button:
-                    viewPagerBase.setCurrentItem(0);
+                case ALL_PRODUCTS_FRAGMENT:
+                    productsDbaseViewPager.setCurrentItem(0);
                     break;
-                case R.id.wlasne_button:
-                    viewPagerBase.setCurrentItem(1);
+                case OWN_PRODUCTS_FRAGMENT:
+                    productsDbaseViewPager.setCurrentItem(1);
                     break;
                 default:
                     Timber.tag("RadioGridGroup").d("Unhandled ID: %s", checkedId); // Debugging
@@ -101,10 +89,15 @@ public class ProductsDbaseFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager2 viewPagerBase) {
-
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
-        adapter.addFragment(new AllProductsFragment(requireArguments().getString("comesFrom")));
-        adapter.addFragment(new OwnProductsFragment(requireArguments().getString("comesFrom")));
+        AllProductsFragment allProductsFragment = new AllProductsFragment();
+        OwnProductsFragment ownProductsFragment = new OwnProductsFragment();
+
+        allProductsFragment.setArguments(requireArguments());
+        ownProductsFragment.setArguments(requireArguments());
+
+        adapter.addFragment(allProductsFragment);
+        adapter.addFragment(ownProductsFragment);
         viewPagerBase.setAdapter(adapter);
 
         viewPagerBase.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -112,10 +105,10 @@ public class ProductsDbaseFragment extends Fragment {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        bazaProduktowBinding.radioGroupBaza.setCheckedRadioButtonById(R.id.wszystkie_button);
+                        menuRadioGridGroup.setCheckedRadioButtonById(ALL_PRODUCTS_FRAGMENT);
                         break;
                     case 1:
-                        bazaProduktowBinding.radioGroupBaza.setCheckedRadioButtonById(R.id.wlasne_button);
+                        menuRadioGridGroup.setCheckedRadioButtonById(OWN_PRODUCTS_FRAGMENT);
                         break;
                 }
             }

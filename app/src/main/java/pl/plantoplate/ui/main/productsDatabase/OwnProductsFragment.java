@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.productsDatabase;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -26,105 +24,83 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
-
+import java.util.Optional;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.databinding.FragmentWlasneBinding;
-import pl.plantoplate.ui.main.productsDatabase.popups.ModifyProductPopUp;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
+import pl.plantoplate.ui.main.popUps.ModifyProductPopUp;
+import pl.plantoplate.ui.main.productsDatabase.viewModels.OwnProductsViewModel;
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.tools.CategorySorter;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
-import pl.plantoplate.ui.main.productsDatabase.viewModels.ProductsDbaseViewModel;
+import pl.plantoplate.ui.main.recyclerViews.adapters.ProductAdapter;
+import timber.log.Timber;
 
 /**
  * This fragment is responsible for displaying the products that the user has added to the database.
  */
 public class OwnProductsFragment extends Fragment implements SearchView.OnQueryTextListener {
+
     private FragmentWlasneBinding fragmentWlasneBinding;
-
-    private FloatingActionButton floatingActionButton_wlasne;
-    private RecyclerView ownProductsRecyclerView;
+    private FloatingActionButton createNewProductButton;
     private TextView welcomeTextView;
-    private SearchView searchView;
-
+    private SearchView productsSearchView;
     private SharedPreferences prefs;
-
-    private ProductsDbaseViewModel productsDbaseViewModel;
-
-    public OwnProductsFragment() {
-    }
+    private OwnProductsViewModel ownProductsViewModel;
+    private ProductAdapter productAdapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        productsDbaseViewModel = new ViewModelProvider(requireParentFragment()).get(ProductsDbaseViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragmentWlasneBinding = FragmentWlasneBinding.inflate(inflater, container, false);
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
+        initViews(fragmentWlasneBinding);
+        setUpViewModel();
+        setupRecyclerView();
+        return fragmentWlasneBinding.getRoot();
     }
 
-    public OwnProductsFragment(String comesFrom) {
-
-        Bundle bundle = new Bundle();
-        bundle.putString("comesFrom", comesFrom);
-        this.setArguments(bundle);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        productsDbaseViewModel.fetchUserInfo();
-        productsDbaseViewModel.fetchOwnProducts();
-        if (searchView != null){
-            searchView.setOnQueryTextListener(this);
-        }
+    public void initViews(FragmentWlasneBinding fragmentWlasneBinding){
+        createNewProductButton = fragmentWlasneBinding.floatingActionButtonWlasne;
+        welcomeTextView = fragmentWlasneBinding.welcomeWlasne;
+        productsSearchView = requireActivity().findViewById(R.id.search);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (searchView != null){
-            searchView.clearFocus();
-            searchView.setQuery("", false);
-            searchView.setOnQueryTextListener(null);
+        if (productsSearchView != null){
+            productsSearchView.clearFocus();
+            productsSearchView.setQuery("", false);
+            productsSearchView.setOnQueryTextListener(null);
         }
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        fragmentWlasneBinding = FragmentWlasneBinding.inflate(inflater, container, false);
-
-        // Setup views
-        floatingActionButton_wlasne = fragmentWlasneBinding.floatingActionButtonWlasne;
-        welcomeTextView = fragmentWlasneBinding.welcomeWlasne;
-        searchView = requireActivity().findViewById(R.id.search);
-
-        // Get the shared preferences
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
-
-        setUpViewModel();
-        setupRecyclerView();
-        return fragmentWlasneBinding.getRoot();
+    public void onResume() {
+        super.onResume();
+        ownProductsViewModel.fetchUserInfo();
+        ownProductsViewModel.fetchOwnProducts();
+        if (productsSearchView != null){
+            productsSearchView.setOnQueryTextListener(this);
+        }
     }
 
     public void addProduct(Product product){
         String comesFrom = requireArguments().getString("comesFrom");
 
         if ("storage".equals(comesFrom)) {
-            productsDbaseViewModel.addProductToStorage(product);
+            ownProductsViewModel.addProductToStorage(product);
         } else {
-            productsDbaseViewModel.addProductToShoppingList(product);
+            ownProductsViewModel.addProductToShoppingList(product);
         }
     }
 
@@ -138,7 +114,6 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
                 return;
             }
             if (quantityValue.endsWith(".")) {
-                // Remove dot at the end
                 quantityValue = quantityValue.substring(0, quantityValue.length() - 1);
             }
             float quantity = BigDecimal.valueOf(Float.parseFloat(quantityValue)).setScale(3, RoundingMode.HALF_UP).floatValue();
@@ -151,34 +126,30 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        searchView.clearFocus();
+        productsSearchView.clearFocus();
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String query) {
-        ArrayList<Product> products = Objects.requireNonNull(productsDbaseViewModel.getOwnProducts().getValue());
+        ArrayList<Product> products = Optional.ofNullable(ownProductsViewModel.getOwnProducts().getValue()).orElse(new ArrayList<>());
         ArrayList<Product> filteredProducts = CategorySorter.filterProductsBySearch(products, query);
         updateRecyclerView(filteredProducts);
         return false;
     }
 
     public void setUpViewModel() {
-        productsDbaseViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
-            // Set the onClickListeners for the buttons
+        ownProductsViewModel = new ViewModelProvider(requireParentFragment()).get(OwnProductsViewModel.class);
+        ownProductsViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
             String role = prefs.getString("role", "");
-
-            // Setup listeners
             if(role.equals("ROLE_ADMIN")) {
-                floatingActionButton_wlasne.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment(), "addOwn"));
+                createNewProductButton.setOnClickListener(v -> replaceFragment(new AddYourOwnProductFragment()));
             }else {
-                floatingActionButton_wlasne.setVisibility(View.INVISIBLE);
-                floatingActionButton_wlasne.setClickable(false);
+                createNewProductButton.setVisibility(View.INVISIBLE);
+                createNewProductButton.setClickable(false);
             }
         });
-
-        // get to buy products
-        productsDbaseViewModel.getOwnProducts().observe(getViewLifecycleOwner(), this::updateRecyclerView);
+        ownProductsViewModel.getOwnProducts().observe(getViewLifecycleOwner(), this::updateRecyclerView);
 
     }
 
@@ -188,15 +159,14 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
         } else {
             welcomeTextView.setText("");
         }
-        ProductAdapter productAdapter = (ProductAdapter) ownProductsRecyclerView.getAdapter();
-        Objects.requireNonNull(productAdapter).setProductsList(CategorySorter.sortProductsByName(products));
+        productAdapter.setProductsList(CategorySorter.sortProductsByName(products));
     }
 
     private void setupRecyclerView() {
-        ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
+        RecyclerView ownProductsRecyclerView = fragmentWlasneBinding.productsOwnRecyclerView;
         ownProductsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ProductAdapter productAllAdapter = new ProductAdapter(new ArrayList<>(), R.layout.item_wlasny_produkt);
-        productAllAdapter.setUpItemButtons(new SetupItemButtons() {
+        productAdapter = new ProductAdapter(new ArrayList<>(), R.layout.item_wlasny_produkt);
+        productAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupAddToShoppingListButtonClick(View v, Product product) {
                 v.setOnClickListener(view -> {
@@ -210,7 +180,14 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
                 //if admin
                 String role = prefs.getString("role", "");
                 if(role.equals("ROLE_ADMIN")) {
-                    v.setOnClickListener(view -> replaceFragment(new EditOwnProductFragment(product), "editOwn"));
+                    v.setOnClickListener(view -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("product", product);
+                        Timber.e("product: %s", product);
+                        EditOwnProductFragment fragment = new EditOwnProductFragment();
+                        fragment.setArguments(bundle);
+                        replaceFragment(fragment);
+                    });
                 }
                 else{
                     //set visibility none
@@ -223,13 +200,13 @@ public class OwnProductsFragment extends Fragment implements SearchView.OnQueryT
                 v.setOnClickListener(view -> showAddProductPopup(product));
             }
         });
-        ownProductsRecyclerView.setAdapter(productAllAdapter);
+        ownProductsRecyclerView.setAdapter(productAdapter);
     }
 
-    private void replaceFragment(Fragment fragment, String tag) {
+    private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
-        transaction.addToBackStack(tag);
+        transaction.addToBackStack("addOwn");
         transaction.commit();
     }
 }

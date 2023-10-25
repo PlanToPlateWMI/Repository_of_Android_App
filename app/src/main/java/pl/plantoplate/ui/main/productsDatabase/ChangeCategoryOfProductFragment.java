@@ -13,50 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package pl.plantoplate.ui.main.productsDatabase;
 
-package pl.plantoplate.ui.main;
-
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.material.snackbar.Snackbar;
-
+import org.greenrobot.eventbus.EventBus;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentChangeCategoryBinding;
-import pl.plantoplate.ui.customViewes.RadioGridGroup;
-import pl.plantoplate.ui.main.productsDatabase.ChangeCategoryListener;
+import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.productsDatabase.events.ChangeCategoryEvent;
 
 /**
  * This fragment is used to change category of product.
  */
 public class ChangeCategoryOfProductFragment extends Fragment {
 
-    private FragmentChangeCategoryBinding fragmentChangeCategoryBinding;
-
-    private SharedPreferences productPrefs;
-
     private RadioGridGroup categoriesRadioGroup;
-    private Button accept_button;
-
-    private ChangeCategoryListener changeCategoryListener;
-
-    /**
-     * Constructs a new ChangeCategoryOfProductFragment object with the specified change category listener.
-     *
-     * @param changeCategoryListener The change category listener to be set for the fragment.
-     */
-    public ChangeCategoryOfProductFragment(ChangeCategoryListener changeCategoryListener) {
-        this.changeCategoryListener = changeCategoryListener;
-    }
+    private Button acceptButton;
 
     /**
      * Called when the fragment should create its view hierarchy.
@@ -69,22 +49,20 @@ public class ChangeCategoryOfProductFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        pl.plantoplate.databinding.FragmentChangeCategoryBinding fragmentChangeCategoryBinding = FragmentChangeCategoryBinding.inflate(inflater, container, false);
 
-        fragmentChangeCategoryBinding = FragmentChangeCategoryBinding.inflate(inflater, container, false);
-
-        // Get product from shared preferences
-        productPrefs = requireActivity().getSharedPreferences("product", 0);
-
-        // Get references to views
-        categoriesRadioGroup = fragmentChangeCategoryBinding.radioGroupNowaKategoria;
-        accept_button = fragmentChangeCategoryBinding.buttonZatwierdz;
-
-        // Set onClickListeners for buttons
-        accept_button.setOnClickListener(v -> applyChanges());
-
-
+        initViews(fragmentChangeCategoryBinding);
+        setClickListeners();
         return fragmentChangeCategoryBinding.getRoot();
+    }
+
+    public void initViews(FragmentChangeCategoryBinding fragmentChangeCategoryBinding){
+        categoriesRadioGroup = fragmentChangeCategoryBinding.radioGroupNowaKategoria;
+        acceptButton = fragmentChangeCategoryBinding.buttonZatwierdz;
+    }
+
+    public void setClickListeners(){
+        acceptButton.setOnClickListener(v -> applyChanges());
     }
 
     /**
@@ -102,19 +80,7 @@ public class ChangeCategoryOfProductFragment extends Fragment {
             return;
         }
 
-        changeCategoryListener.onCategoryChosen(checkedRadioButton.getText().toString());
-
-        // Close fragment
+        EventBus.getDefault().post(new ChangeCategoryEvent(checkedRadioButton.getText().toString()));
         getParentFragmentManager().popBackStack();
     }
-
-    /**
-     * Cancels the changes made in the fragment and closes the fragment by popping the back stack of the parent fragment manager.
-     */
-    public void cancelChanges() {
-        // Close fragment
-        getParentFragmentManager().popBackStack();
-    }
-
-
 }

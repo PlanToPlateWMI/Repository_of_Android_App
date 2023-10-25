@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.productsDatabase;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,150 +30,125 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.textfield.TextInputEditText;
-
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import java.util.Objects;
-
+import java.util.Optional;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.ProductRepository;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.databinding.FragmentAddYourOwnProductBinding;
-import pl.plantoplate.ui.main.ChangeCategoryOfProductFragment;
+import pl.plantoplate.ui.main.productsDatabase.events.ChangeCategoryEvent;
+import timber.log.Timber;
 
 /**
  * This fragment is responsible for adding a new product to the database.
  */
-public class AddYourOwnProductFragment extends Fragment implements ChangeCategoryListener{
+public class AddYourOwnProductFragment extends Fragment {
 
-    private FragmentAddYourOwnProductBinding add_own_product_view;
-
+    private CompositeDisposable compositeDisposable;
     private SharedPreferences prefs;
-    private SharedPreferences productPrefs;
-
-    private RadioGroup choose_product_unit;
-    private Button add_product_button;
-    private Button change_kategory;
-    private TextInputEditText add_product_name;
-    private TextView product_category;
-
+    private RadioGroup chooseProductUnitRadioGroup;
+    private Button addProductButton;
+    private Button changeProductCategoryButton;
+    private TextInputEditText productNameEditText;
+    private TextView productCategoryTextView;
     private Product product;
     private ProductRepository productRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+        product = product == null ? new Product() : product;
+        product.setCategory("Produkty własne");
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        add_own_product_view = FragmentAddYourOwnProductBinding.inflate(inflater, container, false);
-
-        // Get the shared preferences
+        FragmentAddYourOwnProductBinding addYourOwnProductBinding = FragmentAddYourOwnProductBinding.inflate(inflater, container, false);
+        compositeDisposable = new CompositeDisposable();
         prefs = requireActivity().getSharedPreferences("prefs", 0);
-        productPrefs = requireActivity().getSharedPreferences("product", 0);
-
-        // Get the radio group
-        choose_product_unit = add_own_product_view.toggleGroup;
-
-        // Set the product category
-        product_category = add_own_product_view.kategoriaNapisac;
-
-        // init the product and set the default category
-        if (product == null) {
-            product = new Product();
-            product.setCategory("Produkty własne");
-            product_category.setText(product.getCategory());
-        }
-        else{
-            product_category.setText(product.getCategory());
-        }
-
-        // Set the radio group listener
-        choose_product_unit.setOnCheckedChangeListener((group, checkedId) -> setProductUnit(checkedId));
-
-        // Set add product button
-        add_product_button = add_own_product_view.buttonZatwierdz;
-
-        // Set the product name button
-        add_product_name = add_own_product_view.enterTheName;
-
-        // Set the button listener
-        add_product_button.setOnClickListener(v -> addProduct());
-
-        change_kategory = add_own_product_view.zmienKategorie;
-        change_kategory.findViewById(R.id.zmien_kategorie);
-
-        change_kategory.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment(this)));
-
-        // get the product repository
         productRepository = new ProductRepository();
 
-        return add_own_product_view.getRoot();
+        initViews(addYourOwnProductBinding);
+        setClickListeners();
+        return addYourOwnProductBinding.getRoot();
     }
 
-    @SuppressLint("NonConstantResourceId")
+    public void initViews(FragmentAddYourOwnProductBinding add_own_product_view) {
+        chooseProductUnitRadioGroup = add_own_product_view.toggleGroup;
+        productCategoryTextView = add_own_product_view.kategoriaNapisac;
+        addProductButton = add_own_product_view.buttonZatwierdz;
+        productNameEditText = add_own_product_view.enterTheName;
+        changeProductCategoryButton = add_own_product_view.zmienKategorie;
+
+        productCategoryTextView.setText(product.getCategory());
+    }
+
+    private void setClickListeners() {
+        chooseProductUnitRadioGroup.setOnCheckedChangeListener((group, checkedId) -> setProductUnit(checkedId));
+        addProductButton.setOnClickListener(v -> addProduct());
+        changeProductCategoryButton.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
+    }
+
     public void setProductUnit(int checkedId) {
-        switch (checkedId) {
-            case R.id.button_szt:
-                product.setUnit("SZT");
-                break;
-
-            case R.id.button_l:
-                product.setUnit("L");
-                break;
-
-            case R.id.button_kg:
-                product.setUnit("KG");
-                break;
-
-            case R.id.button_gr:
-                product.setUnit("GR");
-                break;
-            case R.id.button_ml:
-                product.setUnit("ML");
-                break;
+        SparseArray<String> unitMapping = new SparseArray<>();
+        unitMapping.put(R.id.button_szt, "SZT");
+        unitMapping.put(R.id.button_l, "L");
+        unitMapping.put(R.id.button_kg, "KG");
+        unitMapping.put(R.id.button_gr, "GR");
+        unitMapping.put(R.id.button_ml, "ML");
+        String selectedUnit = unitMapping.get(checkedId);
+        if (selectedUnit != null) {
+            product.setUnit(selectedUnit);
         }
     }
 
-    @Override
-    public void onCategoryChosen(String category) {
-        product.setCategory(category);
-        product_category.setText(category);
+    @Subscribe
+    public void onCategoryChosen(ChangeCategoryEvent event) {
+        product.setCategory(event.getCategory());
+        productCategoryTextView.setText(event.getCategory());
+        Timber.e("Category changed to: %s", event.getCategory());
     }
 
     public void addProduct() {
-        // Set up product
-        String product_name = Objects.requireNonNull(add_product_name.getText()).toString();
+        String product_name = Optional.ofNullable(productNameEditText.getText()).map(Objects::toString).orElse("");
         product.setName(product_name);
-
-        // Get the token
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = productRepository.addProduct(token, product)
                 .subscribe(
                         response -> {
-                            Toast.makeText(requireActivity().getApplicationContext(), "Produkt został dodany",
+                            Toast.makeText(requireActivity(), "Produkt został dodany",
                                     Toast.LENGTH_SHORT).show();
 
                             // Go back to the products database fragment
-                            requireActivity().getSupportFragmentManager().popBackStack("addOwn", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                            getParentFragmentManager().popBackStack("addOwn", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         },
-                        error -> Toast.makeText(requireActivity(), error.getMessage(), Toast.LENGTH_SHORT).show()
+                        error ->
+                                Toast.makeText(requireActivity(), error.getMessage(), Toast.LENGTH_SHORT).show()
                 );
+
+        compositeDisposable.add(disposable);
     }
 
-
     private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+        EventBus.getDefault().unregister(this);
     }
 }

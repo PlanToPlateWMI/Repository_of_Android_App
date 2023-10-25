@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.recyclerViews.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import pl.plantoplate.data.remote.models.Category;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.ui.main.recyclerViews.viewHolders.CategoryViewHolder;
@@ -51,8 +47,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     public void setCategoriesList(ArrayList<Category> filterlist) {
 
         categories = filterlist;
-        //notifyItemChanged(0, categories.size());
-        //old
         notifyDataSetChanged();
     }
 

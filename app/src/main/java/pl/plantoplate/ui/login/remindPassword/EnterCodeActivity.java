@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.login.remindPassword;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.Objects;
-
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.databinding.RemindPassword2Binding;
-import pl.plantoplate.data.remote.ResponseCallback;
 import pl.plantoplate.data.remote.repository.AuthRepository;
 
 /**
@@ -42,47 +36,48 @@ import pl.plantoplate.data.remote.repository.AuthRepository;
  */
 public class EnterCodeActivity extends AppCompatActivity {
 
-    private RemindPassword2Binding change_password_view;
-
-    private TextView title;
-    private TextInputEditText enter_code_field;
-    private Button confirm_button;
-    private TextView resend_code_button;
-
+    private CompositeDisposable compositeDisposable;
+    private TextView titleTextView;
+    private TextInputEditText enterCodeTextInput;
+    private Button confirmButton;
+    private TextView resendCodeButton;
     private SharedPreferences prefs;
 
     /**
      * This method is called when the activity is created.
      * @param savedInstanceState The saved instance state.
      */
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Inflate the layout using view binding
-        change_password_view = RemindPassword2Binding.inflate(getLayoutInflater());
-        setContentView(change_password_view.getRoot());
-
-        // Define the views
-        title = change_password_view.skorzystajZKodu;
-        enter_code_field = change_password_view.wprowadzKod;
-        confirm_button = change_password_view.buttonZatwierdzenieLink;
-        resend_code_button = change_password_view.wyLijPono;
-
-        // Set confirm button listener
-        confirm_button.setOnClickListener(this::checkCode);
-
-        // Set resend code button listener
-        resend_code_button.setOnClickListener(this::resendCode);
-
-        // Get the shared preferences
+        RemindPassword2Binding remindPassword2Binding = RemindPassword2Binding.inflate(getLayoutInflater());
+        setContentView(remindPassword2Binding.getRoot());
+        compositeDisposable = new CompositeDisposable();
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
-        // Set the title
-        String email = prefs.getString("email", "");
-        title.setText(title.getText().toString() + "\n" + email);
+        initViews(remindPassword2Binding);
+        initTitleTextView();
+        setListeners();
+    }
 
+    private void initViews(RemindPassword2Binding remindPassword2Binding) {
+        titleTextView = remindPassword2Binding.skorzystajZKodu;
+        enterCodeTextInput = remindPassword2Binding.wprowadzKod;
+        confirmButton = remindPassword2Binding.buttonZatwierdzenieLink;
+        resendCodeButton = remindPassword2Binding.wyLijPono;
+
+        initTitleTextView();
+    }
+
+    private void initTitleTextView(){
+        String email = prefs.getString("email", "");
+        String text = titleTextView.getText().toString() + "\n" + email;
+        titleTextView.setText(text);
+    }
+
+    private void setListeners(){
+        confirmButton.setOnClickListener(this::validateConfirmCode);
+        resendCodeButton.setOnClickListener(this::resendCode);
     }
 
     /**
@@ -90,8 +85,8 @@ public class EnterCodeActivity extends AppCompatActivity {
      * by the user is correct and if so, it starts the ChangePasswordActivity.
      * @param view The view that was clicked.
      */
-    public void checkCode(View view) {
-        String entered_code = enter_code_field.getText() != null ? enter_code_field.getText().toString(): "";
+    public void validateConfirmCode(View view) {
+        String entered_code = enterCodeTextInput.getText() != null ? enterCodeTextInput.getText().toString(): "";
         String correct_code = prefs.getString("code", "");
         if (correct_code.equals(entered_code)){
             startActivity(new Intent(this, ChangePasswordActivity.class));
@@ -107,10 +102,9 @@ public class EnterCodeActivity extends AppCompatActivity {
      * @param view The view that was clicked.
      */
     public void resendCode(View view) {
-        // Create a new Email object with the email from the shared preferences.
         String email = prefs.getString("email", "");
-
         AuthRepository repository = new AuthRepository();
+
         Disposable disposable = repository.getEmailConfirmCode(email, "reset")
                 .subscribe(
                         response -> {
@@ -120,5 +114,13 @@ public class EnterCodeActivity extends AppCompatActivity {
                         },
                         error -> Snackbar.make(view, Objects.requireNonNull(error.getMessage()), Snackbar.LENGTH_LONG).show()
                 );
+
+        compositeDisposable.add(disposable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }

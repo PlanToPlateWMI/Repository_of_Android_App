@@ -1,19 +1,29 @@
+/*
+ * Copyright 2023 the original author or authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package pl.plantoplate.ui.main.shoppingList.viewModels;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
-
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import pl.plantoplate.data.remote.ResponseCallback;
 import pl.plantoplate.data.remote.models.ListType;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.data.remote.models.UserInfo;
@@ -26,9 +36,9 @@ public class BoughtProductsListViewModel extends AndroidViewModel {
     private final CompositeDisposable compositeDisposable;
     private final SharedPreferences prefs;
     private final ShoppingListRepository shoppingListRepository;
-    private MutableLiveData<String> responseMessage;
-    private MutableLiveData<ArrayList<Product>> boughtProducts;
-    private MutableLiveData<UserInfo> userInfo;
+    private final MutableLiveData<String> responseMessage;
+    private final MutableLiveData<ArrayList<Product>> boughtProducts;
+    private final MutableLiveData<UserInfo> userInfo;
 
     public BoughtProductsListViewModel(@NonNull Application application) {
         super(application);
@@ -59,11 +69,8 @@ public class BoughtProductsListViewModel extends AndroidViewModel {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.getBoughtShoppingList(token)
-                .subscribe(shoppingList -> {
-                    boughtProducts.setValue(shoppingList);
-                }, throwable -> {
-                    responseMessage.setValue(throwable.getMessage());
-                });
+                .subscribe(boughtProducts::setValue, throwable ->
+                        responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }
@@ -80,9 +87,8 @@ public class BoughtProductsListViewModel extends AndroidViewModel {
                     editor.putString("username", userInfo.getUsername());
                     editor.putString("role", userInfo.getRole());
                     editor.apply();
-                }, throwable -> {
-                    responseMessage.setValue(throwable.getMessage());
-                });
+                }, throwable ->
+                        responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }
@@ -94,9 +100,8 @@ public class BoughtProductsListViewModel extends AndroidViewModel {
                 .subscribe(shoppingList -> {
                     EventBus.getDefault().post(new ProductsListChangedEvent(shoppingList.getToBuy(), ListType.TO_BUY));
                     boughtProducts.setValue(shoppingList.getBought());
-                }, throwable -> {
-                    responseMessage.setValue(throwable.getMessage());
-                });
+                }, throwable ->
+                        responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }
@@ -109,9 +114,8 @@ public class BoughtProductsListViewModel extends AndroidViewModel {
                     boughtProducts.setValue(shoppingList);
                     responseMessage.setValue("Produkt został usunięty z listy");
 
-                }, throwable -> {
-                    responseMessage.setValue(throwable.getMessage());
-                });
+                }, throwable ->
+                        responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }
@@ -132,9 +136,10 @@ public class BoughtProductsListViewModel extends AndroidViewModel {
                 .subscribe(productsList -> {
                     responseMessage.setValue("Produkty zostały przeniesione do spiżarni");
                     boughtProducts.setValue(productsList);
-                }, throwable -> {
-                    responseMessage.setValue(throwable.getMessage());
-                });
+                }, throwable ->
+                        responseMessage.setValue(throwable.getMessage()));
+
+        compositeDisposable.add(disposable);
     }
 
     @Override
@@ -142,5 +147,4 @@ public class BoughtProductsListViewModel extends AndroidViewModel {
         super.onCleared();
         compositeDisposable.clear();
     }
-
 }

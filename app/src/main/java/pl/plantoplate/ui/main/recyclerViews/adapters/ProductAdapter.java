@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.recyclerViews.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
@@ -49,7 +45,6 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @SuppressLint("NotifyDataSetChanged")
     public void setProductsList(ArrayList<Product> filterlist) {
         products = filterlist;
-        //notifyItemChanged(0, products.size());
         notifyDataSetChanged();
     }
 

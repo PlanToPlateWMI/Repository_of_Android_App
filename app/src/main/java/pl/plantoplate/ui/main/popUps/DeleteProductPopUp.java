@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package pl.plantoplate.ui.main.productsDatabase.popups;
+package pl.plantoplate.ui.main.popUps;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
-
 import pl.plantoplate.R;
 
 public class DeleteProductPopUp extends Dialog {
@@ -29,7 +27,6 @@ public class DeleteProductPopUp extends Dialog {
         super(context);
         setCancelable(true);
         setContentView(R.layout.new_pop_up_delete_product_from_shopping_list);
-        //getWindow().setWindowAnimations(R.style.DialogAnimation);
 
         TextView acceptButton = findViewById(R.id.button_yes);
         TextView cancelButton = findViewById(R.id.button_no);
