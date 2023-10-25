@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.registration;
 
 import android.app.Dialog;
@@ -23,34 +22,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.Objects;
-
+import java.util.Optional;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.JwtResponse;
+import pl.plantoplate.data.remote.models.UserJoinGroupData;
+import pl.plantoplate.data.remote.repository.GroupRepository;
 import pl.plantoplate.databinding.GroupPageBinding;
-import pl.plantoplate.repository.remote.models.JwtResponse;
-import pl.plantoplate.repository.remote.models.UserJoinGroupData;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.group.GroupRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.ui.main.ActivityMain;
+import timber.log.Timber;
 
 /**
  * An activity for user entering group code to join group.
  */
 public class GroupEnterActivity extends AppCompatActivity implements ApplicationStateController {
 
-    private GroupPageBinding group_enter_view;
-
-    private TextInputEditText group_code_enter;
-    private Button group_code_enter_button;
-
+    private CompositeDisposable compositeDisposable;
+    private TextInputEditText groupCodeEnterEditText;
+    private Button groupCodeEnterButton;
     private SharedPreferences prefs;
 
     /**
@@ -60,20 +55,25 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GroupPageBinding groupPageBinding = GroupPageBinding.inflate(getLayoutInflater());
+        setContentView(groupPageBinding.getRoot());
 
-        // Inflate the layout using the View Binding Library
-        group_enter_view = GroupPageBinding.inflate(getLayoutInflater());
-        setContentView(group_enter_view.getRoot());
-
-        // Get the group code entered by the user
-        group_code_enter = group_enter_view.wprowadzKod;
-        group_code_enter_button = group_enter_view.buttonZatwierdz;
-
-        // Set listener for the group code entered by the user
-        group_code_enter_button.setOnClickListener(this::validateGroupCode);
-
-        // Get shared preferences
+        initViews(groupPageBinding);
+        setClickListeners();
         prefs = getSharedPreferences("prefs", 0);
+        compositeDisposable = new CompositeDisposable();
+        Timber.d("Activity created");
+    }
+
+    private void initViews(GroupPageBinding groupPageBinding) {
+        Timber.d("Initializing views...");
+        groupCodeEnterEditText = groupPageBinding.wprowadzKod;
+        groupCodeEnterButton = groupPageBinding.buttonZatwierdz;
+    }
+
+    private void setClickListeners() {
+        Timber.d("Setting click listeners...");
+        groupCodeEnterButton.setOnClickListener(this::validateGroupCode);
     }
 
     /**
@@ -82,10 +82,10 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
      * @param code The group code entered by the user
      */
     public void getJoinGroupData(View v, String code) {
+        Timber.d("Getting join group data...");
         String email = prefs.getString("email", "");
         String password = prefs.getString("password", "");
         UserJoinGroupData data = new UserJoinGroupData(code, email, password);
-
         joinGroup(v, data);
     }
 
@@ -95,97 +95,95 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
      * @param v The view that was clicked
      */
     public void validateGroupCode(View v) {
-        String code = Objects.requireNonNull(group_code_enter.getText()).toString();
-        if (code.isEmpty()) {
-            Snackbar.make(v, "Wprowadź kod grupy!", Snackbar.LENGTH_LONG).show();
-            return;
+        Timber.d("Validating group code...");
+        Optional<CharSequence> code = Optional.ofNullable(groupCodeEnterEditText.getText());
+
+        if (code.map(CharSequence::toString).orElse("").isEmpty()) {
+            Timber.d("Group code is empty");
+            showSnackbar(v, "Wprowadź kod grupy!");
+        } else {
+            Timber.d("Group code is correct");
+            getJoinGroupData(v, code.get().toString());
         }
-        getJoinGroupData(v, code);
     }
 
     /**
      * This method is called when the user clicks the confirm button.
      * It makes an API call to join the group.
      * @param view The view that was clicked
-     * @param userJoinGroupdata The data needed to join the group
+     * @param userJoinGroupData The data needed to join the group
      */
-    public void joinGroup(View view, UserJoinGroupData userJoinGroupdata) {
+    public void joinGroup(View view, UserJoinGroupData userJoinGroupData) {
+        Timber.d("Joining group...");
         GroupRepository groupRepository = new GroupRepository();
-        groupRepository.joinGroupByCode(userJoinGroupdata, new ResponseCallback<JwtResponse>() {
 
-            /**
-             * Called when the operation is successful and receives a JwtResponse.
-             *
-             * @param jwt The JwtResponse object containing the token and role.
-             */
-            @Override
-            public void onSuccess(JwtResponse jwt) {
-                // Save token and role in shared preferences
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("token", jwt.getToken());
-                editor.putString("role", jwt.getRole());
-                editor.apply();
+        Disposable disposable = groupRepository.joinGroupByCode(userJoinGroupData)
+                .subscribe(
+                        jwt -> {
+                            saveUserData(jwt);
+                            if (jwt.getRole().equals("ROLE_USER")) {
+                                showRoleChildAboutInfoPopUp();
+                            } else {
+                                startMainActivity();
+                            }
+                        },
+                        error -> showSnackbar(view, error.getMessage())
+                );
 
-                if (jwt.getRole().equals("ROLE_USER")) {
-                    showRoleChildAboutInfoPopUp();
-                } else {
-                    startMainActivity();
-                }
-            }
-
-            /**
-             * Called when an error occurs.
-             *
-             * @param errorMessage The error message to display.
-             */
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            /**
-             * Called when a failure occurs.
-             *
-             * @param failureMessage The failure message to display.
-             */
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
-    public void startMainActivity(){
-        // start main activity
-        Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-
-        // save app state
-        saveAppState(ApplicationState.MAIN_ACTIVITY);
+    private void saveUserData(JwtResponse jwt) {
+        Timber.d("Saving user data...");
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("token", jwt.getToken());
+        editor.putString("role", jwt.getRole());
+        editor.apply();
     }
 
-    public void showRoleChildAboutInfoPopUp(){
+    public void showRoleChildAboutInfoPopUp() {
+        Timber.d("Showing role child about info pop up...");
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.new_pop_up_dziecko);
 
         TextView acceptButton = dialog.findViewById(R.id.button_yes);
-
         acceptButton.setOnClickListener(v -> {
+            Timber.d("Accepting role child about info pop up...");
             startMainActivity();
             dialog.dismiss();
         });
         dialog.show();
     }
 
+    public void startMainActivity() {
+        Timber.d("Starting main activity...");
+        Intent intent = new Intent(this, ActivityMain.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        saveAppState(ApplicationState.MAIN_ACTIVITY);
+    }
+
+    private void showSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+    }
+
     /**
      * This method is called when the user clicks the back button.
      * It starts the previous activity.
+     * @param applicationState The state of the application.
      */
     @Override
     public void saveAppState(ApplicationState applicationState) {
+        Timber.d("Saving application state: %s", applicationState.toString());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("applicationState", applicationState.toString());
         editor.apply();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Timber.d("Destroying activity...");
+        compositeDisposable.dispose();
     }
 }

@@ -13,34 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import com.google.android.material.navigation.NavigationBarView;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
-
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
 import pl.plantoplate.ui.main.recepies.RecipeFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
+import timber.log.Timber;
 
 /**
  * This is the main activity of the application. It is responsible for displaying the bottom navigation bar and
  * switching between the fragments.
  */
-public class ActivityMain extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
-    private ActivityMainForFragmentsBinding binding;
+    private static final int MENU_CALENDAR = R.id.calendar;
+    private static final int MENU_COTTAGE = R.id.cottage;
+    private static final int MENU_SHOPPING_CART = R.id.shopping_cart;
+    private static final int MENU_RECEIPT = R.id.receipt_long;
+    private static final int MENU_SETTINGS = R.id.settings;
 
     /**
      * Called when the activity is starting. Inflates the layout using view binding
@@ -51,22 +53,17 @@ public class ActivityMain extends AppCompatActivity {
      *                           most recently supplied in onSaveInstanceState(Bundle).
      *                           Otherwise, it is null.
      */
-    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Inflate the layout using view binding
-        binding = ActivityMainForFragmentsBinding.inflate(getLayoutInflater());
+        ActivityMainForFragmentsBinding binding = ActivityMainForFragmentsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Set the navigation item selected listener to this activity
-        binding.bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
-
-        // Set the initial fragment to be displayed
+        binding.bottomNavigationView.setOnItemSelectedListener(this);
         if (savedInstanceState == null) {
-            binding.bottomNavigationView.setSelectedItemId(R.id.shopping_cart);
+            binding.bottomNavigationView.setSelectedItemId(MENU_SHOPPING_CART);
         }
+        Timber.d("Activity created");
     }
 
     /**
@@ -75,25 +72,24 @@ public class ActivityMain extends AppCompatActivity {
      * @param item The menu item that was selected.
      * @return True if the item was handled, false otherwise.
      */
-    @SuppressLint("NonConstantResourceId")
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        // Replace the current fragment with the selected fragment based on its ID
+        Timber.d("Selected navigation item: %s", item.getTitle());
         switch (item.getItemId()) {
-            case R.id.calendar:
-                replaceFragment(new CalendarFragment(), "calendar");
+            case MENU_CALENDAR:
+                replaceFragment(new CalendarFragment(), "CALENDAR");
                 return true;
-            case R.id.cottage:
-                replaceFragment(new StorageFragment(), "storage");
+            case MENU_COTTAGE:
+                replaceFragment(new StorageFragment(), "STORAGE");
                 return true;
-            case R.id.shopping_cart:
-                replaceFragment(new ShoppingListFragment(), "shoppingList");
+            case MENU_SHOPPING_CART:
+                replaceFragment(new ShoppingListFragment(), "SHOPPING_LIST");
                 return true;
-            case R.id.receipt_long:
-                replaceFragment(new RecipeFragment(), "recipe");
+            case MENU_RECEIPT:
+                replaceFragment(new RecipeFragment(), "RECIPE");
                 return true;
-            case R.id.settings:
-                replaceFragment(new SettingsFragment(), "settings");
+            case MENU_SETTINGS:
+                replaceFragment(new SettingsFragment(), "SETTINGS");
                 return true;
         }
         return false;
@@ -105,11 +101,12 @@ public class ActivityMain extends AppCompatActivity {
      * @param fragment The fragment to replace the current fragment with.
      */
     private void replaceFragment(Fragment fragment, String tag) {
-
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
-        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, fragment);
-        //transaction.addToBackStack(tag);
+        Timber.d("Replacing fragment with tag: %s", tag);
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment, tag);
+        transaction.addToBackStack(tag);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.commit();
     }
 }

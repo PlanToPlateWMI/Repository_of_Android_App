@@ -13,39 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.changePermissions;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
+import java.util.Map;
 import pl.plantoplate.R;
-import pl.plantoplate.repository.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.UserInfo;
 
 public class UsersInfoViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView userName;
-    private TextView userPermissions;
-    private ImageView editUser;
-
-    private int itemType;
+    private final TextView userNameTextView;
+    private final TextView userPermissionsButton;
+    private final ImageView editUserButton;
 
     /**
      * Constructor for the UsersInfoViewHolder class.
      *
      * @param itemView The root view of the item layout.
-     * @param itemType The type of the item view.
      */
-    public UsersInfoViewHolder(View itemView, int itemType) {
+    public UsersInfoViewHolder(View itemView) {
         super(itemView);
-        this.itemType = itemType;
-        userName = itemView.findViewById(R.id.user_name);
-        userPermissions = itemView.findViewById(R.id.user_permissions);
-        editUser = itemView.findViewById(R.id.iconEdit_user);
-
+        userNameTextView = itemView.findViewById(R.id.user_name);
+        userPermissionsButton = itemView.findViewById(R.id.user_permissions);
+        editUserButton = itemView.findViewById(R.id.iconEdit_user);
     }
 
     /**
@@ -55,18 +48,14 @@ public class UsersInfoViewHolder extends RecyclerView.ViewHolder {
      * @param listener The listener for setup user permissions items.
      */
     public void bind(UserInfo userInfo, SetupUserPermissionsItems listener) {
+        userNameTextView.setText(userInfo.getUsername());
+        Map<String, String> roleMappings = Map.of(
+                "ROLE_ADMIN", "Administrator",
+                "ROLE_USER", "Użytkownik"
+        );
 
-        userName.setText(userInfo.getUsername());
-        String role = "";
-        if (userInfo.getRole().equals("ROLE_ADMIN")){
-            role = "Administrator";
-        } else if (userInfo.getRole().equals("ROLE_USER")){
-            role = "Użytkownik";
-        } else {
-            role = "Nieznana rola";
-        }
-        userPermissions.setText(role);
-
-        listener.setupEditPermissionsButtonClick(editUser, userInfo);
+        String role = roleMappings.getOrDefault(userInfo.getRole(), "Nieznana rola");
+        userPermissionsButton.setText(role);
+        listener.setupEditPermissionsButtonClick(editUserButton, userInfo);
     }
 }

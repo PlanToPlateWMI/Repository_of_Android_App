@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.accountManagement.changePassword;
 
 import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,43 +23,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.Objects;
-
-import pl.plantoplate.R;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentPasswordChange2Binding;
-import pl.plantoplate.databinding.FragmentPasswordChangeBinding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.SCryptStretcher;
 import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
-
 
 /**
  * This fragment is used to change the password.
  */
 public class PasswordChangeNewPasswords extends Fragment {
 
-    private FragmentPasswordChange2Binding fragmentPasswordChange2Binding;
-
+    private CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
-
-    private Button button_zatwierdz;
-
-    private TextInputLayout wprowadz_nowe_haslo;
-
-    private TextInputLayout wprowadz_nowe_haslo_ponownie;
-
+    private Button acceptButton;
+    private TextInputLayout enterNewPasswordInputLayout;
+    private TextInputLayout repeatNewPasswordInputLayout;
+    private EditText newPasswordEditText;
+    private EditText repeatNewPasswordEditText;
     private SharedPreferences prefs;
 
 
@@ -75,89 +61,65 @@ public class PasswordChangeNewPasswords extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout using the View Binding Library
-        fragmentPasswordChange2Binding = FragmentPasswordChange2Binding.inflate(inflater, container, false);
-
-        // Get the button
-        button_zatwierdz = fragmentPasswordChange2Binding.buttonZatwierdz;
-
-        // Get the text input
-        wprowadz_nowe_haslo = fragmentPasswordChange2Binding.wprowadzNoweHaslo;
-        wprowadz_nowe_haslo_ponownie = fragmentPasswordChange2Binding.wprowadzNoweHasloPonownie;
-
+        FragmentPasswordChange2Binding fragmentPasswordChange2Binding = FragmentPasswordChange2Binding.inflate(inflater, container, false);
+        compositeDisposable = new CompositeDisposable();
         userRepository = new UserRepository();
-
         prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
 
-        button_zatwierdz.setOnClickListener(v -> validatePasswords());
-
+        initViews(fragmentPasswordChange2Binding);
+        setClickListeners();
         return fragmentPasswordChange2Binding.getRoot();
     }
 
+    public void initViews(FragmentPasswordChange2Binding fragmentPasswordChange2Binding){
+        acceptButton = fragmentPasswordChange2Binding.buttonZatwierdz;
+        enterNewPasswordInputLayout = fragmentPasswordChange2Binding.wprowadzNoweHaslo;
+        repeatNewPasswordInputLayout = fragmentPasswordChange2Binding.wprowadzNoweHasloPonownie;
+        newPasswordEditText = enterNewPasswordInputLayout.getEditText();
+        repeatNewPasswordEditText = repeatNewPasswordInputLayout.getEditText();
+    }
+
+    private void setClickListeners() {
+        acceptButton.setOnClickListener(v -> validatePasswords());
+    }
+
     public void validatePasswords(){
-        String password = Objects.requireNonNull(wprowadz_nowe_haslo.getEditText()).getText().toString();
-        String password2 = Objects.requireNonNull(wprowadz_nowe_haslo_ponownie.getEditText()).getText().toString();
+        String password = newPasswordEditText.getText().toString();
+        String password2 = repeatNewPasswordEditText.getText().toString();
 
-        if (password.isEmpty()) {
-            wprowadz_nowe_haslo.getEditText().setError("Wprowadź hasło");
-            wprowadz_nowe_haslo.requestFocus();
-            return;
-        } else if (!password.equals(password2)) {
-            wprowadz_nowe_haslo_ponownie.getEditText().setError("Hasła nie są takie same");
-            wprowadz_nowe_haslo_ponownie.requestFocus();
-            return;
-        }
-
-        if (password.length() < 7) {
+        if(password.isEmpty()) {
+            enterNewPasswordInputLayout.setError("Wprowadź hasło");
+            enterNewPasswordInputLayout.requestFocus();
+        } else if(!password.equals(password2)) {
+            repeatNewPasswordInputLayout.setError("Hasła nie są takie same");
+            repeatNewPasswordInputLayout.requestFocus();
+        } else if(password.length() < 7) {
             System.out.println("Hasło musi mieć co najmniej 7 znaków");
-            wprowadz_nowe_haslo.getEditText().setError("Hasło musi mieć co najmniej 7 znaków");
-            wprowadz_nowe_haslo.requestFocus();
-            return;
+            enterNewPasswordInputLayout.setError("Hasło musi mieć co najmniej 7 znaków");
+            enterNewPasswordInputLayout.requestFocus();
+        } else {
+            String email = prefs.getString("email", "");
+            password = SCryptStretcher.stretch(password, email);
+            changePassword(password);
         }
-
-        String email = prefs.getString("email", "");
-
-        password = SCryptStretcher.stretch(password, email);
-
-        changePassword(password);
     }
 
     private void changePassword(String password) {
-
         String token = "Bearer " + prefs.getString("token", "");
-
-        userRepository.changePassword(token, password, new ResponseCallback<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo response) {
-                requireActivity().runOnUiThread(() -> {
+        Disposable disposable = userRepository.changePassword(token, password)
+                .subscribe(userInfo -> {
                     Toast.makeText(requireActivity(), "Hasło zostało zmienione", Toast.LENGTH_SHORT).show();
-                });
+                    exitAccount();
+                }, throwable ->
+                        Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 
-                exitAccount();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show();
-                });
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show();
-                });
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
     /**
      * Logs the user out of the app.
      */
     public void exitAccount() {
-        //delete the user's data from the shared preferences
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove("name");
         editor.remove("email");
@@ -166,12 +128,9 @@ public class PasswordChangeNewPasswords extends Fragment {
         editor.remove("token");
         editor.apply();
 
-        //go back to the login screen
         Intent intent = new Intent(this.getContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-
-        // save the app state
         saveAppState(ApplicationState.LOGIN);
     }
 
@@ -185,17 +144,9 @@ public class PasswordChangeNewPasswords extends Fragment {
         editor.apply();
     }
 
-
-    /**
-     * Replaces the current fragment with the specified fragment.
-     *
-     * @param fragment The fragment to replace the current fragment with.
-     */
-    private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.settings_default, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }

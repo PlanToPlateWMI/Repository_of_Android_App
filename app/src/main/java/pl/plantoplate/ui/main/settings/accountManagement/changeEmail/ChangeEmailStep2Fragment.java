@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.accountManagement.changeEmail;
 
 import android.content.SharedPreferences;
@@ -22,26 +21,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.Objects;
-
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.JwtResponse;
+import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentEmailChange2Binding;
-import pl.plantoplate.databinding.FragmentEmailChangeBinding;
-import pl.plantoplate.repository.local.models.User;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.models.JwtResponse;
-import pl.plantoplate.repository.remote.models.UserInfo;
-import pl.plantoplate.repository.remote.user.UserRepository;
 import pl.plantoplate.tools.SCryptStretcher;
-import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 
 
@@ -51,15 +44,13 @@ import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
  */
 public class ChangeEmailStep2Fragment extends Fragment {
 
+    private CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
-    private FragmentEmailChange2Binding fragmentEmailChange2Binding;
-
-    private Button button_zatwierdz;
-
-    private TextInputLayout wprowadz_nowy_email;
-
-    private TextInputLayout wprowadz_nowy_email_ponownie;
-
+    private Button acceptButton;
+    private TextInputLayout enterNewEmailInputLayout;
+    private TextInputLayout repeatNewEmailInputLayout;
+    private EditText enterNewEmailEditText;
+    private EditText repeatNewEmailEditText;
     private SharedPreferences prefs;
 
     /**
@@ -72,125 +63,85 @@ public class ChangeEmailStep2Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout using the View Binding Library
-        fragmentEmailChange2Binding = FragmentEmailChange2Binding.inflate(inflater, container, false);
-
-        // Get the button
-        button_zatwierdz = fragmentEmailChange2Binding.buttonZatwierdz;
-
-        // Get the text input
-        wprowadz_nowy_email = fragmentEmailChange2Binding.wprowadzNowyEmail;
-        wprowadz_nowy_email_ponownie = fragmentEmailChange2Binding.wprowadzNowyEmailPonownie;
-
-        button_zatwierdz.setOnClickListener(v -> validateEmail());
-
+        FragmentEmailChange2Binding fragmentEmailChange2Binding = FragmentEmailChange2Binding.inflate(inflater, container, false);
+        compositeDisposable = new CompositeDisposable();
         userRepository = new UserRepository();
-
-        // get the shared preferences
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
+        initViews(fragmentEmailChange2Binding);
+        setClickListeners();
         return fragmentEmailChange2Binding.getRoot();
     }
 
-    public void validateEmail(){
-
-        String newEmail = Objects.requireNonNull(wprowadz_nowy_email.getEditText()).getText().toString().trim();
-        String newEmailAgain = Objects.requireNonNull(wprowadz_nowy_email_ponownie.getEditText()).getText().toString().trim();
-
-        if(newEmail.isEmpty()){
-            wprowadz_nowy_email.setError("Pole nie może być puste");
-            wprowadz_nowy_email.requestFocus();
-            return;
-        }
-
-        if(newEmailAgain.isEmpty()){
-            wprowadz_nowy_email_ponownie.setError("Pole nie może być puste");
-            wprowadz_nowy_email_ponownie.requestFocus();
-            return;
-        }
-
-        if(!newEmail.equals(newEmailAgain)){
-            wprowadz_nowy_email_ponownie.setError("Adresy email nie są takie same");
-            wprowadz_nowy_email_ponownie.requestFocus();
-            return;
-        }
-
-        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
-            wprowadz_nowy_email.setError("Wprowadź poprawny adres email");
-            wprowadz_nowy_email.requestFocus();
-            return;
-        }
-
-        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmailAgain).matches()){
-            wprowadz_nowy_email_ponownie.setError("Wprowadź poprawny adres email");
-            wprowadz_nowy_email_ponownie.requestFocus();
-            return;
-        }
-
-        setNewPassword(newEmail);
+    public void initViews(FragmentEmailChange2Binding fragmentEmailChange2Binding){
+        acceptButton = fragmentEmailChange2Binding.buttonZatwierdz;
+        enterNewEmailInputLayout = fragmentEmailChange2Binding.wprowadzNowyEmail;
+        repeatNewEmailInputLayout = fragmentEmailChange2Binding.wprowadzNowyEmailPonownie;
+        enterNewEmailEditText = enterNewEmailInputLayout.getEditText();
+        repeatNewEmailEditText = repeatNewEmailInputLayout.getEditText();
     }
 
-    public void setNewPassword(String newEmail){
-        String token = "Bearer " + prefs.getString("token", "");
+    public void setClickListeners(){
+        acceptButton.setOnClickListener(v -> validateEmail());
+    }
 
+    public void validateEmail(){
+        String newEmail = enterNewEmailEditText.getText().toString().trim();
+        String newEmailAgain = repeatNewEmailEditText.getText().toString().trim();
+
+        if(newEmail.isEmpty()){
+            enterNewEmailInputLayout.setError("Pole nie może być puste");
+            enterNewEmailInputLayout.requestFocus();
+        } else if(!newEmail.equals(newEmailAgain)){
+            repeatNewEmailInputLayout.setError("Adresy email nie są takie same");
+            repeatNewEmailInputLayout.requestFocus();
+        } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
+            enterNewEmailInputLayout.setError("Wprowadź poprawny adres email");
+            enterNewEmailInputLayout.requestFocus();
+        } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmailAgain).matches()){
+            repeatNewEmailInputLayout.setError("Wprowadź poprawny adres email");
+            repeatNewEmailInputLayout.requestFocus();
+        } else {
+            setNewPassword(newEmail);
+        }
+    }
+
+    public void setNewPassword(String newEmail) {
+        String token = "Bearer " + prefs.getString("token", "");
         String newPassword = SCryptStretcher.stretch(requireArguments().getString("password"), newEmail);
 
-        userRepository.changePassword(token, newPassword, new ResponseCallback<UserInfo>() {
-            @Override
-            public void onSuccess(UserInfo response) {
-                UserInfo userInfo = new UserInfo();
-                userInfo.setEmail(newEmail);
-                userInfo.setPassword(newPassword);
+        Disposable disposable = userRepository.changePassword(token, newPassword)
+                .subscribe(userInfo -> {
+                    UserInfo updatedUserInfo = new UserInfo();
+                    updatedUserInfo.setEmail(newEmail);
+                    updatedUserInfo.setPassword(newPassword);
 
-                setNewEmail(token, userInfo);
-            }
+                    setNewEmail(token, updatedUserInfo);
+                }, throwable ->
+                        Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 
-            @Override
-            public void onError(String errorMessage) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), failureMessage, Toast.LENGTH_SHORT).show());
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
     public void setNewEmail(String token, UserInfo userInfo){
 
-        userRepository.changeEmail(token, userInfo, new ResponseCallback<JwtResponse>() {
-            @Override
-            public void onSuccess(JwtResponse jwt) {
-                requireActivity().runOnUiThread(() -> {
+        Disposable disposable = userRepository.changeEmail(token, userInfo)
+                .subscribe(jwt -> {
                     Toast.makeText(requireContext(), "Email został zmieniony", Toast.LENGTH_LONG).show();
-                });
+                    saveNewUserData(jwt, userInfo);
+                    replaceFragment(new ChangeTheData());
+                }, throwable ->
+                        Toast.makeText(requireContext(), throwable.getMessage(), Toast.LENGTH_LONG).show());
 
-                // save new email and role in shared preferences
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("email", userInfo.getEmail());
-                editor.putString("role", jwt.getRole());
-                editor.putString("token", jwt.getToken());
-                editor.apply();
+        compositeDisposable.add(disposable);
+    }
 
-                replaceFragment(new ChangeTheData());
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show();
-                });
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireContext(), failureMessage, Toast.LENGTH_LONG).show();
-                });
-            }
-        });
+    public void saveNewUserData(JwtResponse jwt, UserInfo userInfo){
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("email", userInfo.getEmail());
+        editor.putString("role", jwt.getRole());
+        editor.putString("token", jwt.getToken());
+        editor.apply();
     }
 
     /**
@@ -198,11 +149,15 @@ public class ChangeEmailStep2Fragment extends Fragment {
      * @param fragment The fragment to replace the current fragment with.
      */
     private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.settings_default, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
 }

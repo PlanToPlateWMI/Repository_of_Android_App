@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.login;
 
 import android.content.Intent;
@@ -26,39 +25,37 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.Objects;
-
+import java.util.Optional;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.databinding.LoginPageBinding;
-import pl.plantoplate.repository.remote.models.JwtResponse;
-import pl.plantoplate.repository.remote.models.SignInData;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.auth.AuthRepository;
+import pl.plantoplate.data.remote.models.SignInData;
+import pl.plantoplate.data.remote.repository.AuthRepository;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;
 import pl.plantoplate.ui.login.remindPassword.EnterEmailActivity;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.registration.RegisterActivity;
+import timber.log.Timber;
 
 /**
  * An activity that allows users to log in to their account.
  */
 public class LoginActivity extends AppCompatActivity implements ApplicationStateController {
 
-    private LoginPageBinding login_view;
-
-    private TextInputEditText email_field;
-    private TextInputEditText password_field;
-    private Button sign_in_button;
-    private TextView remind_password_button;
-    private TextView nie_masz_konta;
-
+    private CompositeDisposable compositeDisposable;
+    private TextInputEditText emailTextInput;
+    private TextInputEditText passwordTextInput;
+    private Button signInButton;
+    private TextView remindPasswordButton;
+    private TextView dontHaveAccountTextView;
     private SharedPreferences prefs;
 
     /**
@@ -68,30 +65,37 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Inflate the layout using view binding
-        login_view = LoginPageBinding.inflate(getLayoutInflater());
-        setContentView(login_view.getRoot());
-
-        // Define the ui elements
-        email_field = login_view.enterMail;
-        password_field = login_view.enterPass;
-        sign_in_button = login_view.buttonZalogujSie;
-        remind_password_button = login_view.przypHaslo;
-        nie_masz_konta = login_view.nieMaszKonta;
-
-        Spannable spans = new SpannableString("Nie masz konta?    ZAŁÓŻ KONTO");
-        spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        nie_masz_konta.setText(spans);
-
-        // Get the shared preferences
+        LoginPageBinding loginPageBinding = LoginPageBinding.inflate(getLayoutInflater());
+        setContentView(loginPageBinding.getRoot());
+        compositeDisposable = new CompositeDisposable();
         prefs = getSharedPreferences("prefs", 0);
 
-        // Set a click listeners for the buttons
-        sign_in_button.setOnClickListener(this::signIn);
-        remind_password_button.setOnClickListener(v -> remindPassword());
-        nie_masz_konta.setOnClickListener(v -> createAccount());
+        initViews(loginPageBinding);
+        setClickListeners();
+    }
 
+    private void initViews(LoginPageBinding loginPageBinding) {
+        Timber.d("Initializing views...");
+        emailTextInput = loginPageBinding.enterMail;
+        passwordTextInput = loginPageBinding.enterPass;
+        signInButton = loginPageBinding.buttonZalogujSie;
+        remindPasswordButton = loginPageBinding.przypHaslo;
+        dontHaveAccountTextView = loginPageBinding.nieMaszKonta;
+        initDontHaveAccountTextView();
+    }
+
+    private void initDontHaveAccountTextView() {
+        Timber.d("Initializing has account text view...");
+        Spannable spans = new SpannableString("Nie masz konta?    ZAŁÓŻ KONTO");
+        spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        dontHaveAccountTextView.setText(spans);
+    }
+
+    private void setClickListeners() {
+        Timber.d("Setting click listeners...");
+        signInButton.setOnClickListener(this::validateUserInfo);
+        remindPasswordButton.setOnClickListener(v -> remindPassword());
+        dontHaveAccountTextView.setOnClickListener(v -> createAccount());
     }
 
     /**
@@ -99,87 +103,67 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
      *
      * @return A UserInfo object containing the user's information.
      */
-    public SignInData getUserInfo(){
-        // get the email and password from the text fields
-        String email = Objects.requireNonNull(email_field.getText()).toString();
-        String password = Objects.requireNonNull(password_field.getText()).toString();
-        // remove all whitespaces from email
-        email = email.trim();
-        //stretch password to make it unreadable and secure
-        if (!password.isEmpty()) {
-            password = SCryptStretcher.stretch(password, email);
-        }
-
+    public SignInData getUserInfo() {
+        String email = Optional.ofNullable(emailTextInput.getText()).map(Objects::toString).orElse("");
+        String password = Optional.ofNullable(passwordTextInput.getText()).map(Objects::toString).orElse("");
         return new SignInData(email, password);
     }
 
-    public boolean validMail(String email){
-        return email != null && !email.isEmpty();
-    }
-
-    public boolean validPassword(String password){
-        return password != null && !password.isEmpty();
+    public void validateUserInfo(View view) {
+        SignInData signInData = getUserInfo();
+        if (signInData.getEmail().isEmpty()) {
+            showSnackbar(view, "Wprowadź adres email");
+        }
+        else if(signInData.getPassword().isEmpty()) {
+            showSnackbar(view, "Wprowadź hasło");
+        }
+        else{
+            signInData.setPassword(SCryptStretcher.stretch(signInData.getPassword(), signInData.getEmail()));
+            signIn(signInData, view);
+        }
     }
 
     /**
      * Signs the user in to their account.
      * @param view The view that was clicked.
      */
-    public void signIn(View view){
-
-        SignInData userSignInData = getUserInfo();
-
-        // check if the email and password are not empty
-        if(!validMail(userSignInData.getEmail())){
-            Snackbar.make(view, "Wprowadź adres email", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        // check if the email and password are not empty
-        if(!validPassword(userSignInData.getPassword())){
-            Snackbar.make(view, "Wprowadź hasło", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-
-
+    public void signIn(SignInData userSignInData, View view){
         AuthRepository authRepository = new AuthRepository();
-        authRepository.signIn(userSignInData, new ResponseCallback<JwtResponse>() {
-            @Override
-            public void onSuccess(JwtResponse jwtResponse) {
-                // save the token and role in the shared preferences
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("email", userSignInData.getEmail());
-                editor.putString("token", jwtResponse.getToken());
-                editor.putString("role", jwtResponse.getRole());
-                editor.putString("password", userSignInData.getPassword());
-                editor.apply();
+        Disposable disposable = authRepository.signIn(userSignInData)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(jwtResponse -> {
+                    saveUserData(userSignInData, jwtResponse.getRole(), jwtResponse.getToken());
+                    startMainActivity(view);
+                    saveAppState(ApplicationState.MAIN_ACTIVITY);
+                }, throwable -> showSnackbar(view, Objects.requireNonNull(throwable.getMessage())));
 
-                // Start the main activity
-                Intent intent = new Intent(view.getContext(), ActivityMain.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                view.getContext().startActivity(intent);
-
-                // save the app state
-                saveAppState(ApplicationState.MAIN_ACTIVITY);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
+    public void saveUserData(SignInData signInData, String role, String token) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("email", signInData.getEmail());
+        editor.putString("token", token);
+        editor.putString("role", role);
+        editor.putString("password", signInData.getPassword());
+        editor.apply();
+    }
+
+    public void startMainActivity(View view) {
+        Intent intent = new Intent(view.getContext(), ActivityMain.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        view.getContext().startActivity(intent);
+    }
+
+    public void showSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+    }
 
     /**
      * Starts the RegisterActivity to allow the user to create an account.
      */
     public void createAccount() {
-        // Create an intent to start the RegisterActivity
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
         saveAppState(ApplicationState.REGISTER);
@@ -189,9 +173,7 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
      * Starts the EnterEmailActivity to allow the user to reset their password.
      */
     public void remindPassword() {
-        //Get email from user
-        String email = Objects.requireNonNull(email_field.getText()).toString();
-        // Create an intent to start the RemindPasswordActivity
+        String email = Objects.requireNonNull(emailTextInput.getText()).toString();
         Intent intent = new Intent(this, EnterEmailActivity.class);
         intent.putExtra("email", email);
         startActivity(intent);
@@ -207,6 +189,10 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         editor.putString("applicationState", applicationState.toString());
         editor.apply();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
 }
-
-

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.accountManagement;
 
 import android.os.Bundle;
@@ -21,11 +20,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
 import pl.plantoplate.ui.main.settings.accountManagement.changeEmail.ChangeEmailStep1Fragment;
@@ -37,12 +34,9 @@ import pl.plantoplate.ui.main.settings.accountManagement.changePassword.Password
  */
 public class ChangeTheData extends Fragment {
 
-    private FragmentChangeSelectorBinding fragmentChangeSelectorBinding;
-
-    private Button zmiana_imienia;
-    private Button zmiana_emaila;
-    private Button zmiana_hasla;
-
+    private Button changeNameButton;
+    private Button changeEmailButton;
+    private Button changePasswordButton;
 
     /**
      * Create the view
@@ -54,18 +48,23 @@ public class ChangeTheData extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FragmentChangeSelectorBinding fragmentChangeSelectorBinding = FragmentChangeSelectorBinding.inflate(inflater, container, false);
 
-        fragmentChangeSelectorBinding = FragmentChangeSelectorBinding.inflate(inflater, container, false);
-
-        zmiana_imienia = fragmentChangeSelectorBinding.zmianaImienia;
-        zmiana_emaila = fragmentChangeSelectorBinding.zmianaEmail;
-        zmiana_hasla = fragmentChangeSelectorBinding.zmianaHasla;
-
-        zmiana_imienia.setOnClickListener(v -> replaceFragment(new ChangeNameFragment()));
-        zmiana_emaila.setOnClickListener(v -> replaceFragment(new ChangeEmailStep1Fragment()));
-        zmiana_hasla.setOnClickListener(v -> replaceFragment(new PasswordChangeOldPassword()));
-
+        initViews(fragmentChangeSelectorBinding);
+        setClickListeners();
         return fragmentChangeSelectorBinding.getRoot();
+    }
+
+    public void initViews(FragmentChangeSelectorBinding fragmentChangeSelectorBinding ){
+        changeNameButton = fragmentChangeSelectorBinding.zmianaImienia;
+        changeEmailButton = fragmentChangeSelectorBinding.zmianaEmail;
+        changePasswordButton = fragmentChangeSelectorBinding.zmianaHasla;
+    }
+
+    private void setClickListeners() {
+        changeNameButton.setOnClickListener(v -> replaceFragment(new ChangeNameFragment()));
+        changeEmailButton.setOnClickListener(v -> replaceFragment(new ChangeEmailStep1Fragment()));
+        changePasswordButton.setOnClickListener(v -> replaceFragment(new PasswordChangeOldPassword()));
     }
 
     /**
@@ -73,11 +72,9 @@ public class ChangeTheData extends Fragment {
      * @param fragment The fragment to replace the current fragment with.
      */
     private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.settings_default, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.registration;
 
 import android.content.Intent;
@@ -21,32 +20,29 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.snackbar.Snackbar;
-
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.models.UserCredentials;
+import pl.plantoplate.data.remote.models.JwtResponse;
+import pl.plantoplate.data.remote.repository.GroupRepository;
 import pl.plantoplate.databinding.GroupChooseBinding;
-import pl.plantoplate.repository.remote.models.JwtResponse;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.group.GroupRepository;
-import pl.plantoplate.repository.remote.models.CreateGroupData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.ui.main.ActivityMain;
+import timber.log.Timber;
 
 /**
-
  This activity allows the user to select an option between entering an existing group or creating a new one.
  If the user chooses to create a new group, this activity will make an API call to create a new group with the
  user's email and password as credentials.
  */
 public class GroupSelectActivity extends AppCompatActivity implements ApplicationStateController {
-    private GroupChooseBinding group_select_view;
 
-    private Button enter_group;
-    private Button create_group;
-
+    private CompositeDisposable compositeDisposable;
+    private Button enterGroupButton;
+    private Button createGroupButton;
     private SharedPreferences prefs;
 
     /**
@@ -58,29 +54,27 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Inflate the layout using the View Binding Library
-        group_select_view = GroupChooseBinding.inflate(getLayoutInflater());
+        GroupChooseBinding group_select_view = GroupChooseBinding.inflate(getLayoutInflater());
         setContentView(group_select_view.getRoot());
 
-        // find views
-        enter_group = group_select_view.buttonMamZaproszenie;
-        create_group = group_select_view.buttonSwojaGrupa;
-
-        // set buttons onClickListeners
-        enter_group.setOnClickListener(v -> goToGroupEnterActivity());
-        create_group.setOnClickListener(this::createGroup);
-
-        // get shared preferences
+        initViews(group_select_view);
+        setClickListeners();
         prefs = getSharedPreferences("prefs", 0);
+        compositeDisposable = new CompositeDisposable();
+        Timber.d("Activity created");
     }
 
-    /**
-     * This method starts the GroupEnterActivity to allow the user to enter an existing group.
-     */
-    public void goToGroupEnterActivity() {
-        Intent intent = new Intent(getApplicationContext(), GroupEnterActivity.class);
-        startActivity(intent);
+    private void initViews(GroupChooseBinding group_select_view) {
+        Timber.d("Initializing views...");
+        enterGroupButton = group_select_view.buttonMamZaproszenie;
+        createGroupButton = group_select_view.buttonSwojaGrupa;
+    }
+
+    private void setClickListeners() {
+        Timber.d("Setting click listeners...");
+        enterGroupButton.setOnClickListener(v ->
+                startActivity(new Intent(this, GroupEnterActivity.class)));
+        createGroupButton.setOnClickListener(this::createGroup);
     }
 
     /**
@@ -88,13 +82,11 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
      *
      * @return The CreateGroupData object containing user credentials.
      */
-    public CreateGroupData getCreateGroupData() {
-        // get user credentials from shared preferences
+    public UserCredentials getUserCredentials() {
+        Timber.d("Getting user credentials...");
         String email = prefs.getString("email", "");
         String password = prefs.getString("password", "");
-
-        // create a new CreateGroupData object with user credentials
-        return new CreateGroupData(email, password);
+        return new UserCredentials(email, password);
     }
 
     /**
@@ -104,55 +96,40 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
      * @param view The view that was clicked
      */
     public void createGroup(View view) {
-        CreateGroupData createGroupData = getCreateGroupData();
-
-        // make API call to create a new group with user credentials
+        Timber.d("Creating group...");
+        UserCredentials userCredentials = getUserCredentials();
         GroupRepository groupRepository = new GroupRepository();
-        groupRepository.createGroup(createGroupData, new ResponseCallback<JwtResponse>() {
 
-            /**
-             * Called when the operation is successful and receives a JwtResponse.
-             *
-             * @param jwt The JwtResponse object containing the token and role.
-             */
-            @Override
-            public void onSuccess(JwtResponse jwt) {
+        Disposable disposable = groupRepository.createGroup(userCredentials)
+                .subscribe(
+                        jwt -> {
+                            saveUserData(jwt);
+                            startMainActivity();
+                            saveAppState(ApplicationState.MAIN_ACTIVITY);
+                        },
+                        error -> showSnackbar(view, error.getMessage())
+                );
 
-                // save user token and role in shared preferences
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("token", jwt.getToken());
-                editor.putString("role", jwt.getRole());
-                editor.apply();
+        compositeDisposable.add(disposable);
+    }
 
-                // start main activity
-                Intent intent = new Intent(getApplicationContext(), ActivityMain.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+    private void saveUserData(JwtResponse jwt) {
+        Timber.d("Saving user data...");
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("token", jwt.getToken());
+        editor.putString("role", jwt.getRole());
+        editor.apply();
+    }
 
-                // save app state
-                saveAppState(ApplicationState.MAIN_ACTIVITY);
-            }
+    private void startMainActivity() {
+        Timber.d("Starting main activity...");
+        Intent intent = new Intent(this, ActivityMain.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 
-            /**
-             * Called when an error occurs.
-             *
-             * @param errorMessage The error message to display.
-             */
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            /**
-             * Called when a failure occurs.
-             *
-             * @param failureMessage The failure message to display.
-             */
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+    private void showSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
 
     /**
@@ -162,8 +139,16 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
      */
     @Override
     public void saveAppState(ApplicationState applicationState) {
+        Timber.d("Saving application state: %s", applicationState.toString());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("applicationState", applicationState.toString());
         editor.apply();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Timber.d("Destroying activity...");
+        compositeDisposable.dispose();
     }
 }

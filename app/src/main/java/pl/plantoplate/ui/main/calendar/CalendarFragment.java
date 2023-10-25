@@ -26,7 +26,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +37,9 @@ import java.util.List;
 
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentCalendarBinding;
-import pl.plantoplate.ui.customViewes.RadioGridGroup;
+import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.recepies.RecipeFragment;
-import pl.plantoplate.ui.main.shoppingList.productsDatabase.ProductsDbaseFragment;
+import timber.log.Timber;
 
 /**
  * This fragment is responsible for displaying calendar view.
@@ -105,7 +104,7 @@ public class CalendarFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     private void setupNavigation() {
         radioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            Log.d("RadioGridGroup", "Checked ID: " + checkedId); // Debugging
+            Timber.tag("RadioGridGroup").d("Checked ID: %s", checkedId); // Debugging
             switch (checkedId) {
                 case R.id.wszystkie:
                     viewPager.setCurrentItem(0);
@@ -120,7 +119,7 @@ public class CalendarFragment extends Fragment {
                     viewPager.setCurrentItem(3);
                     break;
                 default:
-                    Log.d("RadioGridGroup", "Unhandled ID: " + checkedId); // Debugging
+                    Timber.tag("RadioGridGroup").d("Unhandled ID: %s", checkedId); // Debugging
                     break;
             }
         });

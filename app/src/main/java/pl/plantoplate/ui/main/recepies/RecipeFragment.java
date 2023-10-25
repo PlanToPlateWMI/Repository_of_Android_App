@@ -13,40 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.recepies;
 
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeBinding;
-import pl.plantoplate.ui.customViewes.RadioGridGroup;
+import pl.plantoplate.ui.customViews.RadioGridGroup;
 
 /**
  * This fragment is responsible for displaying the recipe view.
  */
 public class RecipeFragment extends Fragment {
 
-    private FragmentRecipeBinding recipe_view;
-    private SharedPreferences prefs;
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
-    private RadioGridGroup radioGridGroupCategories;
 
     /**
      * Called to create the view hierarchy of the fragment.
@@ -59,33 +48,22 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FragmentRecipeBinding fragmentRecipeBinding = FragmentRecipeBinding.inflate(inflater, container, false);
 
-        recipe_view = FragmentRecipeBinding.inflate(inflater, container, false);
+        initViews(fragmentRecipeBinding);
+        setupViewPager(viewPager);
+        setupNavigation();
+        return fragmentRecipeBinding.getRoot();
+    }
 
-        // Get the SharedPreferences object
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
+    public void initViews(FragmentRecipeBinding fragmentRecipeBinding){
+        viewPager = fragmentRecipeBinding.viewPagerBase;
+        radioGridGroup = fragmentRecipeBinding.radioGroupBaza;
+        RadioGridGroup radioGridGroupCategories = fragmentRecipeBinding.radioGroupRecipe;
 
-        // Setup views
-        viewPager = recipe_view.viewPagerBase;
-
-        // Set selected all products fragment by default on restart fragment.
-        radioGridGroup = recipe_view.radioGroupBaza;
-        radioGridGroupCategories = recipe_view.radioGroupRecipe;
-
-        //make radio button checked
         radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
         radioGridGroupCategories.setCheckedRadioButtonById(R.id.wszystkie);
-
-        // Set first visible AllProductsFragment by default
         viewPager.setCurrentItem(0);
-
-        // Setup swipe pager
-        setupViewPager(viewPager);
-
-        // Setup navigation
-        setupNavigation();
-
-        return recipe_view.getRoot();
     }
 
     /**
@@ -93,20 +71,12 @@ public class RecipeFragment extends Fragment {
      * listener. If user click on bottom navigation item then we change
      * current fragment in swipe pager.
      */
-    @SuppressLint("NonConstantResourceId")
     private void setupNavigation() {
         radioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            Log.d("RadioGridGroup", "Checked ID: " + checkedId); // Debugging
-            switch (checkedId) {
-                case R.id.wszystkie_button:
-                    viewPager.setCurrentItem(0);
-                    break;
-                case R.id.ulubione_button:
-                    viewPager.setCurrentItem(1);
-                    break;
-                default:
-                    Log.d("RadioGridGroup", "Unhandled ID: " + checkedId); // Debugging
-                    break;
+            if (checkedId == R.id.ulubione_button) {
+                viewPager.setCurrentItem(1);
+            } else {
+                viewPager.setCurrentItem(0);
             }
         });
     }
@@ -116,22 +86,19 @@ public class RecipeFragment extends Fragment {
      * @param viewPager swipe pager
      */
     private void setupViewPager(ViewPager2 viewPager) {
-
-        // Set up change callback to change bottom navigation item when swipe pager
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        recipe_view.radioGroupBaza.setCheckedRadioButtonById(R.id.wszystkie_button);
+                        radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
                         break;
                     case 1:
-                        recipe_view.radioGroupBaza.setCheckedRadioButtonById(R.id.ulubione_button);
+                        radioGridGroup.setCheckedRadioButtonById(R.id.ulubione_button);
                         break;
                 }
             }
         });
-        // Set up adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         adapter.addFragment(new AllRecipeFragment());
         adapter.addFragment(new LikeRecipeFragment());
@@ -144,58 +111,22 @@ public class RecipeFragment extends Fragment {
     static class ViewPagerAdapter extends FragmentStateAdapter {
         private final List<Fragment> fragmentList = new ArrayList<>();
 
-        /**
-         * Constructs a new ViewPagerAdapter.
-         *
-         * @param fragment The fragment associated with the adapter.
-         */
         public ViewPagerAdapter(@NonNull Fragment fragment) {
             super(fragment);
         }
 
-        /**
-         * Create fragment for swipe pager.
-         *
-         * @param position position of fragment
-         * @return fragment
-         */
         @NonNull
         @Override
         public Fragment createFragment(int position) {
             return fragmentList.get(position);
         }
 
-        /**
-         * Get count of fragments.
-         *
-         * @return count of fragments
-         */
         @Override
         public int getItemCount() {
             return fragmentList.size();
         }
-
-        /**
-         * Add fragment to fragment list.
-         *
-         * @param fragment fragment
-         */
         public void addFragment(Fragment fragment) {
             fragmentList.add(fragment);
         }
-    }
-
-
-    /**
-     * Called when the view previously created by {@link #onCreateView} has been detached from the fragment.
-     * This method is called after {@link #onStop} and before {@link #onDestroy}.
-     * It is recommended to unbind any references or resources associated with the view in this method.
-     * This method should also nullify any view references to prevent potential memory leaks.
-     */
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        System.out.println("ShoppingListFragment.onDestroyView");
-        recipe_view = null;
     }
 }

@@ -13,38 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.shoppingList;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
-import java.util.Objects;
-
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
-import pl.plantoplate.repository.remote.models.Product;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.SetupItemButtons;
 import pl.plantoplate.tools.CategorySorter;
-import pl.plantoplate.ui.main.shoppingList.listAdapters.product.ProductAdapter;
-import pl.plantoplate.ui.main.shoppingList.viewModels.ShoppingListViewModel;
+import pl.plantoplate.ui.main.recyclerViews.adapters.ProductAdapter;
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+import pl.plantoplate.ui.main.popUps.DeleteProductPopUp;
+import pl.plantoplate.ui.main.shoppingList.viewModels.BoughtProductsListViewModel;
 import pl.plantoplate.ui.main.storage.StorageFragment;
 
 /**
@@ -52,37 +46,12 @@ import pl.plantoplate.ui.main.storage.StorageFragment;
  */
 public class BoughtProductsFragment extends Fragment {
 
-    private FragmentKupioneBinding fragmentKupioneBinding;
-    private ShoppingListViewModel shoppingListViewModel;
-
+    private BoughtProductsListViewModel boughtProductsListViewModel;
     private RecyclerView productsRecyclerView;
     private FloatingActionButton moveToStorageButton;
-
+    private TextView titleTextView;
     private SharedPreferences prefs;
-
-    /**
-     * Called when the fragment is being created.
-     * This method initializes the ShoppingListViewModel by obtaining it from the parent fragment's ViewModelProvider.
-     *
-     * @param savedInstanceState The saved instance state bundle.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        shoppingListViewModel = new ViewModelProvider(requireParentFragment()).get(ShoppingListViewModel.class);
-    }
-
-    /**
-     * Called when the fragment is visible to the user and actively running.
-     * This method is responsible for fetching the bought products by calling the fetchBoughtProducts method in the ShoppingListViewModel.
-     * This ensures that the latest data is displayed when the fragment is resumed.
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        shoppingListViewModel.fetchUserInfo();
-        shoppingListViewModel.fetchBoughtProducts();
-    }
+    private ProductAdapter productListAdapter;
 
     /**
      * Called to create the view hierarchy associated with the fragment.
@@ -97,20 +66,31 @@ public class BoughtProductsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        fragmentKupioneBinding = FragmentKupioneBinding.inflate(inflater, container, false);
-        moveToStorageButton = fragmentKupioneBinding.floatingActionButton;
-
-        // get shared preferences
+        FragmentKupioneBinding fragmentKupioneBinding = FragmentKupioneBinding.inflate(inflater, container, false);
         prefs = requireActivity().getSharedPreferences("prefs", 0);
 
-        // set up move to storage button
-        moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
-
+        initViews(fragmentKupioneBinding);
+        setClickListeners();
         setUpViewModel();
         setUpRecyclerView();
         return fragmentKupioneBinding.getRoot();
+    }
+
+    private void initViews(FragmentKupioneBinding fragmentKupioneBinding) {
+        moveToStorageButton = fragmentKupioneBinding.floatingActionButton;
+        productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
+        titleTextView = fragmentKupioneBinding.textViewKupione;
+    }
+
+    private void setClickListeners() {
+        moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boughtProductsListViewModel.fetchUserInfo();
+        boughtProductsListViewModel.fetchBoughtProducts();
     }
 
     /**
@@ -119,37 +99,25 @@ public class BoughtProductsFragment extends Fragment {
      * for success and error operations.
      */
     public void setUpViewModel() {
-        shoppingListViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
+        boughtProductsListViewModel = new ViewModelProvider(requireParentFragment()).get(BoughtProductsListViewModel.class);
+        boughtProductsListViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
         });
-
-        // get to buy products
-        shoppingListViewModel.getBoughtProducts().observe(getViewLifecycleOwner(), boughtProducts -> {
-            // set up move to storage button
-            if (boughtProducts.isEmpty()) {
+        boughtProductsListViewModel.getBoughtProducts().observe(getViewLifecycleOwner(), boughtProducts -> {
+            if(boughtProducts.isEmpty()){
                 moveToStorageButton.setVisibility(View.INVISIBLE);
-            } else {
+                moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
+                titleTextView.setText(R.string.wprowadzenie_lista_zakupow_kupione);
+            }
+            else{
                 moveToStorageButton.setVisibility(View.VISIBLE);
                 moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
+                titleTextView.setText("");
             }
-
-            // update recycler view
-            ProductAdapter productAdapter = (ProductAdapter) productsRecyclerView.getAdapter();
-            Objects.requireNonNull(productAdapter).setProductsList(CategorySorter.sortProductsByName(boughtProducts));
+            productListAdapter.setProductsList(CategorySorter.sortProductsByName(boughtProducts));
         });
+        boughtProductsListViewModel.getResponseMessage().observe(getViewLifecycleOwner(), responseMessage ->
+                Toast.makeText(requireActivity(), responseMessage, Toast.LENGTH_SHORT).show());
 
-        // get success message
-        shoppingListViewModel.getBoughtProductsOnSuccessOperation().observe(getViewLifecycleOwner(), successMessage -> {
-            if (isAdded()) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), successMessage, Toast.LENGTH_SHORT).show());
-            }
-        });
-
-        // get error message
-        shoppingListViewModel.getBoughtProductsOnErrorOperation().observe(getViewLifecycleOwner(), errorMessage -> {
-            if (isAdded()) {
-                requireActivity().runOnUiThread(() -> Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show());
-            }
-        });
     }
 
     /**
@@ -158,68 +126,33 @@ public class BoughtProductsFragment extends Fragment {
      * to the shopping list. The adapter is then set to the RecyclerView.
      */
     private void setUpRecyclerView() {
-        productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
         productsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ProductAdapter productAdapter = new ProductAdapter(new ArrayList<>(), R.layout.item_kupione);
-        productAdapter.setUpItemButtons(new SetupItemButtons() {
-            /**
-             * Sets up the delete product button click listener for a specific product item in the RecyclerView.
-             * If the user has the role of "ROLE_ADMIN", clicking the button will show a delete product popup
-             * for the corresponding product. Otherwise, the button's visibility is set to `View.INVISIBLE`.
-             *
-             * @param v       The delete product button view.
-             * @param product The product associated with the button.
-             */
+
+        ArrayList<Product> boughtProducts = boughtProductsListViewModel.getBoughtProducts().getValue();
+        productListAdapter = new ProductAdapter(boughtProducts, R.layout.item_kupione);
+
+        productListAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupDeleteProductButtonClick(View v, Product product) {
                 String role = prefs.getString("role", "");
-                if(role.equals("ROLE_ADMIN")) {
-                    v.setOnClickListener(view -> showDeleteProductPopup(product));
-                }
-                else{
-                    //set visibility none
+                if (role.equals("ROLE_ADMIN")) {
+                    v.setOnClickListener(view -> new DeleteProductPopUp(requireContext(),
+                            R.layout.new_pop_up_delete_product_from_shopping_list,
+                            view1 -> boughtProductsListViewModel.deleteProductFromList(product))
+                            .show());
+                } else {
                     v.setVisibility(View.INVISIBLE);
                 }
             }
 
-            /**
-             * Sets up the check shopping list button click listener for a specific product item in the RecyclerView.
-             * Clicking the button will trigger the movement of the product back to the shopping list, as handled by the
-             * associated ViewModel.
-             *
-             * @param v       The check shopping list button view.
-             * @param product The product associated with the button.
-             */
             @Override
             public void setupCheckShoppingListButtonClick(View v, Product product) {
-                v.setOnClickListener(view -> shoppingListViewModel.moveProductToBuy(product));
+                v.setOnClickListener(view -> boughtProductsListViewModel.moveProductToBuy(product));
             }
         });
-        productsRecyclerView.setAdapter(productAdapter);
-    }
 
-    /**
-     * Shows a delete product popup dialog for the specified product.
-     * The popup dialog allows the user to confirm the deletion of the product from the shopping list.
-     *
-     * @param product The product to be deleted.
-     */
-    public void showDeleteProductPopup(Product product) {
-        Dialog dialog = new Dialog(getContext());
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.new_pop_up_delete_product_from_shopping_list);
+        productsRecyclerView.setAdapter(productListAdapter);
 
-        TextView acceptButton = dialog.findViewById(R.id.button_yes);
-        TextView cancelButton = dialog.findViewById(R.id.button_no);
-
-        acceptButton.setOnClickListener(v -> {
-            shoppingListViewModel.deleteProductFromList(product, "bought");
-            dialog.dismiss();
-        });
-
-        cancelButton.setOnClickListener(v -> dialog.dismiss());
-
-        dialog.show();
     }
 
     /**
@@ -228,11 +161,6 @@ public class BoughtProductsFragment extends Fragment {
      * If there are no products in the bought list, a toast message is displayed.
      */
     public void showMoveProductToStoragePopUp(){
-        if (Objects.requireNonNull(shoppingListViewModel.getBoughtProducts().getValue()).isEmpty())
-        {
-            Toast.makeText(requireContext(), "Nie ma nic do przeniesienia", Toast.LENGTH_SHORT).show();
-            return;
-        }
         Dialog dialog = new Dialog(getContext());
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.new_pop_up_add_to_storage);
@@ -241,7 +169,7 @@ public class BoughtProductsFragment extends Fragment {
         TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         acceptButton.setOnClickListener(v -> {
-            shoppingListViewModel.moveProductsToStorage();
+            boughtProductsListViewModel.moveProductsToStorage();
 
             replaceFragment(new StorageFragment());
             dialog.dismiss();

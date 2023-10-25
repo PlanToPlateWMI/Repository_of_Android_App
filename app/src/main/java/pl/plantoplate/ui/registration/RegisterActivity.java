@@ -13,12 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.registration;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -31,32 +27,33 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.snackbar.Snackbar;
+import java.util.Objects;
+import java.util.Optional;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.models.CodeResponse;
+import pl.plantoplate.data.remote.models.UserRegisterData;
+import pl.plantoplate.data.remote.repository.AuthRepository;
 import pl.plantoplate.databinding.RegisterActivityBinding;
-import pl.plantoplate.repository.remote.ResponseCallback;
-import pl.plantoplate.repository.remote.auth.AuthRepository;
-import pl.plantoplate.repository.remote.models.Message;
-import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.repository.remote.models.UserRegisterData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.EmailValidator;
 import pl.plantoplate.tools.SCryptStretcher;
-import com.google.android.material.snackbar.Snackbar;
+import pl.plantoplate.ui.login.LoginActivity;
+import timber.log.Timber;
 
 /**
  * An activity for user registration.
  */
 public class RegisterActivity extends AppCompatActivity implements ApplicationStateController {
 
-    private RegisterActivityBinding register_view;
-    private EditText enter_name;
-    private EditText enter_email;
-    private EditText enter_password;
-    private CheckBox apply_policy;
-    private Button register_button;
-    private TextView masz_konto;
-
+    private CompositeDisposable compositeDisposable;
+    private EditText enterNameEditText, enterEmailEditText, enterPasswordEditText;
+    private CheckBox applyPolicyCheckBox;
+    private Button registerButton;
+    private TextView hasAccountTextView;
     private SharedPreferences prefs;
     private AuthRepository authRepository;
 
@@ -67,36 +64,43 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      *                               shut down then this Bundle contains the data it most recently
      *                               supplied in onSaveInstanceState(Bundle). Otherwise it is null.
      */
-    @SuppressLint({"ResourceType", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RegisterActivityBinding registerViewBinding = RegisterActivityBinding.inflate(getLayoutInflater());
+        setContentView(registerViewBinding.getRoot());
 
-        // Inflate the layout using the View Binding Library
-        register_view = RegisterActivityBinding.inflate(getLayoutInflater());
-        setContentView(register_view.getRoot());
+        initViews(registerViewBinding);
+        setClickListeners();
+        prefs = getSharedPreferences("prefs", 0);
+        authRepository = new AuthRepository();
+        compositeDisposable = new CompositeDisposable();
+        Timber.d("Activity created");
+    }
 
-        // Find the views in the layout
-        enter_name = register_view.enterName;
-        enter_email = register_view.enterEmail;
-        enter_password = register_view.enterPassword;
-        apply_policy = register_view.checkboxWyrazamZgode;
-        register_button = register_view.buttonZalozKonto;
-        masz_konto = register_view.maszKonto;
+    private void initViews(RegisterActivityBinding binding) {
+        Timber.d("Initializing views...");
+        enterNameEditText = binding.enterName;
+        enterEmailEditText = binding.enterEmail;
+        enterPasswordEditText = binding.enterPassword;
+        applyPolicyCheckBox = binding.checkboxWyrazamZgode;
+        registerButton = binding.buttonZalozKonto;
+        hasAccountTextView = binding.maszKonto;
 
+        initHasAccountTextView();
+    }
+
+    private void initHasAccountTextView() {
+        Timber.d("Initializing has account text view...");
         Spannable spans = new SpannableString("Masz konto?    ZAŁOGUJ SIĘ");
         spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 11, 26, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        masz_konto.setText(spans);
+        hasAccountTextView.setText(spans);
+    }
 
-        // get auth repository
-        authRepository = new AuthRepository();
-
-        // Set the click listeners for the buttons
-        register_button.setOnClickListener(this::checkUserExists);
-        masz_konto.setOnClickListener(v -> signInAccount());
-
-        // get shared preferences
-        prefs = getSharedPreferences("prefs", 0);
+    private void setClickListeners() {
+        Timber.d("Setting click listeners...");
+        registerButton.setOnClickListener(this::checkUserExists);
+        hasAccountTextView.setOnClickListener(v -> signInAccount());
     }
 
     /**
@@ -104,14 +108,11 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      *
      * @return A UserInfo object containing the user's information.
      */
-    public UserRegisterData getUserInfo(){
-        String name = String.valueOf(enter_name.getText());
-        String email = String.valueOf(enter_email.getText());
-
-        //remove all whitespaces from email
-        email = email.trim();
-
-        String password = String.valueOf(enter_password.getText());
+    public UserRegisterData getUserInfo() {
+        Timber.d("Getting user info...");
+        String name = Optional.of(enterNameEditText.getText().toString()).orElse("").trim();
+        String email = Optional.of(enterEmailEditText.getText().toString()).orElse("").trim();
+        String password = Optional.of(enterPasswordEditText.getText().toString()).orElse("").trim();
         return new UserRegisterData(name, email, password);
     }
 
@@ -120,42 +121,31 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      *
      * @param view The view that was clicked.
      */
-    public void validateUserInfo(View view){
+    public void validateUserInfo(View view) {
+        Timber.d("Validating user info...");
         UserRegisterData info = getUserInfo();
-
-        if(info.getUsername() == null || info.getUsername().isEmpty()){
-            Snackbar.make(view, "Wprowadż imię użytkownika!", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-
-        if(info.getEmail() == null || info.getEmail().isEmpty()){
-            Snackbar.make(view, "Wprowadż adres email!", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-
-        if (info.getPassword() == null || info.getPassword().isEmpty()){
-            Snackbar.make(view, "Wprowadż hasło!", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-
-        if(!EmailValidator.isEmail(info.getEmail())){
-            Snackbar.make(view, "Email jest niepoprawny!", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-
-        if(info.getPassword() == null || info.getPassword().length() < 7){
-            Snackbar.make(view, "Hasło musi być długie (co najmniej 7 znaków)", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-
-        if (apply_policy.isChecked()){
-
-            //stretch password to make it unreadable and secure
+        if (info.getUsername().isEmpty()) {
+            Timber.d("Username is empty");
+            showSnackbar(view, "Wprowadź imię użytkownika!");
+        } else if (info.getEmail().isEmpty()) {
+            Timber.d("Email is empty");
+            showSnackbar(view, "Wprowadź adres email!");
+        } else if (info.getPassword().isEmpty()) {
+            Timber.d("Password is empty");
+            showSnackbar(view, "Wprowadź hasło!");
+        } else if (!EmailValidator.isEmail(info.getEmail())) {
+            Timber.d("Email is invalid");
+            showSnackbar(view, "Email jest niepoprawny!");
+        } else if (info.getPassword().length() < 7) {
+            Timber.d("Password is too short");
+            showSnackbar(view, "Hasło musi być długie (co najmniej 7 znaków)");
+        } else if (!applyPolicyCheckBox.isChecked()) {
+            Timber.d("Policy not accepted");
+            showSnackbar(view, "Musisz wyrazić zgodę na przetwarzanie danych osobowych");
+        } else {
+            Timber.d("User info is valid");
             info.setPassword(SCryptStretcher.stretch(info.getPassword(), info.getEmail()));
             sendUserData(info, view);
-        }
-        else{
-            Snackbar.make(view, "Musisz wyrazić zgodę na przetwarzanie danych osobowych", Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -165,28 +155,20 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      * @param view The view to display the response in (e.g. error using SnackBar).
      */
     public void checkUserExists(View view){
-        String email = String.valueOf(enter_email.getText());
+        Timber.d("Checking if user exists...");
+        String email = String.valueOf(enterEmailEditText.getText());
 
-        authRepository.userExists(email, new ResponseCallback<Message>() {
+        Disposable disposable = authRepository.userExists(email)
+                .subscribe(message -> {
+                            // user does not exist
+                            prefs.edit().putString("email", email).apply();
+                            validateUserInfo(view);
+                        },
+                        throwable ->
+                                Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show()
+                );
 
-            @Override
-            public void onSuccess(Message response) {
-                // user don't exists
-                prefs.edit().putString("email", email).apply();
-                validateUserInfo(view);
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                // user exists
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+        compositeDisposable.add(disposable);
     }
 
     /**
@@ -195,54 +177,37 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      * @param view The View to display the response in (e.g. error using SnackBar).
      */
     public void sendUserData(UserRegisterData userData, View view) {
-        // start email confirmation activity
+        Timber.d("Sending user data to server");
         Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
         startActivity(intent);
 
-        authRepository.sendUserRegisterData(userData, new ResponseCallback<String>() {
+        Disposable disposable = authRepository.sendUserRegisterData(userData)
+                .subscribe(codeResponse ->
+                                saveUserData(userData, codeResponse),
+                           throwable ->
+                                Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show());
 
-            /**
-             * Called when the operation is successful and receives a code.
-             *
-             * @param code The code received from the operation.
-             */
-            @Override
-            public void onSuccess(String code) {
-                // save user data to shared preferences
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("email", userData.getEmail());
-                editor.putString("name", userData.getUsername());
-                editor.putString("password", userData.getPassword());
-                editor.putString("code", code).apply();
-            }
+        compositeDisposable.add(disposable);
+    }
 
-            /**
-             * Called when an error occurs.
-             *
-             * @param errorMessage The error message to display.
-             */
-            @Override
-            public void onError(String errorMessage) {
-                Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG).show();
-            }
+    private void saveUserData(UserRegisterData userData, CodeResponse codeResponse) {
+        Timber.d("Saving user data to shared preferences");
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("email", userData.getEmail());
+        editor.putString("name", userData.getUsername());
+        editor.putString("password", userData.getPassword());
+        editor.putString("code", codeResponse.getCode()).apply();
+    }
 
-            /**
-             * Called when a failure occurs.
-             *
-             * @param failureMessage The failure message to display.
-             */
-            @Override
-            public void onFailure(String failureMessage) {
-                Snackbar.make(view, failureMessage, Snackbar.LENGTH_LONG).show();
-            }
-        });
+    private void showSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
 
     /**
      * Starts the LoginActivity to allow the user to sign in.
      */
     public void signInAccount() {
-        // Create an intent to start the RegisterActivity
+        Timber.d("Starting LoginActivity...");
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         saveAppState(ApplicationState.LOGIN);
@@ -254,8 +219,16 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      */
     @Override
     public void saveAppState(ApplicationState applicationState) {
+        Timber.d("Saving application state: %s", applicationState.toString());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("applicationState", applicationState.toString());
         editor.apply();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Timber.d("Destroying activity...");
+        compositeDisposable.dispose();
     }
 }

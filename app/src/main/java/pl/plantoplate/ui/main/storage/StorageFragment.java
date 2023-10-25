@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.storage;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentStorageBinding;
 
@@ -33,9 +29,6 @@ import pl.plantoplate.databinding.FragmentStorageBinding;
  * Fragment for storage screen
  */
 public class StorageFragment extends Fragment {
-
-    private FragmentStorageBinding fragmentStorageBinding;
-
 
     /**
      * Called when the fragment should create its view hierarchy.
@@ -48,8 +41,7 @@ public class StorageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        fragmentStorageBinding = FragmentStorageBinding.inflate(inflater, container, false);
+        FragmentStorageBinding fragmentStorageBinding = FragmentStorageBinding.inflate(inflater, container, false);
         replaceFragment(new StorageMainFragment());
         return fragmentStorageBinding.getRoot();
     }
@@ -60,11 +52,9 @@ public class StorageFragment extends Fragment {
      * @param fragment The fragment to be replaced.
      */
     private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.storage_default, fragment);
-        //transaction.addToBackStack(null);
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.storage_default, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }
