@@ -133,6 +133,7 @@ public class BuyProductsFragment extends Fragment {
                 String role = prefs.getString("role", "");
                 if(role.equals("ROLE_ADMIN")) {
                     v.setOnClickListener(view -> new DeleteProductPopUp(requireContext(),
+                            R.layout.new_pop_up_delete_product_from_shopping_list,
                             view1 -> toBuyProductsListViewModel.deleteProductFromList(product)).show());
                 }
                 else{
@@ -160,7 +161,7 @@ public class BuyProductsFragment extends Fragment {
      * This method observes the changes in the ViewModel and updates the UI accordingly.
      */
     public void setUpViewModel() {
-        toBuyProductsListViewModel = new ViewModelProvider(requireActivity()).get(ToBuyProductsListViewModel.class);
+        toBuyProductsListViewModel = new ViewModelProvider(this).get(ToBuyProductsListViewModel.class);
         toBuyProductsListViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
         });
         toBuyProductsListViewModel.getToBuyProducts().observe(getViewLifecycleOwner(), toBuyProducts ->{

@@ -136,8 +136,9 @@ public class BoughtProductsFragment extends Fragment {
             public void setupDeleteProductButtonClick(View v, Product product) {
                 String role = prefs.getString("role", "");
                 if (role.equals("ROLE_ADMIN")) {
-                    v.setOnClickListener(view -> new DeleteProductPopUp(requireContext(), view1 ->
-                            boughtProductsListViewModel.deleteProductFromList(product))
+                    v.setOnClickListener(view -> new DeleteProductPopUp(requireContext(),
+                            R.layout.new_pop_up_delete_product_from_shopping_list,
+                            view1 -> boughtProductsListViewModel.deleteProductFromList(product))
                             .show());
                 } else {
                     v.setVisibility(View.INVISIBLE);

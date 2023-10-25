@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationBarView;
 import pl.plantoplate.R;
@@ -101,8 +102,10 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
      */
     private void replaceFragment(Fragment fragment, String tag) {
         Timber.d("Replacing fragment with tag: %s", tag);
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, fragment);
+        transaction.replace(R.id.frame_layout, fragment, tag);
+        transaction.addToBackStack(tag);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.commit();
     }

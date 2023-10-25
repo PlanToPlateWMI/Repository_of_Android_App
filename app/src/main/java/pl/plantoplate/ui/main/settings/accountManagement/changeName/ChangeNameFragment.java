@@ -90,7 +90,7 @@ public class ChangeNameFragment extends Fragment {
                 .subscribe(userInfo -> {
                         prefs.edit().putString("username", username).apply();
                         Toast.makeText(requireActivity(), "Imię zostało zmienione na: " + username, Toast.LENGTH_SHORT).show();
-                        requireParentFragment().getParentFragmentManager().popBackStack();
+                        getParentFragmentManager().popBackStack();
                 },
                         throwable -> Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 

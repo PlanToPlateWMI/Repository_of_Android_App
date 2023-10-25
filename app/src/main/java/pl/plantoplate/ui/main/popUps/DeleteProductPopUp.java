@@ -23,10 +23,10 @@ import pl.plantoplate.R;
 
 public class DeleteProductPopUp extends Dialog {
 
-    public DeleteProductPopUp(Context context, View.OnClickListener listener) {
+    public DeleteProductPopUp(Context context, int viewType, View.OnClickListener listener) {
         super(context);
         setCancelable(true);
-        setContentView(R.layout.new_pop_up_delete_product_from_shopping_list);
+        setContentView(viewType);
 
         TextView acceptButton = findViewById(R.id.button_yes);
         TextView cancelButton = findViewById(R.id.button_no);

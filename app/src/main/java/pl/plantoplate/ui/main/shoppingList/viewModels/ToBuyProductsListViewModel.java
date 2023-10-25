@@ -87,7 +87,8 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
                     editor.putString("username", userInfo.getUsername());
                     editor.putString("role", userInfo.getRole());
                     editor.apply();
-                }, throwable -> responseMessage.setValue(throwable.getMessage()));
+                }, throwable ->
+                        responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }

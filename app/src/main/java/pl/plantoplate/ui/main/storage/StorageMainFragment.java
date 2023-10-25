@@ -222,6 +222,7 @@ public class StorageMainFragment extends Fragment {
                 String role = prefs.getString("role", "");
                 if(role.equals("ROLE_ADMIN")) {
                     v.setOnClickListener(view -> new DeleteProductPopUp(requireContext(),
+                                            R.layout.new_pop_up_delete_from_storage,
                                             view1 -> storageViewModel.deleteProductFromStorage(product)).show());
                 }
                 else{

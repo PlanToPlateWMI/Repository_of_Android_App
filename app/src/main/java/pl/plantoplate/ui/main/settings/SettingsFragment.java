@@ -54,7 +54,7 @@ public class SettingsFragment extends Fragment{
      */
     private void replaceFragment(Fragment fragment) {
         Timber.d("Replacing fragment with tag: %s", "SETTINGS_INSIDE");
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.settings_default, fragment);
         transaction.addToBackStack("SETTINGS_INSIDE");
         transaction.commit();
