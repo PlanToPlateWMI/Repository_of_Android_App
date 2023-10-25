@@ -247,6 +247,6 @@ public class StorageMainFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        compositeDisposable.dispose();
+        compositeDisposable.clear();
     }
 }
