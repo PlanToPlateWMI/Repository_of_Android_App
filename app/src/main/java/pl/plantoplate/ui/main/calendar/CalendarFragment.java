@@ -13,35 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.calendar;
 
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-
+import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentCalendarBinding;
+import pl.plantoplate.tools.DateUtils;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.calendar.recyclerViews.CalendarAdapter;
 import pl.plantoplate.ui.main.recepies.RecipeFragment;
 import timber.log.Timber;
 
@@ -50,25 +44,12 @@ import timber.log.Timber;
  */
 public class CalendarFragment extends Fragment {
 
-    private FragmentCalendarBinding calendar_view;
-    private SharedPreferences prefs;
+    private FragmentCalendarBinding fragmentCalendarBinding;
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
-    private FloatingActionButton plus;
-
-
-    private void initList(LayoutInflater inflater, ViewGroup container){
-        LinearLayout list = (LinearLayout) getLayoutInflater().inflate(R.layout.item_calendar_today_no_highlighting, container, false);
-        ScrollView scrollView = calendar_view.kalendarzTutaj;
-//        horizontalScrollView.addView(list);
-//        horizontalScrollView.addView(list);
-        scrollView.addView(list);
-//        scrollView.addView(list);
-//        scrollView.addView(list);
-//        scrollView.addView(list);
-//        scrollView.addView(list);
-    }
-
+    private FloatingActionButton addToCalendarButton;
+    private TextView dateTextView;
+    private CalendarAdapter calendarAdapter;
 
     /**
      * Called to create the view hierarchy of the fragment.
@@ -81,38 +62,36 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        fragmentCalendarBinding = FragmentCalendarBinding.inflate(inflater, container, false);
 
-        // Inflate the layout for this fragment
-        calendar_view = FragmentCalendarBinding.inflate(inflater, container, false);
+        initViews(fragmentCalendarBinding);
+        setClickListeners();
 
-        plus = calendar_view.plusInKalendarz;
-
-        plus.setOnClickListener(v -> replaceFragment(new RecipeFragment()));
-
-        // Get the SharedPreferences object
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
-
-        // Setup views
-        viewPager = calendar_view.kalPrzep;
-        initList(inflater, container);
-
-        // Set selected all products fragment by default on restart fragment.
-        radioGridGroup = calendar_view.radioGroupBaza;
-
-        //make radio button checked
-        radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie);
-
-        // Set first visible AllProductsFragment by default
-        viewPager.setCurrentItem(0);
-
-        // Setup swipe pager
         setupViewPager(viewPager);
-
-        // Setup navigation
         setupNavigation();
+        setupRecyclerView();
+        return fragmentCalendarBinding.getRoot();
 
-        return calendar_view.getRoot();
+    }
 
+    public void initViews(FragmentCalendarBinding fragmentCalendarBinding) {
+        addToCalendarButton = fragmentCalendarBinding.plusInKalendarz;
+        viewPager = fragmentCalendarBinding.kalPrzep;
+        dateTextView = fragmentCalendarBinding.miesiacdzienrok;
+        radioGridGroup = fragmentCalendarBinding.radioGroupBaza;
+
+        radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie);
+        viewPager.setCurrentItem(0);
+        setDate();
+    }
+
+    public void setDate() {
+        String formattedDate = DateUtils.formatPolishDate(LocalDate.now());
+        dateTextView.setText(formattedDate);
+    }
+
+    public void setClickListeners() {
+        addToCalendarButton.setOnClickListener(v -> replaceFragment(new RecipeFragment()));
     }
 
     /**
@@ -120,28 +99,29 @@ public class CalendarFragment extends Fragment {
      * listener. If user click on bottom navigation item then we change
      * current fragment in swipe pager.
      */
-    @SuppressLint("NonConstantResourceId")
     private void setupNavigation() {
         radioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            Timber.tag("RadioGridGroup").d("Checked ID: %s", checkedId); // Debugging
-            switch (checkedId) {
-                case R.id.wszystkie:
-                    viewPager.setCurrentItem(0);
-                    break;
-                case R.id.sniadanie:
-                    viewPager.setCurrentItem(1);
-                    break;
-                case R.id.obiad:
-                    viewPager.setCurrentItem(2);
-                    break;
-                case R.id.kolacja:
-                    viewPager.setCurrentItem(3);
-                    break;
-                default:
-                    Timber.tag("RadioGridGroup").d("Unhandled ID: %s", checkedId); // Debugging
-                    break;
+            Timber.tag("RadioGridGroup").d("Checked ID: %s", checkedId);
+            if (checkedId == R.id.wszystkie) {
+                viewPager.setCurrentItem(0);
+            } else if (checkedId == R.id.sniadanie) {
+                viewPager.setCurrentItem(1);
+            } else if (checkedId == R.id.obiad) {
+                viewPager.setCurrentItem(2);
+            } else if (checkedId == R.id.kolacja) {
+                viewPager.setCurrentItem(3);
+            } else {
+                Timber.tag("RadioGridGroup").d("Unhandled ID: %s", checkedId);
             }
         });
+    }
+
+    public void setupRecyclerView(){
+        RecyclerView recyclerView = fragmentCalendarBinding.kalendarzTutaj;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        calendarAdapter = new CalendarAdapter(DateUtils.generateDates(), R.layout.item_calendar_future_highlighting);
+        recyclerView.setAdapter(calendarAdapter);
+        calendarAdapter.setDateList(DateUtils.generateDates());
     }
 
     /**
@@ -149,23 +129,21 @@ public class CalendarFragment extends Fragment {
      * @param viewPager swipe pager
      */
     private void setupViewPager(ViewPager2 viewPager) {
-
-        // Set up change callback to change bottom navigation item when swipe pager
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        calendar_view.radioGroupBaza.setCheckedRadioButtonById(R.id.wszystkie);
+                        radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie);
                         break;
                     case 1:
-                        calendar_view.radioGroupBaza.setCheckedRadioButtonById(R.id.sniadanie);
+                        radioGridGroup.setCheckedRadioButtonById(R.id.sniadanie);
                         break;
                     case 2:
-                        calendar_view.radioGroupBaza.setCheckedRadioButtonById(R.id.obiad);
+                        radioGridGroup.setCheckedRadioButtonById(R.id.obiad);
                         break;
                     case 3:
-                        calendar_view.radioGroupBaza.setCheckedRadioButtonById(R.id.kolacja);
+                        radioGridGroup.setCheckedRadioButtonById(R.id.kolacja);
                         break;
                 }
             }
@@ -184,67 +162,27 @@ public class CalendarFragment extends Fragment {
      */
     static class ViewPagerAdapter extends FragmentStateAdapter {
         private final List<Fragment> fragmentList = new ArrayList<>();
-
-        /**
-         * Constructs a new ViewPagerAdapter.
-         *
-         * @param fragment The fragment associated with the adapter.
-         */
         public ViewPagerAdapter(@NonNull Fragment fragment) {
             super(fragment);
         }
-
-        /**
-         * Create fragment for swipe pager.
-         *
-         * @param position position of fragment
-         * @return fragment
-         */
         @NonNull
         @Override
         public Fragment createFragment(int position) {
             return fragmentList.get(position);
         }
-
-        /**
-         * Get count of fragments.
-         *
-         * @return count of fragments
-         */
         @Override
         public int getItemCount() {
             return fragmentList.size();
         }
-
-        /**
-         * Add fragment to fragment list.
-         *
-         * @param fragment fragment
-         */
         public void addFragment(Fragment fragment) {
             fragmentList.add(fragment);
         }
     }
 
-    /**
-     * Called when the view previously created by {@link #onCreateView} has been detached from the fragment.
-     * This method is called after {@link #onStop} and before {@link #onDestroy}.
-     * It is recommended to unbind any references or resources associated with the view in this method.
-     * This method should also nullify any view references to prevent potential memory leaks.
-     */
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        System.out.println("ShoppingListFragment.onDestroyView");
-        calendar_view = null;
-    }
-
     private void replaceFragment(Fragment fragment) {
-        // Start a new fragment transaction and replace the current fragment with the specified fragment
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment);
         transaction.addToBackStack("calendarFragment");
         transaction.commit();
     }
-
 }
