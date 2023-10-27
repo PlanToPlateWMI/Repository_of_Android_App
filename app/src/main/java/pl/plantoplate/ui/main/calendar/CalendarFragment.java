@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -29,6 +30,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -51,6 +55,20 @@ public class CalendarFragment extends Fragment {
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
     private FloatingActionButton plus;
+
+
+    private void initList(LayoutInflater inflater, ViewGroup container){
+        LinearLayout list = (LinearLayout) getLayoutInflater().inflate(R.layout.item_calendar_today_no_highlighting, container, false);
+        ScrollView scrollView = calendar_view.kalendarzTutaj;
+//        horizontalScrollView.addView(list);
+//        horizontalScrollView.addView(list);
+        scrollView.addView(list);
+//        scrollView.addView(list);
+//        scrollView.addView(list);
+//        scrollView.addView(list);
+//        scrollView.addView(list);
+    }
+
 
     /**
      * Called to create the view hierarchy of the fragment.
@@ -76,6 +94,7 @@ public class CalendarFragment extends Fragment {
 
         // Setup views
         viewPager = calendar_view.kalPrzep;
+        initList(inflater, container);
 
         // Set selected all products fragment by default on restart fragment.
         radioGridGroup = calendar_view.radioGroupBaza;
