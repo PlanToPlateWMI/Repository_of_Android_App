@@ -10,7 +10,7 @@ We welcome and appreciate contributions from the open-source community. By contr
 
 - Clone the forked repository to your local machine:
   ```bash
-  git clone https://github.com/yourusername/PlanToPlate.git
+  git clone https://github.com/PlanToPlateWMI/Repository_of_Android_App
     ```
 
 - Create a new branch for your feature or bug fix:
