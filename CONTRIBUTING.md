@@ -13,7 +13,7 @@ We welcome and appreciate contributions from the open-source community. By contr
   git clone https://github.com/yourusername/PlanToPlate.git
     ```
 
-Create a new branch for your feature or bug fix:
+- Create a new branch for your feature or bug fix:
   ```bash
   git checkout -b feature/your-feature-name
   ```
