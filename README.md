@@ -70,7 +70,7 @@ We welcome contributions from the community to make PlanToPlate even better. If 
 
 ## License
 
-This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License - see the [LICENSE.md](LICENSE) file for details.
 
 ---
 
