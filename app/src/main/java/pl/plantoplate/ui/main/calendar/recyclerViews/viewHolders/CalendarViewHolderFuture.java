@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.ui.main.calendar.recyclerViews;
+package pl.plantoplate.ui.main.calendar.recyclerViews.viewHolders;
 
 import android.view.View;
 import android.widget.LinearLayout;
@@ -21,36 +21,26 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
 import pl.plantoplate.R;
-public class CalendarViewHolderFuture extends RecyclerView.ViewHolder{
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+
+public class CalendarViewHolderFuture extends CalendarViewHolder{
 
     private final TextView dateDayName;
     private final TextView dateNumber;
-    private final LinearLayout layout_future;
+    private final LinearLayout layoutFutureDate;
 
     public CalendarViewHolderFuture(View itemView) {
         super(itemView);
-
         dateDayName = itemView.findViewById(R.id.dwieLiteryDniaTygodniaFutNH);
         dateNumber = itemView.findViewById(R.id.liczbaDatyFutNH);
-        layout_future = itemView.findViewById(R.id.layoutCalendarFutureNoHighlighting);
+        layoutFutureDate = itemView.findViewById(R.id.layoutCalendarFutureNoHighlighting);
     }
 
-    public void bind(LocalDate date) {
+    public void bind(LocalDate date, SetupItemButtons listener) {
         String dayName = getDayName(date.getDayOfWeek().getValue());
         int dayOfMonth = date.getDayOfMonth();
         dateDayName.setText(dayName);
         dateNumber.setText(String.valueOf(dayOfMonth));
-    }
-
-    /**
-     * Returns the day name for the provided day of the week.
-     * @param dayOfWeek The day of the week (1-7)
-     * @return The short name of the day of the week
-     */
-    private String getDayName(int dayOfWeek) {
-        String[] dayNames = new String[]{"Pn", "Wt", "Śr", "Cz", "Pt", "Sb", "Nd"};
-        int adjustedIndex = (dayOfWeek + 6) % 7;
-
-        return dayNames[adjustedIndex];
+        layoutFutureDate.setOnClickListener(v -> listener.setupDateItemClick(v, date));
     }
 }

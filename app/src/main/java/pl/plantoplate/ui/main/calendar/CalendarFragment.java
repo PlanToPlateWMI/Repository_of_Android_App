@@ -35,8 +35,9 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentCalendarBinding;
 import pl.plantoplate.tools.DateUtils;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
-import pl.plantoplate.ui.main.calendar.recyclerViews.CalendarAdapter;
+import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.CalendarAdapter;
 import pl.plantoplate.ui.main.recepies.RecipeFragment;
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import timber.log.Timber;
 
 /**
@@ -120,6 +121,13 @@ public class CalendarFragment extends Fragment {
         RecyclerView recyclerView = fragmentCalendarBinding.kalendarzTutaj;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         calendarAdapter = new CalendarAdapter(DateUtils.generateDates());
+        calendarAdapter.setUpItemButtons(new SetupItemButtons() {
+            @Override
+            public void setupDateItemClick(View v, LocalDate date) {
+                v.setSelected(!v.isSelected());
+                Timber.tag("CalendarAdapter").e("Date: %s", date);
+            }
+        });
         recyclerView.setAdapter(calendarAdapter);
         calendarAdapter.setDateList(DateUtils.generateDates());
     }
@@ -151,9 +159,9 @@ public class CalendarFragment extends Fragment {
         // Set up adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         adapter.addFragment(new AllCategoryProductsFragment());
-        adapter.addFragment(new BreakfastLunchDinnerCategoryProductsFragment());
-        adapter.addFragment(new BreakfastLunchDinnerCategoryProductsFragment());
-        adapter.addFragment(new BreakfastLunchDinnerCategoryProductsFragment());
+        adapter.addFragment(new MealsCategoryFragment());
+        adapter.addFragment(new MealsCategoryFragment());
+        adapter.addFragment(new MealsCategoryFragment());
         viewPager.setAdapter(adapter);
     }
 

@@ -16,6 +16,9 @@
 package pl.plantoplate.ui.main.recyclerViews.listeners;
 
 import android.view.View;
+
+import java.time.LocalDate;
+
 import pl.plantoplate.data.remote.models.Product;
 
 public interface SetupItemButtons {
@@ -36,6 +39,10 @@ public interface SetupItemButtons {
     }
 
     default void setupProductItemClick(View v, Product product) {
+
+    }
+
+    default void setupDateItemClick(View v, LocalDate date) {
 
     }
 }

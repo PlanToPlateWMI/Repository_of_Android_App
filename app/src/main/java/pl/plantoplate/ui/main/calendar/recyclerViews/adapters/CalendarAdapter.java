@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.ui.main.calendar.recyclerViews;
+package pl.plantoplate.ui.main.calendar.recyclerViews.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -23,20 +23,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Timer;
-
 import pl.plantoplate.R;
+import pl.plantoplate.ui.main.calendar.recyclerViews.viewHolders.CalendarViewHolder;
+import pl.plantoplate.ui.main.calendar.recyclerViews.viewHolders.CalendarViewHolderFuture;
+import pl.plantoplate.ui.main.calendar.recyclerViews.viewHolders.CalendarViewHolderPast;
+import pl.plantoplate.ui.main.calendar.recyclerViews.viewHolders.CalendarViewHolderToday;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import timber.log.Timber;
 
 public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    //private final int categoryItemType;
     private SetupItemButtons listener;
     private ArrayList<LocalDate> dates;
+    private int selectedPosition = 3;
 
     public CalendarAdapter(ArrayList<LocalDate> dates) {
         this.dates = dates;
-        //this.categoryItemType = calendarItemType;
     }
 
     public void setUpItemButtons(SetupItemButtons listener) {
@@ -45,7 +46,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @SuppressLint("NotifyDataSetChanged")
     public void setDateList(ArrayList<LocalDate> dates) {
-
         this.dates = dates;
         notifyDataSetChanged();
     }
@@ -66,7 +66,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = null;
+        View itemView;
         if (viewType == 0) {
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_calendar_past_no_highlighting, parent, false);
@@ -89,22 +89,26 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof CalendarViewHolderPast) {
-            ((CalendarViewHolderPast) holder).bind(dates.get(position));
-        }
-        else if (holder instanceof CalendarViewHolderToday) {
-            ((CalendarViewHolderToday) holder).bind(dates.get(position));
-        }
-        else if (holder instanceof CalendarViewHolderFuture) {
-            ((CalendarViewHolderFuture) holder).bind(dates.get(position));
-        }
+        int adapterPosition = holder.getBindingAdapterPosition();
+        ((CalendarViewHolder) holder).bind(dates.get(adapterPosition), listener);
+        boolean isSelected = adapterPosition == selectedPosition;
+        holder.itemView.setSelected(isSelected);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (adapterPosition != selectedPosition) {
+                int previousSelectedPosition = selectedPosition;
+                selectedPosition = adapterPosition;
+                notifyItemChanged(previousSelectedPosition);
+                notifyItemChanged(selectedPosition);
+                listener.setupDateItemClick(v, dates.get(adapterPosition));
+            }
+        });
+
+        Timber.e("Binded position: %s", position);
     }
 
     @Override
     public int getItemCount() {
-        if (dates == null) {
-            return 0;
-        }
-        return dates.size();
+        return dates == null ? 0 : dates.size();
     }
 }

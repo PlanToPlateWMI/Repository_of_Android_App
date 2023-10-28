@@ -23,7 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import pl.plantoplate.databinding.FragmentCalendarInsideBldBinding;
 
-public class BreakfastLunchDinnerCategoryProductsFragment extends Fragment {
+public class MealsCategoryFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
