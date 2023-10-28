@@ -7,8 +7,10 @@
     android:layout_height="80dp"
     android:orientation="horizontal"
     android:background="@drawable/rounded_kalendarz_highlighting"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:clickable="true"
+    android:layout_marginStart="2dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="0dp"
     android:layout_marginTop="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +22,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/dwieLiteryDniaTygodnia"
+            android:id="@+id/dwieLiteryDniaTygodniaTodH"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="true"
@@ -40,7 +42,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/liczbaDaty"
+            android:id="@+id/liczbaDatyTodH"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="true"

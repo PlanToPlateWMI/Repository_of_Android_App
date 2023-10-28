@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/rounded_kalendarz_highlighting"
+        android:state_checked="true" />
+    <item
+        android:drawable="@drawable/rounded_kalendarz_highlighting"
+        android:state_active="true" />
+    <item
+        android:drawable="@drawable/rounded_kalendarz_no_highlighting"
+        android:state_checked="false"/>
+    <item
+        android:drawable="@drawable/rounded_kalendarz_no_highlighting"
+        android:state_active="false" />
+</selector>

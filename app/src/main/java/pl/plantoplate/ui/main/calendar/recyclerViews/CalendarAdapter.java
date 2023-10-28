@@ -23,16 +23,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+import java.util.Timer;
 
-public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
-    private final int categoryItemType;
+import pl.plantoplate.R;
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+import timber.log.Timber;
+
+public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    //private final int categoryItemType;
     private SetupItemButtons listener;
     private ArrayList<LocalDate> dates;
 
-    public CalendarAdapter(ArrayList<LocalDate> dates, int calendarItemType) {
+    public CalendarAdapter(ArrayList<LocalDate> dates) {
         this.dates = dates;
-        this.categoryItemType = calendarItemType;
+        //this.categoryItemType = calendarItemType;
     }
 
     public void setUpItemButtons(SetupItemButtons listener) {
@@ -46,17 +50,54 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>{
         notifyDataSetChanged();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        Timber.e("position: %s", position);
+        if (position >= 0 && position <= 2) {
+            return 0;
+        } else if (position == 3) {
+            return 1;
+        } else if (position >= 4) {
+            return 2;
+        }
+        return position;
+    }
+
     @NonNull
     @Override
-    public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(this.categoryItemType, parent, false);
-        return new CalendarViewHolder(itemView);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = null;
+        if (viewType == 0) {
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_calendar_past_no_highlighting, parent, false);
+            return new CalendarViewHolderPast(itemView);
+        }
+        else if (viewType == 1) {
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_calendar_today_no_highlighting, parent, false);
+            return new CalendarViewHolderToday(itemView);
+        }
+        else if (viewType == 2) {
+            itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_calendar_future_no_highlighting, parent, false);
+            return new CalendarViewHolderFuture(itemView);
+        }
+        throw new RuntimeException("There is no type that matches the type "
+                + viewType +
+                " + make sure your using types correctly");
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
-        holder.bind(dates.get(position));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof CalendarViewHolderPast) {
+            ((CalendarViewHolderPast) holder).bind(dates.get(position));
+        }
+        else if (holder instanceof CalendarViewHolderToday) {
+            ((CalendarViewHolderToday) holder).bind(dates.get(position));
+        }
+        else if (holder instanceof CalendarViewHolderFuture) {
+            ((CalendarViewHolderFuture) holder).bind(dates.get(position));
+        }
     }
 
     @Override

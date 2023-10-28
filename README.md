@@ -2,7 +2,9 @@
 
 ![PlanToPlate Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png)
 
-PlanToPlate is a comprehensive Android application designed to simplify your meal planning and grocery shopping process. With its user-friendly interface and feature-rich modules, it's your all-in-one solution for managing your meals and kitchen supplies efficiently.
+PlanToPlate is a comprehensive Android application designed to simplify your meal planning and grocery shopping process. 
+With its user-friendly interface and feature-rich modules, it's your all-in-one solution for managing your meals 
+and kitchen supplies efficiently.
 
 ## Table of Contents
 
@@ -46,27 +48,33 @@ PlanToPlate is a comprehensive Android application designed to simplify your mea
 
 ### Shopping List
 
-The Shopping List module allows you to create and manage shopping lists. You can add items directly or choose ingredients from your recipes and products database. This feature ensures you never forget a crucial ingredient during your grocery shopping.
+The Shopping List module allows you to create and manage shopping lists. You can add items directly or choose ingredients 
+from your recipes and products database. This feature ensures you never forget a crucial ingredient during your grocery shopping.
 
 ### Storage
 
-The Storage module lets you keep track of the products you have at home. You can update quantities and quickly assess what you need for your recipes without having to rummage through your kitchen.
+The Storage module lets you keep track of the products you have at home. You can update quantities and quickly assess 
+what you need for your recipes without having to rummage through your kitchen.
 
 ### Products Database
 
-The Products Database module provides access to a wide range of products. You can choose items from this database when creating recipes or shopping lists, making it easier to find the right ingredients.
+The Products Database module provides access to a wide range of products. You can choose items from this database when 
+creating recipes or shopping lists, making it easier to find the right ingredients.
 
 ### Recipes
 
-The Recipes module is your personal cookbook. Add and organize your favorite recipes, making them readily available for meal planning. You can also link recipes to your shopping lists, simplifying the process of gathering ingredients.
+The Recipes module is your personal cookbook. Add and organize your favorite recipes, making them readily available 
+for meal planning. You can also link recipes to your shopping lists, simplifying the process of gathering ingredients.
 
 ### Calendar
 
-The Calendar module is your meal planner. Schedule your meals and recipes in advance, helping you stay organized and ensuring you have the right ingredients at the right time.
+The Calendar module is your meal planner. Schedule your meals and recipes in advance, helping you stay organized 
+and ensuring you have the right ingredients at the right time.
 
 ## Contributing
 
-We welcome contributions from the community to make PlanToPlate even better. If you'd like to contribute, please follow our [Contributing Guidelines](CONTRIBUTING.md).
+We welcome contributions from the community to make PlanToPlate even better. If you'd like to contribute, 
+please follow our [Contributing Guidelines](CONTRIBUTING.md).
 
 ## License
 

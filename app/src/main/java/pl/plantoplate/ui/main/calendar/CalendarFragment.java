@@ -119,7 +119,7 @@ public class CalendarFragment extends Fragment {
     public void setupRecyclerView(){
         RecyclerView recyclerView = fragmentCalendarBinding.kalendarzTutaj;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        calendarAdapter = new CalendarAdapter(DateUtils.generateDates(), R.layout.item_calendar_future_highlighting);
+        calendarAdapter = new CalendarAdapter(DateUtils.generateDates());
         recyclerView.setAdapter(calendarAdapter);
         calendarAdapter.setDateList(DateUtils.generateDates());
     }

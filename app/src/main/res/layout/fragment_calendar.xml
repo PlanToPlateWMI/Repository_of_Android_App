@@ -75,15 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/miesiacdzienrok"
-        android:orientation="horizontal"
-        tools:listitem="@layout/item_calendar_future_highlighting">
-    <!--            <HorizontalScrollView-->
-    <!--                android:id="@+id/horscroll"-->
-    <!--                android:layout_width="fill_parent"-->
-    <!--                android:layout_marginTop="10dp"-->
-    <!--                android:layout_height="50dp">-->
-
-    <!--            </HorizontalScrollView>-->
+        android:orientation="horizontal">
     </androidx.recyclerview.widget.RecyclerView>
 
     <ScrollView
