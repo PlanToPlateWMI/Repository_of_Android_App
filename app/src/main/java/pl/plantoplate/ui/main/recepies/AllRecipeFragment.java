@@ -19,11 +19,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.time.LocalDate;
+
 import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
+import pl.plantoplate.tools.DateUtils;
+import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.CalendarAdapter;
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+import timber.log.Timber;
 
 public class AllRecipeFragment extends Fragment {
+
+    FragmentRecipeInsideAllBinding fragmentRecipeInsideAllBinding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -32,4 +45,9 @@ public class AllRecipeFragment extends Fragment {
 
         return fragmentRecipeInsideAllBinding.getRoot();
     }
+
+//    public void setupRecyclerView(){
+//        RecyclerView recyclerView = fragmentRecipeInsideAllBinding.recipeRecyclerView;
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//    }
 }

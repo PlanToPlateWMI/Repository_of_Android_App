@@ -18,16 +18,25 @@ package pl.plantoplate.ui.main.recepies;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeBinding;
+import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
+import pl.plantoplate.tools.DateUtils;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.CalendarAdapter;
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+import timber.log.Timber;
 
 /**
  * This fragment is responsible for displaying the recipe view.
@@ -36,6 +45,8 @@ public class RecipeFragment extends Fragment {
 
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
+    private FragmentRecipeBinding fragmentRecipeBinding;
+
 
     /**
      * Called to create the view hierarchy of the fragment.

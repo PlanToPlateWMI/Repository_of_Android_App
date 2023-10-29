@@ -53,6 +53,7 @@
         android:layout_height="26dp"
         android:layout_margin="5dp"
         android:backgroundTint="?attr/colorOnTertiary"
+        android:textColor="?attr/colorSecondaryVariant"
 
         android:textAppearance="@style/wy_lij_pono"
         app:iconifiedByDefault="false"

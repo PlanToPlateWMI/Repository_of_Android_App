@@ -71,13 +71,13 @@ public class ShoppingListTest {
 
     @Test
     public void testTrzebaKupicNavbar() {
-        onView(withId(R.id.trzeba_kupic)).perform(click());
+        onView(withId(R.id.trzeba_kupic_button)).perform(click());
         onView(withId(R.id.products_own_recycler_view)).check(matches(isDisplayed()));
     }
 
     @Test
     public void testKupioneNavbar() {
-        onView(withId(R.id.kupione)).perform(click());
+        onView(withId(R.id.kupione_button)).perform(click());
         onView(withId(R.id.category_recycler_view)).check(matches(isDisplayed()));
     }
 
