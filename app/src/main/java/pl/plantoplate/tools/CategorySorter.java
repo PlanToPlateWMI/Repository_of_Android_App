@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import pl.plantoplate.data.remote.models.Product;
 import pl.plantoplate.data.remote.models.Category;
+import pl.plantoplate.data.remote.models.category.Recipe;
+import pl.plantoplate.ui.main.recepies.recyclerViews.RecipeCategory;
 
 /**
  * CategorySorter is a class that sorts categories and products.
@@ -103,5 +105,30 @@ public class CategorySorter {
             }
         }
         return filteredProducts;
+    }
+
+    public static ArrayList<RecipeCategory> sortCategoriesByRecipe(ArrayList<Recipe> recipes) {
+        // Create a map of category names to lists of products
+        Map<String, ArrayList<Recipe>> categoryMap = new HashMap<>();
+        for (Recipe recipe : recipes) {
+            List<Recipe> recipeList = categoryMap.computeIfAbsent(recipe.getCategoryName(), k -> new ArrayList<>());
+            recipeList.add(recipe);
+        }
+
+        // Create a list of Category objects
+        ArrayList<RecipeCategory> categories = new ArrayList<>();
+        for (Map.Entry<String, ArrayList<Recipe>> entry : categoryMap.entrySet()) {
+            RecipeCategory category = new RecipeCategory();
+            category.setName(entry.getKey());
+            ArrayList<Recipe> sortedRecipes = entry.getValue();
+            sortedRecipes.sort(Comparator.comparing(Recipe::getTitle));
+            category.setRecipes(sortedRecipes);
+            categories.add(category);
+        }
+
+        // Sort the list of categories by category name
+        categories.sort(Comparator.comparing(RecipeCategory::getName));
+
+        return categories;
     }
 }

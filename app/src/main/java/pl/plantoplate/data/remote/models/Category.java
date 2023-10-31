@@ -17,8 +17,6 @@ package pl.plantoplate.data.remote.models;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.data.remote.models.Product;
-
 public class Category {
     private int id;
     private String name;
