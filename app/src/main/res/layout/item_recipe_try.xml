@@ -18,7 +18,6 @@
         android:layout_height="130dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
         android:clickable="true"
 
 
@@ -30,7 +29,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/jedzenie"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="6dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

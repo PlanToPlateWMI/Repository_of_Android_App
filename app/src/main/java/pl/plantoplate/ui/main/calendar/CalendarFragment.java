@@ -63,6 +63,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         fragmentCalendarBinding = FragmentCalendarBinding.inflate(inflater, container, false);
 
         initViews(fragmentCalendarBinding);

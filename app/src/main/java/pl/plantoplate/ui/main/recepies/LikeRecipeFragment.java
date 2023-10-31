@@ -21,14 +21,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import pl.plantoplate.databinding.FragmentRecipeInsideLikeBinding;
+import pl.plantoplate.databinding.FragmentRecipeInsideNotAllBinding;
 
 public class LikeRecipeFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentRecipeInsideLikeBinding fragmentRecipeInsideLikeBinding = FragmentRecipeInsideLikeBinding.inflate(inflater, container, false);
-        return fragmentRecipeInsideLikeBinding.getRoot();
+        FragmentRecipeInsideNotAllBinding fragmentRecipeInsideNotAllBinding= FragmentRecipeInsideNotAllBinding.inflate(inflater, container, false);
+        return fragmentRecipeInsideNotAllBinding.getRoot();
     }
 }

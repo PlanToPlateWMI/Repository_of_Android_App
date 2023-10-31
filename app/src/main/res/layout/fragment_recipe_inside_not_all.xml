@@ -71,7 +71,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_category_recipe" />
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

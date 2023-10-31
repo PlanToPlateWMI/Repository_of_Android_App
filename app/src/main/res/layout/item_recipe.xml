@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="190dp"
     android:orientation="vertical"
+    android:clickable="true"
     android:background="@drawable/rounded_kalendarz"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
@@ -22,9 +23,8 @@
         android:clickable="true"
         android:contentDescription="TODO"
 
-
         android:paddingLeft="0dp"
-        android:paddingTop="10dp"
+        android:paddingTop="30dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
         android:scaleType="centerCrop"
@@ -33,7 +33,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="7dp"
+        android:paddingTop="5dp"
         android:orientation="vertical">
 
         <TextView
@@ -60,7 +60,7 @@
             android:singleLine="true"
             android:maxLines="1"
             android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="12dp"/>
+            android:textSize="16dp"/>
 
     </LinearLayout>
 
