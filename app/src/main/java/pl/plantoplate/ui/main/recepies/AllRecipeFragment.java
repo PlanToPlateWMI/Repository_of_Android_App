@@ -70,6 +70,12 @@ public class AllRecipeFragment extends Fragment {
         Recipe recipe = new Recipe(1, "Zupa pomidorowa", "30 min", Level.EASY,
                 "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/AF530EE2-91C9-4964-AB81-8EC3AD5C0788/Derivates/41DDA174-8F07-4BE6-B763-06438A86065B.jpg",
                 "Zupy", true);
+        Recipe recipe3 = new Recipe(1, "Zupa hujowa", "30 min", Level.EASY,
+                "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/AF530EE2-91C9-4964-AB81-8EC3AD5C0788/Derivates/41DDA174-8F07-4BE6-B763-06438A86065B.jpg",
+                "Zupy", true);
+        Recipe recipe4 = new Recipe(1, "Zupa huj", "30 min", Level.EASY,
+                "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/AF530EE2-91C9-4964-AB81-8EC3AD5C0788/Derivates/41DDA174-8F07-4BE6-B763-06438A86065B.jpg",
+                "Zupy", true);
         Recipe recipe2 = new Recipe(1, "Gowno", "2 min", Level.EASY,
                 "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/AF530EE2-91C9-4964-AB81-8EC3AD5C0788/Derivates/41DDA174-8F07-4BE6-B763-06438A86065B.jpg",
                 "Przystawki", false);
@@ -90,6 +96,8 @@ public class AllRecipeFragment extends Fragment {
         recipeCategoryAdapter.setCategoriesList(CategorySorter.sortCategoriesByRecipe(new ArrayList<Recipe>() {{
             add(recipe);
             add(recipe2);
+            add(recipe3);
+            add(recipe4);
         }}));
 
     }

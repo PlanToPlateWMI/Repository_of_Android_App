@@ -62,8 +62,11 @@ public class RecipeFragment extends Fragment {
         FragmentRecipeBinding fragmentRecipeBinding = FragmentRecipeBinding.inflate(inflater, container, false);
 
         initViews(fragmentRecipeBinding);
+
         setupViewPager(viewPager);
+
         setupNavigation();
+
         return fragmentRecipeBinding.getRoot();
     }
 
