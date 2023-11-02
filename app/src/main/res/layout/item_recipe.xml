@@ -42,7 +42,24 @@
                 android:paddingRight="0dp"
                 android:paddingBottom="0dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/jedzenie" />
+                android:src="@drawable/noimage" />
+
+            <TextView
+                android:id="@+id/wegeText"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="130dp"
+                android:background="@drawable/rounded_baza"
+                android:ellipsize="end"
+                android:fontFamily="@font/quicksand_regular"
+                android:gravity="center"
+                android:maxLines="1"
+                android:visibility="visible"
+                android:singleLine="true"
+                android:text="Wege"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textSize="12dp" />
 
         </androidx.cardview.widget.CardView>
 

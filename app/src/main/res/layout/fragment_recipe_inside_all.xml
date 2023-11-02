@@ -26,6 +26,7 @@
         app:layout_constraintHorizontal_bias="0.921"
         app:layout_constraintStart_toStartOf="parent"
         app:maxImageSize="32dp"
+        android:visibility="visible"
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView

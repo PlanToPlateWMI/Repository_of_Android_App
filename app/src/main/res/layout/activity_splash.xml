@@ -11,7 +11,7 @@
         android:layout_height="362dp"
         android:scaleType="centerCrop"
         android:padding="50dp"
-        android:src="@drawable/splash_image"
+        android:src="@drawable/splash_act"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

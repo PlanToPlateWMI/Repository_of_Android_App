@@ -7,25 +7,6 @@
     android:layout_height="match_parent"
     android:background="?attr/colorOnTertiary">
 
-<!--    <TextView-->
-<!--        android:layout_marginTop="70dp"-->
-<!--        android:id="@+id/plantoplate"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:fontFamily="@font/quicksand_semibold"-->
-<!--        android:gravity="top"-->
-<!--        android:text="@string/plantoplate"-->
-<!--        android:textAppearance="@style/plantoplate"-->
-<!--        android:textColor="?attr/colorSecondaryVariant"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.023" />-->
-
-
     <TextView
         android:id="@+id/zmiana_danych"
         android:layout_width="wrap_content"
@@ -57,14 +38,13 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/badge_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="left|center_vertical"
         android:text="@string/zmiana_imienia"
         android:textAllCaps="false"
 
         android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
+        app:iconPadding="12dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,13 +63,12 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/email_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="left|center_vertical"
         android:text="@string/zmiana_email"
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
+        app:iconPadding="12dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
 
@@ -109,13 +88,12 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/lock_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="left|center_vertical"
         android:text="@string/zmiana_hasla"
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
+        app:iconPadding="12dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
 

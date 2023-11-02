@@ -7,71 +7,6 @@
     android:layout_height="match_parent"
     android:background="?attr/colorOnTertiary">
 
-<!--    <TextView-->
-<!--        android:id="@+id/mail"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentLeft="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginBottom="572dp"-->
-<!--        android:fontFamily="@font/quicksand_medium"-->
-
-<!--        android:gravity="top"-->
-
-<!--        android:text="@string/mail"-->
-<!--        android:textAppearance="@style/rejestracja"-->
-<!--        android:textColor="?attr/colorSecondaryVariant"-->
-<!--        android:textSize="18dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.044"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imie"-->
-<!--        app:layout_constraintVertical_bias="0.493" />-->
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/sun"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="4dp"-->
-<!--        android:layout_marginBottom="688dp"-->
-<!--        android:drawableLeft="@drawable/baseline_wb_sunny_24_50"-->
-<!--        android:paddingTop="?android:attr/actionBarSize"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toStartOf="@id/switchButtonChangeColorTheme"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        tools:ignore="MissingConstraints" />-->
-
-    <!--    <TextView-->
-<!--        android:id="@+id/moon"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="688dp"-->
-<!--        android:drawableRight="@drawable/baseline_nights_stay_24"-->
-<!--        android:paddingTop="?android:attr/actionBarSize"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.958"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        tools:ignore="MissingConstraints" />-->
-
-    <!--    <Switch-->
-<!--        android:id="@+id/switchButtonChangeColorTheme"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="672dp"-->
-<!--        android:checked="true"-->
-<!--        android:paddingTop="?android:attr/actionBarSize"-->
-<!--        android:thumbTint="?attr/colorSecondary"-->
-<!--        android:trackTint="?attr/colorOnPrimary"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml"-->
-<!--        tools:layout_editor_absoluteX="298dp" />-->
-
     <ImageView
         android:id="@+id/moon"
         android:layout_width="wrap_content"
@@ -100,7 +35,7 @@
         android:id="@+id/switchButtonChangeColorTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.928"
@@ -140,14 +75,13 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/key_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="left|center_vertical"
         android:text="@string/Wygenerowanie_kodu"
         android:textAllCaps="false"
 
         android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
+        app:iconPadding="12dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -166,13 +100,12 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/manage_accounts_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="left|center_vertical"
         android:text="@string/Zmiana_danych"
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
+        app:iconPadding="12dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
 
@@ -192,13 +125,12 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/settings_suggest_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="left|center_vertical"
         android:text="@string/Zarządzanie_użytkownikami"
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
+        app:iconPadding="12dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
 
@@ -220,13 +152,12 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/question_mark_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="left|center_vertical"
         android:text="@string/About_us"
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
+        app:iconPadding="12dp"
 
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -247,13 +178,12 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
         android:drawableLeft="@drawable/exit_to_app_24_50"
-        android:drawableRight="@drawable/arrow_forward_ios_24_50"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="left|center_vertical"
         android:text="@string/Wyłoguj"
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
-        app:iconPadding="8dp"
+        app:iconPadding="12dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
