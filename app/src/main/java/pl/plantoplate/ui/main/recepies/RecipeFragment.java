@@ -42,11 +42,8 @@ import timber.log.Timber;
  * This fragment is responsible for displaying the recipe view.
  */
 public class RecipeFragment extends Fragment {
-
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
-    private FragmentRecipeBinding fragmentRecipeBinding;
-
 
     /**
      * Called to create the view hierarchy of the fragment.
@@ -78,6 +75,7 @@ public class RecipeFragment extends Fragment {
         radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
         radioGridGroupCategories.setCheckedRadioButtonById(R.id.wszystkie);
         viewPager.setCurrentItem(0);
+        viewPager.setUserInputEnabled(false);
     }
 
     /**

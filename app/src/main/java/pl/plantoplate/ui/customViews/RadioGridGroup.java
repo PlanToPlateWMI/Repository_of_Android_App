@@ -31,7 +31,7 @@ import java.util.List;
  * RadioGridGroup is a custom view that extends GridLayout and implements RadioGroup.OnCheckedChangeListener.
  * It is used in the application to display a grid of radio buttons.
  */
-public class RadioGridGroup extends GridLayout implements RadioGroup.OnCheckedChangeListener {
+public class RadioGridGroup extends GridLayout{
 
     private List<RadioButton> radioButtons = new ArrayList<>();
     private OnCheckedChangeListener onCheckedChangeListener;
@@ -68,12 +68,6 @@ public class RadioGridGroup extends GridLayout implements RadioGroup.OnCheckedCh
                 }
             });
         }
-    }
-
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        // do nothing
     }
 
     public interface OnCheckedChangeListener {

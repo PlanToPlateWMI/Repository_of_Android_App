@@ -49,7 +49,7 @@ public class ChangeCategoryOfProductFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        pl.plantoplate.databinding.FragmentChangeCategoryBinding fragmentChangeCategoryBinding = FragmentChangeCategoryBinding.inflate(inflater, container, false);
+        FragmentChangeCategoryBinding fragmentChangeCategoryBinding = FragmentChangeCategoryBinding.inflate(inflater, container, false);
 
         initViews(fragmentChangeCategoryBinding);
         setClickListeners();

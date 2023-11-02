@@ -28,11 +28,6 @@ public class RecipeCategoryAdapter extends RecyclerView.Adapter<RecipeCategoryVi
 
     @SuppressLint("NotifyDataSetChanged")
     public void setCategoriesList(ArrayList<RecipeCategory> filterlist) {
-
-        for (RecipeCategory category : filterlist) {
-            Timber.e(category.getName());
-        }
-
         categories = filterlist;
         notifyDataSetChanged();
     }
@@ -40,6 +35,8 @@ public class RecipeCategoryAdapter extends RecyclerView.Adapter<RecipeCategoryVi
     @NonNull
     @Override
     public RecipeCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Timber.e("onCreateViewHolder");
+
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_category_recipe, parent, false);
         return new RecipeCategoryViewHolder(itemView);
@@ -48,10 +45,17 @@ public class RecipeCategoryAdapter extends RecyclerView.Adapter<RecipeCategoryVi
     @Override
     public void onBindViewHolder(@NonNull RecipeCategoryViewHolder holder, int position) {
         holder.bind(categories.get(position), listener);
+        Timber.e(categories.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return categories == null ? 0 : categories.size();
+        //log item count
+        Timber.e("Item count: %s", categories.size());
+
+        if (categories == null) {
+            return 0;
+        }
+        return categories.size();
     }
 }

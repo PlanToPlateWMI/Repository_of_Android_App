@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import pl.plantoplate.data.remote.models.Category;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.ui.main.recyclerViews.viewHolders.CategoryViewHolder;
+import timber.log.Timber;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
@@ -53,6 +54,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Timber.e("onCreateViewHolder");
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(this.categoryItemType, parent, false);
         return new CategoryViewHolder(itemView, this.productItemType);

@@ -21,14 +21,60 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import java.util.ArrayList;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.repository.RecipeRepository;
 import pl.plantoplate.databinding.FragmentRecipeInsideNotAllBinding;
+import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.ui.main.recepies.recyclerViews.adapters.RecipeCategoryAdapter;
+import timber.log.Timber;
 
 public class LikeRecipeFragment extends Fragment {
+
+    private CompositeDisposable compositeDisposable;
+    private RecipeCategoryAdapter recipeCategoryAdapter;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentRecipeInsideNotAllBinding fragmentRecipeInsideNotAllBinding= FragmentRecipeInsideNotAllBinding.inflate(inflater, container, false);
+        FragmentRecipeInsideNotAllBinding fragmentRecipeInsideNotAllBinding =
+                FragmentRecipeInsideNotAllBinding.inflate(inflater, container, false);
+        compositeDisposable = new CompositeDisposable();
+
+        floatingActionButton = fragmentRecipeInsideNotAllBinding.plusInKalendarz;
+
+        setupRecyclerView(fragmentRecipeInsideNotAllBinding);
+        getSelectedRecepies();
         return fragmentRecipeInsideNotAllBinding.getRoot();
+    }
+
+    public void getSelectedRecepies(){
+        RecipeRepository recipeRepository = new RecipeRepository();
+
+        Disposable disposable = recipeRepository.getSelectedRecipes("")
+                .subscribe(
+                        recipes -> recipeCategoryAdapter.setCategoriesList(CategorySorter.sortCategoriesByRecipe(recipes)),
+                        throwable -> Timber.e(throwable, "Error while getting recipes")
+                );
+
+        compositeDisposable.add(disposable);
+    }
+
+    public void setupRecyclerView(FragmentRecipeInsideNotAllBinding fragmentRecipeInsideAllBinding){
+        RecyclerView recyclerView = fragmentRecipeInsideAllBinding.productsOwnRecyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recipeCategoryAdapter = new RecipeCategoryAdapter(new ArrayList<>());
+        recyclerView.setAdapter(recipeCategoryAdapter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
     }
 }

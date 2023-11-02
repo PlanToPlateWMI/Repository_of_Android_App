@@ -53,12 +53,12 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         super.onCreate(savedInstanceState);
         EmailConfirmationBinding email_confirm_view = EmailConfirmationBinding.inflate(getLayoutInflater(), null, false);
         setContentView(email_confirm_view.getRoot());
+        prefs = getSharedPreferences("prefs", 0);
 
         initViews(email_confirm_view);
         setEmailInfoText();
         setClickListeners();
         compositeDisposable = new CompositeDisposable();
-        prefs = getSharedPreferences("prefs", 0);
         Timber.d("Activity created");
     }
 

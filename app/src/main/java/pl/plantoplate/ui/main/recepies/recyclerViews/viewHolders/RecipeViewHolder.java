@@ -1,5 +1,6 @@
 package pl.plantoplate.ui.main.recepies.recyclerViews.viewHolders;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,6 +11,7 @@ import com.squareup.picasso.Picasso;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.category.Recipe;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+import timber.log.Timber;
 
 public class RecipeViewHolder extends RecyclerView.ViewHolder {
 
@@ -28,12 +30,18 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Recipe recipe, SetupItemButtons listener) {
-        Picasso.get()
-                .load(recipe.getImage())
-                .error(R.drawable.ic_launcher_background) //TODO change to error image
-                //.placeholder(R.drawable.placeholder)
-                .into(recipeImageView);
+        if (TextUtils.isEmpty(recipe.getImage())) {
+            Picasso.get()
+                    .load(R.drawable.noimage)
+                    .into(recipeImageView);
+        } else {
+            Picasso.get()
+                    .load(recipe.getImage())
+                    .error(R.drawable.noimage)
+                    .into(recipeImageView);
+        }
         recipeNameTextView.setText(recipe.getTitle());
-        recipeTimeToCookTextView.setText(recipe.getTime());
+        String cookTime = recipe.getTime() + " min";
+        recipeTimeToCookTextView.setText(cookTime);
     }
 }
