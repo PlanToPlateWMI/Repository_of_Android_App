@@ -96,10 +96,9 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wybierz_opcje"
-        app:layout_constraintVertical_bias="0.492"
+        app:layout_constraintVertical_bias="0.376"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorPrimaryVariant"
-        />
+        app:strokeColor="?attr/colorPrimaryVariant" />
 
     <Button
         android:id="@+id/button_swoja_grupa"
@@ -122,10 +121,9 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_mam_zaproszenie"
-        app:layout_constraintVertical_bias="0.447"
+        app:layout_constraintVertical_bias="0.227"
         app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorPrimaryVariant"
-        />
+        app:strokeColor="?attr/colorPrimaryVariant" />
 
     <TextView
         android:id="@+id/podpowiedz_grupa"

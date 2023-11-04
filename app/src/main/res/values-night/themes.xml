@@ -6,13 +6,17 @@
         <item name="colorOnTertiary">@color/zam_background_color</item>
 
         <item name="colorOnPrimaryFixed">@color/zam_item_kupione_trzeba_kupic</item>
+
         <item name="boxStrokeColor">@color/zam_greeen_stroke</item>
 
         <item name="colorOnPrimary">@color/zam_blue_stroke</item>
         <item name="color">@color/zam_item_user_new</item>
 
-        <item name="colorOnError">@color/zam_item_baza</item>
-        <item name="colorError">@color/zam_baza_stroke</item>
+        <item name="colorPrimaryDark">@color/zam_item_baza</item>
+        <item name="colorPrimarySurface">@color/zam_baza_stroke</item>
+
+        <item name="colorOnError">@color/red_hard</item>
+        <item name="colorError">@color/red_hard</item>
 
         <item name="android:editTextColor">@color/zam_text_color</item>
 
@@ -26,7 +30,9 @@
 
         <item name="tickColor">@color/zam_color_kalendarz</item>
 
-        <item name="colorAccent">@color/zam_item_kalendarz</item>
+        <item name="colorAccent">@color/zam_checkbox</item>
+
+        <item name="colorBackgroundFloating">@color/zam_item_kalendarz</item>
         <item name="colorOutline">@color/zam_stroke_kalendarz</item>
 
         <item name="colorControlNormal">@color/zam_stroke_yellow</item>

@@ -52,13 +52,14 @@ Aby dodać nowy produkt, kliknij znak plus.
 Uwaga!
 Użytkownik z rolą "dziecko" nie może dodać nowego produktu.</string>
 
-    <string name="wprowadzenie_przepisy_wszystkie">Aby dodać przepis do listy, przejdź do ustawień
-i wybierz kategorię „Opcje przepisów”.</string>
     <string name="wprowadzenie_przepisy_ulubione">Aby dodać przepis do kategorii ulubionych,
-przejdź do dowolnego przepisu znajdującego się w kategorii „Wszystkie”
-i kliknij ikonkę "serca" w prawym górnym rogu.</string>
+kliknij na plus. Przeniesie Cię na stronę internetową, na której będziesz musiał się zalogować i
+wybrać przepisy, które pojawią się później w tej kategorii.
+Uwaga!
+Użytkownik z rolą "dziecko" nie może dodać ulubionego przepisu.</string>
 
-    <string name="wprowadzenie_kalendarz">Aby zaplanować przepis, przejdź do kategorii przepisy</string>
+    <string name="wprowadzenie_kalendarz">Aby zaplanować przepis, przejdź do kategorii przepisy za
+pomocą przyciku plus.</string>
 
 
     <string name="zmien_kategorie">Zmień kategorie</string>
@@ -231,20 +232,10 @@ dane którego chcesz zmienić:</string>
     <string name="kod_zapr_text">Aby korzystać z aplikacji wspólnie z innymi osobami trzeba najpierw wygenerować kod i przekazać go wybranym użytkownikom.</string>
 
     <string name="konto_dziecko"> Masz konto z rolą "Dziecko"</string>
-    <string name="konto_dziecko_prawa">Możesz robić takie rzeczy:\n
-1. Dodawać produkty do listy zakupów i spiżarni.\n
-2. Dodawać produkty do kupionych.\n
-3. Przenosić produkt z kupionych z powrotem do listy zakupów.\n
-4. Przenosić produkty z kupionych do spiżarni.\n
-5. Edytować ilość produktów w spiżarni i na liście zakupów.
-
-</string>
+    <string name="konto_dziecko_prawa">Możesz robić takie rzeczy:\n 1. Dodawać produkty do listy zakupów i spiżarni.\n 2. Dodawać produkty do kupionych.\n 3. Przenosić produkt z kupionych z powrotem do listy zakupów.\n 4. Przenosić produkty z kupionych do spiżarni.\n 5. Edytować ilość produktów w spiżarni i na liście zakupów.</string>
 
 
 </resources>
-
-
-
 
     <!--<resources>-->
     <!--    <string name="app_name">PlanToPlate</string>-->

@@ -41,6 +41,8 @@
     <color name="checkbox">#E059616A</color>
     <color name="stroke_checkbox">#E059616A</color>
 
+    <color name="red_light">#EBD2D2</color>
+    <color name="red_hard">#A13F3F</color>
 
     <color name="zam_navigation_bar_buttons">#1F2732</color>
     <color name="zam_background_color">#2E3846</color>

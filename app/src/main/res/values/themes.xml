@@ -6,13 +6,18 @@
         <item name="colorOnTertiary">@color/background_color</item>
 
         <item name="colorOnPrimaryFixed">@color/item_kupione_trzeba_kupic</item>
+
         <item name="boxStrokeColor">@color/greeen_stroke</item>
 
         <item name="colorOnPrimary">@color/blue_stroke</item>
+
         <item name="color">@color/item_user_new</item>
 
-        <item name="colorOnError">@color/item_baza</item>
-        <item name="colorError">@color/baza_stroke</item>
+        <item name="colorPrimaryDark">@color/item_baza</item>
+        <item name="colorPrimarySurface">@color/baza_stroke</item>
+
+        <item name="colorOnError">@color/red_hard</item>
+        <item name="colorError">@color/red_hard</item>
 
         <item name="android:editTextColor">@color/text_color</item>
 
@@ -26,7 +31,9 @@
 
         <item name="tickColor">@color/color_kalendarz</item>
 
-        <item name="colorAccent">@color/item_kalendarz</item>
+        <item name="colorAccent">@color/checkbox</item>
+
+        <item name="colorBackgroundFloating">@color/item_kalendarz</item>
         <item name="colorOutline">@color/stroke_kalendarz</item>
 
         <item name="colorControlNormal">@color/stroke_yellow</item>

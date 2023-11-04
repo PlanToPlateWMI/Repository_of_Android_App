@@ -36,14 +36,16 @@
             android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.35"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.067" />
+            app:layout_constraintVertical_bias="0.028" />
 
         <TextView
             android:id="@+id/text_add"
             android:layout_width="340dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -60,7 +62,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.224" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/button_yes"
@@ -72,12 +74,12 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_light"
 
+            android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
-            android:paddingBottom="10dp"
 
-            android:gravity="center"
+            android:paddingBottom="10dp"
             android:text="@string/zamknij"
 
             android:textAppearance="@style/rejestracja"
@@ -85,10 +87,9 @@
             android:textSize="22dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintHorizontal_bias="0.937"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_add"
-            app:layout_constraintVertical_bias="0.725" />
+            app:layout_constraintTop_toBottomOf="@+id/text_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -33,8 +33,8 @@
         android:layout_marginBottom="72dp"
         android:clickable="true"
         android:iconTint="?attr/colorSecondaryVariant"
-        android:backgroundTint="?attr/colorError"
-        app:backgroundTint="?attr/colorError"
+        android:backgroundTint="?attr/colorPrimarySurface"
+        app:backgroundTint="?attr/colorPrimarySurface"
 
         android:src="@drawable/add_24_50"
         app:layout_constraintBottom_toBottomOf="parent"
