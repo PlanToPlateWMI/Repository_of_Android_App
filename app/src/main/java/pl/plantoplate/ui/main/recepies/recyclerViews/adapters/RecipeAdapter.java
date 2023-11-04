@@ -4,12 +4,9 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.category.Recipe;
 import pl.plantoplate.ui.main.recepies.recyclerViews.viewHolders.RecipeViewHolder;

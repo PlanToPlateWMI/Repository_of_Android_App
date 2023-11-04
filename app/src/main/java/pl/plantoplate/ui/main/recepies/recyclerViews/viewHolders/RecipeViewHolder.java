@@ -30,6 +30,7 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Recipe recipe, SetupItemButtons listener) {
+        recipeLinearLayout.findViewById(R.id.wegeText).setVisibility(recipe.getVege() ? View.VISIBLE : View.GONE);
         if (TextUtils.isEmpty(recipe.getImage())) {
             Picasso.get()
                     .load(R.drawable.noimage)
