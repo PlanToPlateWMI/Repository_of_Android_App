@@ -41,7 +41,7 @@ public class AuthRepository {
     public Single<CodeResponse> sendUserRegisterData(UserRegisterData info) {
         return authService.sendUserRegisterData(info)
                 .onErrorResumeNext(throwable -> new ErrorHandler<CodeResponse>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(409, "Użytkownik o podanym adresie email już istnieje.");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
@@ -52,7 +52,7 @@ public class AuthRepository {
     public Single<CodeResponse> getEmailConfirmCode(String email, String type) {
         return authService.getEmailConfirmCode(email, type)
                 .onErrorResumeNext(throwable -> new ErrorHandler<CodeResponse>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Użytkownik o podanym adresie email nie istnieje!");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
@@ -75,7 +75,7 @@ public class AuthRepository {
     public Single<Message> resetPassword(SignInData info) {
         return authService.resetPassword(info)
                 .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Użytkownik o podanym adresie email nie istnieje.");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
@@ -86,8 +86,8 @@ public class AuthRepository {
     public Single<Message> userExists(String email) {
         return authService.userExists(email)
                 .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
-                            put(409, "Użytkownik o podanym adresie email nie istnieje.");
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(409, "Użytkownik o podanym adresie email już istnieje.");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
                 .subscribeOn(Schedulers.io())

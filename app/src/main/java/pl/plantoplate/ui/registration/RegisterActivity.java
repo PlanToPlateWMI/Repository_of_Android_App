@@ -156,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      */
     public void checkUserExists(View view){
         Timber.d("Checking if user exists...");
-        String email = String.valueOf(enterEmailEditText.getText());
+        String email = String.valueOf(enterEmailEditText.getText()).trim();
 
         Disposable disposable = authRepository.userExists(email)
                 .subscribe(message -> {
