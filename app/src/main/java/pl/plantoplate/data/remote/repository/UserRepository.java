@@ -16,11 +16,15 @@
 package pl.plantoplate.data.remote.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.RetrofitClient;
+import pl.plantoplate.data.remote.models.CodeResponse;
 import pl.plantoplate.data.remote.models.JwtResponse;
 import pl.plantoplate.data.remote.models.Message;
 import pl.plantoplate.data.remote.models.UserInfo;
@@ -36,18 +40,34 @@ public class UserRepository {
 
     public Single<UserInfo> changeUsername(String token, String username) {
         return userService.changeUsername(token, new UserInfo(username))
+                .onErrorResumeNext(throwable -> new ErrorHandler<UserInfo>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Użytkownik nie istnieje!");
+                            put(500, "Wystąpił nieznany błąd serwera.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<UserInfo> getUserInfo(String token) {
         return userService.getUserInfo(token)
+                .onErrorResumeNext(throwable -> new ErrorHandler<UserInfo>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Użytkownik nie istnieje lub nie jest w grupie.");
+                            put(500, "Wystąpił nieznany błąd serwera.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<JwtResponse> changeEmail(String token, UserInfo userInfo) {
         return userService.changeEmail(token, userInfo)
+                .onErrorResumeNext(throwable -> new ErrorHandler<JwtResponse>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Użytkownik nie istnieje!");
+                            put(409, "Użytkownik o podanym adresie email już istnieje.");
+                            put(500, "Wystąpił nieznany błąd serwera.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -57,18 +77,34 @@ public class UserRepository {
         userInfo.setPassword(password);
 
         return userService.changePassword(token, userInfo)
+                .onErrorResumeNext(throwable -> new ErrorHandler<UserInfo>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Użytkownik nie istnieje!");
+                            put(500, "Wystąpił nieznany błąd serwera.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<Message> validatePasswordMatch(String token, String password) {
         return userService.validatePasswordMatch(token, password)
+                .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Użytkownik nie istnieje!");
+                            put(409, "Hasło jest nieprawidłowe.");
+                            put(500, "Wystąpił nieznany błąd serwera.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<ArrayList<UserInfo>> getUsersInfo(String token) {
         return userService.getUsersInfo(token)
+                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<UserInfo>>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Użytkownik nie istnieje lub nie jest w grupie.");
+                            put(500, "Wystąpił nieznany błąd serwera.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -78,6 +114,12 @@ public class UserRepository {
         userInfos.add(userInfo);
 
         return userService.changePermissions(token, userInfos)
+                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<UserInfo>>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Użytkownik nie jest z tej grupy lub rola jest nieprawidłowa.");
+                            put(409, "Co najmniej jeden z użytkowników nie jest z tej grupy.");
+                            put(500, "Wystąpił nieznany błąd serwera.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

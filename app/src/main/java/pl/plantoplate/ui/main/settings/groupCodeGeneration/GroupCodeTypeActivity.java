@@ -107,7 +107,7 @@ public class GroupCodeTypeActivity extends Fragment {
     }
 
     public void showQuestionPopUp(){
-        Dialog dialog = new Dialog(getContext());
+        Dialog dialog = new Dialog(requireContext());
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.new_pop_up_about_kod);
         TextView cancelButton = dialog.findViewById(R.id.button_no);
@@ -129,6 +129,6 @@ public class GroupCodeTypeActivity extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        compositeDisposable.dispose();
+        compositeDisposable.clear();
     }
 }
