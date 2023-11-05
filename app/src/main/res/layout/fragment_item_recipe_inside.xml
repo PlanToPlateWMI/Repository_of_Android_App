@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:layout_margin="0dp"
-            android:backgroundTint="?attr/colorOnSurface"
+            android:backgroundTint="?attr/colorOnTertiaryFixed"
             android:elevation="0dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
