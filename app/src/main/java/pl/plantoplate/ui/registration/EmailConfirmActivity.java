@@ -90,7 +90,7 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
      */
     public void checkCode(View view) {
         Timber.d("Checking email confirm code...");
-        String entered_code = enterCodeEditText.getText().toString();
+        String entered_code = enterCodeEditText.getText().toString().trim();
         String correct_code = prefs.getString("code", "");
         if (correct_code.equals(entered_code)) {
             prefs.edit().remove("code").apply();

@@ -196,7 +196,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         editor.putString("email", userData.getEmail());
         editor.putString("name", userData.getUsername());
         editor.putString("password", userData.getPassword());
-        editor.putString("code", codeResponse.getCode()).apply();
+        editor.putString("code", codeResponse.getCode().trim()).apply();
     }
 
     private void showSnackbar(View view, String message) {

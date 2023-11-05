@@ -17,7 +17,6 @@
 package pl.plantoplate.ui.main.settings.accountManagement.changePassword;
 
 import static android.content.Context.MODE_PRIVATE;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,35 +24,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.textfield.TextInputLayout;
-
 import java.util.Objects;
-
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentPasswordChangeBinding;
 import pl.plantoplate.tools.SCryptStretcher;
 
-
 /**
  * This fragment is used to change the password.
  */
 public class PasswordChangeOldPassword extends Fragment {
 
-    private FragmentPasswordChangeBinding fragmentPasswordChangeBinding;
-
+    private CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
-
-    private Button button_zatwierdz;
-
-    private TextInputLayout wprowadz_stare_haslo;
-
+    private Button acceptButton;
+    private TextInputLayout oldPasswordInputLayout;
     private SharedPreferences prefs;
 
     /**
@@ -66,29 +57,30 @@ public class PasswordChangeOldPassword extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout using the View Binding Library
-        fragmentPasswordChangeBinding = FragmentPasswordChangeBinding.inflate(inflater, container, false);
-
-        // Get the button
-        button_zatwierdz = fragmentPasswordChangeBinding.buttonZatwierdz;
-
-        // Get the text input
-        wprowadz_stare_haslo = fragmentPasswordChangeBinding.wprowadzStareHaslo;
-
+        FragmentPasswordChangeBinding fragmentPasswordChangeBinding =
+                FragmentPasswordChangeBinding.inflate(inflater, container, false);
+        compositeDisposable = new CompositeDisposable();
         userRepository = new UserRepository();
-
         prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
 
-        button_zatwierdz.setOnClickListener(v -> validatePassword());
-
+        initViews(fragmentPasswordChangeBinding);
+        setClickListeners();
         return fragmentPasswordChangeBinding.getRoot();
     }
 
+    public void initViews(FragmentPasswordChangeBinding fragmentPasswordChangeBinding){
+        acceptButton = fragmentPasswordChangeBinding.buttonZatwierdz;
+        oldPasswordInputLayout = fragmentPasswordChangeBinding.wprowadzStareHaslo;
+    }
+
+    private void setClickListeners() {
+        acceptButton.setOnClickListener(v -> validatePassword());
+    }
+
     public void validatePassword() {
-        String password = Objects.requireNonNull(wprowadz_stare_haslo.getEditText()).getText().toString().trim();
+        String password = Objects.requireNonNull(oldPasswordInputLayout.getEditText()).getText().toString().trim();
         if (password.isEmpty()) {
-            wprowadz_stare_haslo.setError("Pole nie może być puste");
+            oldPasswordInputLayout.setError("Pole nie może być puste");
             return;
         }
 
@@ -104,9 +96,10 @@ public class PasswordChangeOldPassword extends Fragment {
                     Fragment fragment = new PasswordChangeNewPasswords();
                     replaceFragment(fragment);
 
-                }, throwable -> {
-                    Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                }, throwable ->
+                        Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
+
+        compositeDisposable.add(disposable);
     }
 
     /**
@@ -122,4 +115,9 @@ public class PasswordChangeOldPassword extends Fragment {
         transaction.commit();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        compositeDisposable.clear();
+    }
 }

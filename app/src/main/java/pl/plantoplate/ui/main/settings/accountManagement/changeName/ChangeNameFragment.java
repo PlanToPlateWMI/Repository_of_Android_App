@@ -79,7 +79,7 @@ public class ChangeNameFragment extends Fragment {
      * @param view The view that was clicked
      */
     public void onAcceptName(View view) {
-        String username = String.valueOf(enterNameEditText.getText());
+        String username = String.valueOf(enterNameEditText.getText()).trim();
         if (username.isEmpty()) {
             enterNameInputLayout.setError("Pole nie może być puste");
             return;

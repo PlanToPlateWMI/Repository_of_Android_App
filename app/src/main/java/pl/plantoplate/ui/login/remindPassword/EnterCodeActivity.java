@@ -86,7 +86,7 @@ public class EnterCodeActivity extends AppCompatActivity {
      * @param view The view that was clicked.
      */
     public void validateConfirmCode(View view) {
-        String entered_code = enterCodeTextInput.getText() != null ? enterCodeTextInput.getText().toString(): "";
+        String entered_code = enterCodeTextInput.getText() != null ? enterCodeTextInput.getText().toString().trim(): "";
         String correct_code = prefs.getString("code", "");
         if (correct_code.equals(entered_code)){
             startActivity(new Intent(this, ChangePasswordActivity.class));

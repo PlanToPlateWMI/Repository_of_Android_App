@@ -84,8 +84,8 @@ public class PasswordChangeNewPasswords extends Fragment {
     }
 
     public void validatePasswords(){
-        String password = newPasswordEditText.getText().toString();
-        String password2 = repeatNewPasswordEditText.getText().toString();
+        String password = newPasswordEditText.getText().toString().trim();
+        String password2 = repeatNewPasswordEditText.getText().toString().trim();
 
         if(password.isEmpty()) {
             enterNewPasswordInputLayout.setError("Wprowadź hasło");

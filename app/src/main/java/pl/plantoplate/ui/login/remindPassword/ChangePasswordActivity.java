@@ -76,8 +76,8 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
      * @param view The view that was clicked.
      */
     private void validatePassword(View view) {
-        String new_password1 = newPasswordEditText.getText().toString();
-        String new_password2 = repeatNewPasswordEditText.getText().toString();
+        String new_password1 = newPasswordEditText.getText().toString().trim();
+        String new_password2 = repeatNewPasswordEditText.getText().toString().trim();
 
         if (new_password1.equals(new_password2)) {
             String email = prefs.getString("email", "");

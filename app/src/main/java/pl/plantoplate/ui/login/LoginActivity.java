@@ -104,8 +104,8 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
      * @return A UserInfo object containing the user's information.
      */
     public SignInData getUserInfo() {
-        String email = Optional.ofNullable(emailTextInput.getText()).map(Objects::toString).orElse("");
-        String password = Optional.ofNullable(passwordTextInput.getText()).map(Objects::toString).orElse("");
+        String email = Optional.ofNullable(emailTextInput.getText()).map(Objects::toString).orElse("").trim();
+        String password = Optional.ofNullable(passwordTextInput.getText()).map(Objects::toString).orElse("").trim();
         return new SignInData(email, password);
     }
 
