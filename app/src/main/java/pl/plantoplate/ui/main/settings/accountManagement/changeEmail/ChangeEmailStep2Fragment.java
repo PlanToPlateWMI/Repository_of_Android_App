@@ -90,15 +90,19 @@ public class ChangeEmailStep2Fragment extends Fragment {
         String newEmailAgain = repeatNewEmailEditText.getText().toString().trim();
 
         if(newEmail.isEmpty()){
+            Toast.makeText(requireActivity(), "Pole nie może być puste", Toast.LENGTH_SHORT).show();
             enterNewEmailInputLayout.setError("Pole nie może być puste");
             enterNewEmailInputLayout.requestFocus();
         } else if(!newEmail.equals(newEmailAgain)){
+            Toast.makeText(requireActivity(), "Adresy email nie są takie same", Toast.LENGTH_SHORT).show();
             repeatNewEmailInputLayout.setError("Adresy email nie są takie same");
             repeatNewEmailInputLayout.requestFocus();
         } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
+            Toast.makeText(requireActivity(), "Wprowadź poprawny adres email", Toast.LENGTH_SHORT).show();
             enterNewEmailInputLayout.setError("Wprowadź poprawny adres email");
             enterNewEmailInputLayout.requestFocus();
         } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmailAgain).matches()){
+            Toast.makeText(requireActivity(), "Wprowadź poprawny adres email", Toast.LENGTH_SHORT).show();
             repeatNewEmailInputLayout.setError("Wprowadź poprawny adres email");
             repeatNewEmailInputLayout.requestFocus();
         } else {
