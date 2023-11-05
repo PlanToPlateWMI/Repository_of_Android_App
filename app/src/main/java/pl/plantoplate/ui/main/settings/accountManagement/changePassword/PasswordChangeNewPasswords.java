@@ -88,13 +88,15 @@ public class PasswordChangeNewPasswords extends Fragment {
         String password2 = repeatNewPasswordEditText.getText().toString().trim();
 
         if(password.isEmpty()) {
+            Toast.makeText(requireActivity(), "Wprowadź hasło", Toast.LENGTH_SHORT).show();
             enterNewPasswordInputLayout.setError("Wprowadź hasło");
             enterNewPasswordInputLayout.requestFocus();
         } else if(!password.equals(password2)) {
+            Toast.makeText(requireActivity(), "Hasła nie są takie same", Toast.LENGTH_SHORT).show();
             repeatNewPasswordInputLayout.setError("Hasła nie są takie same");
             repeatNewPasswordInputLayout.requestFocus();
         } else if(password.length() < 7) {
-            System.out.println("Hasło musi mieć co najmniej 7 znaków");
+            Toast.makeText(requireActivity(), "Hasło musi mieć co najmniej 7 znaków", Toast.LENGTH_SHORT).show();
             enterNewPasswordInputLayout.setError("Hasło musi mieć co najmniej 7 znaków");
             enterNewPasswordInputLayout.requestFocus();
         } else {
