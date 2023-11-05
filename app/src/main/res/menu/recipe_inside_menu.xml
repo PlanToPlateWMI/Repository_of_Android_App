@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id = "@+id/lista_plan"
+        android:title="Dodaj produkty do listy zakupów"
+
+        android:font="@font/quicksand_light"
+        android:fontFamily="@font/quicksand_light"
+
+        android:iconTint="?attr/colorSecondaryVariant"
+        />
+    <item
+        android:id = "@+id/plan_kalendarz"
+        android:title="Zaplanuj przepis w kalendarzu"
+
+        android:font="@font/quicksand_light"
+        android:fontFamily="@font/quicksand_light"
+
+        android:iconTint="?attr/colorSecondaryVariant"
+        />
+</menu>

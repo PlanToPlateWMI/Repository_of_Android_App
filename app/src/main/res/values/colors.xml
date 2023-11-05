@@ -44,6 +44,8 @@
     <color name="red_light">#EBD2D2</color>
     <color name="red_hard">#A13F3F</color>
 
+    <color name="recipe_item_inside">#F9F2E9</color>
+
     <color name="zam_navigation_bar_buttons">#1F2732</color>
     <color name="zam_background_color">#2E3846</color>
 
@@ -67,6 +69,7 @@
     <color name="zam_checkbox">#E7EFEA</color>
     <color name="zam_stroke_checkbox">#E7EFEA</color>
 
+    <color name="zam_recipe_item_inside">#F9F2E9</color>
 
 
     <color name="blue_2">#77A0F2</color>

@@ -43,6 +43,8 @@
 
         <item name="colorOnSurfaceVariant">@color/zam_stroke_kalendarz</item>
 
+        <item name="colorOnSurface">@color/recipe_item_inside</item>
+
         <item name="android:textColorHint">@color/gray</item>
 
         <!-- Secondary brand color. -->
