@@ -101,7 +101,7 @@ public class EnterEmailActivity extends AppCompatActivity {
     public void getConfirmCode(View v) {
         String email = Optional.ofNullable(emailTextInput.getText()).map(Objects::toString).orElse("").trim();
         prefs.edit().putString("email", email).apply();
-        Intent intent = new Intent(getApplicationContext(), EnterCodeActivity.class);
+        Intent intent = new Intent(this, EnterCodeActivity.class);
         startActivity(intent);
 
         AuthRepository authRepository = new AuthRepository();

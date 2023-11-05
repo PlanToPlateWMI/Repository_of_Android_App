@@ -25,10 +25,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import java.util.Objects;
+import java.util.Timer;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.databinding.RemindPassword2Binding;
 import pl.plantoplate.data.remote.repository.AuthRepository;
+import timber.log.Timber;
 
 /**
  * This activity is responsible for handling the user input of the code sent to the user's email
@@ -56,7 +59,6 @@ public class EnterCodeActivity extends AppCompatActivity {
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
         initViews(remindPassword2Binding);
-        initTitleTextView();
         setListeners();
     }
 
@@ -121,6 +123,6 @@ public class EnterCodeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        compositeDisposable.dispose();
+        compositeDisposable.clear();
     }
 }
