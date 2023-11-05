@@ -63,8 +63,9 @@ public class AuthRepository {
     public Single<JwtResponse> signIn(SignInData info) {
         return authService.signinUser(info)
                 .onErrorResumeNext(throwable -> new ErrorHandler<JwtResponse>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Użytkownik o podanym adresie email nie istnieje!");
+                            put(403, "Nieprawidłowe hasło!");
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
                 .subscribeOn(Schedulers.io())

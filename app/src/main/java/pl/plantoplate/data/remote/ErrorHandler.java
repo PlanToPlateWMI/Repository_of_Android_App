@@ -24,7 +24,7 @@ import retrofit2.HttpException;
 public class ErrorHandler<T> {
 
     public Single<T> handleHttpError(Throwable throwable, HashMap<Integer, String> errorMessages) {
-        String errorMessage;
+        String errorMessage = "";
 
         if (throwable instanceof UnknownHostException) {
             errorMessage = "Problemy z siecią. Sprawdź swoje połączenie.";
@@ -34,6 +34,9 @@ public class ErrorHandler<T> {
         }
         else if (throwable instanceof HttpException) {
             errorMessage = errorMessages.get(((HttpException) throwable).code());
+            if (errorMessage == null) {
+                errorMessage = "Nieznany błąd HTTP (" + ((HttpException) throwable).code() + ")";
+            }
         } else {
             errorMessage = "Wystąpił nieznany błąd.";
         }
