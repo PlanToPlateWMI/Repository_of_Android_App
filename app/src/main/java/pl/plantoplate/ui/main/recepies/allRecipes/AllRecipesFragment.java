@@ -21,30 +21,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.repository.RecipeRepository;
 import pl.plantoplate.databinding.FragmentRecipeBaseBinding;
-import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
-import pl.plantoplate.databinding.FragmentRecipeNewBinding;
-import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
-import pl.plantoplate.ui.main.recepies.ConcreteCategoryFragment;
-import pl.plantoplate.ui.main.recepies.RecipeCategoriesFragment;
-import pl.plantoplate.ui.main.recepies.RecipesFragment;
-import pl.plantoplate.ui.main.recepies.recyclerViews.adapters.RecipeCategoryAdapter;
-import pl.plantoplate.ui.main.recepies.selectedRecipes.SelectedRecipesFragment;
-import timber.log.Timber;
 
 public class AllRecipesFragment extends Fragment {
 
@@ -70,7 +53,7 @@ public class AllRecipesFragment extends Fragment {
 
         radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie);
         viewPager2.setCurrentItem(0);
-        //viewPager2.setUserInputEnabled(false);
+        viewPager2.setUserInputEnabled(false);
     }
 
     private void setupNavigation() {
@@ -118,12 +101,12 @@ public class AllRecipesFragment extends Fragment {
             }
         });
         AllRecipesFragment.ViewPagerAdapter adapter = new AllRecipesFragment.ViewPagerAdapter(this);
-        adapter.addFragment(new RecipeCategoriesFragment());
-        adapter.addFragment(new ConcreteCategoryFragment("Dania główne"));
-        adapter.addFragment(new ConcreteCategoryFragment("Zupy"));
-        adapter.addFragment(new ConcreteCategoryFragment("Desery"));
-        adapter.addFragment(new ConcreteCategoryFragment("Przekąski"));
-        adapter.addFragment(new ConcreteCategoryFragment("Napoje"));
+        adapter.addFragment(new RecipeCategoriesAllFragment());
+        adapter.addFragment(new ConcreteCategoryAllFragment("Dania główne"));
+        adapter.addFragment(new ConcreteCategoryAllFragment("Zupy"));
+        adapter.addFragment(new ConcreteCategoryAllFragment("Desery"));
+        adapter.addFragment(new ConcreteCategoryAllFragment("Przekąski"));
+        adapter.addFragment(new ConcreteCategoryAllFragment("Napoje"));
         viewPager.setAdapter(adapter);
         viewPager.setUserInputEnabled(false);
     }
@@ -152,61 +135,4 @@ public class AllRecipesFragment extends Fragment {
             fragmentList.add(fragment);
         }
     }
-
-
-//    private CompositeDisposable compositeDisposable;
-//    private RecipeCategoryAdapter recipeCategoryAdapter;
-//    private FloatingActionButton floatingActionButton;
-//
-//    @Override
-//    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//
-//        FragmentRecipeInsideAllBinding fragmentRecipeInsideAllBinding = FragmentRecipeInsideAllBinding.inflate(inflater, container, false);
-//        compositeDisposable = new CompositeDisposable();
-//
-//        floatingActionButton = fragmentRecipeInsideAllBinding.plusInAllRecipes;
-//        floatingActionButton.setVisibility(View.INVISIBLE);
-//
-//        setupRecyclerView(fragmentRecipeInsideAllBinding);
-//        getAllRecepies();
-//        return fragmentRecipeInsideAllBinding.getRoot();
-//    }
-//
-//    public void getAllRecepies(){
-//        RecipeRepository recipeRepository = new RecipeRepository();
-//
-//        Disposable disposable = recipeRepository.getAllRecipes("")
-//                .subscribe(
-//                        recipes -> recipeCategoryAdapter.setCategoriesList(CategorySorter.sortCategoriesByRecipe(recipes)),
-//                        throwable -> Timber.e(throwable, "Error while getting recipes")
-//                );
-//
-//        compositeDisposable.add(disposable);
-//    }
-//
-//    public void getCategoryRecepies(String category){
-//        RecipeRepository recipeRepository = new RecipeRepository();
-//
-//        Disposable disposable = recipeRepository.getAllRecipes(category)
-//                .subscribe(
-//                        recipes -> recipeCategoryAdapter.setCategoriesList(CategorySorter.sortCategoriesByRecipe(recipes)),
-//                        throwable -> Timber.e(throwable, "Error while getting recipes")
-//                );
-//
-//        compositeDisposable.add(disposable);
-//    }
-//
-//    public void setupRecyclerView(FragmentRecipeInsideAllBinding fragmentRecipeInsideAllBinding){
-//        RecyclerView recyclerView = fragmentRecipeInsideAllBinding.recipeRecyclerView;
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recipeCategoryAdapter = new RecipeCategoryAdapter(new ArrayList<>());
-//        recyclerView.setAdapter(recipeCategoryAdapter);
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        compositeDisposable.dispose();
-//    }
 }

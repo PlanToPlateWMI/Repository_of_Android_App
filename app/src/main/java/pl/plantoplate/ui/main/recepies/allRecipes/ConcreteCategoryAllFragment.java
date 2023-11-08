@@ -1,4 +1,4 @@
-package pl.plantoplate.ui.main.recepies;
+package pl.plantoplate.ui.main.recepies.allRecipes;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,15 +18,14 @@ import pl.plantoplate.databinding.FragmentRecipeInsideNotAllBinding;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.recepies.recyclerViews.adapters.RecipeAdapter;
 
-public class ConcreteCategoryFragment extends Fragment {
+public class ConcreteCategoryAllFragment extends Fragment {
 
     private CompositeDisposable compositeDisposable;
     private RecipeAdapter recipeCategoryAdapter;
     private FloatingActionButton floatingActionButton;
-
     private String category;
 
-    public ConcreteCategoryFragment(String category) {
+    public ConcreteCategoryAllFragment(String category) {
         this.category = category;
     }
 
@@ -37,6 +36,9 @@ public class ConcreteCategoryFragment extends Fragment {
         FragmentRecipeInsideNotAllBinding fragmentRecipeInsideNotAllBinding =
                 FragmentRecipeInsideNotAllBinding.inflate(inflater, container, false);
         compositeDisposable = new CompositeDisposable();
+
+        floatingActionButton = fragmentRecipeInsideNotAllBinding.plusInKalendarz;
+        floatingActionButton.setVisibility(View.INVISIBLE);
 
         setupRecyclerView(fragmentRecipeInsideNotAllBinding);
         getCategoryRecepies();
@@ -64,4 +66,9 @@ public class ConcreteCategoryFragment extends Fragment {
         compositeDisposable.add(disposable);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
 }

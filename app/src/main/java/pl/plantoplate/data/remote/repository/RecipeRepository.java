@@ -47,8 +47,8 @@ public class RecipeRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Recipe>> getSelectedRecipes(String category) {
-        return recipeService.getSelectedRecipes(category)
+    public Single<ArrayList<Recipe>> getSelectedRecipes(String category, String token) {
+        return recipeService.getSelectedRecipes(category, token)
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Recipe>>().
                         handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Katagoria nie istnieje.");

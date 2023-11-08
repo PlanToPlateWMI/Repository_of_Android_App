@@ -30,6 +30,8 @@ import pl.plantoplate.ui.main.recepies.recyclerViews.RecipeCategory;
  */
 public class CategorySorter {
 
+    // products sorting
+
     /**
      * Sorts a list of products by category name and product name.
      *
@@ -107,6 +109,8 @@ public class CategorySorter {
         return filteredProducts;
     }
 
+    // recipes sorting
+
     public static ArrayList<RecipeCategory> sortCategoriesByRecipe(ArrayList<Recipe> recipes) {
         // Create a map of category names to lists of products
         Map<String, ArrayList<Recipe>> categoryMap = new HashMap<>();
@@ -135,5 +139,27 @@ public class CategorySorter {
     public static ArrayList<Recipe> sortRecipesByName(ArrayList<Recipe> recipes) {
         recipes.sort(Comparator.comparing(Recipe::getTitle));
         return recipes;
+    }
+
+    public static ArrayList<Recipe> filterRecipesCategoriesBySearch(ArrayList<RecipeCategory> recipes, String query) {
+        ArrayList<Recipe> filteredRecipes = new ArrayList<>();
+        for (RecipeCategory category : recipes) {
+            for (Recipe recipe : category.getRecipes()) {
+                if (recipe.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                    filteredRecipes.add(recipe);
+                }
+            }
+        }
+        return filteredRecipes;
+    }
+
+    public static ArrayList<Recipe> filterRecipesBySearch(ArrayList<Recipe> recipes, String query) {
+        ArrayList<Recipe> filteredRecipes = new ArrayList<>();
+        for (Recipe recipe : recipes) {
+            if (recipe.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                filteredRecipes.add(recipe);
+            }
+        }
+        return filteredRecipes;
     }
 }

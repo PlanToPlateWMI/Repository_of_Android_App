@@ -1,5 +1,8 @@
-package pl.plantoplate.ui.main.recepies;
+package pl.plantoplate.ui.main.recepies.selectedRecipes;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,21 +13,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.repository.RecipeRepository;
 import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.recepies.recyclerViews.adapters.RecipeCategoryAdapter;
-import timber.log.Timber;
 
-public class RecipeCategoriesFragment extends Fragment {
+public class RecipeCategoriesSelectedFragment extends Fragment {
 
     private CompositeDisposable compositeDisposable;
     private RecipeCategoryAdapter recipeCategoryAdapter;
     private FloatingActionButton floatingActionButton;
+    private SharedPreferences prefs;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -33,9 +39,9 @@ public class RecipeCategoriesFragment extends Fragment {
         FragmentRecipeInsideAllBinding fragmentRecipeInsideAllBinding =
                 FragmentRecipeInsideAllBinding.inflate(inflater, container, false);
         compositeDisposable = new CompositeDisposable();
+        prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
 
         floatingActionButton = fragmentRecipeInsideAllBinding.plusInAllRecipes;
-        floatingActionButton.setVisibility(View.INVISIBLE);
 
         setupRecyclerView(fragmentRecipeInsideAllBinding);
         getAllRecepies();
@@ -51,9 +57,10 @@ public class RecipeCategoriesFragment extends Fragment {
 
 
     public void getAllRecepies(){
+        String token = "Bearer " + prefs.getString("token", "");
         RecipeRepository recipeRepository = new RecipeRepository();
 
-        Disposable disposable = recipeRepository.getAllRecipes("")
+        Disposable disposable = recipeRepository.getSelectedRecipes("", token)
                 .subscribe(
                         recipes -> recipeCategoryAdapter.setCategoriesList(CategorySorter.sortCategoriesByRecipe(recipes)),
                         throwable -> Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show()
@@ -61,16 +68,10 @@ public class RecipeCategoriesFragment extends Fragment {
 
         compositeDisposable.add(disposable);
     }
-//
-//    public void setupRecyclerView(FragmentRecipeInsideAllBinding fragmentRecipeInsideAllBinding){
-//        RecyclerView recyclerView = fragmentRecipeInsideAllBinding.recipeRecyclerView;
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setAdapter(new RecipeCategoryAdapter(new ArrayList<>()));
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        compositeDisposable.dispose();
-//    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
 }
