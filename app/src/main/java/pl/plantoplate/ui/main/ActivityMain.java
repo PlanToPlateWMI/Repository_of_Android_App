@@ -26,7 +26,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
-import pl.plantoplate.ui.main.recepies.RecipeFragment;
+import pl.plantoplate.ui.main.recepies.RecipesFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
@@ -86,7 +86,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
                 replaceFragment(new ShoppingListFragment(), "SHOPPING_LIST");
                 return true;
             case MENU_RECEIPT:
-                replaceFragment(new RecipeFragment(), "RECIPE");
+                replaceFragment(new RecipesFragment(), "RECIPE");
                 return true;
             case MENU_SETTINGS:
                 replaceFragment(new SettingsFragment(), "SETTINGS");

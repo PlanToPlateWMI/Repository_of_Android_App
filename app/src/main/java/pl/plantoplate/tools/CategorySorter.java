@@ -131,4 +131,9 @@ public class CategorySorter {
 
         return categories;
     }
+
+    public static ArrayList<Recipe> sortRecipesByName(ArrayList<Recipe> recipes) {
+        recipes.sort(Comparator.comparing(Recipe::getTitle));
+        return recipes;
+    }
 }

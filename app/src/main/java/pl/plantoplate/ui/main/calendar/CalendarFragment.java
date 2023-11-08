@@ -36,7 +36,7 @@ import pl.plantoplate.databinding.FragmentCalendarBinding;
 import pl.plantoplate.tools.DateUtils;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.CalendarAdapter;
-import pl.plantoplate.ui.main.recepies.RecipeFragment;
+import pl.plantoplate.ui.main.recepies.RecipesFragment;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import timber.log.Timber;
 
@@ -93,7 +93,7 @@ public class CalendarFragment extends Fragment {
     }
 
     public void setClickListeners() {
-        addToCalendarButton.setOnClickListener(v -> replaceFragment(new RecipeFragment()));
+        addToCalendarButton.setOnClickListener(v -> replaceFragment(new RecipesFragment()));
     }
 
     /**

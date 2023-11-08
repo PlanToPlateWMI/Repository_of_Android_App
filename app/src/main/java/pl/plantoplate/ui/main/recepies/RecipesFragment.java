@@ -26,13 +26,15 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 import pl.plantoplate.R;
-import pl.plantoplate.databinding.FragmentRecipeBinding;
+import pl.plantoplate.databinding.FragmentRecipeNewBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.recepies.allRecipes.AllRecipesFragment;
+import pl.plantoplate.ui.main.recepies.selectedRecipes.SelectedRecipesFragment;
 
 /**
  * This fragment is responsible for displaying the recipe view.
  */
-public class RecipeFragment extends Fragment {
+public class RecipesFragment extends Fragment {
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
 
@@ -47,21 +49,19 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentRecipeBinding fragmentRecipeBinding = FragmentRecipeBinding.inflate(inflater, container, false);
+        FragmentRecipeNewBinding fragmentRecipeNewBinding = FragmentRecipeNewBinding.inflate(inflater, container, false);
 
-        initViews(fragmentRecipeBinding);
+        initViews(fragmentRecipeNewBinding);
 
         setupViewPager(viewPager);
-
         setupNavigation();
-
-        return fragmentRecipeBinding.getRoot();
+        return fragmentRecipeNewBinding.getRoot();
     }
 
-    public void initViews(FragmentRecipeBinding fragmentRecipeBinding){
-        viewPager = fragmentRecipeBinding.viewPagerBase;
-        radioGridGroup = fragmentRecipeBinding.radioGroupBaza;
-        RadioGridGroup radioGridGroupCategories = fragmentRecipeBinding.radioGroupRecipe;
+    public void initViews(FragmentRecipeNewBinding fragmentRecipeNewBinding){
+        viewPager = fragmentRecipeNewBinding.viewPagerBase;
+        radioGridGroup = fragmentRecipeNewBinding.radioGroupBaza;
+        RadioGridGroup radioGridGroupCategories = fragmentRecipeNewBinding.radioGroupBaza;
 
         radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
         radioGridGroupCategories.setCheckedRadioButtonById(R.id.wszystkie);
@@ -103,8 +103,8 @@ public class RecipeFragment extends Fragment {
             }
         });
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
-        adapter.addFragment(new AllRecipeFragment());
-        adapter.addFragment(new LikeRecipeFragment());
+        adapter.addFragment(new AllRecipesFragment());
+        adapter.addFragment(new SelectedRecipesFragment());
         viewPager.setAdapter(adapter);
     }
 

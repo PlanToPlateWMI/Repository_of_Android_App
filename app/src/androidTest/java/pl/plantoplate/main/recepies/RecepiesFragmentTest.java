@@ -18,12 +18,10 @@ package pl.plantoplate.main.recepies;
 
 
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,24 +29,13 @@ import org.junit.runner.RunWith;
 
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.calendar.CalendarFragment;
-import pl.plantoplate.ui.main.recepies.RecipeFragment;
-import pl.plantoplate.ui.main.settings.SettingsFragment;
-import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
-import pl.plantoplate.ui.login.LoginActivity;
+import pl.plantoplate.ui.main.recepies.RecipesFragment;
 import pl.plantoplate.R;
 
-import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
-import android.content.Context;
-import android.content.SharedPreferences;
 
 import java.io.IOException;
 
@@ -84,11 +71,12 @@ public class RecepiesFragmentTest {
         server.shutdown();
     }
 
+    @Test
     public void navigateToRecepiesFragment() {
 
         fragmentRule.getScenario().onActivity(activity -> {
             activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, RecipeFragment.class, null)
+                    .replace(R.id.frame_layout, RecipesFragment.class, null)
                     .commit();
         });
     }
