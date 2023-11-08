@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.category.Recipe;
 import pl.plantoplate.data.remote.models.category.RecipeCategory;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Query;
 
 public interface RecipeService {
@@ -28,7 +29,7 @@ public interface RecipeService {
     Single<ArrayList<Recipe>> getAllRecipes(@Query("category") String type);
 
     @GET("api/recipes/selected")
-    Single<ArrayList<Recipe>> getSelectedRecipes(@Query("category") String type);
+    Single<ArrayList<Recipe>> getSelectedRecipes(@Query("category") String type, @Header("Authorization") String token);
 
     @GET("api/recipe-categories")
     Single<ArrayList<RecipeCategory>> getRecipeCategories();
