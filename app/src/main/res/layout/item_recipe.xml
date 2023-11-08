@@ -2,15 +2,16 @@
 <LinearLayout xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutRecipeItem"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="180dp"
+    android:layout_width="182dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="190dp"
+    android:layout_height="191dp"
     android:orientation="vertical"
     android:clickable="true"
     android:background="@drawable/rounded_recipe"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginTop="0dp">
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="0dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
