@@ -4,40 +4,48 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.Optional;
-import pl.plantoplate.databinding.FragmentItemRecipeInsidePrzepisBinding;
+import pl.plantoplate.databinding.FragmentItemRecipeInsidePrzepisItemsBinding;
+import pl.plantoplate.ui.main.recipes.recipeInfo.recyclerViews.adapters.RecipeStepsAdapter;
 import pl.plantoplate.ui.main.recipes.recipeInfo.viewModels.RecipeInfoViewModel;
 
 public class RecipeStepsFragment extends Fragment {
 
     private RecipeInfoViewModel recipeInfoViewModel;
-    private TextView recipeStepsTextView;
+    private RecipeStepsAdapter recipeStepsAdapter;
+    private RecyclerView recipeStepsRecyclerView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentItemRecipeInsidePrzepisBinding fragmentItemRecipeInsidePrzepisBinding =
-                FragmentItemRecipeInsidePrzepisBinding.inflate(inflater, container, false);
+        FragmentItemRecipeInsidePrzepisItemsBinding fragmentItemRecipeInsidePrzepisItemsBinding =
+                FragmentItemRecipeInsidePrzepisItemsBinding.inflate(inflater, container, false);
 
-        initViews(fragmentItemRecipeInsidePrzepisBinding);
+        initViews(fragmentItemRecipeInsidePrzepisItemsBinding);
         setupViewModel();
-        return fragmentItemRecipeInsidePrzepisBinding.getRoot();
+        setupRecyclerView();
+        return fragmentItemRecipeInsidePrzepisItemsBinding.getRoot();
     }
 
-    private void initViews(FragmentItemRecipeInsidePrzepisBinding fragmentItemRecipeInsidePrzepisBinding) {
-        recipeStepsTextView = fragmentItemRecipeInsidePrzepisBinding.przepis;
+    private void initViews(FragmentItemRecipeInsidePrzepisItemsBinding fragmentItemRecipeInsidePrzepisItemsBinding) {
+        recipeStepsRecyclerView = fragmentItemRecipeInsidePrzepisItemsBinding.recipeRecyclerViewKroki;
+    }
+
+    public void setupRecyclerView(){
+        recipeStepsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recipeStepsAdapter = new RecipeStepsAdapter(new ArrayList<>());
+        recipeStepsRecyclerView.setAdapter(recipeStepsAdapter);
     }
 
     public void setupViewModel(){
         recipeInfoViewModel = new ViewModelProvider(requireParentFragment()).get(RecipeInfoViewModel.class);
 
         recipeInfoViewModel.getRecipeInfo().observe(getViewLifecycleOwner(),
-                recipeInfo -> Optional.ofNullable(recipeInfo.getSteps()).orElse(new ArrayList<>())
-                        .stream().reduce((s1, s2) -> s1 + "\n" + s2).ifPresent(recipeStepsTextView::setText));
+                recipeInfo -> recipeStepsAdapter.setStepsList(recipeInfo.getSteps()));
     }
 }

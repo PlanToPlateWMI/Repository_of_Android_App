@@ -4,18 +4,13 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.recipe.Ingredient;
 import pl.plantoplate.ui.main.recipes.recipeInfo.recyclerViews.viewHolders.RecipeStepsViewHolder;
 
-public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsViewHolder>{
-
+public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsViewHolder> {
 
     private ArrayList<String> steps;
 
@@ -33,7 +28,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsViewHold
     @Override
     public RecipeStepsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recipe_step, parent, false);
+                .inflate(R.layout.item_krok, parent, false);
         return new RecipeStepsViewHolder(itemView);
     }
 
@@ -41,6 +36,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsViewHold
     public void onBindViewHolder(@NonNull RecipeStepsViewHolder holder, int position) {
         String step = steps.get(position);
         holder.bind(step);
+        //holder.itemView.setOnClickListener(v -> holder.toggleCrossedOut());
     }
 
     @Override
@@ -48,3 +44,4 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsViewHold
         return steps == null ? 0 : steps.size();
     }
 }
+
