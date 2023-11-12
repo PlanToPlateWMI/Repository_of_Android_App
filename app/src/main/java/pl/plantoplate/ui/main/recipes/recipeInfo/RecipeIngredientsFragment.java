@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import java.util.Optional;
-import pl.plantoplate.data.remote.models.recipe.Ingredient;
-import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideSkladnikiBinding;
 import pl.plantoplate.ui.main.recipes.recipeInfo.recyclerViews.adapters.RecipeIngredientsAdapter;
 import pl.plantoplate.ui.main.recipes.recipeInfo.viewModels.RecipeInfoViewModel;
 
 public class RecipeIngredientsFragment extends Fragment {
+
+    private RecipeInfoViewModel recipeInfoViewModel;
+    private RecipeIngredientsAdapter recipeIngredientsAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -26,18 +26,21 @@ public class RecipeIngredientsFragment extends Fragment {
                 FragmentItemRecipeInsideSkladnikiBinding.inflate(inflater, container, false);
 
         setupRecyclerView(fragmentItemRecipeInsideSkladnikiBinding);
+        setRecipeInfoViewModel();
         return fragmentItemRecipeInsideSkladnikiBinding.getRoot();
     }
 
-    public void setupRecyclerView(FragmentItemRecipeInsideSkladnikiBinding fragmentItemRecipeInsideSkladnikiBinding){
-        RecipeInfoViewModel recipeInfoViewModel = new ViewModelProvider(requireParentFragment()).get(RecipeInfoViewModel.class);
-        ArrayList<Ingredient> ingredients = Optional.ofNullable(recipeInfoViewModel.getRecipeInfo().getValue()).
-                orElse(new RecipeInfo()).getIngredients();
-        ingredients = Optional.ofNullable(ingredients).orElse(new ArrayList<>());
+    public void setRecipeInfoViewModel(){
+        recipeInfoViewModel = new ViewModelProvider(requireParentFragment()).get(RecipeInfoViewModel.class);
 
+        recipeInfoViewModel.getRecipeInfo().observe(getViewLifecycleOwner(),
+                recipeInfo -> recipeIngredientsAdapter.setIngredientsList(recipeInfo.getIngredients()));
+    }
+
+    public void setupRecyclerView(FragmentItemRecipeInsideSkladnikiBinding fragmentItemRecipeInsideSkladnikiBinding){
         RecyclerView recyclerView = fragmentItemRecipeInsideSkladnikiBinding.recipeRecyclerViewSkladniki;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecipeIngredientsAdapter recipeIngredientsAdapter = new RecipeIngredientsAdapter(ingredients);
+        recipeIngredientsAdapter = new RecipeIngredientsAdapter(new ArrayList<>());
         recyclerView.setAdapter(recipeIngredientsAdapter);
     }
 }

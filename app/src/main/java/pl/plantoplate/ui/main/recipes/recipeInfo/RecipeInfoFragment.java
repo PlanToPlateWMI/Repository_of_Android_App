@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.recipes.recipeInfo.viewModels.RecipeInfoViewModel;
+import timber.log.Timber;
 
 public class RecipeInfoFragment extends Fragment {
 
@@ -34,15 +36,21 @@ public class RecipeInfoFragment extends Fragment {
     private TextView recipeLevel;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         FragmentItemRecipeInsideBinding fragmentItemRecipeInsideBinding =
                 FragmentItemRecipeInsideBinding.inflate(inflater, container, false);
 
         initViews(fragmentItemRecipeInsideBinding);
+        setupViewModel();
         setupNavigation();
         setupViewPager(viewPager2);
-        setupViewModel();
         return fragmentItemRecipeInsideBinding.getRoot();
     }
 
@@ -56,12 +64,51 @@ public class RecipeInfoFragment extends Fragment {
         radioGridGroup = fragmentItemRecipeInsideBinding.radioGroupRecipeInside;
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.game_menu, menu);
-//        return true;
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
+        menu.clear();
+
+        inflater.inflate(R.menu.recipe_inside_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+//    public void showPopupMenu(View view) {
+//        PopupMenu popupMenu = new PopupMenu(requireContext(), view);
+//        popupMenu.getMenuInflater().inflate(R.menu.main_menu, popupMenu.getMenu());
+//
+//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                // Обработка щелчка на элементе меню
+//                switch (item.getItemId()) {
+//                    case R.id.action_settings:
+//                        // Обработка щелчка на "Settings"
+//                        return true;
+//                    case R.id.action_about:
+//                        // Обработка щелчка на "About"
+//                        return true;
+//                    default:
+//                        return false;
+//                }
+//            }
+//        });
+//
+//        popupMenu.show();
 //    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.lista_plan:
+                Timber.d("lista plan");
+                return true;
+            case R.id.plan_kalendarz:
+                Timber.d("plan kalendarz");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     public void setupViewModel(){
         HashMap<String, String> recipeLevelMapping = new HashMap<>() {{
