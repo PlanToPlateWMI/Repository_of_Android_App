@@ -126,8 +126,12 @@ public class RecipeInfoFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
+                    questionImageView.setVisibility(View.VISIBLE);
+                    questionImageViewFake.setVisibility(View.VISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.skladniki_button);
                 } else {
+                    questionImageView.setVisibility(View.INVISIBLE);
+                    questionImageViewFake.setVisibility(View.INVISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);
                 }
             }

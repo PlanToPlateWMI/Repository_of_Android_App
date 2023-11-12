@@ -314,9 +314,11 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
                     android:layout_gravity="right"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="16dp"
 
-                    android:layout_marginTop="-10dp"
+                    android:visibility="visible"
+
+                    android:layout_marginTop="-26dp"
 
                     android:clickable="true"
 
@@ -346,7 +348,7 @@
                     android:layout_gravity="right"
                     android:layout_marginRight="6dp"
 
-                    android:layout_marginTop="-40dp"
+                    android:layout_marginTop="-30dp"
 
                     android:clickable="true"
 
