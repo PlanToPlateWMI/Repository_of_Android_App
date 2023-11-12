@@ -29,7 +29,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.databinding.RemindPassword3Binding;
 import pl.plantoplate.data.remote.repository.AuthRepository;
-import pl.plantoplate.data.remote.models.SignInData;
+import pl.plantoplate.data.remote.models.auth.SignInData;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.tools.ApplicationStateController;
 import pl.plantoplate.tools.SCryptStretcher;

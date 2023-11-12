@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 
 public class BoughtProductsViewHolder extends RecyclerView.ViewHolder {

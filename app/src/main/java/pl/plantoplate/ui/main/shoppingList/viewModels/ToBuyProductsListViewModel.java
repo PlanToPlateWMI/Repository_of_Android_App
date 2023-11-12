@@ -23,10 +23,10 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import pl.plantoplate.data.remote.models.Category;
-import pl.plantoplate.data.remote.models.ListType;
-import pl.plantoplate.data.remote.models.Product;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.product.ProductCategory;
+import pl.plantoplate.data.remote.models.shoppingList.ListType;
+import pl.plantoplate.data.remote.models.product.Product;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.tools.CategorySorter;
@@ -38,7 +38,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
     private final ShoppingListRepository shoppingListRepository;
 
     private final MutableLiveData<String> responseMessage;
-    private final MutableLiveData<ArrayList<Category>> toBuyProducts;
+    private final MutableLiveData<ArrayList<ProductCategory>> toBuyProducts;
     private final MutableLiveData<UserInfo> userInfo;
 
     public ToBuyProductsListViewModel(@NonNull Application application) {
@@ -57,7 +57,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         return responseMessage;
     }
 
-    public MutableLiveData<ArrayList<Category>> getToBuyProducts() {
+    public MutableLiveData<ArrayList<ProductCategory>> getToBuyProducts() {
         return toBuyProducts;
     }
 

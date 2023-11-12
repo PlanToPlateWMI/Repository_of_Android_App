@@ -23,9 +23,9 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import pl.plantoplate.data.remote.models.Category;
-import pl.plantoplate.data.remote.models.Product;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.product.ProductCategory;
+import pl.plantoplate.data.remote.models.product.Product;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.StorageRepository;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.tools.CategorySorter;
@@ -36,7 +36,7 @@ public class StorageViewModel extends AndroidViewModel {
     private final SharedPreferences prefs;
     private final StorageRepository storageRepository;
     private final MutableLiveData<String> responseMessage;
-    private final MutableLiveData<ArrayList<Category>> storageProducts;
+    private final MutableLiveData<ArrayList<ProductCategory>> storageProducts;
     private final MutableLiveData<UserInfo> userInfo;
 
     /**
@@ -70,7 +70,7 @@ public class StorageViewModel extends AndroidViewModel {
      *
      * @return The MutableLiveData object for the list of storage products.
      */
-    public MutableLiveData<ArrayList<Category>> getStorageProducts() {
+    public MutableLiveData<ArrayList<ProductCategory>> getStorageProducts() {
         return storageProducts;
     }
 

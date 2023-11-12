@@ -23,7 +23,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.UserRepository;
 
 /**

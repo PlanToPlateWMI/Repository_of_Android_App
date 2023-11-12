@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="?attr/colorOnTertiary"
-    tools:context="pl.plantoplate.ui.main.recepies.RecipesFragment">
+    tools:context="pl.plantoplate.ui.main.recipes.RecipesFragment">
 
     <TextView
         android:id="@+id/recipie"

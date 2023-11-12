@@ -17,8 +17,8 @@ package pl.plantoplate.ui.main.shoppingList.viewModels;
 
 import java.util.ArrayList;
 
-import pl.plantoplate.data.remote.models.ListType;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.shoppingList.ListType;
+import pl.plantoplate.data.remote.models.product.Product;
 
 public class ProductsListChangedEvent {
 

@@ -27,7 +27,7 @@ import androidx.annotation.NonNull;
 import com.google.android.material.textfield.TextInputEditText;
 import java.util.Objects;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 
 public class ModifyProductPopUp extends Dialog {
 

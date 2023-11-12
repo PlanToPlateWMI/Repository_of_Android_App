@@ -19,7 +19,7 @@ import android.view.View;
 
 import java.time.LocalDate;
 
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 
 public interface SetupItemButtons {
     default void setupAddToShoppingListButtonClick(View v, Product product) {

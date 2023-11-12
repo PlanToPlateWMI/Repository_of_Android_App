@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-import pl.plantoplate.data.remote.models.Category;
+import pl.plantoplate.data.remote.models.product.ProductCategory;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.ui.main.recyclerViews.viewHolders.CategoryViewHolder;
 import timber.log.Timber;
@@ -32,9 +32,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     private final int productItemType;
     private final int categoryItemType;
     private SetupItemButtons listener;
-    private ArrayList<Category> categories;
+    private ArrayList<ProductCategory> categories;
 
-    public CategoryAdapter(ArrayList<Category> categories, int productItemType, int categoryItemType) {
+    public CategoryAdapter(ArrayList<ProductCategory> categories, int productItemType, int categoryItemType) {
         this.categories = categories;
         this.productItemType = productItemType;
         this.categoryItemType = categoryItemType;
@@ -45,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setCategoriesList(ArrayList<Category> filterlist) {
+    public void setCategoriesList(ArrayList<ProductCategory> filterlist) {
 
         categories = filterlist;
         notifyDataSetChanged();

@@ -32,7 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
 import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.recyclerViews.adapters.ProductAdapter;

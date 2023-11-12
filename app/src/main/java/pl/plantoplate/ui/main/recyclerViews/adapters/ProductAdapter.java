@@ -23,7 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.ui.main.recyclerViews.viewHolders.AllProductsViewHolder;
 import pl.plantoplate.ui.main.recyclerViews.viewHolders.BoughtProductsViewHolder;

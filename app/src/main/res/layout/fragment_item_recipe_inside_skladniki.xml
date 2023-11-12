@@ -5,8 +5,7 @@
     android:id="@+id/recipeLayoutSkladniki"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="?attr/colorOnTertiary"
-    tools:context="pl.plantoplate.ui.main.calendar.CalendarFragment">
+    android:backgroundTint="?attr/colorOnTertiary">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
@@ -17,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        tools:listitem="@layout/item_skladnik"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

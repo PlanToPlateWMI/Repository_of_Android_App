@@ -17,7 +17,7 @@ package pl.plantoplate.data.remote.service;
 
 import java.util.ArrayList;
 import io.reactivex.rxjava3.core.Single;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;

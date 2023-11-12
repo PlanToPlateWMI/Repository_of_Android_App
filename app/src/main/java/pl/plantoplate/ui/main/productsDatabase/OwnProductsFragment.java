@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.databinding.FragmentWlasneBinding;
 import pl.plantoplate.ui.main.popUps.ModifyProductPopUp;
 import pl.plantoplate.ui.main.productsDatabase.viewModels.OwnProductsViewModel;

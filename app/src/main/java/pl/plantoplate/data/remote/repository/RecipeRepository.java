@@ -22,8 +22,9 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.RetrofitClient;
-import pl.plantoplate.data.remote.models.category.Recipe;
-import pl.plantoplate.data.remote.models.category.RecipeCategory;
+import pl.plantoplate.data.remote.models.recipe.Recipe;
+import pl.plantoplate.data.remote.models.recipe.RecipeCategory;
+import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.data.remote.service.RecipeService;
 
 public class RecipeRepository {
@@ -58,7 +59,18 @@ public class RecipeRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<RecipeCategory>> getCategories() {
+    public Single<RecipeInfo> getRecipe(int recipeId) {
+        return recipeService.getRecipe(recipeId)
+                .onErrorResumeNext(throwable -> new ErrorHandler<RecipeInfo>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Przepis nie istnieje.");
+                            put(500, "Wystąpił nieznany błąd serwera.");
+                        }}))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<ArrayList<RecipeCategory>> getRecipeCategories() {
         return recipeService.getRecipeCategories()
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<RecipeCategory>>().
                         handleHttpError(throwable, new HashMap<>() {{

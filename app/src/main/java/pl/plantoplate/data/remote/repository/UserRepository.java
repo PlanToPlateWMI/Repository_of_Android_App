@@ -19,15 +19,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.RetrofitClient;
-import pl.plantoplate.data.remote.models.CodeResponse;
-import pl.plantoplate.data.remote.models.JwtResponse;
+import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.models.Message;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.service.UserService;
 
 public class UserRepository {

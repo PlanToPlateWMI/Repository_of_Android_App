@@ -20,10 +20,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import pl.plantoplate.data.remote.models.Product;
-import pl.plantoplate.data.remote.models.Category;
-import pl.plantoplate.data.remote.models.category.Recipe;
-import pl.plantoplate.ui.main.recepies.recyclerViews.RecipeCategory;
+import pl.plantoplate.data.remote.models.product.Product;
+import pl.plantoplate.data.remote.models.product.ProductCategory;
+import pl.plantoplate.data.remote.models.recipe.Recipe;
+import pl.plantoplate.ui.main.recipes.recyclerViews.RecipeCategory;
 
 /**
  * CategorySorter is a class that sorts categories and products.
@@ -38,7 +38,7 @@ public class CategorySorter {
      * @param products The list of products to sort.
      * @return The sorted list of products.
      */
-    public static ArrayList<Category> sortCategoriesByProduct(ArrayList<Product> products) {
+    public static ArrayList<ProductCategory> sortCategoriesByProduct(ArrayList<Product> products) {
         // Create a map of category names to lists of products
         Map<String, ArrayList<Product>> categoryMap = new HashMap<>();
         for (Product product : products) {
@@ -47,9 +47,9 @@ public class CategorySorter {
         }
 
         // Create a list of Category objects
-        ArrayList<Category> categories = new ArrayList<>();
+        ArrayList<ProductCategory> categories = new ArrayList<>();
         for (Map.Entry<String, ArrayList<Product>> entry : categoryMap.entrySet()) {
-            Category category = new Category();
+            ProductCategory category = new ProductCategory();
             category.setId(categories.size() + 1);
             category.setName(entry.getKey());
             ArrayList<Product> sortedProducts = entry.getValue();
@@ -59,7 +59,7 @@ public class CategorySorter {
         }
 
         // Sort the list of categories by category name
-        categories.sort(Comparator.comparing(Category::getName));
+        categories.sort(Comparator.comparing(ProductCategory::getName));
 
         return categories;
     }
@@ -81,9 +81,9 @@ public class CategorySorter {
      * @param query The query to filter by.
      * @return The filtered list of categories.
      */
-    public static ArrayList<Product> filterCategoriesBySearch(ArrayList<Category> products, String query) {
+    public static ArrayList<Product> filterCategoriesBySearch(ArrayList<ProductCategory> products, String query) {
         ArrayList<Product> filteredProducts = new ArrayList<>();
-        for (Category category : products) {
+        for (ProductCategory category : products) {
             for (Product product : category.getProducts()) {
                 if (product.getName().toLowerCase().contains(query.toLowerCase())) {
                     filteredProducts.add(product);

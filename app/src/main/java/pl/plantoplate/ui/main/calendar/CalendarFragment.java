@@ -36,7 +36,7 @@ import pl.plantoplate.databinding.FragmentCalendarBinding;
 import pl.plantoplate.tools.DateUtils;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.CalendarAdapter;
-import pl.plantoplate.ui.main.recepies.RecipesFragment;
+import pl.plantoplate.ui.main.recipes.RecipesFragment;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import timber.log.Timber;
 

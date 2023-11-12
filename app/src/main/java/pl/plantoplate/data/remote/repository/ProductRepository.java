@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.RetrofitClient;
 import pl.plantoplate.data.remote.service.ProductService;
 

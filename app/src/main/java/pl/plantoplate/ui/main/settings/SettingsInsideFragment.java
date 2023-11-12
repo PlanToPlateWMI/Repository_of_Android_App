@@ -32,7 +32,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
 import pl.plantoplate.tools.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
