@@ -52,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     private CompositeDisposable compositeDisposable;
     private EditText enterNameEditText, enterEmailEditText, enterPasswordEditText;
     private CheckBox applyPolicyCheckBox;
+    private CheckBox applyAgeCheckBox;
     private Button registerButton;
     private TextView hasAccountTextView;
     private SharedPreferences prefs;
@@ -84,6 +85,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         enterEmailEditText = binding.enterEmail;
         enterPasswordEditText = binding.enterPassword;
         applyPolicyCheckBox = binding.checkboxWyrazamZgode;
+        applyAgeCheckBox = binding.checkboxMamLat13;
         registerButton = binding.buttonZalozKonto;
         hasAccountTextView = binding.maszKonto;
 
@@ -139,6 +141,9 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         } else if (info.getPassword().length() < 7) {
             Timber.d("Password is too short");
             showSnackbar(view, "Hasło musi być długie (co najmniej 7 znaków)");
+        } else if (!applyAgeCheckBox.isChecked()) {
+            Timber.d("Age rule not accepted");
+            showSnackbar(view, "Musisz ukończyć 13 lat, aby założyć konto");
         } else if (!applyPolicyCheckBox.isChecked()) {
             Timber.d("Policy not accepted");
             showSnackbar(view, "Musisz wyrazić zgodę na przetwarzanie danych osobowych");

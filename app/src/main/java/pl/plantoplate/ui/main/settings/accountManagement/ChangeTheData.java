@@ -28,6 +28,7 @@ import pl.plantoplate.databinding.FragmentChangeSelectorBinding;
 import pl.plantoplate.ui.main.settings.accountManagement.changeEmail.ChangeEmailStep1Fragment;
 import pl.plantoplate.ui.main.settings.accountManagement.changeName.ChangeNameFragment;
 import pl.plantoplate.ui.main.settings.accountManagement.changePassword.PasswordChangeOldPassword;
+import pl.plantoplate.ui.main.settings.accountManagement.deleteAccount.DeleteAccountFragment;
 
 /**
  * Fragment that allows the user to change the data.
@@ -37,6 +38,7 @@ public class ChangeTheData extends Fragment {
     private Button changeNameButton;
     private Button changeEmailButton;
     private Button changePasswordButton;
+    private Button deleteAccountButton;
 
     /**
      * Create the view
@@ -59,12 +61,14 @@ public class ChangeTheData extends Fragment {
         changeNameButton = fragmentChangeSelectorBinding.zmianaImienia;
         changeEmailButton = fragmentChangeSelectorBinding.zmianaEmail;
         changePasswordButton = fragmentChangeSelectorBinding.zmianaHasla;
+        deleteAccountButton = fragmentChangeSelectorBinding.usuwanieKonta;
     }
 
     private void setClickListeners() {
         changeNameButton.setOnClickListener(v -> replaceFragment(new ChangeNameFragment()));
         changeEmailButton.setOnClickListener(v -> replaceFragment(new ChangeEmailStep1Fragment()));
         changePasswordButton.setOnClickListener(v -> replaceFragment(new PasswordChangeOldPassword()));
+        deleteAccountButton.setOnClickListener(v -> replaceFragment(new DeleteAccountFragment()));
     }
 
     /**

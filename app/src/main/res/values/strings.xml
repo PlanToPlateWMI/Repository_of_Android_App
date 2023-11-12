@@ -181,6 +181,7 @@ teraz są produkty.</string>
     <string name="zmiana_imienia">Zmiana imienia</string>
     <string name="zmiana_email">Zmiana email</string>
     <string name="zmiana_hasla">Zmiana hasła</string>
+    <string name="usuwanie_konta">Usuwanie konta</string>
     <string name="zmiana_uprawnien">Zmiana uprawnień</string>
 
     <string name="imie">Imie:</string>
@@ -188,7 +189,7 @@ teraz są produkty.</string>
 
 
     <string name="Wygenerowanie_kodu">Wygenerowanie kodu</string>
-    <string name="Zmiana_danych">Zmiana danych</string>
+    <string name="Zmiana_danych">Zarządzanie kontem</string>
     <string name="Zarządzanie_użytkownikami">Zarządzanie użytkownikami</string>
     <string name="About_us">Napisz do nas</string>
     <string name="Wyłoguj">Wyłoguj</string>
@@ -210,6 +211,11 @@ zaakceptowane!</string>
     <string name="dev_text">Jest to aplikacja, która pomaga w planowaniu diety, śledzeniu tego, co mamy w domu oraz robieniu zakupów.
 
 W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc mail na adres</string>
+
+    <string name="delete_prof_text">UWAGA! Usuwanie konta jest operacją nieodwracalną.
+
+Jeżeli chcesz usunąć swoje konto, podaj maila, którym się logujesz do aplikacji, pisząc na pisząc mail na adres</string>
+
 
     <string name="wprowadz_stare_haslo">Wprowadź stare hasło</string>
     <string name="uwaga_log_out">Uwaga!\nZe względów bezpieczeństwa, po zmianie hasła wylogujemy Cię ze wszystkich urządzeń.</string>

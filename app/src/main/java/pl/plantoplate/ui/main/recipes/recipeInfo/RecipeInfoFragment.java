@@ -31,9 +31,10 @@ public class RecipeInfoFragment extends Fragment {
 
     private ViewPager2 viewPager2;
     private RadioGridGroup radioGridGroup;
-    private ImageView recipeImage, recipeMenu;
+    private ImageView recipeImage, recipeMenu, fakeRecipeMenu, questionImageView, questionImageViewFake;
     private TextView recipeTitle, recipeTime, recipePortions, recipeLevel;
     private PopupMenu popupMenu;
+    private PopupMenu menu;
 
 
     @Override
@@ -58,9 +59,15 @@ public class RecipeInfoFragment extends Fragment {
         viewPager2 = fragmentItemRecipeInsideBinding.viewPagerRecipeInside;
         radioGridGroup = fragmentItemRecipeInsideBinding.radioGroupRecipeInside;
         recipeMenu = fragmentItemRecipeInsideBinding.menuButton;
-        setupPopUpMenu(recipeMenu);
+        fakeRecipeMenu = fragmentItemRecipeInsideBinding.menuButtonTest;
+        questionImageView = fragmentItemRecipeInsideBinding.question;
+        questionImageViewFake = fragmentItemRecipeInsideBinding.questionFake;
+
+        setupPopUpMenu(fakeRecipeMenu);
+        setupPopUpMenuForImage(questionImageViewFake);
 
         recipeMenu.setOnClickListener(v -> popupMenu.show());
+        questionImageView.setOnClickListener(v -> menu.show());
     }
 
     public void setupPopUpMenu(View view) {
@@ -77,6 +84,11 @@ public class RecipeInfoFragment extends Fragment {
             }
             return false;
         });
+    }
+
+    public void setupPopUpMenuForImage(View view) {
+        menu = new PopupMenu(requireContext(), view, Gravity.END);
+        menu.getMenuInflater().inflate(R.menu.question_menu, menu.getMenu());
     }
 
     public void setupViewModel(){

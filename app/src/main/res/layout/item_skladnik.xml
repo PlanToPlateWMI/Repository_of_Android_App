@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_do_skladnik"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="2dp">
 
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:padding="4dp">
+            android:padding="2dp">
 
             <CheckBox
                 android:id="@+id/checkBox"
@@ -37,17 +37,21 @@
                 android:id="@+id/textViewSkladnik"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="8dp"
                 android:text="Mleko"
-                android:textSize="20dp" />
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/textViewIloscSkladnika"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="8dp"
                 android:text="200 ml"
-                android:textSize="18dp" />
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="16dp" />
 
         </LinearLayout>
 

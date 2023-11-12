@@ -28,6 +28,28 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
+    <ImageView
+        android:id="@+id/menuButtonTest"
+
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+
+        android:contentDescription="TODO"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/more_vert_24_50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.009"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/menuButton"
@@ -86,7 +108,6 @@
                     android:fontFamily="@font/quicksand_regular"
                     android:gravity="center"
                     android:maxLines="2"
-                    android:singleLine="true"
                     android:text="Nazwa przepisu"
                     android:textColor="?attr/colorSecondaryVariant"
                     android:textSize="22dp" />
@@ -96,7 +117,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="80dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="80dp"
                     android:columnCount="3"
                     android:rowCount="2">
@@ -104,8 +125,8 @@
                     <ImageView
                         android:id="@+id/time"
 
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="6dp"
@@ -129,8 +150,8 @@
                     <ImageView
                         android:id="@+id/count"
 
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="40dp"
@@ -154,8 +175,8 @@
                     <ImageView
                         android:id="@+id/level"
 
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="40dp"
@@ -188,7 +209,7 @@
                         android:singleLine="true"
                         android:text="10 min"
                         android:textColor="?attr/colorSecondaryVariant"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
 
                     <TextView
                         android:id="@+id/personText"
@@ -204,23 +225,23 @@
                         android:singleLine="true"
                         android:text="4 os."
                         android:textColor="?attr/colorSecondaryVariant"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
 
                     <TextView
                         android:id="@+id/levelText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:layout_marginLeft="42dp"
+                        android:layout_marginLeft="38dp"
 
                         android:ellipsize="end"
                         android:fontFamily="@font/quicksand_regular"
                         android:gravity="center"
                         android:maxLines="2"
                         android:singleLine="true"
-                        android:text="łatwo"
+                        android:text="Łatwy"
                         android:textColor="?attr/colorSecondaryVariant"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
 
                 </pl.plantoplate.ui.customViews.RadioGridGroup>
 
@@ -228,7 +249,7 @@
                     android:id="@+id/radio_group_recipe_inside"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
 
                     android:layout_gravity="center"
 
@@ -285,13 +306,73 @@
 
                 </pl.plantoplate.ui.customViews.RadioGridGroup>
 
+                <ImageView
+                    android:id="@+id/question"
+
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="20dp"
+
+                    android:layout_marginTop="-10dp"
+
+                    android:clickable="true"
+
+                    android:contentDescription="TODO"
+
+                    android:paddingLeft="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/question_mark_24_50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.44"
+                    app:layout_constraintStart_toEndOf="@+id/count"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    app:layout_constraintVertical_bias="0.051"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:id="@+id/question_fake"
+
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="6dp"
+
+                    android:layout_marginTop="-40dp"
+
+                    android:clickable="true"
+
+                    android:contentDescription="TODO"
+
+                    android:paddingLeft="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/question_mark_24_50"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.44"
+                    app:layout_constraintStart_toEndOf="@+id/count"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    app:layout_constraintVertical_bias="0.051"
+                    tools:ignore="MissingConstraints" />
+
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rec_inside_def"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="190dp"
+                android:layout_marginTop="184dp"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -306,7 +387,6 @@
                     android:layout_height="match_parent"
                     tools:layout_editor_absoluteX="0dp"
                     tools:layout_editor_absoluteY="0dp" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
