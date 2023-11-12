@@ -1,6 +1,7 @@
 package pl.plantoplate.ui.main.recipes.recipeInfo;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -29,17 +31,10 @@ public class RecipeInfoFragment extends Fragment {
 
     private ViewPager2 viewPager2;
     private RadioGridGroup radioGridGroup;
-    private ImageView recipeImage;
-    private TextView recipeTitle;
-    private TextView recipeTime;
-    private TextView recipePortions;
-    private TextView recipeLevel;
+    private ImageView recipeImage, recipeMenu;
+    private TextView recipeTitle, recipeTime, recipePortions, recipeLevel;
+    private PopupMenu popupMenu;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -62,52 +57,26 @@ public class RecipeInfoFragment extends Fragment {
         recipeLevel = fragmentItemRecipeInsideBinding.levelText;
         viewPager2 = fragmentItemRecipeInsideBinding.viewPagerRecipeInside;
         radioGridGroup = fragmentItemRecipeInsideBinding.radioGroupRecipeInside;
+        recipeMenu = fragmentItemRecipeInsideBinding.menuButton;
+        setupPopUpMenu(recipeMenu);
+
+        recipeMenu.setOnClickListener(v -> popupMenu.show());
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        menu.clear();
+    public void setupPopUpMenu(View view) {
+        popupMenu = new PopupMenu(requireContext(), view, Gravity.END);
+        popupMenu.getMenuInflater().inflate(R.menu.recipe_inside_menu, popupMenu.getMenu());
 
-        inflater.inflate(R.menu.recipe_inside_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-//    public void showPopupMenu(View view) {
-//        PopupMenu popupMenu = new PopupMenu(requireContext(), view);
-//        popupMenu.getMenuInflater().inflate(R.menu.main_menu, popupMenu.getMenu());
-//
-//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                // Обработка щелчка на элементе меню
-//                switch (item.getItemId()) {
-//                    case R.id.action_settings:
-//                        // Обработка щелчка на "Settings"
-//                        return true;
-//                    case R.id.action_about:
-//                        // Обработка щелчка на "About"
-//                        return true;
-//                    default:
-//                        return false;
-//                }
-//            }
-//        });
-//
-//        popupMenu.show();
-//    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.lista_plan:
-                Timber.d("lista plan");
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if(item.getItemId() == R.id.lista_plan){
+                Timber.d("Lista plan");
                 return true;
-            case R.id.plan_kalendarz:
-                Timber.d("plan kalendarz");
+            } else if(item.getItemId() == R.id.plan_kalendarz) {
+                Timber.d("Plan kalendarz");
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+            }
+            return false;
+        });
     }
 
     public void setupViewModel(){
