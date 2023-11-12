@@ -13,7 +13,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import pl.plantoplate.databinding.FragmentDeveloperBinding;
+import pl.plantoplate.databinding.FragmentRemoveAccountBinding;
 
 public class DeleteAccountFragment extends Fragment {
 
@@ -30,16 +30,17 @@ public class DeleteAccountFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentDeveloperBinding fragmentDeveloperBinding = FragmentDeveloperBinding.inflate(inflater, container, false);
+        FragmentRemoveAccountBinding fragmentRemoveAccountBinding  =
+                FragmentRemoveAccountBinding.inflate(inflater, container, false);
         prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
 
-        initViews(fragmentDeveloperBinding);
+        initViews(fragmentRemoveAccountBinding);
         setClickListeners();
-        return fragmentDeveloperBinding.getRoot();
+        return fragmentRemoveAccountBinding.getRoot();
     }
 
-    public void initViews(FragmentDeveloperBinding fragmentDeveloperBinding) {
-        acceptButton = fragmentDeveloperBinding.buttonZatwierdz;
+    public void initViews(FragmentRemoveAccountBinding fragmentRemoveAccountBinding) {
+        acceptButton = fragmentRemoveAccountBinding.buttonZatwierdz;
     }
 
     public void setClickListeners() {
