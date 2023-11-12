@@ -6,16 +6,6 @@ buildscript {
         // other dependencies...
         classpath 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
     }
-
-    afterEvaluate {
-        tasks.named("preBuild").configure {
-            doLast {
-                exec {
-                    commandLine 'cmd', '/c', '..\\gradle\\config\\config.exe'
-                }
-            }
-        }
-    }
 }
 
 plugins {

@@ -2,6 +2,8 @@ package pl.plantoplate.ui.main.recipes.recipeInfo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -53,6 +55,13 @@ public class RecipeInfoFragment extends Fragment {
         viewPager2 = fragmentItemRecipeInsideBinding.viewPagerRecipeInside;
         radioGridGroup = fragmentItemRecipeInsideBinding.radioGroupRecipeInside;
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.game_menu, menu);
+//        return true;
+//    }
 
     public void setupViewModel(){
         HashMap<String, String> recipeLevelMapping = new HashMap<>() {{
