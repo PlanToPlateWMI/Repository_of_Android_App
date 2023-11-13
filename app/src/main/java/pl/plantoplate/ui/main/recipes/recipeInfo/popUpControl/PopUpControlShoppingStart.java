@@ -6,12 +6,45 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import pl.plantoplate.R;
 
 /*
     This class is responsible for showing pop-ups after clicking on the "Add to shopping list" button
  */
 public class PopUpControlShoppingStart {
+
+
+    public void showPopUpNumerOfServingPerRecipe(Context context) {
+
+        Dialog dialog = new Dialog(context);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.new_pop_up_number_of_servings_per_recipe);
+
+        TextView acceptButton = dialog.findViewById(R.id.zatwierdzenie);
+        TextView cancelButton = dialog.findViewById(R.id.close);
+
+        acceptButton.setOnClickListener(v -> {
+
+            //pobieranie ilosci porcji
+
+            Toast.makeText(context, "Liczba porcji została ustalona", Toast.LENGTH_SHORT).show();
+
+            showPopUpSynchronization(context);
+            dialog.dismiss();
+
+        });
+
+        cancelButton.setOnClickListener(v -> {
+            Toast.makeText(context, "Liczba porcji nie została ustalona", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+
 
     /*
         This method shows pop-up with question about synchronization
@@ -88,6 +121,7 @@ public class PopUpControlShoppingStart {
         TextView cancelButton = dialog.findViewById(R.id.button_no);
 
         //only if ONE OF calendar item is clicked
+        //one radio batton is checked
         acceptButton.setOnClickListener(v -> {
             Toast.makeText(context, "Przepis został dodany do kalendarza", Toast.LENGTH_SHORT).show();
             dialog.dismiss();

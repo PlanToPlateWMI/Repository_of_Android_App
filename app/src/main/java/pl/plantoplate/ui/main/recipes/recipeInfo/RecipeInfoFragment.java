@@ -79,12 +79,12 @@ public class RecipeInfoFragment extends Fragment {
             if(item.getItemId() == R.id.lista_plan){
                 Timber.d("Lista plan");
                 PopUpControlShoppingStart popUpControl = new PopUpControlShoppingStart();
-                popUpControl.showPopUpSynchronization(context);
+                popUpControl.showPopUpNumerOfServingPerRecipe(context);
                 return true;
             } else if(item.getItemId() == R.id.plan_kalendarz) {
                 Timber.d("Plan kalendarz");
                 PopUpControlCalendarStart popUpControl = new PopUpControlCalendarStart();
-                popUpControl.showPopUpPlanning(context);
+                popUpControl.showPopUpNumerOfServingPerRecipe(context);
                 return true;
             }
             return false;
