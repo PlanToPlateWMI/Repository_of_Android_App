@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dialog_add_to_storage"
+        android:id="@+id/dialog_planing_calendar"
         android:layout_width="360dp"
         android:layout_height="240dp"
         android:background="?attr/colorPrimaryVariant"
@@ -16,7 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
-
 
         <TextView
             android:id="@+id/text_head"
@@ -29,7 +28,7 @@
             android:fontFamily="@font/quicksand_medium"
             android:gravity="left"
 
-            android:text="@string/zmiana_uprawnien"
+            android:text="Wybież datę, na którą chcesz zaplanować przepis"
 
             android:textAppearance="@style/rejestracja"
             android:textColor="?attr/colorSecondaryVariant"
@@ -40,27 +39,45 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.067" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/kalendarzRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_head"
+            android:orientation="horizontal">
+        </androidx.recyclerview.widget.RecyclerView>
+
         <TextView
-            android:id="@+id/text_add"
-            android:layout_width="340dp"
+            android:id="@+id/button_no"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_regular"
+            android:fontFamily="@font/quicksand_light"
 
-            android:gravity="left"
+            android:gravity="center"
 
-            android:text="@string/zm_ac"
-            android:textAppearance="@style/logowanie"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="18dp"
+            android:paddingLeft="10dp"
+
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/zamknij"
+
+            android:textAppearance="@style/rejestracja"
+            android:textColor="@color/text_clikable_no_theme"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.658"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.224" />
+            app:layout_constraintTop_toBottomOf="@+id/kalendarzRecyclerView"
+            app:layout_constraintVertical_bias="0.733" />
 
         <TextView
             android:id="@+id/button_yes"
@@ -72,23 +89,23 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_light"
 
+            android:gravity="center"
             android:paddingLeft="10dp"
+
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-
-            android:gravity="center"
-            android:text="@string/zamknij"
+            android:text="@string/ok"
 
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/text_clikable_no_theme"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintHorizontal_bias="0.948"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_add"
-            app:layout_constraintVertical_bias="0.725" />
+            app:layout_constraintTop_toBottomOf="@+id/kalendarzRecyclerView"
+            app:layout_constraintVertical_bias="0.512" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

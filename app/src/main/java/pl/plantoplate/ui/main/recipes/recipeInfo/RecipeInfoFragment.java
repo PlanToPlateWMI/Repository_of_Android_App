@@ -1,11 +1,9 @@
 package pl.plantoplate.ui.main.recipes.recipeInfo;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +22,8 @@ import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlCalendarStart;
+import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlShoppingStart;
 import pl.plantoplate.ui.main.recipes.recipeInfo.viewModels.RecipeInfoViewModel;
 import timber.log.Timber;
 
@@ -73,13 +73,18 @@ public class RecipeInfoFragment extends Fragment {
     public void setupPopUpMenu(View view) {
         popupMenu = new PopupMenu(requireContext(), view, Gravity.END);
         popupMenu.getMenuInflater().inflate(R.menu.recipe_inside_menu, popupMenu.getMenu());
+        Context context = getContext();
 
         popupMenu.setOnMenuItemClickListener(item -> {
             if(item.getItemId() == R.id.lista_plan){
                 Timber.d("Lista plan");
+                PopUpControlShoppingStart popUpControl = new PopUpControlShoppingStart();
+                popUpControl.showPopUpSynchronization(context);
                 return true;
             } else if(item.getItemId() == R.id.plan_kalendarz) {
                 Timber.d("Plan kalendarz");
+                PopUpControlCalendarStart popUpControl = new PopUpControlCalendarStart();
+                popUpControl.showPopUpPlanning(context);
                 return true;
             }
             return false;

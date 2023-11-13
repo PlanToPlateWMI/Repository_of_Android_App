@@ -33,7 +33,7 @@
 
             android:textAppearance="@style/rejestracja"
             android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="22dp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_light"
 
-            android:textSize="22dp"
+            android:textSize="20dp"
 
             android:gravity="center"
 
@@ -102,22 +102,22 @@
             android:fontFamily="@font/quicksand_light"
 
             android:gravity="center"
-            android:text="@string/ok"
-
             android:paddingLeft="10dp"
+
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
+            android:text="@string/ok"
 
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/text_clikable_no_theme"
-            android:textSize="22dp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintHorizontal_bias="0.948"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_permissions"
-            app:layout_constraintVertical_bias="0.737" />
+            app:layout_constraintVertical_bias="0.723" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

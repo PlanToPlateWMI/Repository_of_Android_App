@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dialog_add_to_storage"
+        android:id="@+id/dialog_change_portions"
         android:layout_width="360dp"
         android:layout_height="240dp"
         android:background="?attr/colorPrimaryVariant"
@@ -28,7 +28,7 @@
             android:fontFamily="@font/quicksand_medium"
             android:gravity="left"
 
-            android:text="@string/change"
+            android:text="Ile porcji chcesz zaplanować?"
 
             android:textAppearance="@style/rejestracja"
             android:textColor="?attr/colorSecondaryVariant"
@@ -51,7 +51,7 @@
 
             android:gravity="left"
 
-            android:text="@string/ilosc_"
+            android:text="Ilość porcji:"
             android:textAppearance="@style/logowanie"
             android:textColor="?attr/colorSecondaryVariant"
             android:textSize="18dp"
@@ -60,7 +60,7 @@
             app:layout_constraintHorizontal_bias="0.038"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.289" />
+            app:layout_constraintVertical_bias="0.385" />
 
         <ImageView
             android:id="@+id/minus"
@@ -74,7 +74,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/q"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.294"
+            app:layout_constraintVertical_bias="0.382"
             app:srcCompat="@drawable/remove_24_75" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -99,7 +99,7 @@
             app:layout_constraintHorizontal_bias="0.831"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.4">
+            app:layout_constraintVertical_bias="0.635">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ilosc"
@@ -132,31 +132,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/wprowadz_ilosc"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.294"
+            app:layout_constraintVertical_bias="0.382"
             app:srcCompat="@drawable/add_24_75" />
-
-        <TextView
-            android:id="@+id/unit"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_regular"
-
-            android:gravity="left"
-
-            android:text="@string/j_m"
-            android:textAppearance="@style/logowanie"
-            android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="18dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.166"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/q"
-            app:layout_constraintVertical_bias="0.364" />
 
         <TextView
             android:id="@+id/close"
@@ -166,25 +143,25 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:fontFamily="@font/quicksand_light"
+            android:layout_marginBottom="16dp"
 
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="5dp"
+            android:fontFamily="@font/quicksand_light"
 
             android:gravity="center"
 
-            android:text="@string/zamknij"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
 
+            android:text="@string/zamknij"
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/text_clikable_no_theme"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.669"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/unit" />
+            app:layout_constraintHorizontal_bias="0.656"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/zatwierdzenie"
@@ -196,12 +173,12 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_light"
 
+            android:gravity="center"
             android:paddingLeft="10dp"
+
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-
-            android:gravity="center"
             android:text="@string/ok"
 
             android:textAppearance="@style/rejestracja"
@@ -209,9 +186,10 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintHorizontal_bias="0.948"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/unit" />
+            app:layout_constraintTop_toBottomOf="@+id/wprowadz_ilosc"
+            app:layout_constraintVertical_bias="0.666" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

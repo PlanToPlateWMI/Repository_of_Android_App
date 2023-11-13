@@ -134,6 +134,9 @@ ze spiżarni?</string>
     <string name="tak">Tak</string>
     <string name="nie">Nie</string>
 
+    <string name="synchronizacja">Kliknij, aby dodać do listy zakupów tylko te produkty, których nie masz w spiżarni (w odpowiednich ilościach). </string>
+    <string name="do_listy">Przepis już został zaplanowany. Jeżeli chcesz dodać produkty z przepisu do listy zakupów, kliknij "OK".</string>
+    <string name="do_kalendarzu">Produkty z przepisu już zostały dodane do listy zakupów. Jeśli chcesz również zaplanować przepis w kalendarzu, kliknij "OK".</string>
     <string name="ok">OK</string>
     <string name="zamknij">Zamknij</string>
     <string name="dodac_do_spizarni_ze_spizarni">W twoich kupionych teraz są produkty. Czy dodac kupione produkty do spiżarni?</string>
