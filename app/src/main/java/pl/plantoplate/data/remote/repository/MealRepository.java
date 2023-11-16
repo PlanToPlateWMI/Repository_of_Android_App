@@ -56,4 +56,15 @@ public class MealRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Single<Message> deleteMealById(String token, int mealId) {
+        return mealService.deleteMealById(token, mealId)
+                .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Posiłek o podanym id nie należy do tej grupy lub nie istnieje.");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

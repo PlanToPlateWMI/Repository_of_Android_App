@@ -7,6 +7,7 @@ import pl.plantoplate.data.remote.models.meal.Meal;
 import pl.plantoplate.data.remote.models.meal.MealPlan;
 import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -23,4 +24,7 @@ public interface MealService {
 
     @GET("api/meals/{mealId}")
     Single<RecipeInfo> getMealDetailsById(@Header("Authorization") String token, @Path("mealId") int mealId);
+
+    @DELETE("api/meals/{mealId}")
+    Single<Message> deleteMealById(@Header("Authorization") String token, @Path("mealId") int mealId);
 }
