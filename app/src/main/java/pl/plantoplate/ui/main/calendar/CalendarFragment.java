@@ -126,7 +126,6 @@ public class CalendarFragment extends Fragment {
             @Override
             public void setupDateItemClick(View v, LocalDate date) {
                 v.setSelected(!v.isSelected());
-                Timber.tag("CalendarAdapter").e("Date: %s", date);
             }
         });
         recyclerView.setAdapter(calendarAdapter);
