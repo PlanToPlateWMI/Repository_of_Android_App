@@ -9,7 +9,9 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.RetrofitClient;
+import pl.plantoplate.data.remote.models.Message;
 import pl.plantoplate.data.remote.models.meal.Meal;
+import pl.plantoplate.data.remote.models.meal.MealPlan;
 import pl.plantoplate.data.remote.service.MealService;
 
 public class MealRepository {
@@ -26,6 +28,17 @@ public class MealRepository {
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Meal>>().
                         handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Niepoprawny format daty. Poprawny format to: yyyy-MM-dd");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Message> planMeal(String token, MealPlan mealPlan) {
+        return mealService.planMeal(token, mealPlan)
+                .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Niepoprawne dane.");
                             put(500, "Wystąpił nieznany błąd.");
                         }}))
                 .subscribeOn(Schedulers.io())
