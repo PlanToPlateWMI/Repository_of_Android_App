@@ -12,6 +12,7 @@ import pl.plantoplate.data.remote.RetrofitClient;
 import pl.plantoplate.data.remote.models.Message;
 import pl.plantoplate.data.remote.models.meal.Meal;
 import pl.plantoplate.data.remote.models.meal.MealPlan;
+import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.data.remote.service.MealService;
 
 public class MealRepository {
@@ -39,6 +40,17 @@ public class MealRepository {
                 .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
                         handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Niepoprawne dane.");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<RecipeInfo> getMealDetailsById(String token, int mealId) {
+        return mealService.getMealDetailsById(token, mealId)
+                .onErrorResumeNext(throwable -> new ErrorHandler<RecipeInfo>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Posiłek o podanym id nie należy do tej grupy.");
                             put(500, "Wystąpił nieznany błąd.");
                         }}))
                 .subscribeOn(Schedulers.io())
