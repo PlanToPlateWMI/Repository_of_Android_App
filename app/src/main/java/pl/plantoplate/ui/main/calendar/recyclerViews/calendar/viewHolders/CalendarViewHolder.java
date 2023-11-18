@@ -1,4 +1,4 @@
-package pl.plantoplate.ui.main.calendar.recyclerViews.viewHolders;
+package pl.plantoplate.ui.main.calendar.recyclerViews.calendar.viewHolders;
 
 import android.view.View;
 

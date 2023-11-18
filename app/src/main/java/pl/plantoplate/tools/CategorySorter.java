@@ -20,9 +20,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import pl.plantoplate.data.remote.models.meal.Meal;
+import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.models.product.ProductCategory;
 import pl.plantoplate.data.remote.models.recipe.Recipe;
+import pl.plantoplate.ui.main.calendar.recyclerViews.meal.models.MealTypes;
 import pl.plantoplate.ui.main.recipes.recyclerViews.RecipeCategory;
 
 /**
@@ -161,5 +164,42 @@ public class CategorySorter {
             }
         }
         return filteredRecipes;
+    }
+
+    public static ArrayList<MealTypes> groupMealsByType(ArrayList<Meal> meals) {
+        Map<MealType, ArrayList<Meal>> mealsByType = new HashMap<>();
+
+        // Group meals by MealType
+        for (Meal meal : meals) {
+            mealsByType.computeIfAbsent(meal.getMealType(), k -> new ArrayList<>()).add(meal);
+        }
+
+        // Create MealTypes objects from the grouped meals
+        ArrayList<MealTypes> mealTypesList = new ArrayList<>();
+
+        // Iterate through all MealTypes and add absent ones in order
+        for (MealType type : MealType.values()) {
+            if (mealsByType.containsKey(type)) {
+                mealTypesList.add(new MealTypes(type, mealsByType.get(type)));
+            }
+        }
+
+        return mealTypesList;
+    }
+
+    private static MealTypes createMealType(MealType mealType, Map<MealType, ArrayList<Meal>> mealsByType) {
+        return new MealTypes(mealType, mealsByType.getOrDefault(mealType, new ArrayList<>()));
+    }
+
+    public static ArrayList<Meal> getSortedMealTypeList(ArrayList<Meal> meals, MealType mealType) {
+        meals.sort(Comparator.comparing(Meal::getMealType));
+
+        ArrayList<Meal> sortedMeals = new ArrayList<>();
+        for (Meal meal : meals) {
+            if (meal.getMealType() == mealType) {
+                sortedMeals.add(meal);
+            }
+        }
+        return sortedMeals;
     }
 }

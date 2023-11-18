@@ -28,14 +28,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.databinding.FragmentCalendarBinding;
 import pl.plantoplate.tools.DateUtils;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
-import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.CalendarAdapter;
+import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
+import pl.plantoplate.ui.main.calendar.recyclerViews.calendar.adapters.CalendarAdapter;
 import pl.plantoplate.ui.main.recipes.RecipesFragment;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import timber.log.Timber;
@@ -121,11 +126,12 @@ public class CalendarFragment extends Fragment {
     public void setupRecyclerView(){
         RecyclerView recyclerView = fragmentCalendarBinding.kalendarzTutaj;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        calendarAdapter = new CalendarAdapter(DateUtils.generateDates());
+        calendarAdapter = new CalendarAdapter();
         calendarAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override
             public void setupDateItemClick(View v, LocalDate date) {
                 v.setSelected(!v.isSelected());
+                EventBus.getDefault().post(new DateSelectedEvent(date));
             }
         });
         recyclerView.setAdapter(calendarAdapter);
@@ -158,10 +164,10 @@ public class CalendarFragment extends Fragment {
         });
         // Set up adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
-        adapter.addFragment(new AllCategoryProductsFragment());
-        adapter.addFragment(new MealsCategoryFragment());
-        adapter.addFragment(new MealsCategoryFragment());
-        adapter.addFragment(new MealsCategoryFragment());
+        adapter.addFragment(new AllMealTypesFragment());
+        adapter.addFragment(new ConcreteMealTypeFragment(MealType.BREAKFAST));
+        adapter.addFragment(new ConcreteMealTypeFragment(MealType.LUNCH));
+        adapter.addFragment(new ConcreteMealTypeFragment(MealType.DINNER));
         viewPager.setAdapter(adapter);
     }
 

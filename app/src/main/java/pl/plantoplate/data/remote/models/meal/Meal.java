@@ -1,10 +1,11 @@
 package pl.plantoplate.data.remote.models.meal;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 public class Meal {
 
-    @SerializedName("mealId")
+    @JsonProperty("mealId")
     private int id;
     private String recipeTitle;
     private int time;
