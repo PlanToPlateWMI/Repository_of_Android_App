@@ -1,10 +1,8 @@
-package pl.plantoplate.ui.main.calendar.recyclerViews.viewHolders;
+package pl.plantoplate.ui.main.calendar.recyclerViews.calendar.viewHolders;
 
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.LocalDate;
 

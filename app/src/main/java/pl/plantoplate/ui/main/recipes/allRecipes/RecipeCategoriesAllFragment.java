@@ -1,6 +1,7 @@
 package pl.plantoplate.ui.main.recipes.allRecipes;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Timer;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
@@ -20,12 +24,14 @@ import pl.plantoplate.tools.CategorySorter;
 import pl.plantoplate.ui.main.recipes.recipeInfo.RecipeInfoFragment;
 import pl.plantoplate.ui.main.recipes.recyclerViews.adapters.RecipeCategoryAdapter;
 import pl.plantoplate.ui.main.recipes.recyclerViews.listeners.SetupRecipeButtons;
+import timber.log.Timber;
 
 public class RecipeCategoriesAllFragment extends Fragment {
 
     private CompositeDisposable compositeDisposable;
     private RecipeCategoryAdapter recipeCategoryAdapter;
     private FloatingActionButton floatingActionButton;
+    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -43,8 +49,35 @@ public class RecipeCategoriesAllFragment extends Fragment {
         return fragmentRecipeInsideAllBinding.getRoot();
     }
 
+//    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        Timber.e("onSaveInstanceState");
+//        outState.putParcelable("recycler_state", Objects.requireNonNull(recyclerView.getLayoutManager()).onSaveInstanceState());
+//    }
+//
+//    @Override
+//    public void onViewStateRestored(Bundle savedInstanceState) {
+//        super.onViewStateRestored(savedInstanceState);
+//        Timber.e("onViewStateRestored");
+//        if(savedInstanceState != null){
+//            Parcelable recyclerViewState = savedInstanceState.getParcelable("recycler_state");
+//            recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+//        }
+//    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            Parcelable recyclerViewState = savedInstanceState.getParcelable("recycler_state");
+            recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+        }
+    }
+
+
     public void setupRecyclerView(FragmentRecipeInsideAllBinding fragmentRecipeInsideAllBinding){
-        RecyclerView recyclerView = fragmentRecipeInsideAllBinding.recipeRecyclerView;
+        recyclerView = fragmentRecipeInsideAllBinding.recipeRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recipeCategoryAdapter = new RecipeCategoryAdapter(new ArrayList<>());
         recipeCategoryAdapter.setUpRecipeButtons(new SetupRecipeButtons() {
