@@ -1,7 +1,11 @@
 package pl.plantoplate.data.remote.models.meal;
 
-import com.google.gson.annotations.SerializedName;
+import androidx.annotation.NonNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
+
+import pl.plantoplate.data.remote.models.shoppingList.MealShopPlan;
 
 public class MealPlan {
 
@@ -9,7 +13,7 @@ public class MealPlan {
     private int portions;
     private String date;
     private int recipeId;
-    @SerializedName("ingredientsId")
+    @JsonProperty("ingredientsId")
     private ArrayList<Integer> ingredientsIds;
 
     public MealPlan(){
@@ -61,5 +65,17 @@ public class MealPlan {
 
     public void setIngredientsIds(ArrayList<Integer> ingredientsIds) {
         this.ingredientsIds = ingredientsIds;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "MealPlan{" +
+                "mealType=" + mealType +
+                ", portions=" + portions +
+                ", date='" + date + '\'' +
+                ", recipeId=" + recipeId +
+                ", ingredientsIds=" + ingredientsIds +
+                '}';
     }
 }

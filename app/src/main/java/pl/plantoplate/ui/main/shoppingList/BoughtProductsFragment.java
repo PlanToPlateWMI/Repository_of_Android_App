@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.recyclerViews.adapters.ProductAdapter;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.ui.main.popUps.DeleteProductPopUp;

@@ -1,138 +1,82 @@
 package pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.widget.CheckBox;
-import android.widget.TextView;
 import android.widget.Toast;
+import androidx.fragment.app.FragmentManager;
+import java.time.LocalDate;
+import pl.plantoplate.data.remote.models.meal.MealPlan;
+import pl.plantoplate.ui.main.recipes.recipeInfo.popUps.AddPlannedIngredientsPopUp;
+import pl.plantoplate.ui.main.recipes.recipeInfo.popUps.CalendarPlanningPopUp;
+import pl.plantoplate.ui.main.recipes.recipeInfo.popUps.ChoosePortionsNumberPopUp;
+import pl.plantoplate.ui.main.recipes.recipeInfo.popUps.ProductsSynchronizationPopUp;
 
-import com.google.android.material.textfield.TextInputEditText;
-
-import pl.plantoplate.R;
-
-/*
+/**
     This class is responsible for showing pop-ups after clicking on the "Add to calendar" button
  */
 public class PopUpControlCalendarStart {
 
-    /*
-        This method shows pop-up with question about adding to calendar
-     */
-    public void showPopUpNumerOfServingPerRecipe(Context context) {
+    private MealPlan mealPlan;
+    private FragmentManager fragmentManager;
 
-        Dialog dialog = new Dialog(context);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.new_pop_up_number_of_servings_per_recipe);
-
-        TextView acceptButton = dialog.findViewById(R.id.zatwierdzenie);
-        TextView cancelButton = dialog.findViewById(R.id.close);
-
-        acceptButton.setOnClickListener(v -> {
-
-            //pobieranie ilosci porcji
-
-            Toast.makeText(context, "Liczba porcji została ustalona", Toast.LENGTH_SHORT).show();
-
-            showPopUpPlanning(context);
-            dialog.dismiss();
-
-        });
-
-        cancelButton.setOnClickListener(v -> {
-            Toast.makeText(context, "Liczba porcji nie została ustalona", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        });
-
-        dialog.show();
+    public PopUpControlCalendarStart(FragmentManager fragmentManager, MealPlan mealPlan){
+        this.mealPlan = mealPlan;
+        this.fragmentManager = fragmentManager;
+        this.mealPlan.setDate(LocalDate.now().toString());
     }
 
-    /*
+    /**
         This method shows pop-up with question about adding to calendar
      */
-    public void showPopUpPlanning(Context context){
-        Dialog dialog = new Dialog(context);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.new_pop_up_planing_calendar);
+    public void showPopUpNumerOfServingPerRecipe() {
 
-        TextView acceptButton = dialog.findViewById(R.id.button_yes);
-        TextView cancelButton = dialog.findViewById(R.id.button_no);
+        ChoosePortionsNumberPopUp choosePortionsNumberPopUp =
+                new ChoosePortionsNumberPopUp(mealPlan);
 
-        //only if ONE OF calendar item is clicked
-        //one radio batton is checked
-        acceptButton.setOnClickListener(v -> {
-            Toast.makeText(context, "Przepis został dodany do kalendarza", Toast.LENGTH_SHORT).show();
-            showPopUpQuestionAlsoAddToShoppingList(context);
-            dialog.dismiss();
+        choosePortionsNumberPopUp.setOnAcceptButtonClickListener(v -> {
+            showPopUpPlanning();
+            mealPlan = choosePortionsNumberPopUp.getMealPlan();
         });
 
-        cancelButton.setOnClickListener(v -> {
-            Toast.makeText(context, "Przepis nie został dodany do kalendarza", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        });
-
-        dialog.show();
+        choosePortionsNumberPopUp.show(fragmentManager, "ChoosePortionsNumberPopUp");
     }
 
-    /*
+    /**
+        This method shows pop-up with question about adding to calendar
+     */
+    public void showPopUpPlanning(){
+        CalendarPlanningPopUp calendarPlanningPopUp =
+                new CalendarPlanningPopUp(mealPlan);
+
+        calendarPlanningPopUp.setOnAcceptButtonClickListener(v -> {
+            showPopUpQuestionAlsoAddToShoppingList();
+            mealPlan = calendarPlanningPopUp.getMealPlan();
+        });
+
+        calendarPlanningPopUp.show(fragmentManager, "CalendarPlanningPopUp");
+    }
+
+    /**
         This method shows pop-up with question about adding to shopping list
      */
-    public void showPopUpQuestionAlsoAddToShoppingList(Context context){
-        Dialog dialog = new Dialog(context);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.new_pop_up_question_add_to_shoping_list);
+    public void showPopUpQuestionAlsoAddToShoppingList(){
+        AddPlannedIngredientsPopUp addPlannedIngredientsPopUp =
+                new AddPlannedIngredientsPopUp();
 
-        TextView acceptButton = dialog.findViewById(R.id.button_yes);
-        TextView cancelButton = dialog.findViewById(R.id.button_no);
-
-        acceptButton.setOnClickListener(v -> {
-            Toast.makeText(context, "Dodawanie do listy zakupów...", Toast.LENGTH_SHORT).show();
-            showPopUpSynchronization(context);
-            dialog.dismiss();
+        addPlannedIngredientsPopUp.setOnAcceptButtonClickListener(v -> {
+            showPopUpSynchronization();
         });
 
-        cancelButton.setOnClickListener(v -> {
-            Toast.makeText(context, "Produkty nie zostały dodane do listy zakupów", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        });
-
-        dialog.show();
+        addPlannedIngredientsPopUp.show(fragmentManager, "AddPlannedIngredientsPopUp");
     }
 
-    /*
+    /**
         This method shows pop-up with question about synchronization
      */
-    public void showPopUpSynchronization(Context context) {
+    public void showPopUpSynchronization() {
 
-        Dialog dialog = new Dialog(context);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.new_pop_up_question_synhronization_on);
+        ProductsSynchronizationPopUp productsSynchronizationPopUp =
+                new ProductsSynchronizationPopUp(mealPlan);
 
-        CheckBox checkBox = dialog.findViewById(R.id.checkBox);
-
-        TextView acceptButton = dialog.findViewById(R.id.button_yes);
-        TextView cancelButton = dialog.findViewById(R.id.button_no);
-
-        acceptButton.setOnClickListener(v -> {
-
-            //wlaczanie synchronizacji
-            if(checkBox.isChecked()){
-                Toast.makeText(context, "Synchronizacja została włączona", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, "Synchronizacja nie została włączona", Toast.LENGTH_SHORT).show();
-            }
-
-            Toast.makeText(context, "Produkty zostały dodany do listy zakupów", Toast.LENGTH_SHORT).show();
-
-            dialog.dismiss();
-
-        });
-
-        cancelButton.setOnClickListener(v -> {
-            Toast.makeText(context, "Produkty nie zostały dodany do listy zakupów", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        });
-
-        dialog.show();
+        productsSynchronizationPopUp.show(fragmentManager, "ProductsSynchronizationPopUp");
     }
-
 }

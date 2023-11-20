@@ -37,10 +37,10 @@ import pl.plantoplate.data.remote.models.auth.CodeResponse;
 import pl.plantoplate.data.remote.models.user.UserRegisterData;
 import pl.plantoplate.data.remote.repository.AuthRepository;
 import pl.plantoplate.databinding.RegisterActivityBinding;
-import pl.plantoplate.tools.ApplicationState;
-import pl.plantoplate.tools.ApplicationStateController;
-import pl.plantoplate.tools.EmailValidator;
-import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.utils.ApplicationState;
+import pl.plantoplate.utils.ApplicationStateController;
+import pl.plantoplate.utils.EmailValidator;
+import pl.plantoplate.utils.SCryptStretcher;
 import pl.plantoplate.ui.login.LoginActivity;
 import timber.log.Timber;
 
@@ -101,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
 
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
-        registerButton.setOnClickListener(this::checkUserExists);
+        registerButton.setOnClickListener(this::validateUserInfo);
         hasAccountTextView.setOnClickListener(v -> signInAccount());
     }
 
@@ -150,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         } else {
             Timber.d("User info is valid");
             info.setPassword(SCryptStretcher.stretch(info.getPassword(), info.getEmail()));
-            sendUserData(info, view);
+            checkUserExists(view, info);
         }
     }
 
@@ -159,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      *
      * @param view The view to display the response in (e.g. error using SnackBar).
      */
-    public void checkUserExists(View view){
+    public void checkUserExists(View view, UserRegisterData userData){
         Timber.d("Checking if user exists...");
         String email = String.valueOf(enterEmailEditText.getText()).trim();
 
@@ -167,7 +167,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
                 .subscribe(message -> {
                             // user does not exist
                             prefs.edit().putString("email", email).apply();
-                            validateUserInfo(view);
+                            sendUserData(userData, view);
                         },
                         throwable ->
                                 Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show()
@@ -183,12 +183,11 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      */
     public void sendUserData(UserRegisterData userData, View view) {
         Timber.d("Sending user data to server");
-        Intent intent = new Intent(view.getContext(), EmailConfirmActivity.class);
+        Intent intent = new Intent(getApplicationContext(), EmailConfirmActivity.class);
         startActivity(intent);
 
         Disposable disposable = authRepository.sendUserRegisterData(userData)
-                .subscribe(codeResponse ->
-                                saveUserData(userData, codeResponse),
+                .subscribe(codeResponse -> saveUserData(userData, codeResponse),
                            throwable ->
                                 Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show());
 
@@ -234,6 +233,6 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     protected void onDestroy() {
         super.onDestroy();
         Timber.d("Destroying activity...");
-        compositeDisposable.dispose();
+        compositeDisposable.clear();
     }
 }

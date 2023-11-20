@@ -28,8 +28,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.repository.AuthRepository;
 import pl.plantoplate.databinding.EmailConfirmationBinding;
-import pl.plantoplate.tools.ApplicationState;
-import pl.plantoplate.tools.ApplicationStateController;
+import pl.plantoplate.utils.ApplicationState;
+import pl.plantoplate.utils.ApplicationStateController;
 import timber.log.Timber;
 
 /**

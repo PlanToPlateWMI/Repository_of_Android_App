@@ -23,6 +23,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.RetrofitClient;
 import pl.plantoplate.data.remote.models.product.Product;
+import pl.plantoplate.data.remote.models.shoppingList.MealShopPlan;
 import pl.plantoplate.data.remote.models.shoppingList.ShoppingList;
 import pl.plantoplate.data.remote.service.ShoppingListService;
 
@@ -102,6 +103,19 @@ public class ShoppingListRepository {
                         handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Niepoprawna ilość produktu.");
                             put(404, "Nie znaleziono produktu.");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<ArrayList<Product>> synchronizeMealProducts(String token,
+                                                                   MealShopPlan mealShopPlan,
+                                                                   boolean synchronize) {
+        return shoppingListService.synchronizeMealProducts(token, mealShopPlan, synchronize)
+                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Przepis nie istnieje.");
                             put(500, "Wystąpił nieznany błąd.");
                         }}))
                 .subscribeOn(Schedulers.io())

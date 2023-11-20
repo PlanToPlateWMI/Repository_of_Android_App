@@ -32,8 +32,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentPasswordChange2Binding;
-import pl.plantoplate.tools.ApplicationState;
-import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.utils.ApplicationState;
+import pl.plantoplate.utils.SCryptStretcher;
 import pl.plantoplate.ui.login.LoginActivity;
 
 /**

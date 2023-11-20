@@ -16,12 +16,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.meal.Meal;
+import pl.plantoplate.data.remote.models.meal.MealPlan;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.recipes.recipeInfo.events.IngredientsChangeEvent;
 import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlCalendarStart;
 import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlShoppingStart;
 import pl.plantoplate.ui.main.recipes.recipeInfo.viewModels.RecipeInfoViewModel;
@@ -35,7 +42,24 @@ public class RecipeInfoFragment extends Fragment {
     private TextView recipeTitle, recipeTime, recipePortions, recipeLevel;
     private PopupMenu popupMenu;
     private PopupMenu menu;
+    private ArrayList<Integer> ingredientsIds;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onMessageEvent(IngredientsChangeEvent ingredientsChangeEvent) {
+        this.ingredientsIds = ingredientsChangeEvent.getData();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -73,18 +97,20 @@ public class RecipeInfoFragment extends Fragment {
     public void setupPopUpMenu(View view) {
         popupMenu = new PopupMenu(requireContext(), view, Gravity.END);
         popupMenu.getMenuInflater().inflate(R.menu.recipe_inside_menu, popupMenu.getMenu());
-        Context context = getContext();
 
         popupMenu.setOnMenuItemClickListener(item -> {
+            MealPlan mealPlan = new MealPlan();
+            mealPlan.setIngredientsIds(ingredientsIds);
+            mealPlan.setRecipeId(requireArguments().getInt("recipeId"));
             if(item.getItemId() == R.id.lista_plan){
-                Timber.d("Lista plan");
-                PopUpControlShoppingStart popUpControl = new PopUpControlShoppingStart();
-                popUpControl.showPopUpNumerOfServingPerRecipe(context);
+                Timber.e(mealPlan.toString());
+                PopUpControlShoppingStart popUpControl = new PopUpControlShoppingStart(getChildFragmentManager(), mealPlan);
+                popUpControl.showPopUpNumerOfServingPerRecipe();
                 return true;
             } else if(item.getItemId() == R.id.plan_kalendarz) {
-                Timber.d("Plan kalendarz");
-                PopUpControlCalendarStart popUpControl = new PopUpControlCalendarStart();
-                popUpControl.showPopUpNumerOfServingPerRecipe(context);
+                Timber.e(mealPlan.toString());
+                PopUpControlCalendarStart popUpControl = new PopUpControlCalendarStart(getChildFragmentManager() , mealPlan);
+                popUpControl.showPopUpNumerOfServingPerRecipe();
                 return true;
             }
             return false;

@@ -29,7 +29,7 @@ import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.data.remote.repository.UserRepository;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 
 public class ToBuyProductsListViewModel extends AndroidViewModel {
 

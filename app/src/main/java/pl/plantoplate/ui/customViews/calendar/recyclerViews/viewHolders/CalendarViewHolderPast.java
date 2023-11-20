@@ -1,4 +1,4 @@
-package pl.plantoplate.ui.main.calendar.recyclerViews.calendar.viewHolders;
+package pl.plantoplate.ui.customViews.calendar.recyclerViews.viewHolders;
 
 import android.view.View;
 import android.widget.LinearLayout;

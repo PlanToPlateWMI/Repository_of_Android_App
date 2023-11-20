@@ -34,7 +34,7 @@ import androidx.lifecycle.ViewModelProvider;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
-import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.utils.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
 import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;

@@ -1,7 +1,6 @@
 package pl.plantoplate.data.remote.models.meal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
 
 public class Meal {
 
@@ -10,15 +9,17 @@ public class Meal {
     private String recipeTitle;
     private int time;
     private MealType mealType;
+    private String image;
 
     public Meal(){
     }
 
-    public Meal(int id, String recipeTitle, int time, MealType mealType) {
+    public Meal(int id, String recipeTitle, int time, MealType mealType, String image) {
         this.id = id;
         this.recipeTitle = recipeTitle;
         this.time = time;
         this.mealType = mealType;
+        this.image = image;
     }
 
     public int getId() {
@@ -51,5 +52,13 @@ public class Meal {
 
     public void setMealType(MealType mealType) {
         this.mealType = mealType;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

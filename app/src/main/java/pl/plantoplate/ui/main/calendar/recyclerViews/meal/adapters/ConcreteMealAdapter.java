@@ -29,7 +29,7 @@ public class ConcreteMealAdapter extends RecyclerView.Adapter<ConcreteMealViewHo
     @Override
     public ConcreteMealViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_kalendarz, parent, false);
+                .inflate(R.layout.item_recipe_in_calendar, parent, false);
         return new ConcreteMealViewHolder(itemView);
     }
 

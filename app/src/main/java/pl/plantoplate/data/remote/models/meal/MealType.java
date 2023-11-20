@@ -14,4 +14,13 @@ public enum MealType {
     public String getPolishName() {
         return polishName;
     }
+
+    public static MealType fromString(String text) {
+        for (MealType mealType : MealType.values()) {
+            if (mealType.polishName.equalsIgnoreCase(text)) {
+                return mealType;
+            }
+        }
+        return BREAKFAST;
+    }
 }

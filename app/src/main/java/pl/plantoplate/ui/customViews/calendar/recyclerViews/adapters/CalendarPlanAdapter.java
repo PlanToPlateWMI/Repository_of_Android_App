@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.ui.main.calendar.recyclerViews.calendar.adapters;
+package pl.plantoplate.ui.customViews.calendar.recyclerViews.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -24,19 +24,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import pl.plantoplate.R;
-import pl.plantoplate.ui.main.calendar.recyclerViews.calendar.viewHolders.CalendarViewHolder;
-import pl.plantoplate.ui.main.calendar.recyclerViews.calendar.viewHolders.CalendarViewHolderFuture;
-import pl.plantoplate.ui.main.calendar.recyclerViews.calendar.viewHolders.CalendarViewHolderPast;
-import pl.plantoplate.ui.main.calendar.recyclerViews.calendar.viewHolders.CalendarViewHolderToday;
+import pl.plantoplate.ui.customViews.calendar.recyclerViews.viewHolders.CalendarViewHolder;
+import pl.plantoplate.ui.customViews.calendar.recyclerViews.viewHolders.CalendarViewHolderFuture;
+import pl.plantoplate.ui.customViews.calendar.recyclerViews.viewHolders.CalendarViewHolderToday;
+import pl.plantoplate.ui.customViews.calendar.recyclerViews.viewHolders.CalendarViewHolderPast;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import timber.log.Timber;
 
-public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class CalendarPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private SetupItemButtons listener;
     private ArrayList<LocalDate> dates;
     private int selectedPosition = 3;
 
-    public CalendarAdapter() {
+    public CalendarPlanAdapter() {
         dates = new ArrayList<>();
     }
 

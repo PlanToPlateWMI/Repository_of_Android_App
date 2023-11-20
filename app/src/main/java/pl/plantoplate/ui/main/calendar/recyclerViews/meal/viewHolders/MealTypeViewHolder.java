@@ -27,7 +27,8 @@ public class MealTypeViewHolder extends RecyclerView.ViewHolder{
 
         ConcreteMealAdapter concreteMealAdapter = new ConcreteMealAdapter();
         concreteMealAdapter.setMeals(mealType.getMeals());
-        mealsRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+        mealsRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
         mealsRecyclerView.setAdapter(concreteMealAdapter);
     }
 }

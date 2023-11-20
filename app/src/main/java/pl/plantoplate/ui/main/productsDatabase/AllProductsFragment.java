@@ -38,7 +38,7 @@ import pl.plantoplate.ui.main.productsDatabase.viewModels.AllProductsViewModel;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.data.remote.models.product.ProductCategory;
 import pl.plantoplate.ui.main.recyclerViews.adapters.CategoryAdapter;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 
 /**
  * This fragment is responsible for displaying all products in the database.

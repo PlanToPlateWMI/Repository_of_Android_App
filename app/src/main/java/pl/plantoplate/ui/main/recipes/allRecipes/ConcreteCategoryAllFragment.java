@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.RecipeRepository;
 import pl.plantoplate.databinding.FragmentRecipeInsideNotAllBinding;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.recipes.recipeInfo.RecipeInfoFragment;
 import pl.plantoplate.ui.main.recipes.recyclerViews.adapters.RecipeAdapter;
 import pl.plantoplate.ui.main.recipes.recyclerViews.listeners.SetupRecipeButtons;

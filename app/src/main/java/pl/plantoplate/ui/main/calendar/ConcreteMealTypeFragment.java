@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import org.greenrobot.eventbus.EventBus;
@@ -32,7 +33,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.FragmentCalendarInsideBldBinding;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
 import pl.plantoplate.ui.main.calendar.recyclerViews.meal.adapters.ConcreteMealAdapter;
 import timber.log.Timber;
@@ -81,7 +82,7 @@ public class ConcreteMealTypeFragment extends Fragment {
 
     public void setupRecyclerView(FragmentCalendarInsideBldBinding fragmentCalendarInsideBldBinding) {
         RecyclerView mealsRecyclerView = fragmentCalendarInsideBldBinding.productsOwnRecyclerView;
-        mealsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        mealsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         concreteMealAdapter = new ConcreteMealAdapter();
         mealsRecyclerView.setAdapter(concreteMealAdapter);
     }

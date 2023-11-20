@@ -34,7 +34,7 @@ import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentEmailChange2Binding;
-import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.utils.SCryptStretcher;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 
 

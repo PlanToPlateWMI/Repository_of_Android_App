@@ -40,7 +40,7 @@ import pl.plantoplate.databinding.FragmentWlasneBinding;
 import pl.plantoplate.ui.main.popUps.ModifyProductPopUp;
 import pl.plantoplate.ui.main.productsDatabase.viewModels.OwnProductsViewModel;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.recyclerViews.adapters.ProductAdapter;
 import timber.log.Timber;
 

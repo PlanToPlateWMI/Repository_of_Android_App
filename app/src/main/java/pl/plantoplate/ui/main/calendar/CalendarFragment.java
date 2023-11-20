@@ -19,8 +19,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
@@ -34,13 +32,15 @@ import org.greenrobot.eventbus.EventBus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.databinding.FragmentCalendarBinding;
-import pl.plantoplate.tools.DateUtils;
+import pl.plantoplate.ui.customViews.calendar.CalendarStyle;
+import pl.plantoplate.ui.customViews.calendar.ShortCalendar;
+import pl.plantoplate.utils.DateUtils;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
-import pl.plantoplate.ui.main.calendar.recyclerViews.calendar.adapters.CalendarAdapter;
 import pl.plantoplate.ui.main.recipes.RecipesFragment;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import timber.log.Timber;
@@ -55,7 +55,7 @@ public class CalendarFragment extends Fragment {
     private RadioGridGroup radioGridGroup;
     private FloatingActionButton addToCalendarButton;
     private TextView dateTextView;
-    private CalendarAdapter calendarAdapter;
+    private ShortCalendar shortCalendar;
 
     /**
      * Called to create the view hierarchy of the fragment.
@@ -76,7 +76,6 @@ public class CalendarFragment extends Fragment {
 
         setupViewPager(viewPager);
         setupNavigation();
-        setupRecyclerView();
         return fragmentCalendarBinding.getRoot();
 
     }
@@ -90,6 +89,9 @@ public class CalendarFragment extends Fragment {
         radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie);
         viewPager.setCurrentItem(0);
         setDate();
+        shortCalendar = new ShortCalendar(requireContext(),
+                                          fragmentCalendarBinding.kalendarzTutaj,
+                                          CalendarStyle.PURPLE);
     }
 
     public void setDate() {
@@ -99,6 +101,13 @@ public class CalendarFragment extends Fragment {
 
     public void setClickListeners() {
         addToCalendarButton.setOnClickListener(v -> replaceFragment(new RecipesFragment()));
+        shortCalendar.setUpItemButtons(new SetupItemButtons(){
+            @Override
+            public void setupDateItemClick(View v, LocalDate date) {
+                v.setSelected(!v.isSelected());
+                EventBus.getDefault().post(new DateSelectedEvent(date));
+            }
+        });
     }
 
     /**
@@ -121,21 +130,6 @@ public class CalendarFragment extends Fragment {
                 Timber.tag("RadioGridGroup").d("Unhandled ID: %s", checkedId);
             }
         });
-    }
-
-    public void setupRecyclerView(){
-        RecyclerView recyclerView = fragmentCalendarBinding.kalendarzTutaj;
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        calendarAdapter = new CalendarAdapter();
-        calendarAdapter.setUpItemButtons(new SetupItemButtons() {
-            @Override
-            public void setupDateItemClick(View v, LocalDate date) {
-                v.setSelected(!v.isSelected());
-                EventBus.getDefault().post(new DateSelectedEvent(date));
-            }
-        });
-        recyclerView.setAdapter(calendarAdapter);
-        calendarAdapter.setDateList(DateUtils.generateDates());
     }
 
     /**
@@ -168,6 +162,7 @@ public class CalendarFragment extends Fragment {
         adapter.addFragment(new ConcreteMealTypeFragment(MealType.BREAKFAST));
         adapter.addFragment(new ConcreteMealTypeFragment(MealType.LUNCH));
         adapter.addFragment(new ConcreteMealTypeFragment(MealType.DINNER));
+        viewPager.setUserInputEnabled(false);
         viewPager.setAdapter(adapter);
     }
 

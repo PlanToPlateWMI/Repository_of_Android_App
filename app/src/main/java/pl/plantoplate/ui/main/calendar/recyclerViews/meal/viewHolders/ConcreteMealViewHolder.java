@@ -1,31 +1,48 @@
 package pl.plantoplate.ui.main.calendar.recyclerViews.meal.viewHolders;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
+
+import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.meal.Meal;
 import pl.plantoplate.databinding.ItemKalendarzBinding;
+import pl.plantoplate.databinding.ItemRecipeInCalendarBinding;
 
 public class ConcreteMealViewHolder extends RecyclerView.ViewHolder {
 
-    private final ImageView checkBox;
-    private TextView mealName;
-    private TextView mealPreparationTime;
-    private ImageView deleteMeal;
+    private final TextView vegeTextView;
+    private final TextView mealName;
+    private final TextView mealPreparationTime;
+    private ImageView mealImage;
 
     public ConcreteMealViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        ItemKalendarzBinding binding = ItemKalendarzBinding.bind(itemView);
-        checkBox = binding.iconUncheckKupione;
-        mealName = binding.nazwaPrzepisu;
-        mealPreparationTime = binding.czasUgotowania;
-        deleteMeal = binding.iconDeleteKupione;
+        ItemRecipeInCalendarBinding binding = ItemRecipeInCalendarBinding.bind(itemView);
+        vegeTextView = binding.wegeText;
+        mealName = binding.textView2;
+        mealPreparationTime = binding.textView5;
+        mealImage = binding.iconUncheckKupione;
     }
 
     public void bind(Meal meal) {
+        //vegeTextView.setVisibility(meal. ? View.VISIBLE : View.GONE);
+        if (TextUtils.isEmpty(meal.getImage())) {
+            Picasso.get()
+                    .load(R.drawable.noimage)
+                    .into(mealImage);
+        } else {
+            Picasso.get()
+                    .load(meal.getImage())
+                    .error(R.drawable.noimage)
+                    .into(mealImage);
+        }
         mealName.setText(meal.getRecipeTitle());
         mealPreparationTime.setText(meal.getTime() + " min");
     }

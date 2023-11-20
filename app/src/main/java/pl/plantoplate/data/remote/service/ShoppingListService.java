@@ -18,6 +18,7 @@ package pl.plantoplate.data.remote.service;
 import java.util.ArrayList;
 import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.product.Product;
+import pl.plantoplate.data.remote.models.shoppingList.MealShopPlan;
 import pl.plantoplate.data.remote.models.shoppingList.ShoppingList;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -45,4 +46,9 @@ public interface ShoppingListService {
 
     @PATCH("api/shopping/{id}")
     Single<ArrayList<Product>> changeProductAmountInShopList(@Header("Authorization") String token, @Path("id") int productId, @Body Product product);
+
+    @POST("api/shopping/recipe")
+    Single<ArrayList<Product>> synchronizeMealProducts(@Header("Authorization") String token,
+                                                       @Body MealShopPlan mealShopPlan,
+                                                       @Query("synchronize") boolean synchronize);
 }

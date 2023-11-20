@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.tools;
+package pl.plantoplate.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -50,10 +50,18 @@ public class DateUtils {
         return monthMapping;
     }
 
-    public static ArrayList<LocalDate> generateDates() {
+    public static ArrayList<LocalDate> generateDates(boolean includePast) {
         LocalDate today = LocalDate.now();
         ArrayList<LocalDate> dateList = new ArrayList<>();
-        for (int i = -3; i <= 7; i++) {
+
+        if (includePast) {
+            for (int i = -3; i < 0; i++) {
+                LocalDate date = today.plusDays(i);
+                dateList.add(date);
+            }
+        }
+
+        for (int i = 0; i <= 7; i++) {
             LocalDate date = today.plusDays(i);
             dateList.add(date);
         }

@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.tools;
+package pl.plantoplate.utils;
 
 /**
- * Controller for saving and loading application state.
+ * ApplicationState is an enum class that represents the current state of the application.
  */
-public interface ApplicationStateController {
-    void saveAppState(ApplicationState applicationState);
+public enum ApplicationState {
+    LOGIN,
+    REGISTER,
+    CONFIRM_MAIL,
+    GROUP_CHOOSE,
+    MAIN_ACTIVITY
 }

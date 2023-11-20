@@ -12,19 +12,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Timer;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.RecipeRepository;
 import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.recipes.recipeInfo.RecipeInfoFragment;
 import pl.plantoplate.ui.main.recipes.recyclerViews.adapters.RecipeCategoryAdapter;
 import pl.plantoplate.ui.main.recipes.recyclerViews.listeners.SetupRecipeButtons;
-import timber.log.Timber;
 
 public class RecipeCategoriesAllFragment extends Fragment {
 

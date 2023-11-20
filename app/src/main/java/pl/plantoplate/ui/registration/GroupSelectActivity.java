@@ -28,8 +28,8 @@ import pl.plantoplate.data.remote.models.auth.UserCredentials;
 import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.repository.GroupRepository;
 import pl.plantoplate.databinding.GroupChooseBinding;
-import pl.plantoplate.tools.ApplicationState;
-import pl.plantoplate.tools.ApplicationStateController;
+import pl.plantoplate.utils.ApplicationState;
+import pl.plantoplate.utils.ApplicationStateController;
 import pl.plantoplate.ui.main.ActivityMain;
 import timber.log.Timber;
 

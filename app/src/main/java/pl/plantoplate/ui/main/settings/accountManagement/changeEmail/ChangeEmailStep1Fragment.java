@@ -33,7 +33,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentEmailChangeBinding;
-import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.utils.SCryptStretcher;
 
 /**
  * This class is responsible for changing the user's email address.

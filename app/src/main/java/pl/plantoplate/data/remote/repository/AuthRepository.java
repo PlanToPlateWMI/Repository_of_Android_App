@@ -46,7 +46,7 @@ public class AuthRepository {
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(Schedulers.io());
     }
 
     public Single<CodeResponse> getEmailConfirmCode(String email, String type) {

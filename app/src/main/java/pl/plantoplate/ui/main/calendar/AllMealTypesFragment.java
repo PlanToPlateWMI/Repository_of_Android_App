@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.FragmentCalendarInsideAllBinding;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
 import pl.plantoplate.ui.main.calendar.recyclerViews.meal.adapters.MealTypesAdapter;
 import timber.log.Timber;

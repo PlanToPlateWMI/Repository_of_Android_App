@@ -25,8 +25,12 @@ public class RecipeIngredientsViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void bind(Ingredient ingredient) {
-        checkBox.setChecked(true);
+    public void setOnCheckedChangeListener(CheckBox.OnCheckedChangeListener listener) {
+        checkBox.setOnCheckedChangeListener(listener);
+    }
+
+    public void bind(Ingredient ingredient, boolean isSelected) {
+        checkBox.setChecked(isSelected);
         ingredientName.setText(ingredient.getIngredientName());
         ingredientAmount.setText(ingredient.getQuantity() + " " + ingredient.getUnit());
 
