@@ -1,6 +1,8 @@
 package pl.plantoplate.ui.main.recipes.recipeInfo;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,10 +40,12 @@ public class RecipeInfoFragment extends Fragment {
 
     private ViewPager2 viewPager2;
     private RadioGridGroup radioGridGroup;
-    private ImageView recipeImage, recipeMenu, fakeRecipeMenu, questionImageView, questionImageViewFake;
+    private ImageView recipeImage, recipeMenu, fakeRecipeMenu, questionImageView, questionImageViewFake,
+            infoImageView, infoImageViewFake;
     private TextView recipeTitle, recipeTime, recipePortions, recipeLevel;
     private PopupMenu popupMenu;
     private PopupMenu menu;
+    private PopupMenu menuInfo;
     private ArrayList<Integer> ingredientsIds;
 
     @Override
@@ -86,12 +90,16 @@ public class RecipeInfoFragment extends Fragment {
         fakeRecipeMenu = fragmentItemRecipeInsideBinding.menuButtonTest;
         questionImageView = fragmentItemRecipeInsideBinding.question;
         questionImageViewFake = fragmentItemRecipeInsideBinding.questionFake;
+        infoImageView = fragmentItemRecipeInsideBinding.info;
+        infoImageViewFake = fragmentItemRecipeInsideBinding.infoFake;
 
         setupPopUpMenu(fakeRecipeMenu);
         setupPopUpMenuForImage(questionImageViewFake);
+        setupPopUpMenuForImageInfo(infoImageViewFake);
 
         recipeMenu.setOnClickListener(v -> popupMenu.show());
         questionImageView.setOnClickListener(v -> menu.show());
+        infoImageView.setOnClickListener(v -> menuInfo.show());
     }
 
     public void setupPopUpMenu(View view) {
@@ -120,6 +128,19 @@ public class RecipeInfoFragment extends Fragment {
     public void setupPopUpMenuForImage(View view) {
         menu = new PopupMenu(requireContext(), view, Gravity.END);
         menu.getMenuInflater().inflate(R.menu.question_menu, menu.getMenu());
+    }
+
+    public void setupPopUpMenuForImageInfo(View view) {
+        menuInfo = new PopupMenu(requireContext(), view, Gravity.END);
+        menuInfo.getMenuInflater().inflate(R.menu.info_menu, menuInfo.getMenu());
+        menuInfo.setOnMenuItemClickListener(item -> {
+            if(item.getItemId() == R.id.info_menu){
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com"));
+                startActivity(browserIntent);
+                return true;
+            }
+            return false;
+        });
     }
 
     public void setupViewModel(){
@@ -159,10 +180,14 @@ public class RecipeInfoFragment extends Fragment {
                 if (position == 0) {
                     questionImageView.setVisibility(View.VISIBLE);
                     questionImageViewFake.setVisibility(View.VISIBLE);
+                    infoImageView.setVisibility(View.INVISIBLE);
+                    infoImageViewFake.setVisibility(View.INVISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.skladniki_button);
                 } else {
                     questionImageView.setVisibility(View.INVISIBLE);
                     questionImageViewFake.setVisibility(View.INVISIBLE);
+                    infoImageView.setVisibility(View.VISIBLE);
+                    infoImageViewFake.setVisibility(View.VISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);
                 }
             }

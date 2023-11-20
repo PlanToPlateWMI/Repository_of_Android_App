@@ -10,7 +10,7 @@
         android:id="@+id/recipeImage"
 
         android:layout_width="match_parent"
-        android:layout_height="316dp"
+        android:layout_height="346dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:contentDescription="TODO"
@@ -75,13 +75,16 @@
         app:layout_constraintVertical_bias="0.023"
         tools:ignore="MissingConstraints" />
 
+<!--    android:backgroundTint="?attr/colorBackgroundFloating"-->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
 
+        android:layout_marginTop="300dp"
+        android:layout_marginBottom="-1dp"
+        android:backgroundTint="?attr/colorOnTertiary"
         android:layout_width="match_parent"
-        android:layout_height="440dp"
-        android:layout_margin="0dp"
-        android:backgroundTint="?attr/colorBackgroundFloating"
+        android:layout_height="match_parent"
+
         android:elevation="0dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"

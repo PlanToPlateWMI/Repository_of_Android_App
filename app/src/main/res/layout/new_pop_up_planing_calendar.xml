@@ -43,13 +43,19 @@
             android:id="@+id/kalendarzRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="85dp"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/button_no"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.155"></androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintVertical_bias="0.155">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
 
         <ScrollView
