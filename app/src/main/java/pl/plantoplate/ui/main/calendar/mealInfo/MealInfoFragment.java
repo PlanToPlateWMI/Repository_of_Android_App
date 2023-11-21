@@ -1,6 +1,7 @@
 package pl.plantoplate.ui.main.calendar.mealInfo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -29,6 +30,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.meal.MealPlan;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideForCalendarBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.calendar.mealInfo.popUpControl.PopUpCalendarRecipeControl;
 import pl.plantoplate.ui.main.calendar.mealInfo.viewModels.MealInfoViewModel;
 import pl.plantoplate.ui.main.recipes.recipeInfo.events.IngredientsChangeEvent;
 import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlCalendarStart;
@@ -39,10 +41,13 @@ public class MealInfoFragment extends Fragment{
 
     private ViewPager2 viewPager2;
     private RadioGridGroup radioGridGroup;
-    private ImageView recipeImage, recipeMenu, fakeRecipeMenu;
+    private ImageView recipeImage, recipeMenu, fakeRecipeMenu, recipeInfo, recipeInfoFake;
     private TextView recipeTitle, recipeTime, recipePortions, recipeLevel;
     private PopupMenu popupMenu;
+    private PopupMenu popupMenuInfo;
     private ArrayList<Integer> ingredientsIds;
+    private String sourceLink = "http://google.com";
+    private SharedPreferences prefs;
 
     @Override
     public void onStart() {
@@ -67,6 +72,8 @@ public class MealInfoFragment extends Fragment{
         FragmentItemRecipeInsideForCalendarBinding fragmentItemRecipeInsideForCalendarBinding =
                 FragmentItemRecipeInsideForCalendarBinding.inflate(inflater, container, false);
 
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
+
         initViews(fragmentItemRecipeInsideForCalendarBinding);
         setupViewModel();
         setupNavigation();
@@ -84,33 +91,66 @@ public class MealInfoFragment extends Fragment{
         radioGridGroup = fragmentItemRecipeInsideForCalendarBinding.radioGroupRecipeInside;
         recipeMenu = fragmentItemRecipeInsideForCalendarBinding.menuButton;
         fakeRecipeMenu = fragmentItemRecipeInsideForCalendarBinding.menuButtonTest;
+        recipeInfo = fragmentItemRecipeInsideForCalendarBinding.info;
+        recipeInfoFake = fragmentItemRecipeInsideForCalendarBinding.infoFake;
 
         setupPopUpMenu(fakeRecipeMenu);
 
-        recipeMenu.setOnClickListener(v -> popupMenu.show());
+        setupPopUpMenuInfo(recipeInfoFake);
+
+        String role = prefs.getString("role", "");
+
+        if(role.equals("ROLE_ADMIN")) {
+            recipeMenu.setVisibility(View.VISIBLE);
+            recipeMenu.setOnClickListener(v -> popupMenu.show());
+        }else {
+            recipeMenu.setVisibility(View.INVISIBLE);
+        }
+
+
+        recipeInfo.setOnClickListener(v -> popupMenuInfo.show());
+    }
+
+
+    public void setupPopUpMenuInfo(View view) {
+        popupMenuInfo = new PopupMenu(requireContext(), view, Gravity.END);
+        popupMenuInfo.getMenuInflater().inflate(R.menu.info_menu, popupMenuInfo.getMenu());
+        popupMenuInfo.setOnMenuItemClickListener(item -> {
+            if(item.getItemId() == R.id.info_menu){
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sourceLink));
+                startActivity(browserIntent);
+                return true;
+            }
+            return false;
+        });
     }
 
     public void setupPopUpMenu(View view) {
         popupMenu = new PopupMenu(requireContext(), view, Gravity.END);
         popupMenu.getMenuInflater().inflate(R.menu.recipe_menu_calendar, popupMenu.getMenu());
 
-//        popupMenu.setOnMenuItemClickListener(item -> {
-//            MealPlan mealPlan = new MealPlan();
-//            mealPlan.setIngredientsIds(ingredientsIds);
-//            mealPlan.setRecipeId(requireArguments().getInt("recipeId"));
-//            if(item.getItemId() == R.id.lista_plan){
-//                Timber.e(mealPlan.toString());
-//                PopUpControlShoppingStart popUpControl = new PopUpControlShoppingStart(getChildFragmentManager(), mealPlan);
-//                popUpControl.showPopUpNumerOfServingPerRecipe();
-//                return true;
-//            } else if(item.getItemId() == R.id.plan_kalendarz) {
-//                Timber.e(mealPlan.toString());
-//                PopUpControlCalendarStart popUpControl = new PopUpControlCalendarStart(getChildFragmentManager() , mealPlan);
-//                popUpControl.showPopUpNumerOfServingPerRecipe();
-//                return true;
-//            }
-//            return false;
-//        });
+        popupMenu.setOnMenuItemClickListener(item -> {
+            MealPlan mealPlan = new MealPlan();
+            mealPlan.setIngredientsIds(ingredientsIds);
+            mealPlan.setRecipeId(requireArguments().getInt("recipeId"));
+            if(item.getItemId() == R.id.produkty_do_listy){
+                Timber.e(mealPlan.toString());
+                PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
+                popUpControl.showPopUpSynchronization();
+                return true;
+            } else if(item.getItemId() == R.id.przygotowany_przepis) {
+                Timber.e(mealPlan.toString());
+                PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
+                popUpControl.showPopUpCookRecipe();
+                return true;
+            } else if(item.getItemId() == R.id.usun_przepis) {
+                Timber.e(mealPlan.toString());
+                PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
+                popUpControl.showPopUpDeleteRecipe();
+                return true;
+            }
+            return false;
+        });
     }
 
     public void setupViewModel(){
@@ -127,10 +167,21 @@ public class MealInfoFragment extends Fragment{
             recipeTime.setText(mealInfo.getTime() + " min.");
             recipePortions.setText(mealInfo.getPortions() + " os.");
             recipeLevel.setText(recipeLevelMapping.get(mealInfo.getLevel().name()));
+            sourceLink = mealInfo.getSource();
         });
         mealInfoViewModel.getResponseMessage().observe(getViewLifecycleOwner(),
                 responseMessage -> Toast.makeText(getContext(), responseMessage, Toast.LENGTH_SHORT).show());
         mealInfoViewModel.fetchMealInfo(requireArguments().getInt("mealId"));
+
+        String role = prefs.getString("role", "");
+
+        if(role.equals("ROLE_ADMIN")) {
+            recipeMenu.setVisibility(View.VISIBLE);
+            recipeMenu.setOnClickListener(v -> popupMenu.show());
+        }else {
+            recipeMenu.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private void setupNavigation() {
@@ -148,8 +199,12 @@ public class MealInfoFragment extends Fragment{
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
+                    recipeInfo.setVisibility(View.INVISIBLE);
+                    recipeInfoFake.setVisibility(View.INVISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.skladniki_button);
                 } else {
+                    recipeInfo.setVisibility(View.VISIBLE);
+                    recipeInfoFake.setVisibility(View.VISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);
                 }
             }

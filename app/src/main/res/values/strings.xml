@@ -136,6 +136,8 @@ ze spiżarni?</string>
 
     <string name="synchronizacja">Kliknij, aby dodać do listy zakupów tylko te produkty, których nie masz w spiżarni (w odpowiednich ilościach). </string>
     <string name="do_listy">Przepis już został zaplanowany. Jeżeli chcesz dodać produkty z przepisu do listy zakupów, kliknij "OK".</string>
+    <string name="cook_recepie">Zaplanowany przepis zostanie potraktowany jako przygotowany. Produkty zużyte zostaną automatycznie usunięte ze spiżarni.</string>
+    <string name="delete_recipe">Zaplanowany przepis zostanie usunięty. Produkty z przepisu nie zostaną usunięte ze spiżarni.</string>
     <string name="do_kalendarzu">Produkty z przepisu już zostały dodane do listy zakupów. Jeśli chcesz również zaplanować przepis w kalendarzu, kliknij "OK".</string>
     <string name="ok">OK</string>
     <string name="zamknij">Zamknij</string>
