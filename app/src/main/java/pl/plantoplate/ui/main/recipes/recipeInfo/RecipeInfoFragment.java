@@ -217,12 +217,14 @@ public class RecipeInfoFragment extends Fragment {
                 } else {
                     questionImageView.setVisibility(View.INVISIBLE);
                     questionImageViewFake.setVisibility(View.INVISIBLE);
-                    infoImageView.setVisibility(View.INVISIBLE);
-                    infoImageViewFake.setVisibility(View.INVISIBLE);
                     if(position == 0) {
                         radioGridGroup.setCheckedRadioButtonById(R.id.skladniki_button);
+                        infoImageView.setVisibility(View.INVISIBLE);
+                        infoImageViewFake.setVisibility(View.INVISIBLE);
                     } else{
                         radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);
+                        infoImageView.setVisibility(View.VISIBLE);
+                        infoImageViewFake.setVisibility(View.VISIBLE);
                     }
                 }
             }

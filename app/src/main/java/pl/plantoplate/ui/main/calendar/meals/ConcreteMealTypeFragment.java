@@ -20,6 +20,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -46,6 +48,7 @@ public class ConcreteMealTypeFragment extends Fragment {
     private SharedPreferences prefs;
     private ConcreteMealAdapter concreteMealAdapter;
     private LocalDate date;
+    private TextView welcomeText;
 
     public ConcreteMealTypeFragment(){}
 
@@ -87,6 +90,7 @@ public class ConcreteMealTypeFragment extends Fragment {
         compositeDisposable = new CompositeDisposable();
         prefs = requireActivity().getSharedPreferences("prefs", 0);
         date = LocalDate.now();
+        welcomeText = fragmentCalendarInsideBldBinding.welcomeCalendarBld;
 
         setupRecyclerView(fragmentCalendarInsideBldBinding);
         return fragmentCalendarInsideBldBinding.getRoot();
@@ -110,7 +114,14 @@ public class ConcreteMealTypeFragment extends Fragment {
         MealRepository mealRepository = new MealRepository();
         compositeDisposable.add(
                 mealRepository.getMealsByDate("Bearer " + prefs.getString("token", ""), date)
-                        .subscribe(meals -> concreteMealAdapter.setMeals(CategorySorter.getSortedMealTypeList(meals, mealType)),
+                        .subscribe(meals -> {
+                                    if (meals.isEmpty()) {
+                                        welcomeText.setText(R.string.wprowadzenie_kalendarz);
+                                    } else {
+                                        welcomeText.setText("");
+                                    }
+                                    concreteMealAdapter.setMeals(CategorySorter.getSortedMealTypeList(meals, mealType));
+                                },
                                 Timber::e)
         );
     }

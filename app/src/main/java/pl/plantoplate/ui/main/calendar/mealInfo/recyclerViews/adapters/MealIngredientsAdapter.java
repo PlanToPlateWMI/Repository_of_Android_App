@@ -43,7 +43,7 @@ public class MealIngredientsAdapter extends RecyclerView.Adapter<MealIngredients
     @Override
     public MealIngredientsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_skladnik, parent, false);
+                .inflate(R.layout.item_skladnik_for_calendar, parent, false);
         return new MealIngredientsViewHolder(itemView);
     }
 
@@ -75,10 +75,10 @@ public class MealIngredientsAdapter extends RecyclerView.Adapter<MealIngredients
         Ingredient ingredient = ingredients.get(position);
         Timber.e("Ingredient: %s %s", ingredient.getIngredientName(), position);
         holder.bind(ingredient, isSelected(position));
-        holder.setOnCheckedChangeListener((compoundButton, b) -> {
-            toggleSelection(position);
-            EventBus.getDefault().post(new IngredientsChangeEvent(getSelectedIngredients()));
-        });
+//        holder.setOnCheckedChangeListener((compoundButton, b) -> {
+//            toggleSelection(position);
+//            EventBus.getDefault().post(new IngredientsChangeEvent(getSelectedIngredients()));
+//        });
     }
 
     @Override

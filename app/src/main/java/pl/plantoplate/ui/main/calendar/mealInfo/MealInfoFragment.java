@@ -92,25 +92,25 @@ public class MealInfoFragment extends Fragment{
 
     public void setupPopUpMenu(View view) {
         popupMenu = new PopupMenu(requireContext(), view, Gravity.END);
-        popupMenu.getMenuInflater().inflate(R.menu.recipe_inside_menu, popupMenu.getMenu());
+        popupMenu.getMenuInflater().inflate(R.menu.recipe_menu_calendar, popupMenu.getMenu());
 
-        popupMenu.setOnMenuItemClickListener(item -> {
-            MealPlan mealPlan = new MealPlan();
-            mealPlan.setIngredientsIds(ingredientsIds);
-            mealPlan.setRecipeId(requireArguments().getInt("recipeId"));
-            if(item.getItemId() == R.id.lista_plan){
-                Timber.e(mealPlan.toString());
-                PopUpControlShoppingStart popUpControl = new PopUpControlShoppingStart(getChildFragmentManager(), mealPlan);
-                popUpControl.showPopUpNumerOfServingPerRecipe();
-                return true;
-            } else if(item.getItemId() == R.id.plan_kalendarz) {
-                Timber.e(mealPlan.toString());
-                PopUpControlCalendarStart popUpControl = new PopUpControlCalendarStart(getChildFragmentManager() , mealPlan);
-                popUpControl.showPopUpNumerOfServingPerRecipe();
-                return true;
-            }
-            return false;
-        });
+//        popupMenu.setOnMenuItemClickListener(item -> {
+//            MealPlan mealPlan = new MealPlan();
+//            mealPlan.setIngredientsIds(ingredientsIds);
+//            mealPlan.setRecipeId(requireArguments().getInt("recipeId"));
+//            if(item.getItemId() == R.id.lista_plan){
+//                Timber.e(mealPlan.toString());
+//                PopUpControlShoppingStart popUpControl = new PopUpControlShoppingStart(getChildFragmentManager(), mealPlan);
+//                popUpControl.showPopUpNumerOfServingPerRecipe();
+//                return true;
+//            } else if(item.getItemId() == R.id.plan_kalendarz) {
+//                Timber.e(mealPlan.toString());
+//                PopUpControlCalendarStart popUpControl = new PopUpControlCalendarStart(getChildFragmentManager() , mealPlan);
+//                popUpControl.showPopUpNumerOfServingPerRecipe();
+//                return true;
+//            }
+//            return false;
+//        });
     }
 
     public void setupViewModel(){

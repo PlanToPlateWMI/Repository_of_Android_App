@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public class RecipeCategoriesSelectedFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private SharedPreferences prefs;
     private String webLink = "https://plantoplatewmi.github.io/WebPage/";
+    private TextView welcomeText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -49,6 +51,7 @@ public class RecipeCategoriesSelectedFragment extends Fragment {
         prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
 
         floatingActionButton = fragmentRecipeInsideAllBinding.plusInAllRecipes;
+        welcomeText = fragmentRecipeInsideAllBinding.welcomeRecipeAll;
 
         setupRecyclerView(fragmentRecipeInsideAllBinding);
         getAllRecepies();
@@ -93,7 +96,15 @@ public class RecipeCategoriesSelectedFragment extends Fragment {
 
         Disposable disposable = recipeRepository.getSelectedRecipes("", token)
                 .subscribe(
-                        recipes -> recipeCategoryAdapter.setCategoriesList(CategorySorter.sortCategoriesByRecipe(recipes)),
+                        recipes -> {
+                            recipeCategoryAdapter.setCategoriesList(CategorySorter.sortCategoriesByRecipe(recipes));
+                            if(recipes.size() == 0) {
+                                welcomeText.setText(R.string.wprowadzenie_przepisy_ulubione);
+                            }
+                            else {
+                                welcomeText.setText("");
+                            }
+                        },
                         throwable -> Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show()
                 );
 
