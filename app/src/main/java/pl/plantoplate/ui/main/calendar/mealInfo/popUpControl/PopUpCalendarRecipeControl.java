@@ -53,6 +53,7 @@ public class PopUpCalendarRecipeControl {
 
         questionDeleteRecipe.setOnAcceptButtonClickListener(v -> {
             //no synchronization
+            //delete recipe from calendar
         });
 
         questionDeleteRecipe.show(fragmentManager, "QuestionDeleteRecipe");
