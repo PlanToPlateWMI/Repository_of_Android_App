@@ -2,6 +2,7 @@ package pl.plantoplate.ui.main.recipes.recipeInfo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -30,6 +31,7 @@ import pl.plantoplate.data.remote.models.meal.Meal;
 import pl.plantoplate.data.remote.models.meal.MealPlan;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.productsDatabase.AddYourOwnProductFragment;
 import pl.plantoplate.ui.main.recipes.recipeInfo.events.IngredientsChangeEvent;
 import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlCalendarStart;
 import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlShoppingStart;
@@ -47,6 +49,8 @@ public class RecipeInfoFragment extends Fragment {
     private PopupMenu menu;
     private PopupMenu menuInfo;
     private ArrayList<Integer> ingredientsIds;
+    private String sourceLink = "http://google.com";
+    SharedPreferences prefs;
 
     @Override
     public void onStart() {
@@ -70,6 +74,7 @@ public class RecipeInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         FragmentItemRecipeInsideBinding fragmentItemRecipeInsideBinding =
                 FragmentItemRecipeInsideBinding.inflate(inflater, container, false);
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
 
         initViews(fragmentItemRecipeInsideBinding);
         setupViewModel();
@@ -97,7 +102,15 @@ public class RecipeInfoFragment extends Fragment {
         setupPopUpMenuForImage(questionImageViewFake);
         setupPopUpMenuForImageInfo(infoImageViewFake);
 
-        recipeMenu.setOnClickListener(v -> popupMenu.show());
+        String role = prefs.getString("role", "");
+
+        if(role.equals("ROLE_ADMIN")) {
+            recipeMenu.setVisibility(View.VISIBLE);
+            recipeMenu.setOnClickListener(v -> popupMenu.show());
+        }else {
+            recipeMenu.setVisibility(View.INVISIBLE);
+        }
+
         questionImageView.setOnClickListener(v -> menu.show());
         infoImageView.setOnClickListener(v -> menuInfo.show());
     }
@@ -135,7 +148,7 @@ public class RecipeInfoFragment extends Fragment {
         menuInfo.getMenuInflater().inflate(R.menu.info_menu, menuInfo.getMenu());
         menuInfo.setOnMenuItemClickListener(item -> {
             if(item.getItemId() == R.id.info_menu){
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(sourceLink));
                 startActivity(browserIntent);
                 return true;
             }
@@ -157,10 +170,20 @@ public class RecipeInfoFragment extends Fragment {
             recipeTime.setText(recipeInfo.getTime() + " min.");
             recipePortions.setText(recipeInfo.getPortions() + " os.");
             recipeLevel.setText(recipeLevelMapping.get(recipeInfo.getLevel().name()));
+            sourceLink = recipeInfo.getSource();
         });
         recipeInfoViewModel.getResponseMessage().observe(getViewLifecycleOwner(),
                 responseMessage -> Toast.makeText(getContext(), responseMessage, Toast.LENGTH_SHORT).show());
         recipeInfoViewModel.fetchRecipeInfo(requireArguments().getInt("recipeId"));
+
+        String role = prefs.getString("role", "");
+
+        if(role.equals("ROLE_ADMIN")) {
+            recipeMenu.setVisibility(View.VISIBLE);
+            recipeMenu.setOnClickListener(v -> popupMenu.show());
+        }else {
+            recipeMenu.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void setupNavigation() {
@@ -174,21 +197,33 @@ public class RecipeInfoFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager2 viewPager) {
+        String role = prefs.getString("role", "");
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                if (position == 0) {
+                if (position == 0 && role.equals("ROLE_ADMIN")) {
                     questionImageView.setVisibility(View.VISIBLE);
                     questionImageViewFake.setVisibility(View.VISIBLE);
                     infoImageView.setVisibility(View.INVISIBLE);
                     infoImageViewFake.setVisibility(View.INVISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.skladniki_button);
-                } else {
+                } else if (position == 1 && role.equals("ROLE_ADMIN")) {
                     questionImageView.setVisibility(View.INVISIBLE);
                     questionImageViewFake.setVisibility(View.INVISIBLE);
                     infoImageView.setVisibility(View.VISIBLE);
                     infoImageViewFake.setVisibility(View.VISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);
+                } else {
+                    questionImageView.setVisibility(View.INVISIBLE);
+                    questionImageViewFake.setVisibility(View.INVISIBLE);
+                    infoImageView.setVisibility(View.INVISIBLE);
+                    infoImageViewFake.setVisibility(View.INVISIBLE);
+                    if(position == 0) {
+                        radioGridGroup.setCheckedRadioButtonById(R.id.skladniki_button);
+                    } else{
+                        radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);
+                    }
                 }
             }
         });

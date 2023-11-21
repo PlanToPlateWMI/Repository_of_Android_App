@@ -1,7 +1,10 @@
 package pl.plantoplate.ui.main.recipes.selectedRecipes;
 
 import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +33,7 @@ public class ConcreteCategorySelectedFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private String category;
     private SharedPreferences prefs;
+    private String webLink = "https://plantoplatewmi.github.io/WebPage/";
 
     public ConcreteCategorySelectedFragment(String category) {
         this.category = category;
@@ -66,6 +70,20 @@ public class ConcreteCategorySelectedFragment extends Fragment {
                 replaceFragment(recipeInfoFragment);
             }
         });
+
+        String role = prefs.getString("role", "");
+
+        if(role.equals("ROLE_ADMIN")) {
+            floatingActionButton.setVisibility(View.VISIBLE);
+            floatingActionButton.setOnClickListener(item -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webLink));
+                startActivity(browserIntent);
+            });
+        }
+        else {
+            floatingActionButton.setVisibility(View.INVISIBLE);
+        }
+
         recyclerView.setAdapter(recipeCategoryAdapter);
     }
 

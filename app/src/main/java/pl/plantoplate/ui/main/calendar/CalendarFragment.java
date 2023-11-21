@@ -15,6 +15,7 @@
  */
 package pl.plantoplate.ui.main.calendar;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -56,6 +57,7 @@ public class CalendarFragment extends Fragment {
     private FloatingActionButton addToCalendarButton;
     private TextView dateTextView;
     private ShortCalendar shortCalendar;
+    private SharedPreferences prefs;
 
     /**
      * Called to create the view hierarchy of the fragment.
@@ -70,6 +72,7 @@ public class CalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         fragmentCalendarBinding = FragmentCalendarBinding.inflate(inflater, container, false);
+        prefs = requireActivity().getSharedPreferences("prefs", 0);
 
         initViews(fragmentCalendarBinding);
         setClickListeners();
@@ -100,7 +103,6 @@ public class CalendarFragment extends Fragment {
     }
 
     public void setClickListeners() {
-        addToCalendarButton.setOnClickListener(v -> replaceFragment(new RecipesFragment()));
         shortCalendar.setUpItemButtons(new SetupItemButtons(){
             @Override
             public void setupDateItemClick(View v, LocalDate date) {
@@ -156,6 +158,16 @@ public class CalendarFragment extends Fragment {
                 }
             }
         });
+
+        String role = prefs.getString("role", "");
+
+        if(role.equals("ROLE_ADMIN")) {
+            addToCalendarButton.setVisibility(View.VISIBLE);
+            addToCalendarButton.setOnClickListener(v -> replaceFragment(new RecipesFragment()));
+        }else {
+            addToCalendarButton.setVisibility(View.INVISIBLE);
+        }
+
         // Set up adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         adapter.addFragment(new AllMealTypesFragment());

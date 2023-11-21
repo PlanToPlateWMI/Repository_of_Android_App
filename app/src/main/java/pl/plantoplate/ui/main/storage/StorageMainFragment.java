@@ -42,6 +42,7 @@ import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.databinding.FragmentStorageInsideBinding;
 import pl.plantoplate.ui.main.popUps.DeleteProductPopUp;
+import pl.plantoplate.ui.main.productsDatabase.AddYourOwnProductFragment;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.ui.main.recyclerViews.adapters.CategoryAdapter;
 import pl.plantoplate.ui.main.productsDatabase.ProductsDbaseFragment;
@@ -113,7 +114,12 @@ public class StorageMainFragment extends Fragment {
                     if (productsIds.isEmpty()) {
                         goToProductsDatabase();
                     } else {
-                        showaddFromPopUp(productsIds);
+                        String role = prefs.getString("role", "");
+                        if(role.equals("ROLE_ADMIN")) {
+                            showaddFromPopUp(productsIds);
+                        }else {
+                            goToProductsDatabase();
+                        }
                     }
                 }, throwable -> Toast.makeText(requireActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
 

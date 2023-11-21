@@ -2,7 +2,9 @@ package pl.plantoplate.ui.main.recipes.selectedRecipes;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,7 @@ public class RecipeCategoriesSelectedFragment extends Fragment {
     private RecipeCategoryAdapter recipeCategoryAdapter;
     private FloatingActionButton floatingActionButton;
     private SharedPreferences prefs;
+    private String webLink = "https://plantoplatewmi.github.io/WebPage/";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -42,6 +45,7 @@ public class RecipeCategoriesSelectedFragment extends Fragment {
         FragmentRecipeInsideAllBinding fragmentRecipeInsideAllBinding =
                 FragmentRecipeInsideAllBinding.inflate(inflater, container, false);
         compositeDisposable = new CompositeDisposable();
+
         prefs = requireActivity().getSharedPreferences("prefs", MODE_PRIVATE);
 
         floatingActionButton = fragmentRecipeInsideAllBinding.plusInAllRecipes;
@@ -65,6 +69,20 @@ public class RecipeCategoriesSelectedFragment extends Fragment {
                 replaceFragment(recipeInfoFragment);
             }
         });
+
+        String role = prefs.getString("role", "");
+
+        if(role.equals("ROLE_ADMIN")) {
+            floatingActionButton.setVisibility(View.VISIBLE);
+            floatingActionButton.setOnClickListener(item -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webLink));
+                startActivity(browserIntent);
+            });
+        }
+        else {
+            floatingActionButton.setVisibility(View.INVISIBLE);
+        }
+
         recyclerView.setAdapter(recipeCategoryAdapter);
     }
 

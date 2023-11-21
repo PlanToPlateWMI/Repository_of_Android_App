@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id = "@+id/produkty_do_listy"
+        android:title="Dodaj produkty do listy zakupów"
+
+        android:font="@font/quicksand_light"
+        android:fontFamily="@font/quicksand_light"
+
+        android:iconTint="?attr/colorSecondaryVariant"
+        />
+    <item
+        android:id = "@+id/przygotowany_przepis"
+        android:title="Znacz przepis jako przygotowany"
+
+        android:font="@font/quicksand_light"
+        android:fontFamily="@font/quicksand_light"
+
+        android:iconTint="?attr/colorSecondaryVariant"
+        />
+    <item
+        android:id = "@+id/usun_przepis"
+        android:title="Usuń przepis z planu"
+
+        android:font="@font/quicksand_light"
+        android:fontFamily="@font/quicksand_light"
+
+        android:iconTint="?attr/colorSecondaryVariant"
+        />
+</menu>

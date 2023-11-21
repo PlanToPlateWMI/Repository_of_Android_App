@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
+import pl.plantoplate.ui.main.productsDatabase.AddYourOwnProductFragment;
 import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.recyclerViews.adapters.ProductAdapter;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
@@ -76,12 +77,19 @@ public class BoughtProductsFragment extends Fragment {
         return fragmentKupioneBinding.getRoot();
     }
 
+    /**
+     * This method creates a pop up dialog for moving products to storage. It inflates the layout
+     * for the dialog, sets up the dialog buttons, and displays the dialog.
+     */
     private void initViews(FragmentKupioneBinding fragmentKupioneBinding) {
         moveToStorageButton = fragmentKupioneBinding.floatingActionButton;
         productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
         titleTextView = fragmentKupioneBinding.textViewKupione;
     }
 
+    /*
+        * This method is called when the move to storage button is clicked. It creates a pop up dialog
+     */
     private void setClickListeners() {
         moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
     }
@@ -99,6 +107,9 @@ public class BoughtProductsFragment extends Fragment {
      * for success and error operations.
      */
     public void setUpViewModel() {
+
+        String role = prefs.getString("role", "");
+
         boughtProductsListViewModel = new ViewModelProvider(requireParentFragment()).get(BoughtProductsListViewModel.class);
         boughtProductsListViewModel.getUserInfo().observe(getViewLifecycleOwner(), userInfo -> {
         });
@@ -107,6 +118,11 @@ public class BoughtProductsFragment extends Fragment {
                 moveToStorageButton.setVisibility(View.INVISIBLE);
                 moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
                 titleTextView.setText(R.string.wprowadzenie_lista_zakupow_kupione);
+            }
+            else if(!role.equals("ROLE_ADMIN")){
+                moveToStorageButton.setVisibility(View.INVISIBLE);
+                moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
+                titleTextView.setText("");
             }
             else{
                 moveToStorageButton.setVisibility(View.VISIBLE);
