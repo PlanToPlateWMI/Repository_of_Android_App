@@ -15,17 +15,20 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.recipe.Ingredient;
+import pl.plantoplate.data.remote.models.user.Role;
 import pl.plantoplate.ui.main.recipes.recipeInfo.events.IngredientsChangeEvent;
 import pl.plantoplate.ui.main.recipes.recipeInfo.recyclerViews.viewHolders.RecipeIngredientsViewHolder;
 import timber.log.Timber;
 
 public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredientsViewHolder>{
 
+    private Role role;
     private ArrayList<Ingredient> ingredients;
     private SparseBooleanArray selectedItems;
 
-    public RecipeIngredientsAdapter(ArrayList<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public RecipeIngredientsAdapter(Role role) {
+        this.role = role;
+        this.ingredients = new ArrayList<>();
         this.selectedItems = new SparseBooleanArray();
     }
 
@@ -74,7 +77,7 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
     public void onBindViewHolder(@NonNull RecipeIngredientsViewHolder holder, int position) {
         Ingredient ingredient = ingredients.get(position);
         Timber.e("Ingredient: %s %s", ingredient.getIngredientName(), position);
-        holder.bind(ingredient, isSelected(position));
+        holder.bind(ingredient, isSelected(position), role);
         holder.setOnCheckedChangeListener((compoundButton, b) -> {
             toggleSelection(position);
             EventBus.getDefault().post(new IngredientsChangeEvent(getSelectedIngredients()));

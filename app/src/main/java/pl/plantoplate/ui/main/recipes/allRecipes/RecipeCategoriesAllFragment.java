@@ -1,7 +1,6 @@
 package pl.plantoplate.ui.main.recipes.allRecipes;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,7 @@ public class RecipeCategoriesAllFragment extends Fragment {
         floatingActionButton.setVisibility(View.INVISIBLE);
 
         setupRecyclerView(fragmentRecipeInsideAllBinding);
-        getAllRecepies();
+        getAllRecipes();
         return fragmentRecipeInsideAllBinding.getRoot();
     }
 
@@ -63,14 +62,14 @@ public class RecipeCategoriesAllFragment extends Fragment {
 //        }
 //    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(savedInstanceState != null){
-            Parcelable recyclerViewState = savedInstanceState.getParcelable("recycler_state");
-            recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
-        }
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if(savedInstanceState != null){
+//            Parcelable recyclerViewState = savedInstanceState.getParcelable("recycler_state");
+//            recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+//        }
+//    }
 
 
     public void setupRecyclerView(FragmentRecipeInsideAllBinding fragmentRecipeInsideAllBinding){
@@ -91,7 +90,7 @@ public class RecipeCategoriesAllFragment extends Fragment {
     }
 
 
-    public void getAllRecepies(){
+    public void getAllRecipes(){
         RecipeRepository recipeRepository = new RecipeRepository();
 
         Disposable disposable = recipeRepository.getAllRecipes("")

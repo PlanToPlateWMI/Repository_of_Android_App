@@ -12,8 +12,6 @@ import pl.plantoplate.databinding.ItemSkladnikBinding;
 import pl.plantoplate.databinding.ItemSkladnikForCalendarBinding;
 
 public class MealIngredientsViewHolder extends RecyclerView.ViewHolder {
-
-    //private CheckBox checkBox;
     private TextView ingredientName;
     private TextView ingredientAmount;
 
@@ -21,7 +19,6 @@ public class MealIngredientsViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         ItemSkladnikForCalendarBinding itemSkladnikForCalendarBinding = ItemSkladnikForCalendarBinding.bind(itemView);
-        //checkBox = itemSkladnikBinding.checkBox;
         ingredientName = itemSkladnikForCalendarBinding.textViewSkladnik;
         ingredientAmount = itemSkladnikForCalendarBinding.textViewIloscSkladnika;
 
@@ -35,18 +32,5 @@ public class MealIngredientsViewHolder extends RecyclerView.ViewHolder {
         //checkBox.setChecked(isSelected);
         ingredientName.setText(ingredient.getIngredientName());
         ingredientAmount.setText(ingredient.getQuantity() + " " + ingredient.getUnit());
-
-        //checkBox.setOnClickListener(v -> toggleCrossedOut());
     }
-
-//        public void toggleCrossedOut() {
-//            boolean crossedOut = checkBox.isChecked();
-//            ingredientName.setPaintFlags(crossedOut ?
-//                            ingredientName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG) :
-//                            ingredientName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//
-//            ingredientAmount.setPaintFlags(crossedOut ?
-//                    ingredientAmount.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG) :
-//                    ingredientAmount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//    }
 }

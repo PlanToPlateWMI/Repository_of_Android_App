@@ -39,6 +39,7 @@ import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
 import pl.plantoplate.ui.main.calendar.mealInfo.MealInfoFragment;
 import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.MealTypesAdapter;
 import pl.plantoplate.ui.main.calendar.recyclerViews.listeners.SetupMealItem;
+import pl.plantoplate.ui.main.calendar.recyclerViews.models.MealTypes;
 import pl.plantoplate.ui.main.recipes.recipeInfo.RecipeInfoFragment;
 import pl.plantoplate.ui.main.recipes.recyclerViews.adapters.RecipeCategoryAdapter;
 import pl.plantoplate.ui.main.recipes.recyclerViews.listeners.SetupRecipeButtons;
@@ -113,14 +114,13 @@ public class AllMealTypesFragment extends Fragment {
         compositeDisposable.add(
                 mealRepository.getMealsByDate("Bearer " + prefs.getString("token", ""), date)
                         .subscribe(meals -> {
-                                    if (meals.isEmpty()) {
-                                        welcomeText.setText(R.string.wprowadzenie_kalendarz);
-                                    } else {
-                                        welcomeText.setText("");
-                                    }
+                                    ArrayList<MealTypes> mealsList = CategorySorter.groupMealsByType(meals);
+                                    welcomeText.setText(mealsList.isEmpty() ?
+                                            getString(R.string.wprowadzenie_kalendarz) : "");
                                     mealTypesAdapter.setMealTypes(CategorySorter.groupMealsByType(meals));
+
                                 },
-                                   Timber::e)
+                                Timber::e)
         );
     }
 

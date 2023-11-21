@@ -3,14 +3,14 @@ package pl.plantoplate.data.remote.models.recipe;
 public class Ingredient {
 
     private int id;
-    private int quantity;
+    private float quantity;
     private String ingredientName;
     private String unit;
 
     public Ingredient() {
     }
 
-    public Ingredient(int id, int quantity, String ingredientName, String unit) {
+    public Ingredient(int id, float quantity, String ingredientName, String unit) {
         this.id = id;
         this.quantity = quantity;
         this.ingredientName = ingredientName;
@@ -25,11 +25,11 @@ public class Ingredient {
         this.id = id;
     }
 
-    public int getQuantity() {
+    public float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 

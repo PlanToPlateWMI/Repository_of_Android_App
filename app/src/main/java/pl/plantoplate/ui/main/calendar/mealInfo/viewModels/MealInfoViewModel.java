@@ -14,10 +14,10 @@ import pl.plantoplate.data.remote.repository.MealRepository;
 
 public class MealInfoViewModel extends AndroidViewModel {
 
-    private CompositeDisposable compositeDisposable;
-    private MutableLiveData<RecipeInfo> mealInfo;
-    private MutableLiveData<String> responseMessage;
-    private SharedPreferences prefs;
+    private final CompositeDisposable compositeDisposable;
+    private final MutableLiveData<RecipeInfo> mealInfo;
+    private final MutableLiveData<String> responseMessage;
+    private final SharedPreferences prefs;
 
     public MealInfoViewModel(@NonNull Application application) {
         super(application);

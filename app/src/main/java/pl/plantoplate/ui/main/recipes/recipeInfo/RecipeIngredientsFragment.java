@@ -1,5 +1,6 @@
 package pl.plantoplate.ui.main.recipes.recipeInfo;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+
+import pl.plantoplate.data.remote.models.user.Role;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideSkladnikiBinding;
 import pl.plantoplate.ui.main.recipes.recipeInfo.recyclerViews.adapters.RecipeIngredientsAdapter;
 import pl.plantoplate.ui.main.recipes.recipeInfo.viewModels.RecipeInfoViewModel;
@@ -38,9 +41,12 @@ public class RecipeIngredientsFragment extends Fragment {
     }
 
     public void setupRecyclerView(FragmentItemRecipeInsideSkladnikiBinding fragmentItemRecipeInsideSkladnikiBinding){
+        SharedPreferences prefs = requireActivity().getSharedPreferences("prefs", 0);
+        Role role = Role.valueOf(prefs.getString("role", ""));
+
         RecyclerView recyclerView = fragmentItemRecipeInsideSkladnikiBinding.recipeRecyclerViewSkladniki;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recipeIngredientsAdapter = new RecipeIngredientsAdapter(new ArrayList<>());
+        recipeIngredientsAdapter = new RecipeIngredientsAdapter(role);
         recyclerView.setAdapter(recipeIngredientsAdapter);
     }
 }

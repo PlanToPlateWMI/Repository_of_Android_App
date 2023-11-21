@@ -10,16 +10,18 @@ public class Meal {
     private int time;
     private MealType mealType;
     private String image;
+    private boolean vege;
 
     public Meal(){
     }
 
-    public Meal(int id, String recipeTitle, int time, MealType mealType, String image) {
+    public Meal(int id, String recipeTitle, int time, MealType mealType, String image, boolean vege) {
         this.id = id;
         this.recipeTitle = recipeTitle;
         this.time = time;
         this.mealType = mealType;
         this.image = image;
+        this.vege = vege;
     }
 
     public int getId() {
@@ -60,5 +62,13 @@ public class Meal {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public boolean isVege() {
+        return vege;
+    }
+
+    public void setVege(boolean vege) {
+        this.vege = vege;
     }
 }

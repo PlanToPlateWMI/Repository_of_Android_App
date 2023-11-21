@@ -32,6 +32,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.meal.Meal;
 import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.FragmentCalendarInsideBldBinding;
@@ -115,11 +116,9 @@ public class ConcreteMealTypeFragment extends Fragment {
         compositeDisposable.add(
                 mealRepository.getMealsByDate("Bearer " + prefs.getString("token", ""), date)
                         .subscribe(meals -> {
-                                    if (meals.isEmpty()) {
-                                        welcomeText.setText(R.string.wprowadzenie_kalendarz);
-                                    } else {
-                                        welcomeText.setText("");
-                                    }
+                                    ArrayList<Meal> mealsList = CategorySorter.getSortedMealTypeList(meals, mealType);
+                                    welcomeText.setText(mealsList.isEmpty() ?
+                                            getString(R.string.wprowadzenie_kalendarz) : "");
                                     concreteMealAdapter.setMeals(CategorySorter.getSortedMealTypeList(meals, mealType));
                                 },
                                 Timber::e)
