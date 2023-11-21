@@ -1,4 +1,4 @@
-package pl.plantoplate.ui.main.calendar.recyclerViews.meal.models;
+package pl.plantoplate.ui.main.calendar.recyclerViews.models;
 
 import java.util.ArrayList;
 import java.util.Optional;

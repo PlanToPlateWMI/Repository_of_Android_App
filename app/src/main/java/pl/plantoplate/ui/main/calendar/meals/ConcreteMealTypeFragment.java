@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.ui.main.calendar;
+package pl.plantoplate.ui.main.calendar.meals;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,19 +23,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.FragmentCalendarInsideBldBinding;
+import pl.plantoplate.ui.main.calendar.mealInfo.MealInfoFragment;
+import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.ConcreteMealAdapter;
 import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
-import pl.plantoplate.ui.main.calendar.recyclerViews.meal.adapters.ConcreteMealAdapter;
 import timber.log.Timber;
 
 public class ConcreteMealTypeFragment extends Fragment {
@@ -44,7 +45,9 @@ public class ConcreteMealTypeFragment extends Fragment {
     private CompositeDisposable compositeDisposable;
     private SharedPreferences prefs;
     private ConcreteMealAdapter concreteMealAdapter;
+    private LocalDate date;
 
+    public ConcreteMealTypeFragment(){}
 
     public ConcreteMealTypeFragment(MealType mealType) {
         this.mealType = mealType;
@@ -62,8 +65,16 @@ public class ConcreteMealTypeFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMealsList(date);
+    }
+
     @Subscribe
     public void onDateSelected(DateSelectedEvent event){
+        concreteMealAdapter.setMeals(new ArrayList<>());
+        date = event.getDate();
         concreteMealAdapter.setMeals(new ArrayList<>());
         getMealsList(event.getDate());
     }
@@ -75,6 +86,7 @@ public class ConcreteMealTypeFragment extends Fragment {
                 FragmentCalendarInsideBldBinding.inflate(inflater, container, false);
         compositeDisposable = new CompositeDisposable();
         prefs = requireActivity().getSharedPreferences("prefs", 0);
+        date = LocalDate.now();
 
         setupRecyclerView(fragmentCalendarInsideBldBinding);
         return fragmentCalendarInsideBldBinding.getRoot();
@@ -84,6 +96,13 @@ public class ConcreteMealTypeFragment extends Fragment {
         RecyclerView mealsRecyclerView = fragmentCalendarInsideBldBinding.productsOwnRecyclerView;
         mealsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         concreteMealAdapter = new ConcreteMealAdapter();
+        concreteMealAdapter.setUpMealItem((mealId) -> {
+            MealInfoFragment mealInfoFragment = new MealInfoFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("mealId", mealId);
+            mealInfoFragment.setArguments(bundle);
+            replaceFragment(mealInfoFragment);
+        });
         mealsRecyclerView.setAdapter(concreteMealAdapter);
     }
 
@@ -100,5 +119,12 @@ public class ConcreteMealTypeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         compositeDisposable.clear();
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

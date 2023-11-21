@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.plantoplate.ui.main.calendar;
+package pl.plantoplate.ui.main.calendar.meals;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,11 +30,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.FragmentCalendarInsideAllBinding;
+import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
+import pl.plantoplate.ui.main.calendar.mealInfo.MealInfoFragment;
+import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.MealTypesAdapter;
+import pl.plantoplate.ui.main.calendar.recyclerViews.listeners.SetupMealItem;
+import pl.plantoplate.ui.main.recipes.recipeInfo.RecipeInfoFragment;
+import pl.plantoplate.ui.main.recipes.recyclerViews.adapters.RecipeCategoryAdapter;
+import pl.plantoplate.ui.main.recipes.recyclerViews.listeners.SetupRecipeButtons;
 import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
-import pl.plantoplate.ui.main.calendar.recyclerViews.meal.adapters.MealTypesAdapter;
 import timber.log.Timber;
 
 public class AllMealTypesFragment extends Fragment {
@@ -42,6 +49,7 @@ public class AllMealTypesFragment extends Fragment {
     private CompositeDisposable compositeDisposable;
     private SharedPreferences prefs;
     private MealTypesAdapter mealTypesAdapter;
+    private LocalDate date;
 
     @Override
     public void onStart() {
@@ -55,8 +63,16 @@ public class AllMealTypesFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAllMeals(date);
+    }
+
     @Subscribe
     public void onDateSelected(DateSelectedEvent event){
+        mealTypesAdapter.setMealTypes(new ArrayList<>());
+        date = event.getDate();
         mealTypesAdapter.setMealTypes(new ArrayList<>());
         getAllMeals(event.getDate());
     }
@@ -68,15 +84,23 @@ public class AllMealTypesFragment extends Fragment {
                 FragmentCalendarInsideAllBinding.inflate(inflater, container, false);
         prefs = requireActivity().getSharedPreferences("prefs", 0);
         compositeDisposable = new CompositeDisposable();
+        date = LocalDate.now();
 
         setupRecyclerView(fragmentCalendarInsideBldBinding);
         return fragmentCalendarInsideBldBinding.getRoot();
     }
 
-    public void setupRecyclerView(FragmentCalendarInsideAllBinding fragmentCalendarInsideBldBinding) {
+    public void setupRecyclerView(FragmentCalendarInsideAllBinding fragmentCalendarInsideBldBinding){
         RecyclerView mealTypesRecyclerView = fragmentCalendarInsideBldBinding.productsOwnRecyclerView;
         mealTypesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mealTypesAdapter = new MealTypesAdapter();
+        mealTypesAdapter.setUpMealItem((mealId) -> {
+            MealInfoFragment mealInfoFragment = new MealInfoFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("mealId", mealId);
+            mealInfoFragment.setArguments(bundle);
+            replaceFragment(mealInfoFragment);
+        });
         mealTypesRecyclerView.setAdapter(mealTypesAdapter);
     }
 
@@ -93,5 +117,12 @@ public class AllMealTypesFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         compositeDisposable.clear();
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

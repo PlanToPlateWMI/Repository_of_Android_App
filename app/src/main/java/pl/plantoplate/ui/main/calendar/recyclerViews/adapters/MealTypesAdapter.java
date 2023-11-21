@@ -1,4 +1,4 @@
-package pl.plantoplate.ui.main.calendar.recyclerViews.meal.adapters;
+package pl.plantoplate.ui.main.calendar.recyclerViews.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pl.plantoplate.R;
-import pl.plantoplate.ui.main.calendar.recyclerViews.meal.models.MealTypes;
-import pl.plantoplate.ui.main.calendar.recyclerViews.meal.viewHolders.MealTypeViewHolder;
+import pl.plantoplate.ui.main.calendar.recyclerViews.listeners.SetupMealItem;
+import pl.plantoplate.ui.main.calendar.recyclerViews.models.MealTypes;
+import pl.plantoplate.ui.main.calendar.recyclerViews.viewHolders.MealTypeViewHolder;
+import pl.plantoplate.ui.main.recipes.recyclerViews.listeners.SetupRecipeButtons;
 
 public class MealTypesAdapter extends RecyclerView.Adapter<MealTypeViewHolder>{
 
     private ArrayList<MealTypes> mealTypes;
+    private SetupMealItem listener;
 
     public MealTypesAdapter() {
         this.mealTypes = new ArrayList<>();
@@ -25,6 +28,10 @@ public class MealTypesAdapter extends RecyclerView.Adapter<MealTypeViewHolder>{
     public void setMealTypes(ArrayList<MealTypes> mealTypes) {
         this.mealTypes = mealTypes;
         notifyDataSetChanged();
+    }
+
+    public void setUpMealItem(SetupMealItem listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -38,7 +45,7 @@ public class MealTypesAdapter extends RecyclerView.Adapter<MealTypeViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MealTypeViewHolder holder, int position) {
         MealTypes mealType = mealTypes.get(position);
-        holder.bind(mealType);
+        holder.bind(mealType, listener);
     }
 
     @Override

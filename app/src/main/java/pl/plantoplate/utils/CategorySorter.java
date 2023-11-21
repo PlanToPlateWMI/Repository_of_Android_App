@@ -25,7 +25,7 @@ import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.models.product.ProductCategory;
 import pl.plantoplate.data.remote.models.recipe.Recipe;
-import pl.plantoplate.ui.main.calendar.recyclerViews.meal.models.MealTypes;
+import pl.plantoplate.ui.main.calendar.recyclerViews.models.MealTypes;
 import pl.plantoplate.ui.main.recipes.recyclerViews.RecipeCategory;
 
 /**

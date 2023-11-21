@@ -39,6 +39,8 @@ import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.databinding.FragmentCalendarBinding;
 import pl.plantoplate.ui.customViews.calendar.CalendarStyle;
 import pl.plantoplate.ui.customViews.calendar.ShortCalendar;
+import pl.plantoplate.ui.main.calendar.meals.AllMealTypesFragment;
+import pl.plantoplate.ui.main.calendar.meals.ConcreteMealTypeFragment;
 import pl.plantoplate.utils.DateUtils;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
@@ -108,6 +110,7 @@ public class CalendarFragment extends Fragment {
             public void setupDateItemClick(View v, LocalDate date) {
                 v.setSelected(!v.isSelected());
                 EventBus.getDefault().post(new DateSelectedEvent(date));
+                viewPager.setCurrentItem(0);
             }
         });
     }
