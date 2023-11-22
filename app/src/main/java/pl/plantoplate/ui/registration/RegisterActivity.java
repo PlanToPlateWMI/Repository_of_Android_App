@@ -33,7 +33,6 @@ import java.util.Objects;
 import java.util.Optional;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import pl.plantoplate.data.remote.models.auth.CodeResponse;
 import pl.plantoplate.data.remote.models.user.UserRegisterData;
 import pl.plantoplate.data.remote.repository.AuthRepository;
 import pl.plantoplate.databinding.RegisterActivityBinding;
@@ -183,24 +182,30 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      */
     public void sendUserData(UserRegisterData userData, View view) {
         Timber.d("Sending user data to server");
+        saveUserData(userData);
         Intent intent = new Intent(getApplicationContext(), EmailConfirmActivity.class);
         startActivity(intent);
 
         Disposable disposable = authRepository.sendUserRegisterData(userData)
-                .subscribe(codeResponse -> saveUserData(userData, codeResponse),
-                           throwable ->
-                                Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show());
+                .subscribe(codeResponse -> {
+                            Timber.d("Code response %s", codeResponse.getCode());
+                            Snackbar.make(view, "Kod weryfikacyjny został wysłany na podany adres email", Snackbar.LENGTH_LONG).show();
+                            prefs.edit().putString("code", codeResponse.getCode().trim()).apply();
+                    },
+                           throwable -> {
+                            Timber.d("Error sending user data: %s", throwable.getMessage());
+                            Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show();
+                });
 
         compositeDisposable.add(disposable);
     }
 
-    private void saveUserData(UserRegisterData userData, CodeResponse codeResponse) {
+    private void saveUserData(UserRegisterData userData) {
         Timber.d("Saving user data to shared preferences");
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("email", userData.getEmail());
-        editor.putString("name", userData.getUsername());
-        editor.putString("password", userData.getPassword());
-        editor.putString("code", codeResponse.getCode().trim()).apply();
+        editor.putString("email", userData.getEmail().trim());
+        editor.putString("name", userData.getUsername().trim());
+        editor.putString("password", userData.getPassword().trim()).apply();
     }
 
     private void showSnackbar(View view, String message) {

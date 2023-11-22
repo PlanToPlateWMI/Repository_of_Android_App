@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
@@ -21,6 +22,8 @@ public class ChoosePortionsNumberPopUp extends DialogFragment {
     private TextView cancelButton;
     private TextInputEditText numberOfPortions;
     private View.OnClickListener listener;
+    private ImageView plusButton;
+    private ImageView minusButton;
 
     public ChoosePortionsNumberPopUp() {
     }
@@ -45,6 +48,8 @@ public class ChoosePortionsNumberPopUp extends DialogFragment {
         acceptButton = binding.zatwierdzenie;
         cancelButton = binding.close;
         numberOfPortions = binding.ilosc;
+        plusButton = binding.plus;
+        minusButton = binding.minus;
 
         numberOfPortions.setText("1");
     }
@@ -65,6 +70,26 @@ public class ChoosePortionsNumberPopUp extends DialogFragment {
             mealPlan.setPortions(numberOfServingsInt);
             Toast.makeText(requireContext(), "Liczba porcji została ustalona", Toast.LENGTH_SHORT).show();
             dismiss();
+        });
+
+        plusButton.setOnClickListener(v -> {
+            if (numberOfPortions.getText().toString().length() == 0) {
+                numberOfPortions.setError("Podaj liczbę porcji");
+                return;
+            }
+            int numberOfServingsInt = Integer.parseInt(Objects.requireNonNull(numberOfPortions.getText()).toString());
+            numberOfServingsInt++;
+            numberOfPortions.setText(String.valueOf(numberOfServingsInt));
+        });
+
+        minusButton.setOnClickListener(v -> {
+            if (numberOfPortions.getText().toString().length() == 0) {
+                numberOfPortions.setError("Podaj liczbę porcji");
+                return;
+            }
+            int numberOfServingsInt = Integer.parseInt(Objects.requireNonNull(numberOfPortions.getText()).toString());
+            numberOfServingsInt--;
+            numberOfPortions.setText(String.valueOf(numberOfServingsInt));
         });
 
         numberOfPortions.addTextChangedListener(new TextWatcher() {

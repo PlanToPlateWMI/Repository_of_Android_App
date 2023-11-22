@@ -42,7 +42,7 @@ public class MealInfoViewModel extends AndroidViewModel {
 
         Disposable disposable = mealRepository.getMealDetailsById(token, mealId)
                 .subscribe(
-                        meal -> mealInfo.setValue(meal),
+                        mealInfo::setValue,
                         throwable -> responseMessage.setValue(throwable.getMessage())
                 );
         compositeDisposable.add(disposable);

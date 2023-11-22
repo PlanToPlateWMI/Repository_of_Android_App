@@ -26,8 +26,12 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.meal.MealPlan;
+import pl.plantoplate.data.remote.models.recipe.Ingredient;
+import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideForCalendarBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.calendar.mealInfo.popUpControl.PopUpCalendarRecipeControl;
@@ -39,32 +43,15 @@ import timber.log.Timber;
 
 public class MealInfoFragment extends Fragment{
 
+    private MealInfoViewModel mealInfoViewModel;
     private ViewPager2 viewPager2;
     private RadioGridGroup radioGridGroup;
     private ImageView recipeImage, recipeMenu, fakeRecipeMenu, recipeInfo, recipeInfoFake;
     private TextView recipeTitle, recipeTime, recipePortions, recipeLevel;
     private PopupMenu popupMenu;
     private PopupMenu popupMenuInfo;
-    private ArrayList<Integer> ingredientsIds;
     private String sourceLink = "http://google.com";
     private SharedPreferences prefs;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe
-    public void onMessageEvent(IngredientsChangeEvent ingredientsChangeEvent) {
-        this.ingredientsIds = ingredientsChangeEvent.getData();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -111,7 +98,6 @@ public class MealInfoFragment extends Fragment{
         recipeInfo.setOnClickListener(v -> popupMenuInfo.show());
     }
 
-
     public void setupPopUpMenuInfo(View view) {
         popupMenuInfo = new PopupMenu(requireContext(), view, Gravity.END);
         popupMenuInfo.getMenuInflater().inflate(R.menu.info_menu, popupMenuInfo.getMenu());
@@ -131,8 +117,11 @@ public class MealInfoFragment extends Fragment{
 
         popupMenu.setOnMenuItemClickListener(item -> {
             MealPlan mealPlan = new MealPlan();
-            mealPlan.setIngredientsIds(ingredientsIds);
-            mealPlan.setRecipeId(requireArguments().getInt("recipeId"));
+            RecipeInfo recipeInfo = mealInfoViewModel.getMealInfo().getValue();
+            mealPlan.setRecipeId(recipeInfo.getId());
+            mealPlan.setPortions(recipeInfo.getPortions());
+            mealPlan.setIngredientsIds((ArrayList<Integer>) recipeInfo.getIngredients()
+                    .stream().map(Ingredient::getId).collect(Collectors.toList()));
             if(item.getItemId() == R.id.produkty_do_listy){
                 Timber.e(mealPlan.toString());
                 PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
@@ -160,7 +149,7 @@ public class MealInfoFragment extends Fragment{
             put("EASY", "Łatwy");
         }};
 
-        MealInfoViewModel mealInfoViewModel = new ViewModelProvider(this).get(MealInfoViewModel.class);
+        mealInfoViewModel = new ViewModelProvider(this).get(MealInfoViewModel.class);
         mealInfoViewModel.getMealInfo().observe(getViewLifecycleOwner(), mealInfo -> {
             Picasso.get().load(mealInfo.getImage()).into(recipeImage);
             recipeTitle.setText(mealInfo.getTitle());

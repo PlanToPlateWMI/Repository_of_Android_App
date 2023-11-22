@@ -38,6 +38,10 @@ public class RecipesFragment extends Fragment {
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
 
+    public RecipesFragment() {
+        // Required empty public constructor
+    }
+
     /**
      * Called to create the view hierarchy of the fragment.
      *

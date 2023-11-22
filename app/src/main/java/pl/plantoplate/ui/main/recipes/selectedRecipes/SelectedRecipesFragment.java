@@ -34,6 +34,10 @@ public class SelectedRecipesFragment extends Fragment {
     private ViewPager2 viewPager2;
     private RadioGridGroup radioGridGroup;
 
+    public SelectedRecipesFragment() {
+        // Required empty public constructor
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -20,6 +20,8 @@ public class RecipeStepsFragment extends Fragment {
     private RecipeStepsAdapter recipeStepsAdapter;
     private RecyclerView recipeStepsRecyclerView;
 
+    public RecipeStepsFragment() {
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -50,7 +50,11 @@ public class RecipeInfoFragment extends Fragment {
     private PopupMenu menuInfo;
     private ArrayList<Integer> ingredientsIds;
     private String sourceLink = "http://google.com";
-    SharedPreferences prefs;
+    private SharedPreferences prefs;
+
+    public RecipeInfoFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onStart() {

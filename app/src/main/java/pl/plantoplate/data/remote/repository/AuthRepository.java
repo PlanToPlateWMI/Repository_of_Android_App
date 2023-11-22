@@ -17,8 +17,10 @@ package pl.plantoplate.data.remote.repository;
 
 import java.util.HashMap;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.service.AuthService;
 import pl.plantoplate.data.remote.models.auth.CodeResponse;
@@ -49,6 +51,8 @@ public class AuthRepository {
                 .observeOn(Schedulers.io());
     }
 
+    private final PublishSubject<Object> cancelSubject = PublishSubject.create();
+
     public Single<CodeResponse> getEmailConfirmCode(String email, String type) {
         return authService.getEmailConfirmCode(email, type)
                 .onErrorResumeNext(throwable -> new ErrorHandler<CodeResponse>().
@@ -57,7 +61,8 @@ public class AuthRepository {
                             put(500, "Wystąpił nieznany błąd serwera.");
                         }}))
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .takeUntil(cancelSubject.toFlowable(BackpressureStrategy.BUFFER));
     }
 
     public Single<JwtResponse> signIn(SignInData info) {

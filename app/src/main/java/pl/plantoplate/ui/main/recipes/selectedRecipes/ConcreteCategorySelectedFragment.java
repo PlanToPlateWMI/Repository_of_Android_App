@@ -37,6 +37,9 @@ public class ConcreteCategorySelectedFragment extends Fragment {
     private String webLink = "https://plantoplatewmi.github.io/WebPage/";
     private TextView welcomeText;
 
+
+    public ConcreteCategorySelectedFragment() {
+    }
     public ConcreteCategorySelectedFragment(String category) {
         this.category = category;
     }

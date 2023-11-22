@@ -22,6 +22,9 @@ public class RecipeIngredientsFragment extends Fragment {
     private RecipeInfoViewModel recipeInfoViewModel;
     private RecipeIngredientsAdapter recipeIngredientsAdapter;
 
+    public RecipeIngredientsFragment() {
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

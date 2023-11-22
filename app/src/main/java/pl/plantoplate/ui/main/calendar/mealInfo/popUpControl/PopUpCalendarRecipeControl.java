@@ -1,5 +1,7 @@
 package pl.plantoplate.ui.main.calendar.mealInfo.popUpControl;
 
+import android.os.Bundle;
+
 import androidx.fragment.app.FragmentManager;
 
 import pl.plantoplate.data.remote.models.meal.MealPlan;
@@ -50,6 +52,9 @@ public class PopUpCalendarRecipeControl {
     public void showPopUpDeleteRecipe(){
         QuestionDeleteRecipe questionDeleteRecipe =
                 new QuestionDeleteRecipe();
+        Bundle bundle = new Bundle();
+        bundle.putInt("mealId", mealPlan.getRecipeId());
+        questionDeleteRecipe.setArguments(bundle);
 
         questionDeleteRecipe.setOnAcceptButtonClickListener(v -> {
             //no synchronization

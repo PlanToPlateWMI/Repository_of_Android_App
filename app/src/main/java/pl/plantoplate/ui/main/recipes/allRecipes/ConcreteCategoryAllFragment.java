@@ -29,6 +29,9 @@ public class ConcreteCategoryAllFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private String category;
 
+    public ConcreteCategoryAllFragment() {
+    }
+
     public ConcreteCategoryAllFragment(String category) {
         this.category = category;
     }

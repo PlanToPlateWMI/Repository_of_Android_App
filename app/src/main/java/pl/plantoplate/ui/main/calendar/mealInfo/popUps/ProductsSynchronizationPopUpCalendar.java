@@ -76,6 +76,7 @@ public class ProductsSynchronizationPopUpCalendar extends DialogFragment {
     }
 
     public void addIngredientsToShoppingList(View v, boolean sync) {
+        Timber.e(mealPlan.toString());
         String token = "Bearer " + prefs.getString("token", "");
         ShoppingListRepository shoppingListRepository = new ShoppingListRepository();
         Disposable disposable = shoppingListRepository.synchronizeMealProducts(token, new MealShopPlan(mealPlan), sync)

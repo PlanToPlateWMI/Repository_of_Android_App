@@ -14,6 +14,7 @@ public class RecipeInfo {
     private ArrayList<String> steps;
     private ArrayList<Ingredient> ingredients;
     private boolean vege;
+    private int recipeId;
 
     public RecipeInfo() {
     }
@@ -27,7 +28,8 @@ public class RecipeInfo {
                       int portions,
                       ArrayList<String> steps,
                       ArrayList<Ingredient> ingredients,
-                      boolean vege) {
+                      boolean vege,
+                      int recipeId) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -38,6 +40,7 @@ public class RecipeInfo {
         this.steps = steps;
         this.ingredients = ingredients;
         this.vege = vege;
+        this.recipeId = recipeId;
     }
 
     public int getId() {
@@ -118,5 +121,13 @@ public class RecipeInfo {
 
     public void setVege(boolean vege) {
         this.vege = vege;
+    }
+
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 }

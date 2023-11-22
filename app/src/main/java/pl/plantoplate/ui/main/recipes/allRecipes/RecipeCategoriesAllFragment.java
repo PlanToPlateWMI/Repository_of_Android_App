@@ -29,6 +29,8 @@ public class RecipeCategoriesAllFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
 
+    public RecipeCategoriesAllFragment() {
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
