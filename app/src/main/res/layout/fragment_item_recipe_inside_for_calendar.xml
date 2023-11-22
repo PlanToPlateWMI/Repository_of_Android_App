@@ -55,8 +55,8 @@
     <ImageView
         android:id="@+id/menuButton"
 
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
 
@@ -66,7 +66,7 @@
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/more_vert_24_50"
+        android:src="@drawable/lens_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.956"
@@ -75,12 +75,35 @@
         app:layout_constraintVertical_bias="0.023"
         tools:ignore="MissingConstraints" />
 
+    <ImageView
+        android:id="@+id/menuWhite"
+
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+
+        android:contentDescription="TODO"
+        android:paddingLeft="9dp"
+        android:paddingTop="3dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/more_vert_24_black_75"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        tools:ignore="MissingConstraints"/>
+
 <!--    android:backgroundTint="?attr/colorBackgroundFloating"-->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
 
         android:layout_marginTop="300dp"
-        android:layout_marginBottom="-1dp"
+        android:layout_marginBottom="-2dp"
         android:backgroundTint="?attr/colorOnTertiary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -97,7 +120,7 @@
             android:id="@+id/linearlayout"
 
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingTop="0dp"
             android:orientation="vertical">
 
@@ -261,7 +284,7 @@
                 android:orientation="horizontal"
                 android:rowCount="1"
 
-                app:layout_constraintBottom_toTopOf="@+id/search"
+                app:layout_constraintBottom_toTopOf="@+id/rec_inside_def"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
 
@@ -371,14 +394,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
                 app:layout_constraintVertical_bias="0.051"
                 tools:ignore="MissingConstraints" />
-
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rec_inside_def"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="184dp"
+            android:layout_marginTop="192dp"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

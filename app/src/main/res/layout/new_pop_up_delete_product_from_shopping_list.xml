@@ -101,7 +101,7 @@
             android:fontFamily="@font/quicksand_light"
 
             android:gravity="center"
-            android:text="@string/ok"
+            android:text="@string/tak"
 
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
