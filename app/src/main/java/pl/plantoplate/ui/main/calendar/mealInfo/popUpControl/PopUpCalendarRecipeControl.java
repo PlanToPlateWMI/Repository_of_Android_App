@@ -48,20 +48,4 @@ public class PopUpCalendarRecipeControl {
 
         questionCookRecipe.show(fragmentManager, "QuestionCookRecipe");
     }
-
-    public void showPopUpDeleteRecipe(){
-        QuestionDeleteRecipe questionDeleteRecipe =
-                new QuestionDeleteRecipe();
-        Bundle bundle = new Bundle();
-        bundle.putInt("mealId", mealPlan.getRecipeId());
-        questionDeleteRecipe.setArguments(bundle);
-
-        questionDeleteRecipe.setOnAcceptButtonClickListener(v -> {
-            //no synchronization
-            //delete recipe from calendar
-        });
-
-        questionDeleteRecipe.show(fragmentManager, "QuestionDeleteRecipe");
-    }
-
 }

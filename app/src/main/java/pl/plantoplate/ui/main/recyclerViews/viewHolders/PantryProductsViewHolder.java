@@ -20,6 +20,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
@@ -40,7 +45,10 @@ public class PantryProductsViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Product product, SetupItemButtons listener) {
         name.setText(product.getName());
-        String unitText = product.getAmount() + " " + product.getUnit().toLowerCase();
+        float amount = BigDecimal.valueOf(Float.parseFloat(String.valueOf(product.getAmount())))
+                .setScale(3, RoundingMode.HALF_UP)
+                .floatValue();
+        String unitText = amount + " " + product.getUnit().toLowerCase();
         unit.setText(unitText);
         listener.setupProductItemClick(layout, product);
         listener.setupDeleteProductButtonClick(deleteProductButton, product);

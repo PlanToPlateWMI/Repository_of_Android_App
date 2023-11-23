@@ -35,6 +35,7 @@ import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideForCalendarBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.calendar.mealInfo.popUpControl.PopUpCalendarRecipeControl;
+import pl.plantoplate.ui.main.calendar.mealInfo.popUps.QuestionDeleteRecipe;
 import pl.plantoplate.ui.main.calendar.mealInfo.viewModels.MealInfoViewModel;
 import pl.plantoplate.ui.main.recipes.recipeInfo.events.IngredientsChangeEvent;
 import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlCalendarStart;
@@ -118,12 +119,12 @@ public class MealInfoFragment extends Fragment{
         popupMenu.setOnMenuItemClickListener(item -> {
             MealPlan mealPlan = new MealPlan();
             RecipeInfo recipeInfo = mealInfoViewModel.getMealInfo().getValue();
-            mealPlan.setRecipeId(recipeInfo.getId());
             mealPlan.setPortions(recipeInfo.getPortions());
             mealPlan.setIngredientsIds((ArrayList<Integer>) recipeInfo.getIngredients()
                     .stream().map(Ingredient::getId).collect(Collectors.toList()));
             if(item.getItemId() == R.id.produkty_do_listy){
                 Timber.e(mealPlan.toString());
+                mealPlan.setRecipeId(recipeInfo.getRecipeId());
                 PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
                 popUpControl.showPopUpSynchronization();
                 return true;
@@ -134,12 +135,26 @@ public class MealInfoFragment extends Fragment{
                 return true;
             } else if(item.getItemId() == R.id.usun_przepis) {
                 Timber.e(mealPlan.toString());
-                PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
-                popUpControl.showPopUpDeleteRecipe();
+                mealPlan.setRecipeId(recipeInfo.getId());
+                showPopUpDeleteRecipe(mealPlan);
                 return true;
             }
             return false;
         });
+    }
+
+    public void showPopUpDeleteRecipe(MealPlan mealPlan){
+        QuestionDeleteRecipe questionDeleteRecipe =
+                new QuestionDeleteRecipe();
+        Bundle bundle = new Bundle();
+        bundle.putInt("mealId", mealPlan.getRecipeId());
+        questionDeleteRecipe.setArguments(bundle);
+
+        questionDeleteRecipe.setOnAcceptButtonClickListener(v -> {
+            getParentFragmentManager().popBackStack();
+        });
+
+        questionDeleteRecipe.show(getChildFragmentManager(), "QuestionDeleteRecipe");
     }
 
     public void setupViewModel(){

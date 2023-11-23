@@ -7,6 +7,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import pl.plantoplate.data.remote.models.recipe.Ingredient;
 import pl.plantoplate.databinding.ItemSkladnikBinding;
 import pl.plantoplate.databinding.ItemSkladnikForCalendarBinding;
@@ -30,7 +33,10 @@ public class MealIngredientsViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Ingredient ingredient, boolean isSelected) {
         //checkBox.setChecked(isSelected);
+        float amount = BigDecimal.valueOf(Float.parseFloat(String.valueOf(ingredient.getQuantity())))
+                .setScale(3, RoundingMode.HALF_UP)
+                .floatValue();
         ingredientName.setText(ingredient.getIngredientName());
-        ingredientAmount.setText(ingredient.getQuantity() + " " + ingredient.getUnit());
+        ingredientAmount.setText(amount + " " + ingredient.getUnit());
     }
 }

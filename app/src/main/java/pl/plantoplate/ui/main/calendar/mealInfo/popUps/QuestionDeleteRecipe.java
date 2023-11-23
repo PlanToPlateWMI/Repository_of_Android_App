@@ -68,8 +68,8 @@ public class QuestionDeleteRecipe extends DialogFragment {
                 .subscribe(
                         response -> {
                             Toast.makeText(requireContext(), "Przepis został usunięty z kalendarza", Toast.LENGTH_SHORT).show();
-                            listener.onClick(v);
                             dismiss();
+                            listener.onClick(v);
                         },
                         error -> Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show());
 

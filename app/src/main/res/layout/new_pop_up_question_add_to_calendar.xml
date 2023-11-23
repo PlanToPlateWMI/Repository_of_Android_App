@@ -106,7 +106,7 @@
             android:paddingBottom="10dp"
 
             android:gravity="center"
-            android:text="@string/tak"
+            android:text="@string/ok"
 
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/text_clikable_no_theme"
