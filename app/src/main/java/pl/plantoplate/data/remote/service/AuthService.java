@@ -16,11 +16,11 @@
 package pl.plantoplate.data.remote.service;
 
 import io.reactivex.rxjava3.core.Single;
-import pl.plantoplate.data.remote.models.CodeResponse;
-import pl.plantoplate.data.remote.models.JwtResponse;
+import pl.plantoplate.data.remote.models.auth.CodeResponse;
+import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.models.Message;
-import pl.plantoplate.data.remote.models.UserRegisterData;
-import pl.plantoplate.data.remote.models.SignInData;
+import pl.plantoplate.data.remote.models.user.UserRegisterData;
+import pl.plantoplate.data.remote.models.auth.SignInData;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;

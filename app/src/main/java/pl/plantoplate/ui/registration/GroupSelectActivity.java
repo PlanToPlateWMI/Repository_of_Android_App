@@ -24,12 +24,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import pl.plantoplate.data.remote.models.UserCredentials;
-import pl.plantoplate.data.remote.models.JwtResponse;
+import pl.plantoplate.data.remote.models.auth.UserCredentials;
+import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.repository.GroupRepository;
 import pl.plantoplate.databinding.GroupChooseBinding;
-import pl.plantoplate.tools.ApplicationState;
-import pl.plantoplate.tools.ApplicationStateController;
+import pl.plantoplate.utils.ApplicationState;
+import pl.plantoplate.utils.ApplicationStateController;
 import pl.plantoplate.ui.main.ActivityMain;
 import timber.log.Timber;
 

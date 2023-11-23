@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.recepies.RecipesFragment;
+import pl.plantoplate.ui.main.recipes.RecipesFragment;
 import pl.plantoplate.R;
 
 import static androidx.test.espresso.action.ViewActions.click;

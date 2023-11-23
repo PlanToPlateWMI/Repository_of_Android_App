@@ -30,7 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentPermissionsChangeBinding;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 
 /**
  * This fragment is responsible for changing the permissions of the user.

@@ -39,7 +39,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.ProductRepository;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.databinding.FragmentProductChangeBinding;
 import pl.plantoplate.ui.main.productsDatabase.events.ChangeCategoryEvent;
 

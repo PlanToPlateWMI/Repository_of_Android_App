@@ -28,8 +28,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.repository.AuthRepository;
 import pl.plantoplate.databinding.EmailConfirmationBinding;
-import pl.plantoplate.tools.ApplicationState;
-import pl.plantoplate.tools.ApplicationStateController;
+import pl.plantoplate.utils.ApplicationState;
+import pl.plantoplate.utils.ApplicationStateController;
 import timber.log.Timber;
 
 /**
@@ -91,7 +91,9 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
     public void checkCode(View view) {
         Timber.d("Checking email confirm code...");
         String entered_code = enterCodeEditText.getText().toString().trim();
-        String correct_code = prefs.getString("code", "");
+        Timber.e("Entered code: %s", entered_code);
+        String correct_code = prefs.getString("code", "").trim();
+        Timber.e("Correct code: %s", correct_code);
         if (correct_code.equals(entered_code)) {
             prefs.edit().remove("code").apply();
             startGroupSelectActivity();
@@ -112,11 +114,13 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         AuthRepository authRepository = new AuthRepository();
         Disposable disposable = authRepository.getEmailConfirmCode(email, "registration")
                 .subscribe(
-                        response -> prefs.edit().putString("code", response.getCode()).apply(),
-                        error -> showSnackbar(view, error.getMessage())
+                        response -> {
+                                showSnackbar(view, "Wysłano nowy kod");
+                                prefs.edit().putString("code", response.getCode()).apply();
+                            },
+                                error -> showSnackbar(view, error.getMessage())
                 );
         compositeDisposable.add(disposable);
-        showSnackbar(view, "Wysłano nowy kod");
     }
 
     public void startGroupSelectActivity() {

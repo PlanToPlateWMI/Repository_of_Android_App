@@ -30,11 +30,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.JwtResponse;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.auth.JwtResponse;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentEmailChange2Binding;
-import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.utils.SCryptStretcher;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
 
 

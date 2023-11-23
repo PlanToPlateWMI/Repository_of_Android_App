@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout7"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorOnTertiary">
+
+    <TextView
+        android:id="@+id/dev_text"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginTop="140dp"
+        android:fontFamily="@font/quicksand_regular"
+
+        android:gravity="center"
+        android:text="@string/delete_prof_text"
+
+        android:textAppearance="@style/rejestracja"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.035" />
+
+    <TextView
+        android:id="@+id/dev_adres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+
+        android:fontFamily="@font/quicksand_semibold"
+
+        android:gravity="center"
+        android:text="@string/dev_adres"
+
+        android:textAppearance="@style/rejestracja"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dev_text"
+        app:layout_constraintVertical_bias="0.002" />
+
+    <Button
+        android:id="@+id/button_zatwierdz"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+
+
+        android:layout_alignParentTop="true"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+
+
+        android:layout_marginTop="100dp"
+
+
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:clickable="true"
+
+        android:fontFamily="@font/quicksand_medium"
+
+        android:text="@string/napisz_do_nas"
+
+        android:textAllCaps="false"
+
+        android:textColor="?attr/colorSecondaryVariant"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dev_adres"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorPrimaryVariant"
+        app:strokeWidth="1dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

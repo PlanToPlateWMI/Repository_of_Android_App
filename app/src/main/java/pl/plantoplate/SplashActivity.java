@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import pl.plantoplate.tools.ApplicationState;
+import pl.plantoplate.utils.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.registration.EmailConfirmActivity;

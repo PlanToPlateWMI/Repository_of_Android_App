@@ -22,8 +22,9 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.RetrofitClient;
-import pl.plantoplate.data.remote.models.Product;
-import pl.plantoplate.data.remote.models.ShoppingList;
+import pl.plantoplate.data.remote.models.product.Product;
+import pl.plantoplate.data.remote.models.shoppingList.MealShopPlan;
+import pl.plantoplate.data.remote.models.shoppingList.ShoppingList;
 import pl.plantoplate.data.remote.service.ShoppingListService;
 
 public class ShoppingListRepository {
@@ -37,12 +38,22 @@ public class ShoppingListRepository {
 
     public Single<ArrayList<Product>> getToBuyShoppingList(String token) {
         return shoppingListService.getShoppingList(token, false)
+                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Konto z takim emailem nie istnieje.");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<ArrayList<Product>> getBoughtShoppingList(String token) {
         return shoppingListService.getShoppingList(token, true)
+                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Konto z takim emailem nie istnieje.");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -60,6 +71,11 @@ public class ShoppingListRepository {
 
     public Single<ArrayList<Product>> addProductToShoppingList(String token, Product product) {
         return shoppingListService.addProductToShopList(token, product)
+                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Użytkownik chcę dodać produkt nie z jego grupy lub liczba produktów jest <=0");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -67,10 +83,10 @@ public class ShoppingListRepository {
     public Single<ArrayList<Product>> deleteProductFromShoppingList(String token, int productId) {
         return shoppingListService.deleteProductFromShopList(token, productId)
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(404, "Nie znaleziono produktu.");
                             put(500, "Wystąpił nieznany błąd.");
-                    }}))
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -84,13 +100,25 @@ public class ShoppingListRepository {
     public Single<ArrayList<Product>> changeProductAmountInShopList(String token, int productId, Product product) {
         return shoppingListService.changeProductAmountInShopList(token, productId, product)
                 .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
+                        handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Niepoprawna ilość produktu.");
                             put(404, "Nie znaleziono produktu.");
                             put(500, "Wystąpił nieznany błąd.");
-                    }}))
+                        }}))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Single<ArrayList<Product>> synchronizeMealProducts(String token,
+                                                                   MealShopPlan mealShopPlan,
+                                                                   boolean synchronize) {
+        return shoppingListService.synchronizeMealProducts(token, mealShopPlan, synchronize)
+                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Przepis nie istnieje.");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

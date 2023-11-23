@@ -134,6 +134,11 @@ ze spiżarni?</string>
     <string name="tak">Tak</string>
     <string name="nie">Nie</string>
 
+    <string name="synchronizacja">Kliknij, aby dodać do listy zakupów tylko te produkty, których nie masz w spiżarni (w odpowiednich ilościach). </string>
+    <string name="do_listy">Przepis już został zaplanowany. Jeżeli chcesz dodać produkty z przepisu do listy zakupów, kliknij "OK".</string>
+    <string name="cook_recepie">Zaplanowany przepis zostanie potraktowany jako przygotowany. Produkty zużyte zostaną automatycznie usunięte ze spiżarni.</string>
+    <string name="delete_recipe">Zaplanowany przepis zostanie usunięty. Produkty z przepisu nie zostaną usunięte ze spiżarni.</string>
+    <string name="do_kalendarzu">Produkty z przepisu już zostały dodane do listy zakupów. Jeśli chcesz również zaplanować przepis w kalendarzu, kliknij "OK".</string>
     <string name="ok">OK</string>
     <string name="zamknij">Zamknij</string>
     <string name="dodac_do_spizarni_ze_spizarni">W twoich kupionych teraz są produkty. Czy dodac kupione produkty do spiżarni?</string>
@@ -181,15 +186,16 @@ teraz są produkty.</string>
     <string name="zmiana_imienia">Zmiana imienia</string>
     <string name="zmiana_email">Zmiana email</string>
     <string name="zmiana_hasla">Zmiana hasła</string>
+    <string name="usuwanie_konta">Usuwanie konta</string>
     <string name="zmiana_uprawnien">Zmiana uprawnień</string>
 
     <string name="imie">Imie:</string>
     <string name="mail">Email:</string>
 
 
-    <string name="Wygenerowanie_kodu">Wygenerowanie kodu</string>
-    <string name="Zmiana_danych">Zmiana danych</string>
-    <string name="Zarządzanie_użytkownikami">Zarządzanie użytkownikami</string>
+    <string name="Wygenerowanie_kodu">Dodawanie użytkownika do grupy</string>
+    <string name="Zmiana_danych">Zarządzanie kontem</string>
+    <string name="Zarządzanie_użytkownikami">Zarządzanie użytkownikami w grupie</string>
     <string name="About_us">Napisz do nas</string>
     <string name="Wyłoguj">Wyłoguj</string>
 
@@ -210,6 +216,11 @@ zaakceptowane!</string>
     <string name="dev_text">Jest to aplikacja, która pomaga w planowaniu diety, śledzeniu tego, co mamy w domu oraz robieniu zakupów.
 
 W razie jakichkolwiek pytań prosimy kontaktówać się z developerami pisząc mail na adres</string>
+
+    <string name="delete_prof_text">UWAGA! Usuwanie konta jest operacją nieodwracalną.
+
+Jeżeli chcesz usunąć swoje konto, podaj maila, którym się logujesz do aplikacji, pisząc na pisząc mail na adres</string>
+
 
     <string name="wprowadz_stare_haslo">Wprowadź stare hasło</string>
     <string name="uwaga_log_out">Uwaga!\nZe względów bezpieczeństwa, po zmianie hasła wylogujemy Cię ze wszystkich urządzeń.</string>

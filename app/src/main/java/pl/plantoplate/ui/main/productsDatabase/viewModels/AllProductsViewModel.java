@@ -24,20 +24,20 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-import pl.plantoplate.data.remote.models.Category;
-import pl.plantoplate.data.remote.models.Product;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.product.ProductCategory;
+import pl.plantoplate.data.remote.models.product.Product;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.ProductRepository;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.data.remote.repository.StorageRepository;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 
 public class AllProductsViewModel extends AndroidViewModel {
 
     private final CompositeDisposable compositeDisposable;
     private final SharedPreferences prefs;
     private final ProductRepository productRepository;
-    private final MutableLiveData<ArrayList<Category>> allProducts;
+    private final MutableLiveData<ArrayList<ProductCategory>> allProducts;
     private final MutableLiveData<UserInfo> userInfo;
 
     public AllProductsViewModel(@NonNull Application application) {
@@ -50,7 +50,7 @@ public class AllProductsViewModel extends AndroidViewModel {
         userInfo = new MutableLiveData<>();
     }
 
-    public MutableLiveData<ArrayList<Category>> getAllProducts() {
+    public MutableLiveData<ArrayList<ProductCategory>> getAllProducts() {
         return allProducts;
     }
 

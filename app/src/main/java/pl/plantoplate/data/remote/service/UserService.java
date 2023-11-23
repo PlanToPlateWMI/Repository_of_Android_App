@@ -17,9 +17,9 @@ package pl.plantoplate.data.remote.service;
 
 import java.util.ArrayList;
 import io.reactivex.rxjava3.core.Single;
-import pl.plantoplate.data.remote.models.JwtResponse;
+import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.models.Message;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

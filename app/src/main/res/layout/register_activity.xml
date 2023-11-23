@@ -28,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
 
+
     <TextView
         android:id="@+id/rejestracja"
         android:layout_width="wrap_content"
@@ -36,20 +37,18 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:gravity="top"
-
         android:fontFamily="@font/quicksand_regular"
+
+        android:gravity="top"
 
         android:text="@string/rejestracja"
         android:textAppearance="@style/rejestracja"
         android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plantoplate"
-        app:layout_constraintVertical_bias="0.077" />
-
+        app:layout_constraintVertical_bias="0.047" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/wprowadz_imie"
@@ -74,7 +73,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rejestracja"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enterName"
@@ -114,7 +113,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wprowadz_imie"
-        app:layout_constraintVertical_bias="0.061">
+        app:layout_constraintVertical_bias="0.036">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_email"
@@ -157,7 +156,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_the_name"
-        app:layout_constraintVertical_bias="0.089">
+        app:layout_constraintVertical_bias="0.042">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_password"
@@ -178,11 +177,36 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
-        android:id="@+id/checkbox_wyrazam_zgode"
-        android:layout_width="300dp"
+        android:id="@+id/checkbox_mam_lat_13"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_regular"
 
+        android:shadowColor="?attr/colorTertiary"
+
+        android:text="Oswiadczam, ze mam ukonczone 13 lat"
+
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+
+        android:textAppearance="@style/wyra_am_zgo"
+        android:textColor="?attr/colorSecondaryVariant"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wprowadz_haslo"
+        app:layout_constraintVertical_bias="0.065"
+        tools:ignore="MissingConstraints" />
+
+    <CheckBox
+        android:id="@+id/checkbox_wyrazam_zgode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+
+        android:layout_marginRight="22dp"
+        android:fontFamily="@font/quicksand_regular"
         android:shadowColor="?attr/colorTertiary"
 
         android:text="@string/wyra_am_zgo"
@@ -190,10 +214,9 @@
         android:textColor="?attr/colorSecondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wprowadz_haslo"
-        app:layout_constraintVertical_bias="0.089"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox_mam_lat_13"
+        app:layout_constraintVertical_bias="0.039"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -206,20 +229,20 @@
         android:layout_alignParentBottom="true"
 
         android:clickable="true"
-        android:textSize="16dp"
-
         android:fontFamily="@font/quicksand_medium"
 
         android:gravity="center_horizontal|center_vertical"
+
         android:text="@string/masz_konto_"
         android:textAppearance="@style/masz_konto_"
         android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_zaloz_konto"
-        app:layout_constraintVertical_bias="0.405" />
+        app:layout_constraintVertical_bias="0.241" />
 
     <Button
         android:id="@+id/button_zaloz_konto"
@@ -231,16 +254,13 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
 
-        app:strokeWidth="1dp"
-
-        android:fontFamily="@font/quicksand_medium"
-
         android:backgroundTint="?attr/colorPrimaryVariant"
+
         android:clickable="true"
 
+        android:fontFamily="@font/quicksand_medium"
         android:text="@string/zaloz_konto"
-        app:rippleColor="?attr/colorPrimaryVariant"
-        app:strokeColor="?attr/colorPrimaryVariant"
+
         android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
         app:iconPadding="8dp"
@@ -249,7 +269,9 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkbox_wyrazam_zgode"
-        app:layout_constraintVertical_bias="0.162"
-        />
+        app:layout_constraintVertical_bias="0.139"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorPrimaryVariant"
+        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

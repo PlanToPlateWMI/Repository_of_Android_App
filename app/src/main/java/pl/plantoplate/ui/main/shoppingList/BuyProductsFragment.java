@@ -34,8 +34,8 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Optional;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.Category;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.ProductCategory;
+import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.databinding.FragmentTrzebaKupicBinding;
 import pl.plantoplate.ui.main.recyclerViews.adapters.CategoryAdapter;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
@@ -125,7 +125,7 @@ public class BuyProductsFragment extends Fragment {
      */
     private void setUpRecyclerView() {
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<Category> categories = toBuyProductsListViewModel.getToBuyProducts().getValue();
+        ArrayList<ProductCategory> categories = toBuyProductsListViewModel.getToBuyProducts().getValue();
         categoryAdapter = new CategoryAdapter(categories, R.layout.item_trzeba_kupic, R.layout.item_category_lista);
         categoryAdapter.setUpItemButtons(new SetupItemButtons() {
             @Override

@@ -21,7 +21,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.Map;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.UserInfo;
+import pl.plantoplate.data.remote.models.user.UserInfo;
 
 public class UsersInfoViewHolder extends RecyclerView.ViewHolder {
 

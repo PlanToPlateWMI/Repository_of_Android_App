@@ -17,10 +17,12 @@ package pl.plantoplate.data.remote.service;
 
 import java.util.ArrayList;
 import io.reactivex.rxjava3.core.Single;
-import pl.plantoplate.data.remote.models.category.Recipe;
-import pl.plantoplate.data.remote.models.category.RecipeCategory;
+import pl.plantoplate.data.remote.models.recipe.Recipe;
+import pl.plantoplate.data.remote.models.recipe.RecipeCategory;
+import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RecipeService {
@@ -33,4 +35,7 @@ public interface RecipeService {
 
     @GET("api/recipe-categories")
     Single<ArrayList<RecipeCategory>> getRecipeCategories();
+
+    @GET("api/recipes/{recipeId}")
+    Single<RecipeInfo> getRecipe(@Path("recipeId") int recipeId);
 }

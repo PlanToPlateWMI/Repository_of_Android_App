@@ -33,7 +33,7 @@
 
             android:textAppearance="@style/rejestracja"
             android:textColor="?attr/colorSecondaryVariant"
-            android:textSize="22dp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_light"
 
-            android:textSize="22dp"
+            android:textSize="20dp"
 
             android:gravity="center"
 
@@ -102,7 +102,7 @@
             android:fontFamily="@font/quicksand_light"
 
             android:gravity="center"
-            android:text="@string/ok"
+            android:text="@string/tak"
 
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
@@ -111,7 +111,7 @@
 
             android:textAppearance="@style/rejestracja"
             android:textColor="@color/text_clikable_no_theme"
-            android:textSize="22dp"
+            android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"

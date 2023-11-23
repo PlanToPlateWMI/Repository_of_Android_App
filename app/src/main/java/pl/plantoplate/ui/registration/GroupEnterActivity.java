@@ -29,12 +29,12 @@ import java.util.Optional;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.JwtResponse;
-import pl.plantoplate.data.remote.models.UserJoinGroupData;
+import pl.plantoplate.data.remote.models.auth.JwtResponse;
+import pl.plantoplate.data.remote.models.user.UserJoinGroupData;
 import pl.plantoplate.data.remote.repository.GroupRepository;
 import pl.plantoplate.databinding.GroupPageBinding;
-import pl.plantoplate.tools.ApplicationState;
-import pl.plantoplate.tools.ApplicationStateController;
+import pl.plantoplate.utils.ApplicationState;
+import pl.plantoplate.utils.ApplicationStateController;
 import pl.plantoplate.ui.main.ActivityMain;
 import timber.log.Timber;
 

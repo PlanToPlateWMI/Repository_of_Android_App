@@ -26,7 +26,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
-import pl.plantoplate.ui.main.recepies.RecipesFragment;
+import pl.plantoplate.ui.main.recipes.RecipesFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
 import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
@@ -75,22 +75,21 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Timber.d("Selected navigation item: %s", item.getTitle());
-        switch (item.getItemId()) {
-            case MENU_CALENDAR:
-                replaceFragment(new CalendarFragment(), "CALENDAR");
-                return true;
-            case MENU_COTTAGE:
-                replaceFragment(new StorageFragment(), "STORAGE");
-                return true;
-            case MENU_SHOPPING_CART:
-                replaceFragment(new ShoppingListFragment(), "SHOPPING_LIST");
-                return true;
-            case MENU_RECEIPT:
-                replaceFragment(new RecipesFragment(), "RECIPE");
-                return true;
-            case MENU_SETTINGS:
-                replaceFragment(new SettingsFragment(), "SETTINGS");
-                return true;
+        if(item.getItemId() == MENU_CALENDAR){
+            replaceFragment(new CalendarFragment(), "CALENDAR");
+            return true;
+        }else if(item.getItemId() == MENU_COTTAGE){
+            replaceFragment(new StorageFragment(), "STORAGE");
+            return true;
+        }else if(item.getItemId() == MENU_SHOPPING_CART){
+            replaceFragment(new ShoppingListFragment(), "SHOPPING_LIST");
+            return true;
+        }else if(item.getItemId() == MENU_RECEIPT){
+            replaceFragment(new RecipesFragment(), "RECIPE");
+            return true;
+        }else if(item.getItemId() == MENU_SETTINGS){
+            replaceFragment(new SettingsFragment(), "SETTINGS");
+            return true;
         }
         return false;
     }
@@ -105,9 +104,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, fragment, tag);
-        transaction.addToBackStack(tag);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.commit();
     }
 }
-

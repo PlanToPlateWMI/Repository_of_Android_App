@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id = "@+id/lista_plan"
+        android:title="Odznacz polę, jeśli nie chcesz produktu"
+
+        android:font="@font/quicksand_light"
+        android:fontFamily="@font/quicksand_light"
+
+        android:iconTint="?attr/colorSecondaryVariant"
+        />
+</menu>

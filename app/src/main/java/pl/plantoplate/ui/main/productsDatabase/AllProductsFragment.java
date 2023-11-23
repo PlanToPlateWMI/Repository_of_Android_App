@@ -31,14 +31,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.Product;
+import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.databinding.FragmentWszystkieBinding;
 import pl.plantoplate.ui.main.popUps.ModifyProductPopUp;
 import pl.plantoplate.ui.main.productsDatabase.viewModels.AllProductsViewModel;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
-import pl.plantoplate.data.remote.models.Category;
+import pl.plantoplate.data.remote.models.product.ProductCategory;
 import pl.plantoplate.ui.main.recyclerViews.adapters.CategoryAdapter;
-import pl.plantoplate.tools.CategorySorter;
+import pl.plantoplate.utils.CategorySorter;
 
 /**
  * This fragment is responsible for displaying all products in the database.
@@ -108,9 +108,9 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
 
     @Override
     public boolean onQueryTextChange(String query) {
-        Optional<ArrayList<Category>> products = Optional.ofNullable(allProductsViewModel.getAllProducts().getValue());
+        Optional<ArrayList<ProductCategory>> products = Optional.ofNullable(allProductsViewModel.getAllProducts().getValue());
         ArrayList<Product> filteredProducts = CategorySorter.filterCategoriesBySearch(products.orElse(new ArrayList<>()), query);
-        ArrayList<Category> filteredList = CategorySorter.sortCategoriesByProduct(filteredProducts);
+        ArrayList<ProductCategory> filteredList = CategorySorter.sortCategoriesByProduct(filteredProducts);
         categoryAdapter.setCategoriesList(filteredList);
         return false;
     }

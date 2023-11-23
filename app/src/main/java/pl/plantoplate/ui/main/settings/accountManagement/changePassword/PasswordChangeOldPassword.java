@@ -34,7 +34,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentPasswordChangeBinding;
-import pl.plantoplate.tools.SCryptStretcher;
+import pl.plantoplate.utils.SCryptStretcher;
 
 /**
  * This fragment is used to change the password.

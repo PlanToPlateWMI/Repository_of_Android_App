@@ -21,10 +21,10 @@ import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.service.GroupService;
-import pl.plantoplate.data.remote.models.CodeResponse;
-import pl.plantoplate.data.remote.models.UserCredentials;
-import pl.plantoplate.data.remote.models.JwtResponse;
-import pl.plantoplate.data.remote.models.UserJoinGroupData;
+import pl.plantoplate.data.remote.models.auth.CodeResponse;
+import pl.plantoplate.data.remote.models.auth.UserCredentials;
+import pl.plantoplate.data.remote.models.auth.JwtResponse;
+import pl.plantoplate.data.remote.models.user.UserJoinGroupData;
 import pl.plantoplate.data.remote.RetrofitClient;
 
 public class GroupRepository {
