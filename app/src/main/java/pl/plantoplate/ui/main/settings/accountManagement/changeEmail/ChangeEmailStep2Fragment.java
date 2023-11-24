@@ -34,8 +34,10 @@ import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentEmailChange2Binding;
+import pl.plantoplate.utils.EmailValidator;
 import pl.plantoplate.utils.SCryptStretcher;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
+import timber.log.Timber;
 
 
 /**
@@ -97,11 +99,11 @@ public class ChangeEmailStep2Fragment extends Fragment {
             Toast.makeText(requireActivity(), "Adresy email nie są takie same", Toast.LENGTH_SHORT).show();
             repeatNewEmailInputLayout.setError("Adresy email nie są takie same");
             repeatNewEmailInputLayout.requestFocus();
-        } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
+        } else if(!EmailValidator.isEmail(newEmail)){
             Toast.makeText(requireActivity(), "Wprowadź poprawny adres email", Toast.LENGTH_SHORT).show();
             enterNewEmailInputLayout.setError("Wprowadź poprawny adres email");
             enterNewEmailInputLayout.requestFocus();
-        } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmailAgain).matches()){
+        } else if(!EmailValidator.isEmail(newEmailAgain)){
             Toast.makeText(requireActivity(), "Wprowadź poprawny adres email", Toast.LENGTH_SHORT).show();
             repeatNewEmailInputLayout.setError("Wprowadź poprawny adres email");
             repeatNewEmailInputLayout.requestFocus();

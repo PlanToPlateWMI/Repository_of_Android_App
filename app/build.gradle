@@ -32,8 +32,10 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+        debug {
+            debuggable true
         }
     }
     compileOptions {
@@ -46,6 +48,13 @@ android {
             res.srcDirs =
                     [
                             '/src/main/res'
+                    ]
+        }
+
+        debug{
+            res.srcDirs =
+                    [
+                            '/src/debug/res'
                     ]
         }
     }
