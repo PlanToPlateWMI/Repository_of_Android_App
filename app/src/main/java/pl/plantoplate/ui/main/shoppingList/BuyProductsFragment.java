@@ -157,7 +157,6 @@ public class BuyProductsFragment extends Fragment {
 
     /**
      * Set up the ViewModel observers for the shopping list.
-     *
      * This method observes the changes in the ViewModel and updates the UI accordingly.
      */
     public void setUpViewModel() {

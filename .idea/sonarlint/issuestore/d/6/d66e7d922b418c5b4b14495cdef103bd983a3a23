@@ -1,0 +1,25 @@
+
+
+java:S1192)"dDefine a constant instead of duplicating this literal "WystÄ…piÅ‚ nieznany bÅ‚Ä…d serwera." 5 times.(³‡”ˆøÿÿÿÿ
+†
+java:S1319E"kThe type of "productsIds" should be an interface such as "List" rather than the implementation "ArrayList".(«º×Ğúÿÿÿÿ
+B
+java:S3599'",Use another way to initialize this instance.(Âè¶å
+o
+java:S1171'"YMove the contents of this initializer to a standard constructor or to field initializers.(Âè¶å
+B
+java:S35992",Use another way to initialize this instance.(Âè¶å
+o
+java:S11712"YMove the contents of this initializer to a standard constructor or to field initializers.(Âè¶å
+B
+java:S3599=",Use another way to initialize this instance.(Âè¶å
+o
+java:S1171="YMove the contents of this initializer to a standard constructor or to field initializers.(Âè¶å
+B
+java:S3599H",Use another way to initialize this instance.(Âè¶å
+o
+java:S1171H"YMove the contents of this initializer to a standard constructor or to field initializers.(Âè¶å
+B
+java:S3599S",Use another way to initialize this instance.(Âè¶å
+o
+java:S1171S"YMove the contents of this initializer to a standard constructor or to field initializers.(Âè¶å

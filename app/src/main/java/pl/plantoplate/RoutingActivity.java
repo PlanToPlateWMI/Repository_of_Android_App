@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
-
 import pl.plantoplate.ui.main.ActivityMain;
 
 public class RoutingActivity extends AppCompatActivity {

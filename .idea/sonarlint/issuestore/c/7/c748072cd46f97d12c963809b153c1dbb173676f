@@ -1,0 +1,4 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(à”Œ”øÿÿÿÿ
+}
+java:S3252g"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(½ÙÜ¥

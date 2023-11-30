@@ -1,0 +1,10 @@
+
+f	java:S117O"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(à§û
+k	java:S117P"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿Ä’ùÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(„õİ“
+M
+java:S1659,"7Declare "repeatNewPasswordEditText" on a separate line.(èÄ³†
+E
+java:S1874n"/Remove this use of "Handler"; it is deprecated.(ñòÂ¤
+}
+java:S3252u"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".( Ò§

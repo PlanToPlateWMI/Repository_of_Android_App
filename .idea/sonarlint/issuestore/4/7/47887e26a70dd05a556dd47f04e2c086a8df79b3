@@ -1,0 +1,14 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(è¹ê¼
+b
+java:S16592"GDeclare "recipeMenu" and all following declarations on a separate line.(ëåòéúÿÿÿÿ
+]
+java:S16593"GDeclare "recipeTime" and all following declarations on a separate line.(÷÷Ó±
+x
+java:S14502"]Remove the "fakeRecipeMenu" field and declare it as a local variable in the relevant methods.(ëåòéúÿÿÿÿ
+H
+java:S1602™",Remove useless curly braces around statement(›¬ˆÚşÿÿÿÿ
+H
+java:S3599¡",Use another way to initialize this instance.(ÌÛîÿÿÿÿÿ
+u
+java:S1171¡"YMove the contents of this initializer to a standard constructor or to field initializers.(ÌÛîÿÿÿÿÿ

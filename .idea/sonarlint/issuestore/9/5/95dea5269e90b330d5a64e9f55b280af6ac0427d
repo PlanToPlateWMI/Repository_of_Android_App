@@ -1,0 +1,6 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(îÊÉûÿÿÿÿ
+h
+java:S37766"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(£ğ
+Q
+java:S1128"6Remove this unused import 'android.widget.RadioGroup'.(İÚûÿÿÿÿ

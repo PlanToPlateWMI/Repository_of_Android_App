@@ -1,0 +1,19 @@
+
+r
+java:S1192 "\Define a constant instead of duplicating this literal "WystÄ…piÅ‚ nieznany bÅ‚Ä…d." 4 times.(’ç¿Œ
+B
+java:S3599",Use another way to initialize this instance.(‘½ê§
+o
+java:S1171"YMove the contents of this initializer to a standard constructor or to field initializers.(‘½ê§
+B
+java:S3599)",Use another way to initialize this instance.(‘½ê§
+o
+java:S1171)"YMove the contents of this initializer to a standard constructor or to field initializers.(‘½ê§
+B
+java:S35994",Use another way to initialize this instance.(‘½ê§
+o
+java:S11714"YMove the contents of this initializer to a standard constructor or to field initializers.(‘½ê§
+B
+java:S3599?",Use another way to initialize this instance.(‘½ê§
+o
+java:S1171?"YMove the contents of this initializer to a standard constructor or to field initializers.(‘½ê§

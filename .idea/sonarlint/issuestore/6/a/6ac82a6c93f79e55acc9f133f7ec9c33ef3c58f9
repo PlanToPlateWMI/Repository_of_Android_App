@@ -1,0 +1,6 @@
+
+~
+java:S1319"hThe type of "itemList" should be an interface such as "List" rather than the implementation "ArrayList".(Ä™«·
+†
+java:S1319!"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(°ÃÐÍ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Óé¯’øÿÿÿÿ

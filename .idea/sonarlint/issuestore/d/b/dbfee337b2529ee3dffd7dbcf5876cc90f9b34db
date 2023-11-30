@@ -1,0 +1,13 @@
+
+k
+java:S1192A"UDefine a constant instead of duplicating this literal "Podaj liczbÄ™ porcji" 3 times.(›¡Ó›
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÙÙ”ú
+m
+java:S37769"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(•°ô÷øÿÿÿÿ
+—
+java:S1186a"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(«û³±
+œ
+java:S1186e"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ê¥¾àûÿÿÿÿ
+>	java:S108z")Either remove or fill this block of code.(ÉµÝ¬
+Z
+java:S1128"?Remove this unused import 'androidx.appcompat.app.AlertDialog'.(¼Ìï¨üÿÿÿÿ

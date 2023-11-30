@@ -4,12 +4,9 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.calendar.mealInfo.recyclerViews.viewHolders.MealStepsViewHolder;
 
@@ -39,7 +36,6 @@ public class MealStepsAdapter extends RecyclerView.Adapter<MealStepsViewHolder> 
     public void onBindViewHolder(@NonNull MealStepsViewHolder holder, int position) {
         String step = steps.get(position);
         holder.bind(step);
-        //holder.itemView.setOnClickListener(v -> holder.toggleCrossedOut());
     }
 
     @Override
@@ -47,4 +43,3 @@ public class MealStepsAdapter extends RecyclerView.Adapter<MealStepsViewHolder> 
         return steps == null ? 0 : steps.size();
     }
 }
-

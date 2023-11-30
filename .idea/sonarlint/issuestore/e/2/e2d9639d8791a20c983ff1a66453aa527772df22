@@ -1,0 +1,12 @@
+
+f	java:S117["QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŠÑ‘ã
+k	java:S117\"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›Ýå±ùÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(„õÝ“
+}
+java:S3252a"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(Ž¸ÈË
+}
+java:S3252u"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(Î®¥§
+G
+java:S1128",Remove this unused import 'java.util.Timer'.(†£ñáÿÿÿÿÿ
+D
+java:S1128"".Remove this unused import 'timber.log.Timber'.(ÈÊÖ 

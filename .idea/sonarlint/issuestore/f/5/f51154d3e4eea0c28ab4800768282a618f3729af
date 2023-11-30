@@ -1,0 +1,8 @@
+
+o	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Î€≤√
+P
+java:S1118":Add a private constructor to hide the implicit public one.(™ﬂ†Ù
+b
+java:S5998"LRefactor this repetition that can lead to a stack overflow for large inputs.(Î€≤√
+Y
+java:S6353"CUse concise character class syntax '\\w' instead of '[a-zA-Z0-9_]'.(Î€≤√

@@ -1,24 +1,22 @@
 package pl.plantoplate.ui.main.recipes.recipeInfo.recyclerViews.viewHolders;
 
-import android.graphics.Paint;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
 import pl.plantoplate.data.remote.models.recipe.Ingredient;
 import pl.plantoplate.data.remote.models.user.Role;
 import pl.plantoplate.databinding.ItemSkladnikBinding;
 
 public class RecipeIngredientsViewHolder extends RecyclerView.ViewHolder {
 
-    private CheckBox checkBox;
-    private TextView ingredientName;
-    private TextView ingredientAmount;
+    private final CheckBox checkBox;
+    private final TextView ingredientName;
+    private final TextView ingredientAmount;
 
     public RecipeIngredientsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -30,7 +28,7 @@ public class RecipeIngredientsViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setOnCheckedChangeListener(CheckBox.OnCheckedChangeListener listener) {
+    public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener listener) {
         checkBox.setOnCheckedChangeListener(listener);
     }
 
@@ -41,6 +39,7 @@ public class RecipeIngredientsViewHolder extends RecyclerView.ViewHolder {
                 .setScale(3, RoundingMode.HALF_UP)
                 .floatValue();
         ingredientName.setText(ingredient.getIngredientName());
-        ingredientAmount.setText(amount + " " + ingredient.getUnit());
+        String ingredientAmountText = amount + " " + ingredient.getUnit().toLowerCase();
+        ingredientAmount.setText(ingredientAmountText);
     }
 }

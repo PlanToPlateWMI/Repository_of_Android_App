@@ -1,6 +1,5 @@
 package pl.plantoplate.ui.main.recipes.recipeInfo.recyclerViews.viewHolders;
 
-import android.graphics.Paint;
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -9,8 +8,7 @@ import pl.plantoplate.databinding.ItemKrokBinding;
 
 public class RecipeStepsViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView stepTextView;
-    //private boolean crossedOut = false;
+    private final TextView stepTextView;
 
     public RecipeStepsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,13 +18,6 @@ public class RecipeStepsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(String step) {
-        stepTextView.setText(step);
+        stepTextView.setText(step.trim());
     }
-
-//    public void toggleCrossedOut() {
-//        crossedOut = !crossedOut;
-//        stepTextView.setPaintFlags(crossedOut ?
-//                stepTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG :
-//                stepTextView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-//    }
 }

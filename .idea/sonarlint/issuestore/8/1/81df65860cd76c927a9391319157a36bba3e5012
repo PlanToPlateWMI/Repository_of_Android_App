@@ -1,0 +1,6 @@
+
+~
+java:S1319!"hThe type of "products" should be an interface such as "List" rather than the implementation "ArrayList".(ˆ²Æ«
+€
+java:S1319'"jThe type of "filterlist" should be an interface such as "List" rather than the implementation "ArrayList".(ÙåàÌ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(À¬²«
