@@ -1,13 +1,13 @@
 
-e
-java:S16594"ODeclare "enterEmailEditText" and all following declarations on a separate line.(ŞÇ÷ö
-c
-java:S3252a"MUse static access with "android.text.Spanned" for "SPAN_EXCLUSIVE_EXCLUSIVE".(¬„’
-ƒ
-java:S3252¬"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(™Íæáøÿÿÿÿ
-}
-java:S3252À"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(ñ’¤i
-ƒ
-java:S3252Å"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(¿æ³øÿÿÿÿ
-~
-java:S3252Ô"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".( Ò§
+l
+java:S16594"ODeclare "enterEmailEditText" and all following declarations on a separate line.(ŞÇ÷ö8Ô¢Ô±Â1
+j
+java:S3252a"MUse static access with "android.text.Spanned" for "SPAN_EXCLUSIVE_EXCLUSIVE".(¬„’8æ¢Ô±Â1
+Š
+java:S3252­"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(™Íæáøÿÿÿÿ8ö¢Ô±Â1
+„
+java:S3252Á"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(ñ’¤i8û¢Ô±Â1
+Š
+java:S3252Æ"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(¿æ³øÿÿÿÿ8ü¢Ô±Â1
+…
+java:S3252Õ"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".( Ò§8ÿ¢Ô±Â1

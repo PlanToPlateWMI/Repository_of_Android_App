@@ -19,6 +19,9 @@ import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import com.google.firebase.FirebaseApp;
+
 import timber.log.Timber;
 
 public class PlanToPlate extends Application {
@@ -37,10 +40,8 @@ public class PlanToPlate extends Application {
             instance = this;
         }
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
-
+        Timber.plant(new Timber.DebugTree());
+        FirebaseApp.initializeApp(this);
     }
 
     /**

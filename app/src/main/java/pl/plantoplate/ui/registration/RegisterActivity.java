@@ -114,7 +114,8 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         String name = Optional.of(enterNameEditText.getText().toString()).orElse("").trim();
         String email = Optional.of(enterEmailEditText.getText().toString()).orElse("").trim();
         String password = Optional.of(enterPasswordEditText.getText().toString()).orElse("").trim();
-        return new UserRegisterData(name, email, password);
+        String fcmToken = prefs.getString("fcmToken", "");
+        return new UserRegisterData(name, email, password, fcmToken);
     }
 
     /**
