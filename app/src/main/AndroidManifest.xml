@@ -109,7 +109,7 @@
                 android:value="" />
         </activity>
         <service
-            android:name=".service.PushNotificationService"
+            android:name=".service.push_notification.PushNotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

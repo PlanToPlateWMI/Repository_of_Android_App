@@ -1,10 +1,11 @@
-package pl.plantoplate.service;
+package pl.plantoplate.service.push_notification;
 
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -54,6 +55,10 @@ public class PushNotificationService extends FirebaseMessagingService {
             return;
         }
 
+        if (title.matches("Your role was changed to .*")) {
+            updateRole();
+        }
+
         createNotificationChannel();
         notificationManagerCompat.notify(generateUniqueNotificationId(), builder.build());
     }
@@ -64,6 +69,17 @@ public class PushNotificationService extends FirebaseMessagingService {
             NotificationChannel channel = new NotificationChannel("notify", "notify", NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    private void updateRole() {
+        SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (sharedPreferences.getString("role", "").equals("ROLE_USER")) {
+            editor.putString("role", "ROLE_ADMIN");
+        } else {
+            editor.putString("role", "ROLE_USER");
+        }
+        editor.apply();
     }
 
     private int generateUniqueNotificationId() {
