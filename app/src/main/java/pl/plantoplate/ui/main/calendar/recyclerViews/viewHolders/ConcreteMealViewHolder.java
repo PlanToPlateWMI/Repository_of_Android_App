@@ -36,7 +36,15 @@ public class ConcreteMealViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Meal meal, SetupMealItem listener) {
-        mealLayout.setOnClickListener(v -> listener.setupMealItemClick(meal.getId()));
+        if (!meal.isPrepared()) {
+            mealLayout.setOnClickListener(v -> listener.setupMealItemClick(meal.getId()));
+        } else {
+            mealLayout.setClickable(false);
+            mealLayout.setEnabled(false);
+            mealLayout.setAlpha(0.6f);
+        }
+
+        // Rest of your code for populating meal data remains the same
         vegeTextView.setVisibility(meal.isVege() ? View.VISIBLE : View.GONE);
         if (TextUtils.isEmpty(meal.getImage())) {
             Picasso.get()

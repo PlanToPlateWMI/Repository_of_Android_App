@@ -1,0 +1,19 @@
+
+e
+java:S1192ˆ"GDefine a constant instead of duplicating this literal "mealId" 3 times.(”íÆ¿8ÉÌ›ªÄ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(è¹ê¼8ÙŒšªÄ1
+i
+java:S16593"GDeclare "recipeMenu" and all following declarations on a separate line.(ëåòéúÿÿÿÿ8ƒšªÄ1
+d
+java:S16594"GDeclare "recipeTime" and all following declarations on a separate line.(÷÷Ó±8ƒšªÄ1
+
+java:S14503"]Remove the "fakeRecipeMenu" field and declare it as a local variable in the relevant methods.(ëåòéúÿÿÿÿ8„šªÄ1
+]	java:S125~"<This block of commented-out lines of code should be removed.(’ÑÆÍøÿÿÿÿ8”šªÄ1
+O
+java:S1602Š",Remove useless curly braces around statement(öµÜùıÿÿÿÿ8ššªÄ1
+O
+java:S1602 ",Remove useless curly braces around statement(›¬ˆÚşÿÿÿÿ8À¢ÒªÄ1
+O
+java:S3599¨",Use another way to initialize this instance.(ÌÛîÿÿÿÿÿ8›šªÄ1
+|
+java:S1171¨"YMove the contents of this initializer to a standard constructor or to field initializers.(ÌÛîÿÿÿÿÿ8œšªÄ1

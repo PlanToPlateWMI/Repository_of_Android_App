@@ -1,0 +1,28 @@
+
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(±Œù­8îâ‚ªÄ1
+d
+java:S2094"BRemove this empty class, write its code or make it an "interface".(˜û§Ùıÿÿÿÿ8ú¹ªÄ1
+]	java:S125"<This block of commented-out lines of code should be removed.(ùæù±ùÿÿÿÿ8‚ºªÄ1
+Z
+java:S1128">Remove this unused import 'android.content.SharedPreferences'.(íÎÉr8‚ºªÄ1
+P
+java:S1128".Remove this unused import 'android.os.Bundle'.(°şÊóøÿÿÿÿ8‚ºªÄ1
+S
+java:S1128"1Remove this unused import 'android.widget.Toast'.(©›ïÍúÿÿÿÿ8‚ºªÄ1
+d
+java:S1128"BRemove this unused import 'androidx.fragment.app.FragmentManager'.(¯­ë‹ıÿÿÿÿ8ƒºªÄ1
+j
+java:S1128	"HRemove this unused import 'io.reactivex.rxjava3.disposables.Disposable'.(ÜÍØüÿÿÿÿ8ƒºªÄ1
+n
+java:S1128
+"LRemove this unused import 'pl.plantoplate.data.remote.models.meal.MealPlan'.(·Ôÿûÿÿÿÿ8ƒºªÄ1
+s
+java:S1128"QRemove this unused import 'pl.plantoplate.data.remote.repository.MealRepository'.(éÁµ“øÿÿÿÿ8ƒºªÄ1
+
+java:S1128"qRemove this unused import 'pl.plantoplate.ui.main.calendar.mealInfo.popUps.ProductsSynchronizationPopUpCalendar'.(¼«ôÓ8ƒºªÄ1
+{
+java:S1128"_Remove this unused import 'pl.plantoplate.ui.main.calendar.mealInfo.popUps.QuestionCookRecipe'.(ó¢â8ƒºªÄ1
+ƒ
+java:S1128"aRemove this unused import 'pl.plantoplate.ui.main.calendar.mealInfo.popUps.QuestionDeleteRecipe'.(ôŠŞğúÿÿÿÿ8ƒºªÄ1
+Œ
+java:S1128"jRemove this unused import 'pl.plantoplate.ui.main.recipes.recipeInfo.popUps.ProductsSynchronizationPopUp'.(¢¶ŞËøÿÿÿÿ8ƒºªÄ1

@@ -1,0 +1,7 @@
+
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(þÇö«8áÿžŸÄ1
+X	java:S125"<This block of commented-out lines of code should be removed.(ã®ÜÁ8Û¨ŸÄ1
+
+java:S1128"kRemove this unused import 'pl.plantoplate.ui.main.recipes.recipeInfo.newPopUps.PopUpCalendarPlanningStart'.(þ½¸âùÿÿÿÿ8Û¨ŸÄ1
+U
+java:S1068"3Remove this unused "fragmentManager" private field.(î›äÿÿÿÿÿ8Û¨ŸÄ1
