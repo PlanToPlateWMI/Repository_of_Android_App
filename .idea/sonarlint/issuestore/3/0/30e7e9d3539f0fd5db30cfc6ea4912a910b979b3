@@ -1,7 +1,0 @@
-
-[	java:S112L"FDefine and throw a dedicated exception instead of using a generic one.(éðñÔ
-~
-java:S1319("hThe type of "products" should be an interface such as "List" rather than the implementation "ArrayList".(þÏ»°
-€
-java:S1319."jThe type of "filterlist" should be an interface such as "List" rather than the implementation "ArrayList".(©Ý˜ò
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Œú£Àøÿÿÿÿ

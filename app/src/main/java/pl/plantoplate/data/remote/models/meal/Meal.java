@@ -11,17 +11,19 @@ public class Meal {
     private MealType mealType;
     private String image;
     private boolean vege;
+    private boolean prepared;
 
     public Meal(){
     }
 
-    public Meal(int id, String recipeTitle, int time, MealType mealType, String image, boolean vege) {
+    public Meal(int id, String recipeTitle, int time, MealType mealType, String image, boolean vege, boolean prepared) {
         this.id = id;
         this.recipeTitle = recipeTitle;
         this.time = time;
         this.mealType = mealType;
         this.image = image;
         this.vege = vege;
+        this.prepared = prepared;
     }
 
     public int getId() {
@@ -70,5 +72,13 @@ public class Meal {
 
     public void setVege(boolean vege) {
         this.vege = vege;
+    }
+
+    public boolean isPrepared() {
+        return prepared;
+    }
+
+    public void setPrepared(boolean prepared) {
+        this.prepared = prepared;
     }
 }

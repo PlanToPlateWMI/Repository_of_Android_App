@@ -1,6 +1,5 @@
 package pl.plantoplate.ui.main.recipes.recipeInfo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -27,14 +26,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.meal.Meal;
+import pl.plantoplate.data.remote.models.meal.MealPlanNew;
 import pl.plantoplate.data.remote.models.meal.MealPlan;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
-import pl.plantoplate.ui.main.productsDatabase.AddYourOwnProductFragment;
 import pl.plantoplate.ui.main.recipes.recipeInfo.events.IngredientsChangeEvent;
-import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlCalendarStart;
-import pl.plantoplate.ui.main.recipes.recipeInfo.popUpControl.PopUpControlShoppingStart;
+import pl.plantoplate.ui.main.recipes.recipeInfo.newPopUps.PopUpCalendarPlanningStart;
+import pl.plantoplate.ui.main.recipes.recipeInfo.newPopUps.PopUpShoppingStart;
 import pl.plantoplate.ui.main.recipes.recipeInfo.viewModels.RecipeInfoViewModel;
 import timber.log.Timber;
 
@@ -129,13 +127,19 @@ public class RecipeInfoFragment extends Fragment {
             mealPlan.setRecipeId(requireArguments().getInt("recipeId"));
             if(item.getItemId() == R.id.lista_plan){
                 Timber.e(mealPlan.toString());
-                PopUpControlShoppingStart popUpControl = new PopUpControlShoppingStart(getChildFragmentManager(), mealPlan);
-                popUpControl.showPopUpNumerOfServingPerRecipe();
+                MealPlanNew addMealProducts = new MealPlanNew();
+                addMealProducts.setRecipeId(requireArguments().getInt("recipeId"));
+                addMealProducts.setIngredientsIds(ingredientsIds);
+                PopUpShoppingStart popUpControl = new PopUpShoppingStart(addMealProducts);
+                popUpControl.show(getChildFragmentManager(), "PopUpShoppingStart");
                 return true;
             } else if(item.getItemId() == R.id.plan_kalendarz) {
                 Timber.e(mealPlan.toString());
-                PopUpControlCalendarStart popUpControl = new PopUpControlCalendarStart(getChildFragmentManager() , mealPlan);
-                popUpControl.showPopUpNumerOfServingPerRecipe();
+                MealPlanNew addMealProducts = new MealPlanNew();
+                addMealProducts.setRecipeId(requireArguments().getInt("recipeId"));
+                addMealProducts.setIngredientsIds(ingredientsIds);
+                PopUpCalendarPlanningStart popUpControl = new PopUpCalendarPlanningStart(addMealProducts);
+                popUpControl.show(getChildFragmentManager(), "PopUpCalendarStart");
                 return true;
             }
             return false;

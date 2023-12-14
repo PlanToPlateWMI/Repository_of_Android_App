@@ -1,8 +1,0 @@
-
-^
-java:S1192E"HDefine a constant instead of duplicating this literal "Bearer " 5 times.(øü¬ 
-\
-java:S1192E"FDefine a constant instead of duplicating this literal "token" 5 times.(øü¬ 
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Óé¯’øÿÿÿÿ
-W
-java:S1117S"<Rename "userInfo" which hides the field declared at line 42.(š‚‡øÿÿÿÿ

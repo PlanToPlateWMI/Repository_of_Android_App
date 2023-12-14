@@ -1,8 +1,0 @@
-
-
-java:S1319"kThe type of "ingredients" should be an interface such as "List" rather than the implementation "ArrayList".(‰á°
-†
-java:S1319"kThe type of "ingredients" should be an interface such as "List" rather than the implementation "ArrayList".(ïŒÎàùÿÿÿÿ
-‹
-java:S1319."pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ÜõÚÏÿÿÿÿÿ
-t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(’é—Äúÿÿÿÿ
