@@ -20,8 +20,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import java.util.ArrayList;
@@ -29,6 +33,9 @@ import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.shoppingList.viewModels.BoughtProductsListViewModel;
+import pl.plantoplate.ui.main.shoppingList.viewModels.ShoppingListViewModel;
+import pl.plantoplate.utils.CategorySorter;
 
 /**
  * Fragment for shopping list.
@@ -37,6 +44,9 @@ public class ShoppingListFragment extends Fragment {
 
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
+
+    //public ShoppingListViewModel shoppingListViewModel;
+    public TextView quantityTextView;
 
     /**
      * Method called on fragment view creation.
@@ -54,6 +64,9 @@ public class ShoppingListFragment extends Fragment {
         FragmentShoppingListBinding fragmentShoppingListBinding = FragmentShoppingListBinding.inflate(inflater, container, false);
 
         initViews(fragmentShoppingListBinding);
+
+        //setUpViewModel();
+
         setupViewPager(viewPager);
         setupNavigation();
         return fragmentShoppingListBinding.getRoot();
@@ -62,10 +75,25 @@ public class ShoppingListFragment extends Fragment {
     private void initViews(FragmentShoppingListBinding fragmentShoppingListBinding) {
         viewPager = fragmentShoppingListBinding.viewPager;
         radioGridGroup = fragmentShoppingListBinding.radioGroup;
+        quantityTextView = fragmentShoppingListBinding.quantity;
 
         radioGridGroup.setCheckedRadioButtonById(R.id.trzeba_kupic_button);
         viewPager.setCurrentItem(0);
     }
+
+
+//    public void setUpViewModel() {
+//        shoppingListViewModel = new ViewModelProvider(requireParentFragment()).get(ShoppingListViewModel.class);
+//        shoppingListViewModel.getBougthProductsCount().observe(getViewLifecycleOwner(), bougthProductsCount -> {
+//            if(bougthProductsCount > 0) {
+//                quantityTextView.setVisibility(View.VISIBLE);
+//                quantityTextView.setText(String.valueOf(bougthProductsCount));
+//            } else {
+//                quantityTextView.setVisibility(View.INVISIBLE);
+//            }
+//        });
+//    }
+
 
     /**
      * Method called on fragment view creation that setup bottom navigation
