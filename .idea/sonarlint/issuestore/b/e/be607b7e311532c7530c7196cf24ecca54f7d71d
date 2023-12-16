@@ -1,14 +1,0 @@
-
-€
-java:S1319"eThe type of "steps" should be an interface such as "List" rather than the implementation "ArrayList".(Ñ­ƒÉıÿÿÿÿ
-†
-java:S1319"kThe type of "ingredients" should be an interface such as "List" rather than the implementation "ArrayList".(óı“·ıÿÿÿÿ
-‹
-java:S1319f"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ßçœĞÿÿÿÿÿ
-€
-java:S1319j"eThe type of "steps" should be an interface such as "List" rather than the implementation "ArrayList".(à÷Ãşşÿÿÿÿ
-‹
-java:S1319n"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Ÿ´İÊûÿÿÿÿ
-
-java:S1319r"kThe type of "ingredients" should be an interface such as "List" rather than the implementation "ArrayList".(ù´Ç©
-W	java:S107"BConstructor has 11 parameters, which is greater than 7 authorized.(•ĞÊ¡

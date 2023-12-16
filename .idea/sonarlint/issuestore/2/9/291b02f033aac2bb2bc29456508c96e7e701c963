@@ -1,9 +1,0 @@
-
-g
-java:S1192J"LDefine a constant instead of duplicating this literal "UÅ¼ytkownik" 3 times.(Ì…„öøÿÿÿÿ
-f	java:S117G"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÆÍ¾Ì
-f	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( †ª“
-k	java:S117J"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ì…„öøÿÿÿÿ
-k	java:S117K"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(û¦ö¤øÿÿÿÿ
-f	java:S117\"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ó·éŽ
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(À¬²«
