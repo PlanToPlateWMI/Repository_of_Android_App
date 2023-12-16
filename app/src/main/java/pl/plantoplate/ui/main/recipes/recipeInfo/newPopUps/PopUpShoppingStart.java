@@ -6,44 +6,43 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.Objects;
-
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import pl.plantoplate.R;
+import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.data.remote.models.meal.MealPlanNew;
+import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.NewTryPopUpShoppingStartBinding;
-import pl.plantoplate.ui.customViews.calendar.CalendarStyle;
-import pl.plantoplate.ui.customViews.calendar.ShortCalendar;
+import timber.log.Timber;
 
 public class PopUpShoppingStart extends DialogFragment {
 
     private CompositeDisposable compositeDisposable;
     private SharedPreferences prefs;
-
     private TextView acceptButton;
     private TextView cancelButton;
-
     private ImageView plusButton;
     private ImageView minusButton;
-
     private TextInputEditText numberOfPortions;
-    private View.OnClickListener listener;
-
     private CheckBox checkBoxSynch;
     private CheckBox checkBoxPlanning;
+    private MealPlanNew addMealProducts;
 
     public PopUpShoppingStart() {
     }
 
+    public PopUpShoppingStart(MealPlanNew addMealProducts) {
+        this.addMealProducts = addMealProducts;
+    }
+
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         NewTryPopUpShoppingStartBinding binding = NewTryPopUpShoppingStartBinding.inflate(getLayoutInflater());
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -53,13 +52,13 @@ public class PopUpShoppingStart extends DialogFragment {
         compositeDisposable = new CompositeDisposable();
 
         setupViews(binding);
-        //setClicklisteners();
+        setClicklisteners();
         return dialog;
     }
 
     public void setupViews(NewTryPopUpShoppingStartBinding binding){
-        acceptButton = binding.close;
-        cancelButton = binding.zatwierdzenie;
+        acceptButton = binding.zatwierdzenie;
+        cancelButton = binding.close;
 
         numberOfPortions = binding.ilosc;
 
@@ -77,12 +76,22 @@ public class PopUpShoppingStart extends DialogFragment {
 
     public void setClicklisteners(){
         acceptButton.setOnClickListener(v -> {
-            dismiss();
+            addMealProducts.setPortions(Integer.parseInt(Objects.requireNonNull(numberOfPortions.getText()).toString()));
+            addMealProducts.setProductsAdd(true);
+            if (checkBoxSynch.isChecked()){
+                addMealProducts.setSynchronize(true);
+            }
+            if (checkBoxPlanning.isChecked()){
+                PopUpShoppingEnd calendarPlanningPopUp = new PopUpShoppingEnd(addMealProducts);
+                calendarPlanningPopUp.show(getParentFragmentManager(), "calendarPlanningPopUp");
+                dismiss();
+            }
+            else{
+                addMealProducts();
+            }
         });
 
-        cancelButton.setOnClickListener(v -> {
-            dismiss();
-        });
+        cancelButton.setOnClickListener(v -> dismiss());
 
         plusButton.setOnClickListener(v -> {
             if (numberOfPortions.getText().toString().length() == 0) {
@@ -138,4 +147,20 @@ public class PopUpShoppingStart extends DialogFragment {
 
     }
 
+    public void addMealProducts(){
+        String token = "Bearer " + prefs.getString("token", "");
+        MealRepository mealRepository = new MealRepository();
+        Disposable disposable = mealRepository.planMealV1(token, addMealProducts)
+                .subscribe(mealPlan -> {
+                    Toast.makeText(requireContext(), "Produkty zostały dodane do listy zakupów", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }, throwable -> Toast.makeText(requireContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
+        compositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
 }

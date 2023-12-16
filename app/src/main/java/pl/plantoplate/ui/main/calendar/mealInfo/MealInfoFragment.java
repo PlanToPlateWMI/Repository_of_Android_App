@@ -35,6 +35,7 @@ import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.databinding.FragmentItemRecipeInsideForCalendarBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.calendar.mealInfo.popUpControl.PopUpCalendarRecipeControl;
+import pl.plantoplate.ui.main.calendar.mealInfo.popUps.QuestionCookRecipe;
 import pl.plantoplate.ui.main.calendar.mealInfo.popUps.QuestionDeleteRecipe;
 import pl.plantoplate.ui.main.calendar.mealInfo.viewModels.MealInfoViewModel;
 import pl.plantoplate.ui.main.recipes.recipeInfo.events.IngredientsChangeEvent;
@@ -122,16 +123,22 @@ public class MealInfoFragment extends Fragment{
             mealPlan.setPortions(recipeInfo.getPortions());
             mealPlan.setIngredientsIds((ArrayList<Integer>) recipeInfo.getIngredients()
                     .stream().map(Ingredient::getId).collect(Collectors.toList()));
-            if(item.getItemId() == R.id.produkty_do_listy){
+//            if(item.getItemId() == R.id.produkty_do_listy){
+//                Timber.e(mealPlan.toString());
+//                mealPlan.setRecipeId(recipeInfo.getRecipeId());
+//                PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
+//                popUpControl.showPopUpSynchronization();
+//                return true;
+            if(item.getItemId() == R.id.przygotowany_przepis) {
                 Timber.e(mealPlan.toString());
-                mealPlan.setRecipeId(recipeInfo.getRecipeId());
-                PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
-                popUpControl.showPopUpSynchronization();
-                return true;
-            } else if(item.getItemId() == R.id.przygotowany_przepis) {
-                Timber.e(mealPlan.toString());
-                PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
-                popUpControl.showPopUpCookRecipe();
+                QuestionCookRecipe questionCookRecipe = new QuestionCookRecipe();
+                Bundle bundle = new Bundle();
+                bundle.putInt("mealId", recipeInfo.getId());
+                questionCookRecipe.setArguments(bundle);
+                questionCookRecipe.setOnAcceptClickListener(v -> {
+                    getParentFragmentManager().popBackStack();
+                });
+                questionCookRecipe.show(getChildFragmentManager(), "QuestionCookRecipe");
                 return true;
             } else if(item.getItemId() == R.id.usun_przepis) {
                 Timber.e(mealPlan.toString());

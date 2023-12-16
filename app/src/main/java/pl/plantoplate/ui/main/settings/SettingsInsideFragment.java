@@ -31,6 +31,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
@@ -183,7 +186,11 @@ public class SettingsInsideFragment extends Fragment {
         editor.remove("password");
         editor.remove("role");
         editor.remove("token");
+        //editor.remove("logged");
         editor.apply();
+
+        // delete fcm token
+        FirebaseMessaging.getInstance().deleteToken();
 
         Intent intent = new Intent(requireContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

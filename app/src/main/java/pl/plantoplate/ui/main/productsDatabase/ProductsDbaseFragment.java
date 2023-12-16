@@ -72,18 +72,15 @@ public class ProductsDbaseFragment extends Fragment {
      * listener. If user click on bottom navigation item then we change
      * current fragment in swipe pager.
      */
+    @SuppressLint("NonConstantResourceId")
     private void setupNavigation() {
         menuRadioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            switch (checkedId) {
-                case ALL_PRODUCTS_FRAGMENT:
-                    productsDbaseViewPager.setCurrentItem(0);
-                    break;
-                case OWN_PRODUCTS_FRAGMENT:
-                    productsDbaseViewPager.setCurrentItem(1);
-                    break;
-                default:
-                    Timber.tag("RadioGridGroup").d("Unhandled ID: %s", checkedId); // Debugging
-                    break;
+            if (checkedId == ALL_PRODUCTS_FRAGMENT) {
+                productsDbaseViewPager.setCurrentItem(0);
+            } else if (checkedId == OWN_PRODUCTS_FRAGMENT) {
+                productsDbaseViewPager.setCurrentItem(1);
+            }else{
+                Timber.tag("RadioGridGroup").d("Unhandled ID: %s", checkedId); // Debugging
             }
         });
     }

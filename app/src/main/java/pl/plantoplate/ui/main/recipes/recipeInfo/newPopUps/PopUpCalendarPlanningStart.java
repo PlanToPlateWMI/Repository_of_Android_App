@@ -10,19 +10,28 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.meal.MealPlanNew;
+import pl.plantoplate.data.remote.models.meal.MealType;
+import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.NewTryPopUpCalendarStartBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.customViews.calendar.CalendarStyle;
 import pl.plantoplate.ui.customViews.calendar.ShortCalendar;
+import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+import timber.log.Timber;
 
 public class PopUpCalendarPlanningStart extends DialogFragment {
 
@@ -32,15 +41,22 @@ public class PopUpCalendarPlanningStart extends DialogFragment {
     private TextView cancelButton;
     private RadioGridGroup radioGridGroup;
     private TextInputEditText numberOfPortions;
-    private View.OnClickListener listener;
     private ImageView plusButton;
     private ImageView minusButton;
     private ShortCalendar shortCalendar;
     private CheckBox checkBox;
+    private MealPlanNew addMealProducts;
 
     public PopUpCalendarPlanningStart() {
     }
 
+    public PopUpCalendarPlanningStart(MealPlanNew addMealProducts) {
+        this.addMealProducts = addMealProducts;
+        addMealProducts.setDate(LocalDate.now().toString());
+    }
+
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         NewTryPopUpCalendarStartBinding binding = NewTryPopUpCalendarStartBinding.inflate(getLayoutInflater());
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -55,8 +71,8 @@ public class PopUpCalendarPlanningStart extends DialogFragment {
     }
 
     public void setupViews(NewTryPopUpCalendarStartBinding binding){
-        acceptButton = binding.close;
-        cancelButton = binding.zatwierdzenie;
+        acceptButton = binding.zatwierdzenie;
+        cancelButton = binding.close;
 
         radioGridGroup = binding.radioGroupBaza;
         radioGridGroup.setCheckedRadioButtonById(R.id.sniadanie);
@@ -76,13 +92,29 @@ public class PopUpCalendarPlanningStart extends DialogFragment {
     }
 
     public void setClicklisteners(){
-        acceptButton.setOnClickListener(v -> {
-            dismiss();
+        shortCalendar.setUpItemButtons(new SetupItemButtons() {
+            @Override
+            public void setupDateItemClick(View v, LocalDate date) {
+                Timber.e("Date clicked: %s", date.toString());
+                addMealProducts.setDate(date.toString());
+            }
         });
 
-        cancelButton.setOnClickListener(v -> {
-            dismiss();
+        acceptButton.setOnClickListener(v -> {
+            addMealProducts.setMealType(MealType.fromString(radioGridGroup.getCheckedRadioButton().getText().toString()));
+            addMealProducts.setPortions(Integer.parseInt(Objects.requireNonNull(numberOfPortions.getText()).toString()));
+            if(checkBox.isChecked()){
+                addMealProducts.setProductsAdd(true);
+                PopUpCalendarPlanningEnd popUpCalendarPlanningEnd = new PopUpCalendarPlanningEnd(addMealProducts);
+                popUpCalendarPlanningEnd.show(getParentFragmentManager(), "PopUpCalendarPlanningEnd");
+                dismiss();
+            }
+            else{
+                planMeal();
+            }
         });
+
+        cancelButton.setOnClickListener(v -> dismiss());
 
         plusButton.setOnClickListener(v -> {
             if (numberOfPortions.getText().toString().length() == 0) {
@@ -106,14 +138,6 @@ public class PopUpCalendarPlanningStart extends DialogFragment {
 
         numberOfPortions.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
             public void afterTextChanged(Editable s) {
                 String input = s.toString();
 
@@ -134,9 +158,28 @@ public class PopUpCalendarPlanningStart extends DialogFragment {
                     } catch (NumberFormatException ignored) {}
                 }
             }
-        });
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
     }
 
+    public void planMeal(){
+        String token = "Bearer " + prefs.getString("token", "");
+        MealRepository mealRepository = new MealRepository();
+        Disposable disposable = mealRepository.planMealV2(token, addMealProducts)
+                .subscribe(mealPlan -> {
+                    Toast.makeText(requireContext(), "Przepis został dodany do kalendarza", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }, throwable -> Toast.makeText(requireContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
+        compositeDisposable.add(disposable);
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
 }

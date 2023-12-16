@@ -22,6 +22,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import pl.plantoplate.utils.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.ActivityMain;
@@ -51,8 +55,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         prefs = getSharedPreferences("prefs", 0);
-
         setAppTheme(prefs.getString("theme", "light"));
+        getFcmToken();
 
         new Handler().postDelayed(() -> {
             initApplication();
@@ -95,6 +99,23 @@ public class SplashActivity extends AppCompatActivity {
             default:
                 return LoginActivity.class;
         }
+    }
+
+    public void getFcmToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Timber.e("Fetching FCM registration token failed");
+                        return;
+                    }
+
+                    // Get new FCM registration token
+                    String token = task.getResult();
+                    prefs.edit().putString("fcmToken", token).apply();
+
+                    // Log and toast
+                    Timber.e("FCM token: %s", token);
+                });
     }
 
     private void startNewActivity(Class<? extends AppCompatActivity> activityClass) {

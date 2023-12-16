@@ -33,6 +33,9 @@ public class UserRegisterData {
     @SerializedName("password")
     private String password;
 
+    @SerializedName("fcmToken")
+    private String fcmToken;
+
     /**
 
      Constructs a new UserInfo object.
@@ -40,10 +43,11 @@ public class UserRegisterData {
      @param email user's email address
      @param password user's password
      */
-    public UserRegisterData(String username, String email, String password) {
+    public UserRegisterData(String username, String email, String password, String fcmToken) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.fcmToken = fcmToken;
     }
     /**
 
@@ -92,5 +96,13 @@ public class UserRegisterData {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }
