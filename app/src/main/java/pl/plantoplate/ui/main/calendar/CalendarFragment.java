@@ -26,6 +26,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.greenrobot.eventbus.EventBus;
@@ -166,7 +168,11 @@ public class CalendarFragment extends Fragment {
 
         if(role.equals("ROLE_ADMIN")) {
             addToCalendarButton.setVisibility(View.VISIBLE);
-            addToCalendarButton.setOnClickListener(v -> replaceFragment(new RecipesFragment()));
+            addToCalendarButton.setOnClickListener(v -> {
+                ((BottomNavigationView) requireActivity()
+                        .findViewById(R.id.bottomNavigationView)).setSelectedItemId(R.id.receipt_long);
+                replaceFragment(new RecipesFragment());
+            });
         }else {
             addToCalendarButton.setVisibility(View.INVISIBLE);
         }

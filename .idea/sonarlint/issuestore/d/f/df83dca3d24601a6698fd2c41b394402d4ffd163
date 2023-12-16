@@ -1,0 +1,47 @@
+
+†
+java:S1319,"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Üı¸ã
+~
+java:S1319,"hThe type of "products" should be an interface such as "List" rather than the implementation "ArrayList".(Üı¸ã
+‹
+java:S1319L"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Ñ¼œúÿÿÿÿ
+ƒ
+java:S1319L"hThe type of "products" should be an interface such as "List" rather than the implementation "ArrayList".(Ñ¼œúÿÿÿÿ
+†
+java:S1319W"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(·ìÌ
+~
+java:S1319W"hThe type of "products" should be an interface such as "List" rather than the implementation "ArrayList".(·ìÌ
+†
+java:S1319i"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ç«±î
+~
+java:S1319i"hThe type of "products" should be an interface such as "List" rather than the implementation "ArrayList".(ç«±î
+‹
+java:S1319u"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Áá¡íıÿÿÿÿ
+‚
+java:S1319u"gThe type of "recipes" should be an interface such as "List" rather than the implementation "ArrayList".(Áá¡íıÿÿÿÿ
+Œ
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ñÖÒÍûÿÿÿÿ
+ƒ
+java:S1319"gThe type of "recipes" should be an interface such as "List" rather than the implementation "ArrayList".(ñÖÒÍûÿÿÿÿ
+‡
+java:S1319“"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(°íõ
+~
+java:S1319“"gThe type of "recipes" should be an interface such as "List" rather than the implementation "ArrayList".(°íõ
+Œ
+java:S1319Ÿ"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(„œíöúÿÿÿÿ
+ƒ
+java:S1319Ÿ"gThe type of "recipes" should be an interface such as "List" rather than the implementation "ArrayList".(„œíöúÿÿÿÿ
+‡
+java:S1319©"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ÏŞôã
+|
+java:S1319©"eThe type of "meals" should be an interface such as "List" rather than the implementation "ArrayList".(ÏŞôã
+‡
+java:S1319Â"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(’§”Ô
+|
+java:S1319Â"eThe type of "meals" should be an interface such as "List" rather than the implementation "ArrayList".(’§”Ô
+;
+java:S1640ª"Convert this Map to an EnumMap.(“¡’¿ıÿÿÿÿ
+P
+java:S1118"":Add a private constructor to hide the implicit public one.(È»›˜
+J
+java:S1144¾"3Remove this unused private "createMealType" method.(‡±µñ

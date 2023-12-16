@@ -1,0 +1,12 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(„õİ“
+B
+java:S1602T",Remove useless curly braces around statement(š×ĞÔ
+}
+java:S3252V"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(À´ÇÑ
+G
+java:S1602X",Remove useless curly braces around statement(°‚˜§üÿÿÿÿ
+]
+java:S1117k"BRename "authRepository" which hides the field declared at line 44.(Ç‚Áşÿÿÿÿ
+‚
+java:S3252o"gUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_LONG".(ÿãøÆüÿÿÿÿ

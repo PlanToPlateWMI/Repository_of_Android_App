@@ -5,14 +5,10 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
-
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.recipe.Ingredient;
 import pl.plantoplate.ui.main.calendar.mealInfo.recyclerViews.viewHolders.MealIngredientsViewHolder;
@@ -47,18 +43,6 @@ public class MealIngredientsAdapter extends RecyclerView.Adapter<MealIngredients
         return new MealIngredientsViewHolder(itemView);
     }
 
-    public void toggleSelection(int position) {
-        if (selectedItems.get(position, false)) {
-            selectedItems.delete(position);
-        } else {
-            selectedItems.put(position, true);
-        }
-    }
-
-    public boolean isSelected(int position) {
-        return selectedItems.get(position, false);
-    }
-
     public ArrayList<Integer> getSelectedIngredients() {
         ArrayList<Integer> selectedIngredients = new ArrayList<>();
         for (int i = 0; i < selectedItems.size(); i++) {
@@ -74,11 +58,7 @@ public class MealIngredientsAdapter extends RecyclerView.Adapter<MealIngredients
     public void onBindViewHolder(@NonNull MealIngredientsViewHolder holder, int position) {
         Ingredient ingredient = ingredients.get(position);
         Timber.e("Ingredient: %s %s", ingredient.getIngredientName(), position);
-        holder.bind(ingredient, isSelected(position));
-//        holder.setOnCheckedChangeListener((compoundButton, b) -> {
-//            toggleSelection(position);
-//            EventBus.getDefault().post(new IngredientsChangeEvent(getSelectedIngredients()));
-//        });
+        holder.bind(ingredient);
     }
 
     @Override

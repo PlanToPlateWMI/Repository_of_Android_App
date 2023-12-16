@@ -1,0 +1,11 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(±Œù­
+B
+java:S1602",Remove useless curly braces around statement(¼±ô×
+I
+java:S1128".Remove this unused import 'android.os.Bundle'.(°þÊóøÿÿÿÿ
+|
+java:S1128
+"aRemove this unused import 'pl.plantoplate.ui.main.calendar.mealInfo.popUps.QuestionDeleteRecipe'.(ôŠÞðúÿÿÿÿ
+…
+java:S1128"jRemove this unused import 'pl.plantoplate.ui.main.recipes.recipeInfo.popUps.ProductsSynchronizationPopUp'.(¢¶ÞËøÿÿÿÿ

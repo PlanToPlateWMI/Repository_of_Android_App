@@ -1,4 +1,5 @@
 buildscript {
+    ext.kotlin_version = '1.9.21'
     repositories {
         mavenCentral()
     }
@@ -32,8 +33,14 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            signingConfig signingConfigs.debug
+            //Enable proguard rules
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
         }
     }
     compileOptions {
@@ -46,6 +53,13 @@ android {
             res.srcDirs =
                     [
                             '/src/main/res'
+                    ]
+        }
+
+        debug{
+            res.srcDirs =
+                    [
+                            '/src/debug/res'
                     ]
         }
     }

@@ -29,12 +29,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
-import pl.plantoplate.ui.main.productsDatabase.AddYourOwnProductFragment;
 import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.recyclerViews.adapters.ProductAdapter;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
@@ -87,7 +87,7 @@ public class BoughtProductsFragment extends Fragment {
         titleTextView = fragmentKupioneBinding.textViewKupione;
     }
 
-    /*
+    /**
         * This method is called when the move to storage button is clicked. It creates a pop up dialog
      */
     private void setClickListeners() {
@@ -177,7 +177,7 @@ public class BoughtProductsFragment extends Fragment {
      * If there are no products in the bought list, a toast message is displayed.
      */
     public void showMoveProductToStoragePopUp(){
-        Dialog dialog = new Dialog(getContext());
+        Dialog dialog = new Dialog(requireContext());
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.new_pop_up_add_to_storage);
 
@@ -186,6 +186,9 @@ public class BoughtProductsFragment extends Fragment {
 
         acceptButton.setOnClickListener(v -> {
             boughtProductsListViewModel.moveProductsToStorage();
+
+            ((BottomNavigationView) requireActivity()
+                    .findViewById(R.id.bottomNavigationView)).setSelectedItemId(R.id.cottage);
 
             replaceFragment(new StorageFragment());
             dialog.dismiss();

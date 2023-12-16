@@ -2,16 +2,13 @@ package pl.plantoplate.ui.main.calendar.mealInfo.recyclerViews.viewHolders;
 
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import pl.plantoplate.databinding.ItemKrokBinding;
 
 public class MealStepsViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView stepTextView;
-    //private boolean crossedOut = false;
+    private final TextView stepTextView;
 
     public MealStepsViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -21,13 +18,7 @@ public class MealStepsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(String step) {
-        stepTextView.setText(step);
+        stepTextView.setText(step.trim());
     }
 
-//    public void toggleCrossedOut() {
-//        crossedOut = !crossedOut;
-//        stepTextView.setPaintFlags(crossedOut ?
-//                stepTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG :
-//                stepTextView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-//    }
 }

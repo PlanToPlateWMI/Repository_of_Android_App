@@ -1,0 +1,8 @@
+
+{
+java:S1319"eThe type of "meals" should be an interface such as "List" rather than the implementation "ArrayList".(¨‹ßã
+‹
+java:S1319!"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ùÆÛÈþÿÿÿÿ
+€
+java:S1319%"eThe type of "meals" should be an interface such as "List" rather than the implementation "ArrayList".(ý½Îñùÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(’¿Ïºÿÿÿÿÿ
