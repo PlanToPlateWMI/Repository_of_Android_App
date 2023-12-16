@@ -28,6 +28,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.repository.UserRepository;
@@ -128,7 +130,11 @@ public class PasswordChangeNewPasswords extends Fragment {
         editor.remove("password");
         editor.remove("role");
         editor.remove("token");
+        //editor.remove("logged");
         editor.apply();
+
+        // delete fcm token
+        FirebaseMessaging.getInstance().deleteToken();
 
         Intent intent = new Intent(this.getContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

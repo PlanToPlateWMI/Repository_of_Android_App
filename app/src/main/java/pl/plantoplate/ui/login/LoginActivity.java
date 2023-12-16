@@ -147,13 +147,15 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         editor.putString("token", token);
         editor.putString("role", role);
         editor.putString("password", signInData.getPassword());
+        //editor.putBoolean("logged", true);
         editor.apply();
     }
 
     public void startMainActivity(View view) {
         Intent intent = new Intent(view.getContext(), ActivityMain.class);
+        intent.putExtra("action", "updateFcmToken");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        view.getContext().startActivity(intent);
+        startActivity(intent);
     }
 
     public void showSnackbar(View view, String message) {

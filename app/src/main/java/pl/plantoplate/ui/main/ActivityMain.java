@@ -15,6 +15,7 @@
  */
 package pl.plantoplate.ui.main;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -23,7 +24,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.Optional;
+
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.FCMToken;
+import pl.plantoplate.data.remote.repository.FCMTokenRepository;
 import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
 import pl.plantoplate.ui.main.recipes.RecipesFragment;
@@ -38,6 +48,7 @@ import timber.log.Timber;
  */
 public class ActivityMain extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
+    private CompositeDisposable compositeDisposable;
     private static final int MENU_CALENDAR = R.id.calendar;
     private static final int MENU_COTTAGE = R.id.cottage;
     private static final int MENU_SHOPPING_CART = R.id.shopping_cart;
@@ -58,11 +69,13 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
         super.onCreate(savedInstanceState);
         ActivityMainForFragmentsBinding binding = ActivityMainForFragmentsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        compositeDisposable = new CompositeDisposable();
 
         binding.bottomNavigationView.setOnItemSelectedListener(this);
         if (savedInstanceState == null) {
             binding.bottomNavigationView.setSelectedItemId(MENU_SHOPPING_CART);
         }
+        checkActions(getIntent().getExtras());
         Timber.d("Activity created");
     }
 
@@ -94,6 +107,53 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
         return false;
     }
 
+    public void checkActions(Bundle bundle){
+        if(bundle != null){
+            String action = Optional.ofNullable(bundle.getString("action")).orElse("");
+
+            if (action.equals("updateFcmToken")){
+                FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Timber.w("Fetching FCM registration token failed");
+                        return;
+                    }
+                    String token = task.getResult();
+                    Timber.d("FCM registration token: %s", token);
+                    SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("fcmToken", token).apply();
+                    updateFcmToken(new FCMToken(token));
+                    Timber.d("FCM token updated %s", token);
+                });
+            }
+        }
+    }
+
+    public void updateFcmToken(FCMToken fcmToken){
+        SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
+        String token = "Bearer " + sharedPreferences.getString("token", "");
+        FCMTokenRepository fcmTokenRepository = new FCMTokenRepository();
+        Disposable disposable = fcmTokenRepository.updateFcmToken(token, fcmToken)
+                .subscribe(
+                        response -> Timber.d("FCM token updated"),
+                        Timber::e
+                );
+
+        compositeDisposable.add(disposable);
+
+        // subscribe to topic
+        FirebaseMessaging.getInstance().subscribeToTopic("notify")
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Subscription successful
+                        Timber.d("Subscribed to topic");
+                    } else {
+                        // Subscription failed
+                        Timber.d("Subscription failed");
+                    }
+                });
+    }
+
     /**
      * Replaces the current fragment with the specified fragment.
      *
@@ -106,5 +166,11 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
         transaction.replace(R.id.frame_layout, fragment, tag);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
     }
 }

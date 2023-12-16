@@ -8,6 +8,7 @@ import pl.plantoplate.data.remote.RetrofitClient;
 import pl.plantoplate.data.remote.models.FCMToken;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.service.FCMTokenService;
+import timber.log.Timber;
 
 public class FCMTokenRepository {
     private final FCMTokenService fcmtokenService;
@@ -18,7 +19,8 @@ public class FCMTokenRepository {
         fcmtokenService = retrofitClient.getClient().create(FCMTokenService.class);
     }
 
-    public Single<UserInfo> sendUserRegisterData(String token, FCMToken fcmToken) {
+    public Single<UserInfo> updateFcmToken(String token, FCMToken fcmToken) {
+        Timber.e("updateFcmToken request: %s", fcmToken);
         return fcmtokenService.updateFCMToken(token, fcmToken)
                 .onErrorResumeNext(throwable -> new ErrorHandler<UserInfo>().
                         handleHttpError(throwable, new HashMap<>() {{

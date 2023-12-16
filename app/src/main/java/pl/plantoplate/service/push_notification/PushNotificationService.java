@@ -14,23 +14,40 @@ import androidx.core.content.ContextCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import java.util.Objects;
+
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
+import pl.plantoplate.data.remote.models.FCMToken;
+import pl.plantoplate.data.remote.repository.FCMTokenRepository;
 import pl.plantoplate.ui.main.ActivityMain;
 import timber.log.Timber;
 
 public class PushNotificationService extends FirebaseMessagingService {
 
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-        Timber.e("onNewToken: %s", token);
+        FCMToken fcmToken = new FCMToken(token);
+        FCMTokenRepository fcmTokenRepository = new FCMTokenRepository();
+        Disposable disposable = fcmTokenRepository.updateFcmToken(token, fcmToken)
+                .subscribe(msg -> Timber.e("onNewToken: %s", msg),
+                        throwable -> Timber.e("onNewToken: %s", throwable.getMessage()));
+
+        compositeDisposable.add(disposable);
     }
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
         Timber.e("onMessageReceived: %s", Objects.requireNonNull(message.getNotification()).getBody());
-        getFirebaseMessage(Objects.requireNonNull(message.getNotification()).getTitle(), message.getNotification().getBody());
+        //SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        //boolean logged = prefs.getBoolean("logged", false);
+        //if (logged){
+            getFirebaseMessage(Objects.requireNonNull(message.getNotification()).getTitle(), message.getNotification().getBody());
+        //}
     }
 
     private void getFirebaseMessage(String title, String body) {
@@ -41,9 +58,9 @@ public class PushNotificationService extends FirebaseMessagingService {
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
         bigTextStyle.bigText(body);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "notify")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("PlanTo Plate")
+                .setContentTitle("PlanToPlate")
                 .setContentText(title)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
@@ -66,7 +83,7 @@ public class PushNotificationService extends FirebaseMessagingService {
     private void createNotificationChannel() {
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         if (notificationManager != null) {
-            NotificationChannel channel = new NotificationChannel("notify", "notify", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("default", "default", NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
     }
@@ -85,6 +102,12 @@ public class PushNotificationService extends FirebaseMessagingService {
     private int generateUniqueNotificationId() {
         // Генерируем уникальный ID для каждого уведомления, например, на основе временной метки или случайного числа.
         return (int) System.currentTimeMillis();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
     }
 }
 

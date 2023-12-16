@@ -33,6 +33,7 @@ public class UserRegisterData {
     @SerializedName("password")
     private String password;
 
+    @SerializedName("fcmToken")
     private String fcmToken;
 
     /**
