@@ -35,12 +35,12 @@
         android:backgroundTint="?attr/boxStrokeColor"
         app:backgroundTint="?attr/boxStrokeColor"
 
-        android:src="@drawable/done_24_50"
+        android:src="@drawable/cottage_outlined_24_50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.921"
         app:layout_constraintStart_toStartOf="parent"
-        app:maxImageSize="32dp"
+        app:maxImageSize="30dp"
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView

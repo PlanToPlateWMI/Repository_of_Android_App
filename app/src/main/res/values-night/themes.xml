@@ -5,6 +5,8 @@
         <item name="colorPrimaryVariant">@color/zam_navigation_bar_buttons</item>
         <item name="colorOnTertiary">@color/zam_background_color</item>
 
+        <item name="colorSurface">@color/zam_navigation_bar_buttons</item>
+
         <item name="colorOnPrimaryFixed">@color/zam_item_kupione_trzeba_kupic</item>
 
         <item name="boxStrokeColor">@color/zam_greeen_stroke</item>

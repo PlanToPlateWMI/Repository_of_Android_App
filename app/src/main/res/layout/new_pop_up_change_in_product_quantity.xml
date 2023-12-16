@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dialog_add_to_storage"
         android:layout_width="360dp"
-        android:layout_height="240dp"
+        android:layout_height="300dp"
         android:background="?attr/colorPrimaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +27,8 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_medium"
             android:gravity="left"
+
+            android:maxLines="2"
 
             android:text="@string/change"
 
@@ -60,7 +62,8 @@
             app:layout_constraintHorizontal_bias="0.038"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.289" />
+            app:layout_constraintVertical_bias="0.099" />
+
 
         <ImageView
             android:id="@+id/minus"
@@ -74,7 +77,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/q"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.294"
+            app:layout_constraintVertical_bias="0.103"
             app:srcCompat="@drawable/remove_24_75" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -99,7 +102,7 @@
             app:layout_constraintHorizontal_bias="0.831"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.4">
+            app:layout_constraintVertical_bias="0.063">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ilosc"
@@ -132,7 +135,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/wprowadz_ilosc"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.294"
+            app:layout_constraintVertical_bias="0.108"
             app:srcCompat="@drawable/add_24_75" />
 
         <TextView
@@ -156,7 +159,95 @@
             app:layout_constraintHorizontal_bias="0.166"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/q"
-            app:layout_constraintVertical_bias="0.364" />
+            app:layout_constraintVertical_bias="0.131" />
+
+        <RadioGroup
+            android:id="@+id/toggle_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/unit"
+            app:layout_constraintVertical_bias="0.179">
+
+            <Button
+                android:id="@+id/min"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_margin="11dp"
+                android:backgroundTint="?attr/colorPrimaryVariant"
+                android:button="@null"
+                android:clickable="true"
+                android:fontFamily="@font/quicksand_regular"
+                android:gravity="center_horizontal|center_vertical"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:text="+2"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textOff="@string/szt"
+                android:textOn="@string/szt"
+                android:textSize="14dp"
+                app:rippleColor="?attr/colorContainer"
+                app:strokeColor="?attr/colorContainer"
+                app:strokeWidth="1dp"/>
+
+            <Button
+                android:id="@+id/middle"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_margin="11dp"
+                android:backgroundTint="?attr/colorPrimaryVariant"
+                android:button="@null"
+                android:clickable="true"
+                android:fontFamily="@font/quicksand_regular"
+                android:gravity="center_horizontal|center_vertical"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="8dp"
+                android:text="+5"
+                android:maxLines="1"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textOff="@string/l"
+                android:textOn="@string/l"
+                android:textSize="14dp"
+                app:rippleColor="?attr/colorContainer"
+                app:strokeColor="?attr/colorContainer"
+                app:strokeWidth="1dp"/>
+
+            <Button
+                android:id="@+id/max"
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:layout_margin="11dp"
+                android:backgroundTint="?attr/colorPrimaryVariant"
+                android:button="@null"
+                android:clickable="true"
+                android:fontFamily="@font/quicksand_regular"
+                android:gravity="center_horizontal|center_vertical"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="+10"
+                android:maxLines="1"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textOff="@string/ml"
+                android:textOn="@string/ml"
+                android:padding="8dp"
+                android:textSize="14dp"
+                app:rippleColor="?attr/colorContainer"
+                app:strokeColor="?attr/colorContainer"
+                app:strokeWidth="1dp"
+                />
+
+        </RadioGroup>
 
         <TextView
             android:id="@+id/close"
@@ -168,12 +259,12 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_light"
 
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="5dp"
-
             android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+
+            android:paddingBottom="10dp"
 
             android:text="@string/zamknij"
 
@@ -182,9 +273,10 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.669"
+            app:layout_constraintHorizontal_bias="0.664"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/unit" />
+            app:layout_constraintTop_toBottomOf="@+id/unit"
+            app:layout_constraintVertical_bias="0.843" />
 
         <TextView
             android:id="@+id/zatwierdzenie"
@@ -196,12 +288,12 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_light"
 
+            android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
-            android:paddingBottom="10dp"
 
-            android:gravity="center"
+            android:paddingBottom="10dp"
             android:text="@string/ok"
 
             android:textAppearance="@style/rejestracja"
@@ -209,9 +301,10 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintHorizontal_bias="0.948"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/unit" />
+            app:layout_constraintTop_toBottomOf="@+id/unit"
+            app:layout_constraintVertical_bias="0.846" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

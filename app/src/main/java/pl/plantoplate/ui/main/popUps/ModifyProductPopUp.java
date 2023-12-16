@@ -21,13 +21,20 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
+import pl.plantoplate.ui.customViews.RadioGridGroup;
 
 public class ModifyProductPopUp extends Dialog {
 
@@ -38,7 +45,13 @@ public class ModifyProductPopUp extends Dialog {
     public TextInputEditText quantity;
     private TextView productUnitTextView;
     public TextView acceptButton;
+    private RadioGroup radioGroup;
+    private Button radioButton_min;
+    private Button radioButton_middle;
+    private Button radioButton_max;
+    private HashMap<String,List<Float>> map = new HashMap<>();
 
+    @SuppressLint("SetTextI18n")
     public ModifyProductPopUp(@NonNull Context context, Product product) {
         super(context);
         setCancelable(true);
@@ -51,12 +64,27 @@ public class ModifyProductPopUp extends Dialog {
         quantity = findViewById(R.id.ilosc);
         productUnitTextView = findViewById(R.id.unit);
         acceptButton = findViewById(R.id.zatwierdzenie);
+        radioGroup = findViewById(R.id.toggle_group);
+        radioButton_min = findViewById(R.id.min);
+        radioButton_middle = findViewById(R.id.middle);
+        radioButton_max = findViewById(R.id.max);
+
+        map.put("szt", List.of(0.5f,2.0f,5.0f));
+        map.put("l", List.of(0.25f,0.5f,5.0f));
+        map.put("ml", List.of(10.0f,50.0f,200.0f));
+        map.put("kg", List.of(0.25f,0.5f,5.0f));
+        map.put("gr", List.of(10.0f,50.0f,200.0f));
 
         String title = productName.getText().toString() + " " + product.getName();
         productName.setText(title);
 
-        String unitTitle = productUnitTextView.getText().toString() + " " + product.getUnit();
+        String unitTitle = productUnitTextView.getText().toString() + " " + product.getUnit().toLowerCase();
         productUnitTextView.setText(unitTitle);
+
+        System.out.println(product.getUnit().toLowerCase());
+        radioButton_min.setText("+" + String.valueOf(Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(0)));
+        radioButton_middle.setText("+" + String.valueOf(Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(1)));
+        radioButton_max.setText("+" + String.valueOf(Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(2)));
 
         if(product.getAmount() == 0.0){
             quantity.setText("");
@@ -102,6 +130,48 @@ public class ModifyProductPopUp extends Dialog {
                 quantity--;
                 this.quantity.setText(String.valueOf(quantity));
             }
+        });
+        radioButton_min.setOnClickListener(v -> {
+            String quantityValue = Objects.requireNonNull(this.quantity.getText()).toString();
+            if (quantityValue.isEmpty()) {
+                quantityValue = "0.0";
+            }
+            if (quantityValue.endsWith(".")) {
+                // add 0
+                quantityValue += "0";
+                this.quantity.setText(quantityValue);
+            }
+            float quantity = Float.parseFloat(quantityValue);
+            quantity += Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(0);
+            this.quantity.setText(String.valueOf(quantity));
+        });
+        radioButton_middle.setOnClickListener(v -> {
+            String quantityValue = Objects.requireNonNull(this.quantity.getText()).toString();
+            if (quantityValue.isEmpty()) {
+                quantityValue = "0.0";
+            }
+            if (quantityValue.endsWith(".")) {
+                // add 0
+                quantityValue += "0";
+                this.quantity.setText(quantityValue);
+            }
+            float quantity = Float.parseFloat(quantityValue);
+            quantity += Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(1);
+            this.quantity.setText(String.valueOf(quantity));
+        });
+        radioButton_max.setOnClickListener(v -> {
+            String quantityValue = Objects.requireNonNull(this.quantity.getText()).toString();
+            if (quantityValue.isEmpty()) {
+                quantityValue = "0.0";
+            }
+            if (quantityValue.endsWith(".")) {
+                // add 0
+                quantityValue += "0";
+                this.quantity.setText(quantityValue);
+            }
+            float quantity = Float.parseFloat(quantityValue);
+            quantity += Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(2);
+            this.quantity.setText(String.valueOf(quantity));
         });
 
         this.setOnShowListener(dialog -> {
