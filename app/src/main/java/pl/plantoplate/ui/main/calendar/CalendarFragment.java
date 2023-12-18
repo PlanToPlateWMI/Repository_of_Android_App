@@ -58,7 +58,7 @@ public class CalendarFragment extends Fragment {
     private FragmentCalendarBinding fragmentCalendarBinding;
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
-    private FloatingActionButton addToCalendarButton;
+    //private FloatingActionButton addToCalendarButton;
     private TextView dateTextView;
     private ShortCalendar shortCalendar;
     private SharedPreferences prefs;
@@ -88,7 +88,7 @@ public class CalendarFragment extends Fragment {
     }
 
     public void initViews(FragmentCalendarBinding fragmentCalendarBinding) {
-        addToCalendarButton = fragmentCalendarBinding.plusInKalendarz;
+        //addToCalendarButton = fragmentCalendarBinding.plusInKalendarz;
         viewPager = fragmentCalendarBinding.kalPrzep;
         dateTextView = fragmentCalendarBinding.miesiacdzienrok;
         radioGridGroup = fragmentCalendarBinding.radioGroupBaza;
@@ -166,16 +166,16 @@ public class CalendarFragment extends Fragment {
 
         String role = prefs.getString("role", "");
 
-        if(role.equals("ROLE_ADMIN")) {
-            addToCalendarButton.setVisibility(View.VISIBLE);
-            addToCalendarButton.setOnClickListener(v -> {
-                ((BottomNavigationView) requireActivity()
-                        .findViewById(R.id.bottomNavigationView)).setSelectedItemId(R.id.receipt_long);
-                replaceFragment(new RecipesFragment());
-            });
-        }else {
-            addToCalendarButton.setVisibility(View.INVISIBLE);
-        }
+//        if(role.equals("ROLE_ADMIN")) {
+//            addToCalendarButton.setVisibility(View.VISIBLE);
+//            addToCalendarButton.setOnClickListener(v -> {
+//                ((BottomNavigationView) requireActivity()
+//                        .findViewById(R.id.bottomNavigationView)).setSelectedItemId(R.id.receipt_long);
+//                replaceFragment(new RecipesFragment());
+//            });
+//        }else {
+//            addToCalendarButton.setVisibility(View.INVISIBLE);
+//        }
 
         // Set up adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
