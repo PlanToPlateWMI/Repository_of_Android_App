@@ -114,6 +114,12 @@ public class CategorySorter {
 
     // recipes sorting
 
+    /**
+     * Sorts a list of recipes by category name and recipe name.
+     *
+     * @param recipes The list of recipes to sort.
+     * @return The sorted list of recipes.
+     */
     public static ArrayList<RecipeCategory> sortCategoriesByRecipe(ArrayList<Recipe> recipes) {
         // Create a map of category names to lists of products
         Map<String, ArrayList<Recipe>> categoryMap = new HashMap<>();
@@ -139,11 +145,24 @@ public class CategorySorter {
         return categories;
     }
 
+    /**
+     * Sorts a list of products by product name.
+     *
+     * @param recipes The list of products to sort.
+     * @return The sorted list of products.
+     */
     public static ArrayList<Recipe> sortRecipesByName(ArrayList<Recipe> recipes) {
         recipes.sort(Comparator.comparing(Recipe::getTitle));
         return recipes;
     }
 
+
+    /**
+     * Filters a list of categories by query
+     * @param recipes The list of categories to filter.
+     * @param query The query to filter by.
+     * @return The filtered list of categories.
+     */
     public static ArrayList<Recipe> filterRecipesCategoriesBySearch(ArrayList<RecipeCategory> recipes, String query) {
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
         for (RecipeCategory category : recipes) {
@@ -156,6 +175,12 @@ public class CategorySorter {
         return filteredRecipes;
     }
 
+    /**
+     * Filters a list of products by query
+     * @param recipes The list of products to filter.
+     * @param query The query to filter by.
+     * @return The filtered list of products.
+     */
     public static ArrayList<Recipe> filterRecipesBySearch(ArrayList<Recipe> recipes, String query) {
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
         for (Recipe recipe : recipes) {
@@ -166,6 +191,12 @@ public class CategorySorter {
         return filteredRecipes;
     }
 
+    /**
+     * Groups a list of meals by MealType.
+     *
+     * @param meals The list of meals to group.
+     * @return The grouped list of meals.
+     */
     public static ArrayList<MealTypes> groupMealsByType(ArrayList<Meal> meals) {
         Map<MealType, ArrayList<Meal>> mealsByType = new HashMap<>();
 
@@ -187,10 +218,22 @@ public class CategorySorter {
         return mealTypesList;
     }
 
+    /**
+     * Sorts a list of recipes by category name and recipe name.
+     *
+     * @param meals The list of recipes to sort.
+     * @return The sorted list of recipes.
+     */
     private static MealTypes createMealType(MealType mealType, Map<MealType, ArrayList<Meal>> mealsByType) {
         return new MealTypes(mealType, mealsByType.getOrDefault(mealType, new ArrayList<>()));
     }
 
+    /**
+     * Sorts a list of products by product name.
+     *
+     * @param meals The list of products to sort.
+     * @return The sorted list of products.
+     */
     public static ArrayList<Meal> getSortedMealTypeList(ArrayList<Meal> meals, MealType mealType) {
         meals.sort(Comparator.comparing(Meal::getMealType));
 

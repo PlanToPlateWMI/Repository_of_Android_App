@@ -15,6 +15,11 @@ public class ShortCalendar{
     private RecyclerView calendarRecyclerView;
     private RecyclerView.Adapter<RecyclerView.ViewHolder> calendarAdapter;
 
+    /**
+     * @param context
+     * @param recyclerView
+     * @param calendarStyle
+     */
     public ShortCalendar(@NonNull Context context,
                          RecyclerView recyclerView,
                          CalendarStyle calendarStyle) {
@@ -23,11 +28,17 @@ public class ShortCalendar{
         setupRecyclerView(context);
     }
 
+    /**
+     * @param context
+     */
     public void setupRecyclerView(Context context){
         calendarRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         setCalendarAdapter();
     }
 
+    /**
+     * @param calendarStyle
+     */
     public void setCalendarAdapter(){
         switch (calendarStyle){
             case PURPLE:
@@ -41,6 +52,10 @@ public class ShortCalendar{
         }
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
+
+    /**
+     * @param setupItemButtons
+     */
     public void setUpItemButtons(SetupItemButtons setupItemButtons){
         switch (calendarStyle){
             case PURPLE:

@@ -76,6 +76,7 @@ public class GroupEnterActivityTest {
         server.shutdown();
     }
 
+    //19.12.2023 - ok
     @Test
     public void testRegisterViewDisplayed() {
 
@@ -84,24 +85,33 @@ public class GroupEnterActivityTest {
 
     }
 
-//    @Test
-//    public void testGroupCode() throws InterruptedException {
-//
-//        String code = "111111";
-//        String baseUrl = "/api/mail/code";
-//
+    @Test
+    public void testGroupCode() throws InterruptedException {
+
+        String code = "111111";
+        String baseUrl = "/api/mail/code";
+
 //        MockResponse response = new MockResponse()
 //                .setResponseCode(200)
 //                .setBody("API send back code that it sends to user's email");
 //        server.enqueue(response);
-//
-//        onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
-//        onView(withId(R.id.button_zatwierdz)).perform(click());
-//
+
+        onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
+        onView(withId(R.id.button_zatwierdz)).perform(click());
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Niepoprawny kod grupy.")));
+
 //        RecordedRequest recordedRequest = server.takeRequest();
 //        assertEquals(baseUrl, recordedRequest.getPath());
-//
-//    }
+
+    }
 }
 
 

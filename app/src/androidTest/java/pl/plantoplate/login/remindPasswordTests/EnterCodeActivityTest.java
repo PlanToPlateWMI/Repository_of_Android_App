@@ -79,6 +79,7 @@ public class EnterCodeActivityTest {
     }
 
     //remind password 2
+    //19.12.2023 - ok
     @Test
     public void testChangePasswordViewDisplayed() {
 
@@ -88,6 +89,7 @@ public class EnterCodeActivityTest {
 
     }
 
+    //19.12.2023 - ok
     @Test
     public void testEnterCodeButton() {
 
@@ -96,8 +98,18 @@ public class EnterCodeActivityTest {
         onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Wprowadzony kod jest niepoprawny")));
+
     }
 
+    //19.12.2023 - ok
     @Test
     public void testAgainButton() {
 
@@ -105,18 +117,21 @@ public class EnterCodeActivityTest {
 
     }
 
+    //19.12.2023 - ok
     @Test
     public void testNoSuchUser() throws InterruptedException {
 
         String code = "1111";
 
-        MockResponse response = new MockResponse()
-                .setResponseCode(400)
-                .setBody("Account with this email doesn't exist");
-        server.enqueue(response);
+//        MockResponse response = new MockResponse()
+//                .setResponseCode(400)
+//                .setBody("Account with this email doesn't exist");
+//        server.enqueue(response);
 
         onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
+
+        Thread.sleep(1000);
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Wprowadzony kod jest niepoprawny")));

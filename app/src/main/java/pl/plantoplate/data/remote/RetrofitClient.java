@@ -30,6 +30,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Retrofit client class.
+ */
 public class RetrofitClient {
 
     //private static final String BASE_URL = "https://plantoplate.lm.r.appspot.com/";
@@ -40,6 +43,9 @@ public class RetrofitClient {
     private final Retrofit client;
     private static final long cacheSize = 5 * 1024 * 1024; // 5 MB
 
+    /**
+     * Constructor
+     */
     private RetrofitClient() {
         client = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -50,6 +56,10 @@ public class RetrofitClient {
                 .build();
     }
 
+    /**
+     * Create OkHttp client
+     * @return OkHttpClient
+     */
     private static OkHttpClient okHttpClient(){
         return new OkHttpClient.Builder()
                 .cache(cache())
@@ -62,6 +72,10 @@ public class RetrofitClient {
                 .build();
     }
 
+    /**
+     * Create Cache
+     * @return Cache
+     */
     private static Cache cache(){
         return new Cache(new File(PlanToPlate.getInstance().getCacheDir(), "cache"), cacheSize);
     }

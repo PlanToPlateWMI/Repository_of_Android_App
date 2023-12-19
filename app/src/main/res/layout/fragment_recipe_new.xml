@@ -97,7 +97,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:text="Włąsne"
+            android:text="Własne"
             android:textAllCaps="false"
             android:textColor="?attr/colorSecondaryVariant"
             android:textOff="@string/produkty_miesne"

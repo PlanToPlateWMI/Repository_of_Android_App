@@ -5,6 +5,21 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="testChangePasswordViewDisplayed()">
+        <State />
+      </entry>
+      <entry key="testGroupCode()">
+        <State />
+      </entry>
+      <entry key="testOldGroupButton()">
+        <State />
+      </entry>
+      <entry key="testRegisterViewDisplayed()">
+        <State />
+      </entry>
+      <entry key="testSignInButton()">
+        <State />
+      </entry>
     </value>
   </component>
 </project>

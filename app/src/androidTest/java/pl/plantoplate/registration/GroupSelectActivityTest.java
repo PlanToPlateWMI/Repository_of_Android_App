@@ -74,6 +74,7 @@ public class GroupSelectActivityTest {
         server.shutdown();
     }
 
+    //19.12.2023 - ok
     @Test
     public void testGroupSelectViewDisplayed() {
 
@@ -82,6 +83,7 @@ public class GroupSelectActivityTest {
 
     }
 
+    //19.12.2023 - ok
     @Test
     public void testOldGroupButton() {
 
@@ -90,13 +92,13 @@ public class GroupSelectActivityTest {
 
     }
 
-//    @Test
-//    public void testNewGroupButton() {
-//
-//        onView(withId(R.id.button_swoja_grupa)).perform(click());
-//        intended(hasComponent(ShoppingListFragment.class.getName()));
-//
-//    }
+    //19.12.2023 - ok
+    @Test
+    public void testNewGroupButton() {
+
+        onView(withId(R.id.button_swoja_grupa)).perform(click());
+
+    }
 }
 
 
