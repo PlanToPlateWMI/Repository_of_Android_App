@@ -59,6 +59,11 @@ public class StorageMainFragment extends Fragment {
     private CategoryAdapter categoryAdapter;
     private SharedPreferences prefs;
 
+    /**
+     * Initializes the views.
+     *
+     * @param fragmentStorageInsideBinding The binding object for the fragment's view.
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -88,12 +93,18 @@ public class StorageMainFragment extends Fragment {
         return fragmentStorageInsideBinding.getRoot();
     }
 
+    /**
+     * Called when the fragment is no longer in use.
+     */
     public void initViews(FragmentStorageInsideBinding fragmentStorageInsideBinding){
         addProductButton = fragmentStorageInsideBinding.plusInStorage;
         recyclerView = fragmentStorageInsideBinding.productsStorage;
         storageTitleTextView = fragmentStorageInsideBinding.textView4;
     }
 
+    /**
+     * Sets up the view model.
+     */
     private void setClickListeners() {
         addProductButton.setOnClickListener(this::addProductsToStorage);
     }
@@ -149,6 +160,9 @@ public class StorageMainFragment extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Sets up the recycler view.
+     */
     private void goToProductsDatabase() {
         Bundle args = new Bundle();
         args.putString("comesFrom", "storage");
@@ -249,6 +263,9 @@ public class StorageMainFragment extends Fragment {
         transaction.commit();
     }
 
+    /**
+     * Called when the fragment is no longer in use.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

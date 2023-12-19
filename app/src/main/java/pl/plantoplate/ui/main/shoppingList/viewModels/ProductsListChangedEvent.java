@@ -20,20 +20,32 @@ import java.util.ArrayList;
 import pl.plantoplate.data.remote.models.shoppingList.ListType;
 import pl.plantoplate.data.remote.models.product.Product;
 
+/**
+ * This class is used to notify the view that the list of products has changed.
+ */
 public class ProductsListChangedEvent {
 
     private final ArrayList<Product> itemList;
     private final ListType listType;
 
+    /**
+     * @param itemList the list of products
+     */
     public ProductsListChangedEvent (ArrayList<Product> itemList, ListType listType) {
         this.itemList = itemList;
         this.listType = listType;
     }
 
+    /**
+     * @return the list of products
+     */
     public ArrayList<Product> getItemList() {
         return itemList;
     }
 
+    /**
+     * @return the list type
+     */
     public ListType getListType() {
         return listType;
     }

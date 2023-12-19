@@ -72,6 +72,10 @@ public class ShoppingListFragment extends Fragment {
         return fragmentShoppingListBinding.getRoot();
     }
 
+    /**
+     * Method called on fragment view creation that initialize fragment views.
+     * @param fragmentShoppingListBinding binding of fragment view.
+     */
     private void initViews(FragmentShoppingListBinding fragmentShoppingListBinding) {
         viewPager = fragmentShoppingListBinding.viewPager;
         radioGridGroup = fragmentShoppingListBinding.radioGroup;

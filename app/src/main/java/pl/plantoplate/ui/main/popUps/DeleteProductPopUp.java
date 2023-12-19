@@ -21,8 +21,16 @@ import android.view.View;
 import android.widget.TextView;
 import pl.plantoplate.R;
 
+/**
+ * Class responsible for displaying pop up window for deleting product
+ */
 public class DeleteProductPopUp extends Dialog {
 
+    /**
+     * @param context  - context of the activity
+     * @param viewType - type of the view to be displayed
+     * @param listener - listener for the buttons
+     */
     public DeleteProductPopUp(Context context, int viewType, View.OnClickListener listener) {
         super(context);
         setCancelable(true);

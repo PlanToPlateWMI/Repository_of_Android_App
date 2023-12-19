@@ -8,10 +8,10 @@
       <entry key="testChangePasswordViewDisplayed()">
         <State />
       </entry>
-      <entry key="testGroupCode()">
+      <entry key="testCreateAccountButton()">
         <State />
       </entry>
-      <entry key="testOldGroupButton()">
+      <entry key="testGroupCode()">
         <State />
       </entry>
       <entry key="testRegisterViewDisplayed()">
