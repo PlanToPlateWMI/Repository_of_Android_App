@@ -94,6 +94,10 @@ public class BoughtProductsFragment extends Fragment {
         moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
     }
 
+    /**
+     * This method creates a pop up dialog for moving products to storage. It inflates the layout
+     * for the dialog, sets up the dialog buttons, and displays the dialog.
+     */
     @Override
     public void onResume() {
         super.onResume();

@@ -22,7 +22,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * DateUtils is a class that provides a method for formatting a LocalDate object to a polish date string.
+ */
 public class DateUtils {
+
+    /**
+     * This method formats a LocalDate object to a polish date string.
+     * @param date The LocalDate object to format
+     * @return The formatted date string
+     */
     public static String formatPolishDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM, d, yyyy", new Locale("pl", "PL"));
         String formattedDate = date.format(formatter);
@@ -33,6 +42,10 @@ public class DateUtils {
         return formattedDate;
     }
 
+    /**
+     * Creates a mapping between polish and english month names.
+     * @return A map with polish month names as keys and english month names as values.
+     */
     private static Map<String, String> createMonthMapping() {
         Map<String, String> monthMapping = new HashMap<>();
         monthMapping.put("stycznia", "Styczeń");
@@ -50,6 +63,11 @@ public class DateUtils {
         return monthMapping;
     }
 
+    /**
+     * Generates a list of dates for the next 7 days.
+     * @param includePast If true, the list will also include the last 3 days.
+     * @return A list of dates for the next 7 days.
+     */
     public static ArrayList<LocalDate> generateDates(boolean includePast) {
         LocalDate today = LocalDate.now();
         ArrayList<LocalDate> dateList = new ArrayList<>();

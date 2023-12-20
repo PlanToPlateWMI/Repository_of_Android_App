@@ -88,28 +88,36 @@ public class ChangeTheDataTest {
         onView(withId(R.id.zmiana_imienia)).check(matches(isDisplayed()));
         onView(withId(R.id.zmiana_email)).check(matches(isDisplayed()));
         onView(withId(R.id.zmiana_hasla)).check(matches(isDisplayed()));
+        onView(withId(R.id.usuwanie_konta)).check(matches(isDisplayed()));
 
     }
 
-//    @Test
-//    public void testChangeName() {
-//
-//        onView(withId(R.id.zmiana_imienia)).perform(click());
-//
-//    }
-//
-//    @Test
-//    public void testChangeEmail() {
-//
-//        onView(withId(R.id.zmiana_email)).perform(click());
-//
-//    }
-//
-//
-//    @Test
-//    public void testChangePassword() {
-//
-//        onView(withId(R.id.zmiana_hasla)).perform(click());
-//
-//    }
+    @Test
+    public void testChangeName() {
+
+        onView(withId(R.id.zmiana_imienia)).perform(click());
+
+    }
+
+    @Test
+    public void testChangeEmail() {
+
+        onView(withId(R.id.zmiana_email)).perform(click());
+
+    }
+
+
+    @Test
+    public void testChangePassword() {
+
+        onView(withId(R.id.zmiana_hasla)).perform(click());
+
+    }
+
+    @Test
+    public void testDeleteAccount() {
+
+        onView(withId(R.id.usuwanie_konta)).perform(click());
+
+    }
 }

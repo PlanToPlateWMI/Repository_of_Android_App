@@ -62,6 +62,9 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         Timber.d("Activity created");
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     private void initViews(EmailConfirmationBinding email_confirm_view) {
         Timber.d("Initializing views...");
         emailInfoTextView = email_confirm_view.skorzystajZLinku;
@@ -70,6 +73,9 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         resendCodeButton = email_confirm_view.wyLijPono;
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     private void setEmailInfoText() {
         Timber.d("Setting email info text...");
         String email = prefs.getString("email", "");
@@ -77,6 +83,9 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         emailInfoTextView.setText(text);
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         confirmButton.setOnClickListener(this::checkCode);
@@ -123,6 +132,10 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * This method is called when the user clicks the get new code button.
+     * It is responsible for getting a new code from the server.
+     */
     public void startGroupSelectActivity() {
         Timber.d("Starting group select activity...");
         Intent intent = new Intent(this, GroupSelectActivity.class);
@@ -131,6 +144,12 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         saveAppState(ApplicationState.GROUP_CHOOSE);
     }
 
+    /**
+     * This method is called when the user clicks the get new code button.
+     * It is responsible for getting a new code from the server.
+     * @param view The view that was clicked.
+     * @param message The message to be shown in the snackbar.
+     */
     private void showSnackbar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
@@ -147,6 +166,10 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
         editor.apply();
     }
 
+    /**
+     * This method is called when the user clicks the back button.
+     * It is responsible for starting the login activity.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

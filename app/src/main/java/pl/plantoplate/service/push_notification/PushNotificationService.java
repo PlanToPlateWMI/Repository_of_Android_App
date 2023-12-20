@@ -23,10 +23,18 @@ import pl.plantoplate.data.remote.repository.FCMTokenRepository;
 import pl.plantoplate.ui.main.ActivityMain;
 import timber.log.Timber;
 
+/**
+ * Service for handling Firebase push notifications.
+ */
 public class PushNotificationService extends FirebaseMessagingService {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    /**
+     * Called if InstanceID token is updated. This may occur if the security of
+     * the previous token had been compromised. Note that this is called when the InstanceID token
+     * is initially generated so this is where you would retrieve the token.
+     */
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
@@ -39,6 +47,9 @@ public class PushNotificationService extends FirebaseMessagingService {
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * Called when message is received.
+     */
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
@@ -50,6 +61,9 @@ public class PushNotificationService extends FirebaseMessagingService {
         //}
     }
 
+    /**
+     * Create and show a simple notification containing the received FCM message.
+     */
     private void getFirebaseMessage(String title, String body) {
         Intent intent = new Intent(this, ActivityMain.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -80,6 +94,9 @@ public class PushNotificationService extends FirebaseMessagingService {
         notificationManagerCompat.notify(generateUniqueNotificationId(), builder.build());
     }
 
+    /**
+     * Create notification channel for Android Oreo and higher.
+     */
     private void createNotificationChannel() {
         NotificationManager notificationManager = getSystemService(NotificationManager.class);
         if (notificationManager != null) {
@@ -88,6 +105,9 @@ public class PushNotificationService extends FirebaseMessagingService {
         }
     }
 
+    /**
+     * Update user role in SharedPreferences.
+     */
     private void updateRole() {
         SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -99,11 +119,17 @@ public class PushNotificationService extends FirebaseMessagingService {
         editor.apply();
     }
 
+    /**
+     * Generate unique notification ID.
+     */
     private int generateUniqueNotificationId() {
         // Генерируем уникальный ID для каждого уведомления, например, на основе временной метки или случайного числа.
         return (int) System.currentTimeMillis();
     }
 
+    /**
+     * Clear all subscriptions.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

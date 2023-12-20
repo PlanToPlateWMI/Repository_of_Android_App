@@ -107,6 +107,12 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
         return false;
     }
 
+    /**
+     * Replaces the current fragment with the given one.
+     *
+     * @param fragment The fragment to be displayed.
+     * @param tag      The tag of the fragment.
+     */
     public void checkActions(Bundle bundle){
         if(bundle != null){
             String action = Optional.ofNullable(bundle.getString("action")).orElse("");
@@ -129,6 +135,12 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
         }
     }
 
+    /**
+     * Replaces the current fragment with the given one.
+     *
+     * @param fragment The fragment to be displayed.
+     * @param tag      The tag of the fragment.
+     */
     public void updateFcmToken(FCMToken fcmToken){
         SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);
         String token = "Bearer " + sharedPreferences.getString("token", "");
@@ -168,6 +180,11 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
         transaction.commit();
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back key.
+     * If the current fragment is not the shopping list fragment, the shopping list fragment is displayed.
+     * Otherwise, the application is closed.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

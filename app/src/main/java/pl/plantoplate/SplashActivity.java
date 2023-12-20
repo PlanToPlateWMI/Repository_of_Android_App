@@ -64,6 +64,11 @@ public class SplashActivity extends AppCompatActivity {
         }, SPLASH_TIME_OUT);
     }
 
+    /**
+     * This method is responsible for setting the application theme.
+     *
+     * @param theme application theme
+     */
     private void setAppTheme(String theme) {
         Timber.e("Theme: %s", theme);
         switch (theme) {
@@ -101,6 +106,10 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * This method is responsible for getting the FCM token.
+     */
     public void getFcmToken() {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
@@ -118,6 +127,11 @@ public class SplashActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * This method is responsible for starting a new activity.
+     *
+     * @param activityClass activity class
+     */
     private void startNewActivity(Class<? extends AppCompatActivity> activityClass) {
         Intent intent = new Intent(this, activityClass);
         startActivity(intent);

@@ -67,6 +67,10 @@ public class GroupCodeTypeActivity extends Fragment {
         return fragmentChoiceAdultOrChildBinding.getRoot();
     }
 
+    /**
+     * Initialize the views for the activity.
+     * @param fragmentChoiceAdultOrChildBinding The binding for the fragment
+     */
     public void initViews(FragmentChoiceAdultOrChildBinding fragmentChoiceAdultOrChildBinding){
         Timber.d("Initializing views...");
         childCodeButton = fragmentChoiceAdultOrChildBinding.codeForChild;
@@ -74,6 +78,9 @@ public class GroupCodeTypeActivity extends Fragment {
         questionButton = fragmentChoiceAdultOrChildBinding.questionButton;
     }
 
+    /**
+     * Show a pop up with a question about group codes.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         childCodeButton.setOnClickListener(v -> generateGroupCode(v, "USER"));
@@ -106,6 +113,10 @@ public class GroupCodeTypeActivity extends Fragment {
         compositeDisposable.add(disposable);
     }
 
+
+    /**
+     * Show a pop up with a question about group codes.
+     */
     public void showQuestionPopUp(){
         Dialog dialog = new Dialog(requireContext());
         dialog.setCancelable(true);
@@ -126,6 +137,9 @@ public class GroupCodeTypeActivity extends Fragment {
         transaction.commit();
     }
 
+    /**
+     * Clear the composite disposable when the activity is destroyed.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

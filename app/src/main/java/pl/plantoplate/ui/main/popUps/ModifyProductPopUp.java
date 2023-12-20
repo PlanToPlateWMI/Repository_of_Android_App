@@ -36,6 +36,9 @@ import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 
+/**
+ * Class responsible for displaying pop up window for modifying product
+ */
 public class ModifyProductPopUp extends Dialog {
 
     private TextView productName;
@@ -51,6 +54,10 @@ public class ModifyProductPopUp extends Dialog {
     private Button radioButton_max;
     private HashMap<String,List<Float>> map = new HashMap<>();
 
+    /**
+     * @param context - context of the activity
+     * @param product - product to be modified
+     */
     @SuppressLint("SetTextI18n")
     public ModifyProductPopUp(@NonNull Context context, Product product) {
         super(context);
@@ -187,6 +194,9 @@ public class ModifyProductPopUp extends Dialog {
 
     }
 
+    /**
+     * Set up input type for quantity EditText
+     */
     public void setOnlyFloatInput() {
         quantity.addTextChangedListener(new TextWatcher() {
             @SuppressLint("SetTextI18n")

@@ -56,6 +56,15 @@ public class BuyProductsFragment extends Fragment {
     private SharedPreferences prefs;
     private CategoryAdapter categoryAdapter;
 
+    /**
+     * Method called on fragment view creation.
+     * Method initialize fragment view and setup swipe pager and bottom navigation.
+     *
+     * @param inflater layout inflater that can be used to inflate any views in the fragment.
+     * @param container view group container that will contain the fragment.
+     * @param savedInstanceState saved instance state of fragment.
+     * @return root view of fragment.
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -63,6 +72,11 @@ public class BuyProductsFragment extends Fragment {
         toBuyProductsListViewModel.fetchToBuyProducts();
     }
 
+    /**
+     * Replaces the current fragment with the given one.
+     *
+     * @param fragment The fragment to be displayed.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,12 +90,21 @@ public class BuyProductsFragment extends Fragment {
         return fragmentTrzebaKupicBinding.getRoot();
     }
 
+    /**
+     * Replaces the current fragment with the given one.
+     *
+     * @param fragment The fragment to be displayed.
+     */
     private void initViews(FragmentTrzebaKupicBinding fragmentTrzebaKupicBinding) {
         addToCartButton = fragmentTrzebaKupicBinding.plusInTrzebaKupic;
         categoryRecyclerView = fragmentTrzebaKupicBinding.productsOwnRecyclerView;
         titleTextView = fragmentTrzebaKupicBinding.textViewTrzebaKupic;
     }
 
+    /**
+     * Sets up the ViewModel for this fragment.
+     * Observes the LiveData for the shopping list and the user info.
+     */
     private void setClickListeners() {
         addToCartButton.setOnClickListener(v -> {
             Bundle args = new Bundle();

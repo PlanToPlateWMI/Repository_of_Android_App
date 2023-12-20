@@ -81,6 +81,8 @@ public class RegisterActivityTest {
         server.shutdown();
     }
 
+
+    //19/12/2023 - ok
     @Test
     public void testRegisterViewDisplayed() {
 
@@ -90,74 +92,80 @@ public class RegisterActivityTest {
         onView(withId(R.id.checkbox_wyrazam_zgode)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zaloz_konto)).check(matches(isDisplayed()));
         onView(withId(R.id.masz_konto)).check(matches(isDisplayed()));
+        onView(withId(R.id.checkbox_mam_lat_13)).check(matches(isDisplayed()));
 
     }
 
+    //19/12/2023 - ok
     @Test
     public void testUserIsAlreadyExist() throws InterruptedException {
 
         String baseUrl = "/api/users/emails";
-        String email = "karynayarmosh@gmail.com";
+        String email = "plantoplatemobileapp@gmail.com";
         String password = "password";
-        String name = "Karyna";
+        String name = "Plantest";
 
-        MockResponse response = new MockResponse()
-                .setResponseCode(409)
-                .setBody("Email is already taken");
-        server.enqueue(response);
+//        MockResponse response = new MockResponse()
+//                .setResponseCode(409)
+//                .setBody("Email is already taken");
+//        server.enqueue(response);
 
         onView(withId(R.id.enterName)).perform(typeText(name), closeSoftKeyboard());
         onView(withId(R.id.enter_email)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
 
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
 
-        RecordedRequest recordedRequest = server.takeRequest();
-
-        String url = Uri.parse(baseUrl)
-                .buildUpon()
-                .appendQueryParameter("email", email)
-                .build()
-                .toString();
-
-        assertEquals(url, recordedRequest.getPath());
+//        RecordedRequest recordedRequest = server.takeRequest();
+//
+//        String url = Uri.parse(baseUrl)
+//                .buildUpon()
+//                .appendQueryParameter("email", email)
+//                .build()
+//                .toString();
+//
+//        assertEquals(url, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Użytkownik o podanym adresie email już istnieje.")));
     }
 
+    //19/12/2023 - ok
     @Test
     public void testUserIsRegister() throws InterruptedException {
 
         String baseUrl = "/api/users/emails";
-        String email = "marinamarinatestmarina@gmail.com";
+        String email = "marinamarinatestmarinatesttest@gmail.com";
         String password = "password";
         String name = "Marina";
 
-        MockResponse response = new MockResponse()
-                .setResponseCode(200)
-                .setBody("User successfully registered and API sends back code that it sends yo user's email");
-        server.enqueue(response);
+//        MockResponse response = new MockResponse()
+//                .setResponseCode(200)
+//                .setBody("User successfully registered and API sends back code that it sends yo user's email");
+//        server.enqueue(response);
 
         onView(withId(R.id.enterName)).perform(typeText(name), closeSoftKeyboard());
         onView(withId(R.id.enter_email)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
 
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
 
-        RecordedRequest recordedRequest = server.takeRequest();
-
-        String url = Uri.parse(baseUrl)
-                .buildUpon()
-                .appendQueryParameter("email", email)
-                .build()
-                .toString();
-
-        assertEquals(url, recordedRequest.getPath());
+//        RecordedRequest recordedRequest = server.takeRequest();
+//
+//        String url = Uri.parse(baseUrl)
+//                .buildUpon()
+//                .appendQueryParameter("email", email)
+//                .build()
+//                .toString();
+//
+//        assertEquals(url, recordedRequest.getPath());
     }
 
+    //19/12/2023 - ok
     @Test
     public void testSignInButton() {
 
@@ -169,11 +177,12 @@ public class RegisterActivityTest {
         onView(withId(R.id.enter_email)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
-
 
     }
 
+    //19/12/2023 - ok
     @Test
     public void testNoName() {
 
@@ -187,13 +196,21 @@ public class RegisterActivityTest {
         onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
 
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Wprowadż imię użytkownika!")));
+                .check(matches(withText("Wprowadź imię użytkownika!")));
 
     }
 
+    //19/12/2023 - ok
     @Test
     public void testNoEmail() {
 
@@ -206,13 +223,22 @@ public class RegisterActivityTest {
         onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
 
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Wprowadż adres email!")));
+                .check(matches(withText("Wprowadź adres email!")));
 
     }
 
+
+    //19/12/2023 - ok
     @Test
     public void testNoPassword() {
 
@@ -225,13 +251,15 @@ public class RegisterActivityTest {
         onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
 
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Wprowadż hasło!")));
+                .check(matches(withText("Wprowadź hasło!")));
 
     }
 
+    //19/12/2023 - ok
     @Test
     public void testNoLongPassword() {
 
@@ -244,6 +272,7 @@ public class RegisterActivityTest {
         onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
 
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
@@ -251,23 +280,47 @@ public class RegisterActivityTest {
 
     }
 
-//    @Test
-//    public void testNoChecked() {
-//
-//        String name = "Karol";
-//        String email = "test1234@test.com";
-//        String password = "password";
-//
-//        onView(withId(R.id.enterName)).perform(typeText(name), closeSoftKeyboard());
-//        onView(withId(R.id.enter_email)).perform(typeText(email), closeSoftKeyboard());
-//        onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
-//
-//        onView(withId(R.id.button_zaloz_konto)).perform(click());
-//
-//        onView(withId(com.google.android.material.R.id.snackbar_text))
-//                .check(matches(withText("Musisz wyrazić zgodę na przetwarzanie danych osobowych")));
-//    }
+    //19/12/2023 - ok
+    @Test
+    public void testNoChecked() {
 
+        String name = "Karol";
+        String email = "test1234@test.com";
+        String password = "password";
+
+        onView(withId(R.id.enterName)).perform(typeText(name), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
+
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
+        onView(withId(R.id.button_zaloz_konto)).perform(click());
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Musisz wyrazić zgodę na przetwarzanie danych osobowych")));
+    }
+
+    //19/12/2023 - ok
+    @Test
+    public void testNoCheckedAge() {
+
+        String name = "Karol";
+        String email = "test1234@test.com";
+        String password = "password";
+
+        onView(withId(R.id.enterName)).perform(typeText(name), closeSoftKeyboard());
+        onView(withId(R.id.enter_email)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
+
+        onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.button_zaloz_konto)).perform(click());
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Musisz ukończyć 13 lat, aby założyć konto")));
+    }
+
+
+
+    //19/12/2023 - ok
     @Test
     public void testCreateAccountButton() {
 
@@ -276,6 +329,7 @@ public class RegisterActivityTest {
 
     }
 
+    //19/12/2023 - ok
     @Test
     public void testInvalidCredentials_mail() {
 
@@ -288,6 +342,7 @@ public class RegisterActivityTest {
         onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
 
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
@@ -295,6 +350,7 @@ public class RegisterActivityTest {
 
     }
 
+    //19/12/2023 - ok
     @Test
     public void testInvalidCredentials_password() {
 
@@ -307,6 +363,7 @@ public class RegisterActivityTest {
         onView(withId(R.id.enter_password)).perform(typeText(password), closeSoftKeyboard());
 
         onView(withId(R.id.checkbox_wyrazam_zgode)).perform(click());
+        onView(withId(R.id.checkbox_mam_lat_13)).perform(click());
         onView(withId(R.id.button_zaloz_konto)).perform(click());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))

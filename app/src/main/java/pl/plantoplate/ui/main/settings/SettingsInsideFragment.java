@@ -61,6 +61,14 @@ public class SettingsInsideFragment extends Fragment {
     private SwitchCompat themeSwitch;
     private SharedPreferences prefs;
 
+    /**
+     * Creates the view for the fragment.
+     *
+     * @param inflater the layout inflater for the fragment
+     * @param container the view group container for the fragment
+     * @param savedInstanceState the saved instance state for the fragment
+     * @return the view for the fragment as a View object.
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -69,6 +77,10 @@ public class SettingsInsideFragment extends Fragment {
         checkUsers(prefs.getString("role", ""));
     }
 
+    /**
+     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
+     * @param role The role of the user.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,6 +96,10 @@ public class SettingsInsideFragment extends Fragment {
         return settingsView.getRoot();
     }
 
+    /**
+     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
+     * @param role The role of the user.
+     */
     private void initViews(FragmentSettingsInsideBinding settingsView) {
         Timber.d("Initializing views...");
         generateGroupCodeButton = settingsView.buttonWygenerowanieKodu;
@@ -97,6 +113,10 @@ public class SettingsInsideFragment extends Fragment {
         usernameTextView.setVisibility(View.GONE);
     }
 
+    /**
+     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
+     * @param role The role of the user.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         exitAccountButton.setOnClickListener(this::exitAccount);
@@ -104,6 +124,10 @@ public class SettingsInsideFragment extends Fragment {
         aboutUsButton.setOnClickListener(v -> replaceFragment(new MailDevelops()));
     }
 
+    /**
+     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
+     * @param role The role of the user.
+     */
     private void setupTheme() {
         SharedPreferences.Editor editor = prefs.edit();
         themeSwitch.setChecked("dark".equals(prefs.getString("theme", "")));
@@ -119,6 +143,7 @@ public class SettingsInsideFragment extends Fragment {
             editor.apply();
         });
     }
+
 
     private void setUpViewModel() {
         settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);

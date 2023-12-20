@@ -30,6 +30,11 @@ import pl.plantoplate.data.remote.repository.StorageRepository;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.utils.CategorySorter;
 
+/**
+ * The ViewModel class for the StorageFragment.
+ * It holds the MutableLiveData objects for the success message, the list of storage products, and the user info.
+ * It also holds the CompositeDisposable object for the RxJava subscriptions.
+ */
 public class StorageViewModel extends AndroidViewModel {
 
     private final CompositeDisposable compositeDisposable;
@@ -101,6 +106,11 @@ public class StorageViewModel extends AndroidViewModel {
 
     }
 
+    /**
+     * Fetches the user info from the user repository.
+     * It uses the token from shared preferences to authenticate the request.
+     * Handles the success, error, and failure cases by updating the corresponding MutableLiveData objects.
+     */
     public void fetchUserInfo() {
         UserRepository userRepository = new UserRepository();
         String token = "Bearer " + prefs.getString("token", "");

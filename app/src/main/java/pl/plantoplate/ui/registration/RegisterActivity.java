@@ -82,6 +82,9 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         Timber.d("Activity created");
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     private void initViews(RegisterActivityBinding binding) {
         Timber.d("Initializing views...");
         enterNameEditText = binding.enterName;
@@ -95,6 +98,9 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         initHasAccountTextView();
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     private void initHasAccountTextView() {
         Timber.d("Initializing has account text view...");
         Spannable spans = new SpannableString("Masz konto?    ZAŁOGUJ SIĘ");
@@ -102,6 +108,9 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         hasAccountTextView.setText(spans);
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         registerButton.setOnClickListener(this::getUserInfo);
@@ -212,6 +221,11 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         compositeDisposable.add(disposable);
     }
 
+
+    /**
+     * Saves the user's data to shared preferences.
+     * @param userData The user's data to save.
+     */
     private void saveUserData(UserRegisterData userData) {
         Timber.d("Saving user data to shared preferences");
         SharedPreferences.Editor editor = prefs.edit();
@@ -246,6 +260,10 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         editor.apply();
     }
 
+
+    /**
+     * Clears the composite disposable when the activity is destroyed.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

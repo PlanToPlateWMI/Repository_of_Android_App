@@ -54,6 +54,10 @@ public class GeneratedGroupCodeActivity extends Fragment {
         return fragmentGeneratedCodeBinding.getRoot();
     }
 
+    /**
+     * Initializes the views for the activity.
+     * @param fragmentGeneratedCodeBinding The binding for the fragment
+     */
     public void initViews(FragmentGeneratedCodeBinding fragmentGeneratedCodeBinding){
         Timber.d("Initializing views...");
         groupCodeEditText = fragmentGeneratedCodeBinding.kod;
@@ -70,6 +74,9 @@ public class GeneratedGroupCodeActivity extends Fragment {
         groupCodeEditText.setText(groupCode);
     }
 
+    /**
+     * Sets the click listeners for the buttons.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         applyButton.setOnClickListener(this::shareInviteCode);

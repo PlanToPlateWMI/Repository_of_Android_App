@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,12 +49,15 @@ public class MealInfoFragment extends Fragment{
     private MealInfoViewModel mealInfoViewModel;
     private ViewPager2 viewPager2;
     private RadioGridGroup radioGridGroup;
-    private ImageView recipeImage, recipeMenu, fakeRecipeMenu, recipeInfo, recipeInfoFake;
+    private ImageView recipeImage, recipeInfo, recipeInfoFake;
     private TextView recipeTitle, recipeTime, recipePortions, recipeLevel;
     private PopupMenu popupMenu;
     private PopupMenu popupMenuInfo;
     private String sourceLink = "http://google.com";
     private SharedPreferences prefs;
+
+    private FloatingActionButton button_ingredience;
+    private FloatingActionButton button_cook;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -78,26 +82,44 @@ public class MealInfoFragment extends Fragment{
         recipeLevel = fragmentItemRecipeInsideForCalendarBinding.levelText;
         viewPager2 = fragmentItemRecipeInsideForCalendarBinding.viewPagerRecipeInside;
         radioGridGroup = fragmentItemRecipeInsideForCalendarBinding.radioGroupRecipeInside;
-        recipeMenu = fragmentItemRecipeInsideForCalendarBinding.menuButton;
-        fakeRecipeMenu = fragmentItemRecipeInsideForCalendarBinding.menuButtonTest;
         recipeInfo = fragmentItemRecipeInsideForCalendarBinding.info;
         recipeInfoFake = fragmentItemRecipeInsideForCalendarBinding.infoFake;
-
-        setupPopUpMenu(fakeRecipeMenu);
+        button_ingredience = fragmentItemRecipeInsideForCalendarBinding.plusIng;
+        button_cook = fragmentItemRecipeInsideForCalendarBinding.plusPrzepis;
 
         setupPopUpMenuInfo(recipeInfoFake);
 
         String role = prefs.getString("role", "");
 
-        if(role.equals("ROLE_ADMIN")) {
-            recipeMenu.setVisibility(View.VISIBLE);
-            recipeMenu.setOnClickListener(v -> popupMenu.show());
-        }else {
-            recipeMenu.setVisibility(View.INVISIBLE);
-        }
-
-
         recipeInfo.setOnClickListener(v -> popupMenuInfo.show());
+        button_cook.setOnClickListener(v -> {
+            MealPlan mealPlan = new MealPlan();
+            RecipeInfo recipeInfo = mealInfoViewModel.getMealInfo().getValue();
+            mealPlan.setPortions(recipeInfo.getPortions());
+            mealPlan.setIngredientsIds((ArrayList<Integer>) recipeInfo.getIngredients()
+                    .stream().map(Ingredient::getId).collect(Collectors.toList()));
+
+            Timber.e(mealPlan.toString());
+            QuestionCookRecipe questionCookRecipe = new QuestionCookRecipe();
+            Bundle bundle = new Bundle();
+            bundle.putInt("mealId", recipeInfo.getId());
+            questionCookRecipe.setArguments(bundle);
+            questionCookRecipe.setOnAcceptClickListener(v1 -> {
+                getParentFragmentManager().popBackStack();
+            });
+            questionCookRecipe.show(getChildFragmentManager(), "QuestionCookRecipe");
+        });
+        button_ingredience.setOnClickListener(v -> {
+            MealPlan mealPlan = new MealPlan();
+            RecipeInfo recipeInfo = mealInfoViewModel.getMealInfo().getValue();
+            mealPlan.setPortions(recipeInfo.getPortions());
+            mealPlan.setIngredientsIds((ArrayList<Integer>) recipeInfo.getIngredients()
+                    .stream().map(Ingredient::getId).collect(Collectors.toList()));
+
+            Timber.e(mealPlan.toString());
+            mealPlan.setRecipeId(recipeInfo.getId());
+            showPopUpDeleteRecipe(mealPlan);
+        });
     }
 
     public void setupPopUpMenuInfo(View view) {
@@ -123,12 +145,6 @@ public class MealInfoFragment extends Fragment{
             mealPlan.setPortions(recipeInfo.getPortions());
             mealPlan.setIngredientsIds((ArrayList<Integer>) recipeInfo.getIngredients()
                     .stream().map(Ingredient::getId).collect(Collectors.toList()));
-//            if(item.getItemId() == R.id.produkty_do_listy){
-//                Timber.e(mealPlan.toString());
-//                mealPlan.setRecipeId(recipeInfo.getRecipeId());
-//                PopUpCalendarRecipeControl popUpControl = new PopUpCalendarRecipeControl(getChildFragmentManager(), mealPlan);
-//                popUpControl.showPopUpSynchronization();
-//                return true;
             if(item.getItemId() == R.id.przygotowany_przepis) {
                 Timber.e(mealPlan.toString());
                 QuestionCookRecipe questionCookRecipe = new QuestionCookRecipe();
@@ -186,13 +202,6 @@ public class MealInfoFragment extends Fragment{
 
         String role = prefs.getString("role", "");
 
-        if(role.equals("ROLE_ADMIN")) {
-            recipeMenu.setVisibility(View.VISIBLE);
-            recipeMenu.setOnClickListener(v -> popupMenu.show());
-        }else {
-            recipeMenu.setVisibility(View.INVISIBLE);
-        }
-
     }
 
     private void setupNavigation() {
@@ -206,17 +215,35 @@ public class MealInfoFragment extends Fragment{
     }
 
     private void setupViewPager(ViewPager2 viewPager) {
+        String role = prefs.getString("role", "");
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                if (position == 0) {
+                if (position == 0 && role.equals("ROLE_ADMIN")) {
                     recipeInfo.setVisibility(View.INVISIBLE);
                     recipeInfoFake.setVisibility(View.INVISIBLE);
+                    button_ingredience.setVisibility(View.VISIBLE);
+                    button_cook.setVisibility(View.INVISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.skladniki_button);
-                } else {
+                } else if (position == 1 && role.equals("ROLE_ADMIN")) {
                     recipeInfo.setVisibility(View.VISIBLE);
                     recipeInfoFake.setVisibility(View.VISIBLE);
+                    button_ingredience.setVisibility(View.INVISIBLE);
+                    button_cook.setVisibility(View.VISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);
+                } else {
+                    button_ingredience.setVisibility(View.INVISIBLE);
+                    button_cook.setVisibility(View.INVISIBLE);
+                    if(position == 0) {
+                        radioGridGroup.setCheckedRadioButtonById(R.id.skladniki_button);
+                        recipeInfo.setVisibility(View.VISIBLE);
+                        recipeInfoFake.setVisibility(View.VISIBLE);
+                    } else{
+                        radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);
+                        recipeInfo.setVisibility(View.VISIBLE);
+                        recipeInfoFake.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });

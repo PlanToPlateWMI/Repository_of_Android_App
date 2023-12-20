@@ -70,14 +70,25 @@ public class RadioGridGroup extends GridLayout{
         }
     }
 
+    /**
+     * Interface definition for a callback to be invoked when the checked radio button changed in this group.
+     */
     public interface OnCheckedChangeListener {
         void onCheckedChanged(RadioGridGroup group, int checkedId);
     }
 
+    /**
+     * Register a callback to be invoked when the checked radio button changed in this group.
+     * @param listener the callback to call on checked state change
+     */
     public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
         this.onCheckedChangeListener = listener;
     }
 
+    /**
+     * Returns the checked radio button ID.
+     * @return the checked radio button ID
+     */
     public RadioButton getCheckedRadioButton() {
         for (RadioButton radioButton : radioButtons) {
             if (radioButton.isChecked()) {

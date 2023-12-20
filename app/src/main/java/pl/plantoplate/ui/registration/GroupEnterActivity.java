@@ -65,12 +65,18 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         Timber.d("Activity created");
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     private void initViews(GroupPageBinding groupPageBinding) {
         Timber.d("Initializing views...");
         groupCodeEnterEditText = groupPageBinding.wprowadzKod;
         groupCodeEnterButton = groupPageBinding.buttonZatwierdz;
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         groupCodeEnterButton.setOnClickListener(this::validateGroupCode);
@@ -133,6 +139,9 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     private void saveUserData(JwtResponse jwt) {
         Timber.d("Saving user data...");
         SharedPreferences.Editor editor = prefs.edit();
@@ -141,6 +150,9 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         editor.apply();
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     public void showRoleChildAboutInfoPopUp() {
         Timber.d("Showing role child about info pop up...");
         Dialog dialog = new Dialog(this);
@@ -155,6 +167,9 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         dialog.show();
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     public void startMainActivity() {
         Timber.d("Starting main activity...");
         Intent intent = new Intent(this, ActivityMain.class);
@@ -163,6 +178,11 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         saveAppState(ApplicationState.MAIN_ACTIVITY);
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     * @param view The view that was clicked
+     * @param message The message to be shown
+     */
     private void showSnackbar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
@@ -180,6 +200,10 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         editor.apply();
     }
 
+    /**
+     * This method is called when the user clicks the back button.
+     * It starts the previous activity.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="deploymentTargetDropDown">
+    <value>
+      <entry key="ChangeEmailStep1FragmentTest">
+        <State />
+      </entry>
+      <entry key="PasswordChangeOldPasswordTest">
+        <State />
+      </entry>
+      <entry key="app">
+        <State />
+      </entry>
+      <entry key="testNoEmailDisplayed()">
+        <State />
+      </entry>
+      <entry key="testOldPasswordViewDisplayed()">
+        <State />
+      </entry>
+      <entry key="testSucc()">
+        <State />
+      </entry>
+    </value>
+  </component>
+</project>

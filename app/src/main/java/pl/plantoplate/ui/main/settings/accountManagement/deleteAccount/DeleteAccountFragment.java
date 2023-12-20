@@ -15,6 +15,9 @@ import androidx.fragment.app.Fragment;
 
 import pl.plantoplate.databinding.FragmentRemoveAccountBinding;
 
+/**
+ * A fragment that allows the user to delete their account.
+ */
 public class DeleteAccountFragment extends Fragment {
 
     private Button acceptButton;
@@ -39,10 +42,17 @@ public class DeleteAccountFragment extends Fragment {
         return fragmentRemoveAccountBinding.getRoot();
     }
 
+    /**
+     * Initialize the views
+     * @param fragmentRemoveAccountBinding The binding for the fragment
+     */
     public void initViews(FragmentRemoveAccountBinding fragmentRemoveAccountBinding) {
         acceptButton = fragmentRemoveAccountBinding.buttonZatwierdz;
     }
 
+    /**
+     * Set the click listeners
+     */
     public void setClickListeners() {
         acceptButton.setOnClickListener(v -> sendMail());
     }

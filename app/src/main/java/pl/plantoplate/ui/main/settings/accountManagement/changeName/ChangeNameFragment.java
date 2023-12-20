@@ -64,6 +64,10 @@ public class ChangeNameFragment extends Fragment {
         return fragmentNameChangeBinding.getRoot();
     }
 
+    /**
+     * This method is responsible for initializing the views.
+     * @param fragmentNameChangeBinding The binding for this fragment
+     */
     public void initViews(FragmentNameChangeBinding fragmentNameChangeBinding){
         acceptButton = fragmentNameChangeBinding.buttonZatwierdz;
         enterNameInputLayout = fragmentNameChangeBinding.wprowadzImie;
@@ -81,6 +85,7 @@ public class ChangeNameFragment extends Fragment {
     public void onAcceptName(View view) {
         String username = String.valueOf(enterNameEditText.getText()).trim();
         if (username.isEmpty()) {
+            Toast.makeText(requireActivity(), "Pole nie może być puste", Toast.LENGTH_SHORT).show();
             enterNameInputLayout.setError("Pole nie może być puste");
             return;
         }
@@ -97,6 +102,9 @@ public class ChangeNameFragment extends Fragment {
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * This method is called when the fragment is destroyed.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

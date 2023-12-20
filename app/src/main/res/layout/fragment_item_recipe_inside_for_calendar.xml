@@ -29,76 +29,115 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/menuButtonTest"
+<!--    <ImageView-->
+<!--        android:id="@+id/menuButtonTest"-->
 
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
+<!--        android:layout_width="1dp"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentBottom="true"-->
 
-        android:contentDescription="TODO"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingRight="0dp"
-        android:paddingBottom="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/more_vert_24_50"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.981"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.009"
-        tools:ignore="MissingConstraints" />
+<!--        android:contentDescription="TODO"-->
+<!--        android:paddingLeft="0dp"-->
+<!--        android:paddingTop="0dp"-->
+<!--        android:paddingRight="0dp"-->
+<!--        android:paddingBottom="0dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/more_vert_24_50"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.981"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.009"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <ImageView
-        android:id="@+id/menuButton"
+<!--    <ImageView-->
+<!--        android:id="@+id/menuButton"-->
 
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentBottom="true"-->
 
-        android:contentDescription="TODO"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingRight="0dp"
-        android:paddingBottom="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/lens_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.956"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        tools:ignore="MissingConstraints" />
+<!--        android:contentDescription="TODO"-->
+<!--        android:paddingLeft="0dp"-->
+<!--        android:paddingTop="0dp"-->
+<!--        android:paddingRight="0dp"-->
+<!--        android:paddingBottom="0dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/lens_24"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.956"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.023"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <ImageView
-        android:id="@+id/menuWhite"
+<!--    <ImageView-->
+<!--        android:id="@+id/menuWhite"-->
 
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
+<!--        android:layout_width="46dp"-->
+<!--        android:layout_height="46dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentBottom="true"-->
 
-        android:contentDescription="TODO"
-        android:paddingLeft="9dp"
-        android:paddingTop="3dp"
-        android:paddingRight="1dp"
-        android:paddingBottom="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/more_vert_24_black_75"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.94"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        tools:ignore="MissingConstraints"/>
+<!--        android:contentDescription="TODO"-->
+<!--        android:paddingLeft="9dp"-->
+<!--        android:paddingTop="3dp"-->
+<!--        android:paddingRight="1dp"-->
+<!--        android:paddingBottom="0dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/more_vert_24_black_75"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.94"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.023"-->
+<!--        tools:ignore="MissingConstraints"/>-->
 
 <!--    android:backgroundTint="?attr/colorBackgroundFloating"-->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/plus_ing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:clickable="true"
+        android:iconTint="?attr/colorSecondaryVariant"
+        android:backgroundTint="?attr/colorOutline"
+        app:backgroundTint="?attr/colorOutline"
+
+        android:src="@drawable/outline_delete_forever_24_50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.921"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxImageSize="26dp"
+        android:visibility="visible"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/plus_przepis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:clickable="true"
+        android:iconTint="?attr/colorSecondaryVariant"
+        android:backgroundTint="?attr/colorOutline"
+        app:backgroundTint="?attr/colorOutline"
+
+        android:src="@drawable/done_24_50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.921"
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxImageSize="26dp"
+        android:visibility="visible"
+        tools:ignore="MissingConstraints" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
 

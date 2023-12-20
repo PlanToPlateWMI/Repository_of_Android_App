@@ -74,6 +74,9 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         setClickListeners();
     }
 
+    /**
+     * A method that allows the user to log in to their account.
+     */
     private void initViews(LoginPageBinding loginPageBinding) {
         Timber.d("Initializing views...");
         emailTextInput = loginPageBinding.enterMail;
@@ -84,6 +87,9 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         initDontHaveAccountTextView();
     }
 
+    /**
+     * A method that allows the user to log in to their account.
+     */
     private void initDontHaveAccountTextView() {
         Timber.d("Initializing has account text view...");
         Spannable spans = new SpannableString("Nie masz konta?    ZAŁÓŻ KONTO");
@@ -91,6 +97,9 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         dontHaveAccountTextView.setText(spans);
     }
 
+    /**
+     * A method that allows the user to log in to their account.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         signInButton.setOnClickListener(this::validateUserInfo);
@@ -109,6 +118,9 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         return new SignInData(email, password);
     }
 
+    /**
+     * A method that allows the user to log in to their account.
+     */
     public void validateUserInfo(View view) {
         SignInData signInData = getUserInfo();
         if (signInData.getEmail().isEmpty()) {
@@ -141,6 +153,9 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * A method that allows the user to log in to their account.
+     */
     public void saveUserData(SignInData signInData, String role, String token) {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("email", signInData.getEmail());
@@ -151,6 +166,9 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         editor.apply();
     }
 
+    /**
+     * A method that allows the user to log in to their account.
+     */
     public void startMainActivity(View view) {
         Intent intent = new Intent(view.getContext(), ActivityMain.class);
         intent.putExtra("action", "updateFcmToken");
@@ -158,6 +176,9 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         startActivity(intent);
     }
 
+    /**
+     * A method that allows the user to log in to their account.
+     */
     public void showSnackbar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
@@ -192,6 +213,9 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         editor.apply();
     }
 
+    /**
+     * Disposes of the composite disposable.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

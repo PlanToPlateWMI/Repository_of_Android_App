@@ -64,12 +64,22 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         Timber.d("Activity created");
     }
 
+
+    /**
+     * This method initializes the views.
+     *
+     * @param group_select_view The view binding object
+     */
     private void initViews(GroupChooseBinding group_select_view) {
         Timber.d("Initializing views...");
         enterGroupButton = group_select_view.buttonMamZaproszenie;
         createGroupButton = group_select_view.buttonSwojaGrupa;
     }
 
+
+    /**
+     * This method sets the onClickListeners for the buttons.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         enterGroupButton.setOnClickListener(v ->
@@ -113,6 +123,12 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         compositeDisposable.add(disposable);
     }
 
+
+    /**
+     * This method saves the user's token and role in shared preferences.
+     *
+     * @param jwt The JWT response
+     */
     private void saveUserData(JwtResponse jwt) {
         Timber.d("Saving user data...");
         SharedPreferences.Editor editor = prefs.edit();
@@ -121,6 +137,10 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         editor.apply();
     }
 
+
+    /**
+     * This method starts the main activity.
+     */
     private void startMainActivity() {
         Timber.d("Starting main activity...");
         Intent intent = new Intent(this, ActivityMain.class);
@@ -128,6 +148,13 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         startActivity(intent);
     }
 
+
+    /**
+     * This method shows a snackbar with the given message.
+     *
+     * @param view    The view to show the snackbar on
+     * @param message The message to show
+     */
     private void showSnackbar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
@@ -145,6 +172,11 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         editor.apply();
     }
 
+
+    /**
+     * This method is called when the activity is destroyed.
+     * It disposes the composite disposable.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
