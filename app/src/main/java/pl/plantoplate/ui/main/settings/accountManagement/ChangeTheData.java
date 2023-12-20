@@ -57,6 +57,10 @@ public class ChangeTheData extends Fragment {
         return fragmentChangeSelectorBinding.getRoot();
     }
 
+    /**
+     * Initialize the views
+     * @param fragmentChangeSelectorBinding The binding object that can be used to access views in the fragment
+     */
     public void initViews(FragmentChangeSelectorBinding fragmentChangeSelectorBinding ){
         changeNameButton = fragmentChangeSelectorBinding.zmianaImienia;
         changeEmailButton = fragmentChangeSelectorBinding.zmianaEmail;
@@ -64,6 +68,9 @@ public class ChangeTheData extends Fragment {
         deleteAccountButton = fragmentChangeSelectorBinding.usuwanieKonta;
     }
 
+    /**
+     * Set the click listeners
+     */
     private void setClickListeners() {
         changeNameButton.setOnClickListener(v -> replaceFragment(new ChangeNameFragment()));
         changeEmailButton.setOnClickListener(v -> replaceFragment(new ChangeEmailStep1Fragment()));

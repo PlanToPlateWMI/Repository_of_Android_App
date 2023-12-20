@@ -49,10 +49,17 @@ public class MailDevelops extends Fragment {
         return fragmentDeveloperBinding.getRoot();
     }
 
+    /**
+     * Initialize the views
+     * @param fragmentDeveloperBinding The binding object
+     */
     public void initViews(FragmentDeveloperBinding fragmentDeveloperBinding) {
         acceptButton = fragmentDeveloperBinding.buttonZatwierdz;
     }
 
+    /**
+     * Set the click listeners
+     */
     public void setClickListeners() {
         acceptButton.setOnClickListener(v -> sendMail());
     }

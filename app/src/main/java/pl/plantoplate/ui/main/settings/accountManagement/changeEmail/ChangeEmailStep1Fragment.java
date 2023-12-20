@@ -68,6 +68,11 @@ public class ChangeEmailStep1Fragment extends Fragment {
         return fragmentEmailChangeBinding.getRoot();
     }
 
+    /**
+     * Replaces the current fragment with the specified fragment.
+     *
+     * @param fragment The fragment to replace the current fragment with.
+     */
     public void initViews(FragmentEmailChangeBinding fragmentEmailChangeBinding){
         acceptButton = fragmentEmailChangeBinding.buttonZatwierdz;
         enterPasswordInputLayout = fragmentEmailChangeBinding.wprowadzHaslo;
@@ -78,9 +83,13 @@ public class ChangeEmailStep1Fragment extends Fragment {
         acceptButton.setOnClickListener(v -> validatePasswordMatch());
     }
 
+    /**
+     * Validates if the password matches the one in the database.
+     */
     public void validatePasswordMatch() {
         String password = passwordEditText.getText().toString().trim();
         if (password.isEmpty()) {
+            Toast.makeText(requireActivity(), "Pole nie może być puste", Toast.LENGTH_SHORT).show();
             enterPasswordInputLayout.setError("Pole nie może być puste");
             return;
         }
@@ -115,6 +124,9 @@ public class ChangeEmailStep1Fragment extends Fragment {
         transaction.commit();
     }
 
+    /**
+     * Disposes the composite disposable.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

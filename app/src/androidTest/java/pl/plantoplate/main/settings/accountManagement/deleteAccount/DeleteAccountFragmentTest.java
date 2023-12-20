@@ -1,20 +1,9 @@
-/*
- * Copyright 2023 the original author or authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+package pl.plantoplate.main.settings.accountManagement.deleteAccount;
 
-package pl.plantoplate.main.settings.developerContact;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -26,23 +15,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import mockwebserver3.MockWebServer;
-import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
-import pl.plantoplate.R;
-
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
 import java.io.IOException;
 
+import mockwebserver3.MockWebServer;
+import pl.plantoplate.R;
+import pl.plantoplate.ui.main.ActivityMain;
+import pl.plantoplate.ui.main.settings.accountManagement.deleteAccount.DeleteAccountFragment;
+
 @RunWith(AndroidJUnit4.class)
-public class MainDevelopsTest {
+public class DeleteAccountFragmentTest {
 
     @Rule
     public ActivityScenarioRule<ActivityMain> fragmentRule =
@@ -77,19 +58,18 @@ public class MainDevelopsTest {
 
         fragmentRule.getScenario().onActivity(activity -> {
             activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, MailDevelops.class, null)
+                    .replace(R.id.frame_layout, DeleteAccountFragment.class, null)
                     .commit();
         });
     }
 
-
-    //19/12/2023 - ok
     @Test
-    public void testSettingsFragmentInsideViewDisplayed() {
+    public void testDeleteAccountViewDisplayed() {
 
         onView(withId(R.id.dev_text)).check(matches(isDisplayed()));
         onView(withId(R.id.dev_adres)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zatwierdz)).check(matches(isDisplayed()));
 
     }
+
 }

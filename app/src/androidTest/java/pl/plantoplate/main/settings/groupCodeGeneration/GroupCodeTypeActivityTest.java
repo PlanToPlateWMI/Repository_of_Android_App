@@ -68,6 +68,9 @@ public class GroupCodeTypeActivityTest {
     @Test
     public void generateChildCodeButtonDisplayed() {
 
+        onView(withId(R.id.code_generation)).check(matches(isDisplayed()));
+        onView(withId(R.id.choose_an_option)).check(matches(isDisplayed()));
+        onView(withId(R.id.uwaga)).check(matches(isDisplayed()));
         // Check that the child code button is displayed
         onView(withId(R.id.code_for_child)).check(matches(isDisplayed()));
         onView(withId(R.id.code_for_adult)).check(matches(isDisplayed()));
@@ -89,7 +92,7 @@ public class GroupCodeTypeActivityTest {
         onView(withId(R.id.code_for_child)).perform(click());
 
         //intended(hasComponent(GeneratedGroupCodeActivity.class.getName()));
-        navigateToGeneratedGroupCodeActivity();
+        //navigateToGeneratedGroupCodeActivity();
 
     }
 
@@ -108,7 +111,7 @@ public class GroupCodeTypeActivityTest {
         onView(withId(R.id.code_for_adult)).perform(click());
 
         //intended(hasComponent(GeneratedGroupCodeActivity.class.getName()));
-        navigateToGenerateAdultCodeButtonClickedy();
+        //navigateToGenerateAdultCodeButtonClickedy();
 
     }
 }

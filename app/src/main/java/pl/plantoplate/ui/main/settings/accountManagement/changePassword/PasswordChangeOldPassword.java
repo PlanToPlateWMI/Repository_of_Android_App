@@ -68,15 +68,26 @@ public class PasswordChangeOldPassword extends Fragment {
         return fragmentPasswordChangeBinding.getRoot();
     }
 
+    /**
+     * Initialize views
+     * @param fragmentPasswordChangeBinding This is the parent view that the fragment's UI should be attached to
+     */
     public void initViews(FragmentPasswordChangeBinding fragmentPasswordChangeBinding){
         acceptButton = fragmentPasswordChangeBinding.buttonZatwierdz;
         oldPasswordInputLayout = fragmentPasswordChangeBinding.wprowadzStareHaslo;
     }
 
+    /**
+     * Set click listeners
+     */
     private void setClickListeners() {
         acceptButton.setOnClickListener(v -> validatePassword());
     }
 
+
+    /**
+     * Validate password
+     */
     public void validatePassword() {
         String password = Objects.requireNonNull(oldPasswordInputLayout.getEditText()).getText().toString().trim();
         if (password.isEmpty()) {
@@ -115,6 +126,9 @@ public class PasswordChangeOldPassword extends Fragment {
         transaction.commit();
     }
 
+    /**
+     * Destroy view
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
