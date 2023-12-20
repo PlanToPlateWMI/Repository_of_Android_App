@@ -89,7 +89,7 @@ public class ChangeEmailStep2Fragment extends Fragment {
 
     /**
      * Replace the fragment
-     * @param fragment The fragment to replace
+     * The fragment to replace
      */
     public void setClickListeners(){
         acceptButton.setOnClickListener(v -> validateEmail());
@@ -98,7 +98,7 @@ public class ChangeEmailStep2Fragment extends Fragment {
 
     /**
      * Replace the fragment
-     * @param fragment The fragment to replace
+     * The fragment to replace
      */
     public void validateEmail(){
         String newEmail = enterNewEmailEditText.getText().toString().trim();
@@ -128,7 +128,7 @@ public class ChangeEmailStep2Fragment extends Fragment {
 
     /**
      * Replace the fragment
-     * @param The fragment to replace
+     * The fragment to replace
      */
     public void setNewPassword(String newEmail) {
         String token = "Bearer " + prefs.getString("token", "");
