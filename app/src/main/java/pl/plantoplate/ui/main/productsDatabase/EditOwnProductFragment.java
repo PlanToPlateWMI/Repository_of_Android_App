@@ -91,7 +91,7 @@ public class EditOwnProductFragment extends Fragment {
         productCategoryTextView = fragmentProductChangeBinding.kategoriaNapis;
         deleteProductButton = fragmentProductChangeBinding.buttonUsun;
 
-        productCategoryTextView.setText(product.getCategory());
+        productCategoryTextView.setText("Kategoria: " + product.getCategory());
     }
 
     private void setClickListeners() {
@@ -183,7 +183,7 @@ public class EditOwnProductFragment extends Fragment {
     @Subscribe
     public void onCategoryChosen(ChangeCategoryEvent event) {
         product.setCategory(event.getCategory());
-        productCategoryTextView.setText(event.getCategory());
+        productCategoryTextView.setText("Kategoria: " + event.getCategory());
     }
 
     private void replaceFragment(Fragment fragment) {
