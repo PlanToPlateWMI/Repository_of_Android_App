@@ -30,6 +30,7 @@ import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.data.remote.repository.StorageRepository;
 import pl.plantoplate.data.remote.repository.UserRepository;
+import pl.plantoplate.ui.main.shoppingList.events.ProductsListChangedEvent;
 
 /**
  * ViewModel for bought products list

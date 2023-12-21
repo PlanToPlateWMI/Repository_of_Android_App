@@ -53,6 +53,7 @@ public class BoughtProductsFragment extends Fragment {
     private TextView titleTextView;
     private SharedPreferences prefs;
     private ProductAdapter productListAdapter;
+    private TextView productsCountTextView;
 
     /**
      * Called to create the view hierarchy associated with the fragment.
@@ -85,6 +86,7 @@ public class BoughtProductsFragment extends Fragment {
         moveToStorageButton = fragmentKupioneBinding.floatingActionButton;
         productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
         titleTextView = fragmentKupioneBinding.textViewKupione;
+        productsCountTextView = requireActivity().findViewById(R.id.quantity);
     }
 
     /**
@@ -134,6 +136,12 @@ public class BoughtProductsFragment extends Fragment {
                 titleTextView.setText("");
             }
             productListAdapter.setProductsList(CategorySorter.sortProductsByName(boughtProducts));
+            if (boughtProducts.isEmpty()) {
+                productsCountTextView.setVisibility(View.INVISIBLE);
+            } else {
+                productsCountTextView.setVisibility(View.VISIBLE);
+                productsCountTextView.setText(String.valueOf(boughtProducts.size()));
+            }
         });
         boughtProductsListViewModel.getResponseMessage().observe(getViewLifecycleOwner(), responseMessage ->
                 Toast.makeText(requireActivity(), responseMessage, Toast.LENGTH_SHORT).show());

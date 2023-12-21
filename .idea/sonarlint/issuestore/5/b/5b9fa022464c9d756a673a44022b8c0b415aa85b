@@ -1,0 +1,7 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ƒêÍ
+
+java:S1450'"bRemove the "ownRecipesViewModel" field and declare it as a local variable in the relevant methods.(ş¾Ãü8ÚæéêÈ1
+C	java:S131\""Add a default case to this switch.(¼œóÛüÿÿÿÿ8à™èêÈ1
+T
+java:S1068'"7Remove this unused "ownRecipesViewModel" private field.(ş¾Ãü8éæéêÈ1

@@ -56,15 +56,6 @@ public class BuyProductsFragment extends Fragment {
     private SharedPreferences prefs;
     private CategoryAdapter categoryAdapter;
 
-    /**
-     * Method called on fragment view creation.
-     * Method initialize fragment view and setup swipe pager and bottom navigation.
-     *
-     * @param inflater layout inflater that can be used to inflate any views in the fragment.
-     * @param container view group container that will contain the fragment.
-     * @param savedInstanceState saved instance state of fragment.
-     * @return root view of fragment.
-     */
     @Override
     public void onResume() {
         super.onResume();
@@ -73,9 +64,13 @@ public class BuyProductsFragment extends Fragment {
     }
 
     /**
-     * Replaces the current fragment with the given one.
+     * Method called on fragment view creation.
+     * Method initialize fragment view and setup swipe pager and bottom navigation.
      *
-     * @param fragment The fragment to be displayed.
+     * @param inflater layout inflater that can be used to inflate any views in the fragment.
+     * @param container view group container that will contain the fragment.
+     * @param savedInstanceState saved instance state of fragment.
+     * @return root view of fragment.
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -92,8 +87,6 @@ public class BuyProductsFragment extends Fragment {
 
     /**
      * Replaces the current fragment with the given one.
-     *
-     * @param fragment The fragment to be displayed.
      */
     private void initViews(FragmentTrzebaKupicBinding fragmentTrzebaKupicBinding) {
         addToCartButton = fragmentTrzebaKupicBinding.plusInTrzebaKupic;
@@ -160,7 +153,6 @@ public class BuyProductsFragment extends Fragment {
                             view1 -> toBuyProductsListViewModel.deleteProductFromList(product)).show());
                 }
                 else{
-                    //set visibility none
                     v.setVisibility(View.INVISIBLE);
                 }
             }
