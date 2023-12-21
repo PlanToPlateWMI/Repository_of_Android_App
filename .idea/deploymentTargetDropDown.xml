@@ -5,19 +5,32 @@
       <entry key="ChangeEmailStep1FragmentTest">
         <State />
       </entry>
+      <entry key="ChangeEmailStep2FragmentTest">
+        <State />
+      </entry>
       <entry key="PasswordChangeOldPasswordTest">
         <State />
       </entry>
       <entry key="app">
-        <State />
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Karisha\.android\avd\Pixel_5_API_33_3_1.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-12-21T22:23:23.387195600Z" />
+        </State>
       </entry>
       <entry key="testNoEmailDisplayed()">
         <State />
       </entry>
       <entry key="testOldPasswordViewDisplayed()">
-        <State />
-      </entry>
-      <entry key="testSucc()">
         <State />
       </entry>
     </value>

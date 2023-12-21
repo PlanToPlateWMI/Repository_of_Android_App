@@ -58,6 +58,7 @@ public class SettingsInsideFragment extends Fragment {
     private Button manageUsersButton;
     private Button changeDataButton;
     private Button aboutUsButton;
+    private Button helpButton;
     private SwitchCompat themeSwitch;
     private SharedPreferences prefs;
 
@@ -103,10 +104,13 @@ public class SettingsInsideFragment extends Fragment {
     private void initViews(FragmentSettingsInsideBinding settingsView) {
         Timber.d("Initializing views...");
         generateGroupCodeButton = settingsView.buttonWygenerowanieKodu;
+
         exitAccountButton = settingsView.buttonWyloguj;
         manageUsersButton = settingsView.buttonZarzadyanieUyztkownikamu;
         changeDataButton = settingsView.buttonZmianaDanych;
         aboutUsButton = settingsView.buttonAboutUs;
+        helpButton = settingsView.buttonHelp;
+
         usernameTextView = settingsView.imie;
         themeSwitch = settingsView.switchButtonChangeColorTheme;
 
