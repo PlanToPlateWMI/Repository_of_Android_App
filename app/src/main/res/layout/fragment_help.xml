@@ -7,31 +7,158 @@
     android:layout_height="match_parent"
     android:background="?attr/colorOnTertiary">
 
-    <TextView
-        android:id="@+id/dev_text"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
+    <Button
+        android:id="@+id/button_wygenerowanie_kodu"
+        android:layout_width="0dp"
+        android:layout_height="84dp"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:clickable="true"
+        android:drawableLeft="@drawable/shopping_cart_outlined_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="Zarządzanie listą zakupów"
 
-        android:layout_marginTop="140dp"
-        android:fontFamily="@font/quicksand_regular"
-
-        android:gravity="center"
-        android:text="Wkrótce"
-
-        android:textAppearance="@style/rejestracja"
+        android:textAllCaps="false"
         android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="22dp"
+
+        app:iconPadding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintVertical_bias="0.19"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorPrimaryVariant"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/button_zmiana_danych"
+        android:layout_width="0dp"
+        android:layout_height="84dp"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:clickable="true"
+        android:drawableLeft="@drawable/outline_food_bank_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="Interakcja z bazą produktów"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorSecondaryVariant"
+        app:iconPadding="12dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_wygenerowanie_kodu"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorPrimaryVariant"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/button_zarzadyanie_uyztkownikamu"
+        android:layout_width="0dp"
+        android:layout_height="84dp"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:clickable="true"
+        android:drawableLeft="@drawable/cottage_outlined_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="Zarządzanie spiżarnią"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorSecondaryVariant"
+        app:iconPadding="12dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_zmiana_danych"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorPrimaryVariant"
+        app:strokeWidth="1dp" />
 
 
+
+    <Button
+        android:id="@+id/button_about_us"
+        android:layout_width="0dp"
+        android:layout_height="84dp"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:clickable="true"
+        android:drawableLeft="@drawable/receipt_long_outline_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="Zarządzanie przepisami"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorSecondaryVariant"
+        app:iconPadding="12dp"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_zarzadyanie_uyztkownikamu"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorPrimaryVariant"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/button_help"
+        android:layout_width="0dp"
+        android:layout_height="84dp"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:clickable="true"
+        android:drawableLeft="@drawable/outline_receipt_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="Zarządzanie przepisem"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorSecondaryVariant"
+        app:iconPadding="12dp"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_about_us"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorPrimaryVariant"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/button_wyloguj"
+        android:layout_width="0dp"
+        android:layout_height="84dp"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:clickable="true"
+        android:drawableLeft="@drawable/calendar_today_outline_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="Zarządzanie przepisem w kalendarzu"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorSecondaryVariant"
+        app:iconPadding="12dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_help"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorPrimaryVariant"
+        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
