@@ -37,6 +37,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
+import pl.plantoplate.ui.main.settings.helpManager.HelpManager;
 import pl.plantoplate.utils.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
@@ -126,6 +127,7 @@ public class SettingsInsideFragment extends Fragment {
         exitAccountButton.setOnClickListener(this::exitAccount);
         changeDataButton.setOnClickListener(v -> replaceFragment(new ChangeTheData()));
         aboutUsButton.setOnClickListener(v -> replaceFragment(new MailDevelops()));
+        helpButton.setOnClickListener(v -> replaceFragment(new HelpManager()));
     }
 
     /**

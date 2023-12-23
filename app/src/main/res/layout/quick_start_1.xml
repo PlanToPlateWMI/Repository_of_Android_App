@@ -8,16 +8,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dialog_quick_start_1"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="match_parent"
 
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-
-        android:background="?attr/colorPrimaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +23,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/quick_start_1"
             android:scaleType="centerCrop"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -40,8 +34,8 @@
 
         <ImageView
             android:id="@+id/close"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:background="@drawable/close_24_50"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +49,7 @@
         <ImageView
             android:id="@+id/next"
 
-            android:layout_width="38dp"
+            android:layout_width="42dp"
             android:layout_height="160dp"
             android:background="@drawable/outline_chevron_right_24_50"
             android:scaleType="centerCrop"
@@ -74,7 +68,7 @@
         <ImageView
             android:id="@+id/previouse"
 
-            android:layout_width="38dp"
+            android:layout_width="42dp"
             android:layout_height="160dp"
             android:layout_marginLeft="-8dp"
 
