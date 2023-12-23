@@ -57,6 +57,11 @@ public class HelpManager extends Fragment {
      */
     public void setClickListeners() {
         shoppinglist.setOnClickListener(v -> showShoppingList());
+        baseOfProducts.setOnClickListener(v -> showbaseOfProducts());
+        storageList.setOnClickListener(v -> showStorageList());
+        recipeOne.setOnClickListener(v -> showRecipeOne());
+        recipeAll.setOnClickListener(v -> showRecipeAll());
+        calendarRecipe.setOnClickListener(v -> showCalendarRecipe());
     }
 
     public void showShoppingList() {
@@ -79,4 +84,78 @@ public class HelpManager extends Fragment {
         dialog.show();
     }
 
+    public void showbaseOfProducts() {
+        Timber.d("Showing pop up...");
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.quick_start_2);
+
+        ImageView closeButton = dialog.findViewById(R.id.close);
+
+        closeButton.setOnClickListener(v -> {
+            Timber.d("Closing pop up...");
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    public void showStorageList() {
+        Timber.d("Showing pop up...");
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.quick_start_3);
+
+        ImageView closeButton = dialog.findViewById(R.id.close);
+
+        closeButton.setOnClickListener(v -> {
+            Timber.d("Closing pop up...");
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    public void showRecipeOne() {
+        Timber.d("Showing pop up...");
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.quick_start_4);
+
+        ImageView closeButton = dialog.findViewById(R.id.close);
+
+        closeButton.setOnClickListener(v -> {
+            Timber.d("Closing pop up...");
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    public void showRecipeAll() {
+        Timber.d("Showing pop up...");
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.quick_start_5);
+
+        ImageView closeButton = dialog.findViewById(R.id.close);
+
+        closeButton.setOnClickListener(v -> {
+            Timber.d("Closing pop up...");
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    public void showCalendarRecipe() {
+        Timber.d("Showing pop up...");
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.quick_start_6);
+
+        ImageView closeButton = dialog.findViewById(R.id.close);
+
+        closeButton.setOnClickListener(v -> {
+            Timber.d("Closing pop up...");
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
 }

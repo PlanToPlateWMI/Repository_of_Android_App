@@ -7,6 +7,30 @@
     android:layout_height="match_parent"
     android:background="?attr/colorOnTertiary">
 
+    <TextView
+        android:id="@+id/code_generation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/quicksand_regular"
+
+        android:gravity="top"
+        android:text="Pomoc w korzystaniu z aplikacji"
+
+        android:textAppearance="@style/pomy_lnie_z"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <Button
         android:id="@+id/button_wygenerowanie_kodu"
         android:layout_width="0dp"
@@ -26,8 +50,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19"
+        app:layout_constraintTop_toBottomOf="@+id/code_generation"
+        app:layout_constraintVertical_bias="0.075"
         app:rippleColor="?attr/colorPrimaryVariant"
         app:strokeColor="?attr/colorPrimaryVariant"
         app:strokeWidth="1dp" />

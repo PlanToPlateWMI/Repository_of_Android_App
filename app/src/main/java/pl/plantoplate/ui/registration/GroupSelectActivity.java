@@ -217,6 +217,7 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         closeButton.setOnClickListener(v -> {
             Timber.d("Closing quick start guade pops up...");
             startMainActivity();
+            saveAppState(ApplicationState.MAIN_ACTIVITY);
             dialog.dismiss();
         });
 
