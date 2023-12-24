@@ -69,12 +69,12 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         setClickListeners();
         prefs = getSharedPreferences("prefs", 0);
 
-        quickStart.put(0, R.drawable.quick_start_1);
-        quickStart.put(1, R.drawable.quick_start_2);
-        quickStart.put(2, R.drawable.quick_start_3);
-        quickStart.put(3, R.drawable.quick_start_4);
-        quickStart.put(4, R.drawable.quick_start_5);
-        quickStart.put(5, R.drawable.quick_start_6);
+        quickStart.put(0, R.layout.quick_start_1);
+        quickStart.put(1, R.layout.quick_start_2);
+        quickStart.put(2, R.layout.quick_start_3);
+        quickStart.put(3, R.layout.quick_start_4);
+        quickStart.put(4, R.layout.quick_start_5);
+        quickStart.put(5, R.layout.quick_start_6);
 
         compositeDisposable = new CompositeDisposable();
         Timber.d("Activity created");
@@ -211,6 +211,7 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         closeButton.setOnClickListener(v -> {
             Timber.d("Closing quick start guade question pop up...");
             startMainActivity();
+            saveAppState(ApplicationState.MAIN_ACTIVITY);
             dialog.dismiss();
         });
 
@@ -224,7 +225,7 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         Timber.d("Showing quick start guade pop ups...");
         Dialog dialog = new Dialog(this);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.quick_start_1);
+        dialog.setContentView(quickStart.get(popUpKeyNumber));
 
         ImageView imageView = dialog.findViewById(R.id.imageView);
         ImageView next = dialog.findViewById(R.id.next);
@@ -241,8 +242,8 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         }
 
         //imageView set image "quick_"
-        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), quickStart.get(popUpKeyNumber));
-        imageView.setImageDrawable(drawable);
+//        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), quickStart.get(popUpKeyNumber));
+//        imageView.setImageDrawable(drawable);
 
         next.setOnClickListener(v -> {
             Timber.d("Next pop up...");

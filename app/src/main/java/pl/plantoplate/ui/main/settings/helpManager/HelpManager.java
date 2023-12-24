@@ -89,7 +89,12 @@ public class HelpManager extends Fragment {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.quick_start_2);
 
+        ImageView next = dialog.findViewById(R.id.next);
+        ImageView previouse = dialog.findViewById(R.id.previouse);
         ImageView closeButton = dialog.findViewById(R.id.close);
+
+        next.setVisibility(View.INVISIBLE);
+        previouse.setVisibility(View.INVISIBLE);
 
         closeButton.setOnClickListener(v -> {
             Timber.d("Closing pop up...");
@@ -104,7 +109,12 @@ public class HelpManager extends Fragment {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.quick_start_3);
 
+        ImageView next = dialog.findViewById(R.id.next);
+        ImageView previouse = dialog.findViewById(R.id.previouse);
         ImageView closeButton = dialog.findViewById(R.id.close);
+
+        next.setVisibility(View.INVISIBLE);
+        previouse.setVisibility(View.INVISIBLE);
 
         closeButton.setOnClickListener(v -> {
             Timber.d("Closing pop up...");
@@ -119,7 +129,12 @@ public class HelpManager extends Fragment {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.quick_start_4);
 
+        ImageView next = dialog.findViewById(R.id.next);
+        ImageView previouse = dialog.findViewById(R.id.previouse);
         ImageView closeButton = dialog.findViewById(R.id.close);
+
+        next.setVisibility(View.INVISIBLE);
+        previouse.setVisibility(View.INVISIBLE);
 
         closeButton.setOnClickListener(v -> {
             Timber.d("Closing pop up...");
@@ -134,7 +149,12 @@ public class HelpManager extends Fragment {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.quick_start_5);
 
+        ImageView next = dialog.findViewById(R.id.next);
+        ImageView previouse = dialog.findViewById(R.id.previouse);
         ImageView closeButton = dialog.findViewById(R.id.close);
+
+        next.setVisibility(View.INVISIBLE);
+        previouse.setVisibility(View.INVISIBLE);
 
         closeButton.setOnClickListener(v -> {
             Timber.d("Closing pop up...");
@@ -149,7 +169,12 @@ public class HelpManager extends Fragment {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.quick_start_6);
 
+        ImageView next = dialog.findViewById(R.id.next);
+        ImageView previouse = dialog.findViewById(R.id.previouse);
         ImageView closeButton = dialog.findViewById(R.id.close);
+
+        next.setVisibility(View.INVISIBLE);
+        previouse.setVisibility(View.INVISIBLE);
 
         closeButton.setOnClickListener(v -> {
             Timber.d("Closing pop up...");

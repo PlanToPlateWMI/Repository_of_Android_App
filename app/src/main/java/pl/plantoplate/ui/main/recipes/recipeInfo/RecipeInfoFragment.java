@@ -101,10 +101,13 @@ public class RecipeInfoFragment extends Fragment {
         radioGridGroup = fragmentItemRecipeInsideBinding.radioGroupRecipeInside;
         //recipeMenu = fragmentItemRecipeInsideBinding.menuButton;
         //fakeRecipeMenu = fragmentItemRecipeInsideBinding.menuButtonTest;
+
         questionImageView = fragmentItemRecipeInsideBinding.question;
         questionImageViewFake = fragmentItemRecipeInsideBinding.questionFake;
+
         infoImageView = fragmentItemRecipeInsideBinding.info;
         infoImageViewFake = fragmentItemRecipeInsideBinding.infoFake;
+
         button_ingredience = fragmentItemRecipeInsideBinding.plusIng;
         button_cook = fragmentItemRecipeInsideBinding.plusPrzepis;
 
