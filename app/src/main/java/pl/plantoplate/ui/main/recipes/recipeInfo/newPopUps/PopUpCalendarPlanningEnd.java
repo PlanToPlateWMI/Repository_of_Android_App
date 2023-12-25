@@ -59,10 +59,10 @@ public class PopUpCalendarPlanningEnd extends DialogFragment {
         acceptButton.setOnClickListener(v -> {
             if(checkBox.isChecked()){
                 Toast.makeText(requireContext(), "Synchronizacja została włączona", Toast.LENGTH_SHORT).show();
-                addMealProducts.setSynchronize(true);
+                addMealProducts.setIsSynchronize(true);
             } else {
                 Toast.makeText(requireContext(), "Synchronizacja nie została włączona", Toast.LENGTH_SHORT).show();
-                addMealProducts.setSynchronize(false);
+                addMealProducts.setIsSynchronize(false);
             }
             planMeal();
         });

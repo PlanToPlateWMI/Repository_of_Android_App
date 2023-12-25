@@ -18,13 +18,19 @@ package pl.plantoplate.ui.registration;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.HashMap;
 import java.util.Optional;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -47,6 +53,7 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
     private TextInputEditText groupCodeEnterEditText;
     private Button groupCodeEnterButton;
     private SharedPreferences prefs;
+    private static HashMap<Integer, Integer> quickStart = new HashMap<>();
 
     /**
      * This method is called when the activity is created.
@@ -61,6 +68,14 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         initViews(groupPageBinding);
         setClickListeners();
         prefs = getSharedPreferences("prefs", 0);
+
+        quickStart.put(0, R.layout.quick_start_1);
+        quickStart.put(1, R.layout.quick_start_2);
+        quickStart.put(2, R.layout.quick_start_3);
+        quickStart.put(3, R.layout.quick_start_4);
+        quickStart.put(4, R.layout.quick_start_5);
+        quickStart.put(5, R.layout.quick_start_6);
+
         compositeDisposable = new CompositeDisposable();
         Timber.d("Activity created");
     }
@@ -127,10 +142,13 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
                 .subscribe(
                         jwt -> {
                             saveUserData(jwt);
+                            //before starting main activity, we need to check if user is child or parent
                             if (jwt.getRole().equals("ROLE_USER")) {
                                 showRoleChildAboutInfoPopUp();
                             } else {
-                                startMainActivity();
+                                //quick start option
+                                showQuickStartGuadeQuestion();
+                                //startMainActivity();
                             }
                         },
                         error -> showSnackbar(view, error.getMessage())
@@ -151,21 +169,105 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
     }
 
     /**
-     * This method is called when the activity is resumed.
+     * This method is called when role child about info pop up is shown.
      */
     public void showRoleChildAboutInfoPopUp() {
         Timber.d("Showing role child about info pop up...");
         Dialog dialog = new Dialog(this);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.new_pop_up_dziecko);
 
         TextView acceptButton = dialog.findViewById(R.id.button_yes);
+
         acceptButton.setOnClickListener(v -> {
             Timber.d("Accepting role child about info pop up...");
+            showQuickStartGuadeQuestion();
+            //startMainActivity();
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    /**
+     * This method is called when the showQuickStartGuadeQuestion() method is called.
+     */
+    public void showQuickStartGuadeQuestion() {
+        Timber.d("Showing quick start guade question pop up...");
+        Dialog dialog = new Dialog(this);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.new_pop_up_question_quick_start);
+
+        TextView closeButton = dialog.findViewById(R.id.button_no);
+        TextView acceptButton = dialog.findViewById(R.id.button_yes);
+
+        acceptButton.setOnClickListener(v -> {
+            Timber.d("Start showing quick guade pop ups...");
+            //TODO: start showing quick guade pop ups
+            showQuickStartGuade(0);
+            dialog.dismiss();
+        });
+
+        closeButton.setOnClickListener(v -> {
+            Timber.d("Closing quick start guade question pop up...");
+            startMainActivity();
+            saveAppState(ApplicationState.MAIN_ACTIVITY);
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    /**
+     * This method is called when the showQuickStartGuadeQuestion() method is called.
+     */
+    public void showQuickStartGuade(Integer popUpKeyNumber) {
+        Timber.d("Showing quick start guade pop ups...");
+        Dialog dialog = new Dialog(this);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(quickStart.get(popUpKeyNumber));
+
+        ImageView imageView = dialog.findViewById(R.id.imageView);
+        ImageView next = dialog.findViewById(R.id.next);
+        ImageView previouse = dialog.findViewById(R.id.previouse);
+        ImageView closeButton = dialog.findViewById(R.id.close);
+
+        if (popUpKeyNumber == 0) {
+            previouse.setVisibility(View.INVISIBLE);
+        } else if (popUpKeyNumber == 5){
+            next.setVisibility(View.INVISIBLE);
+        } else {
+            previouse.setVisibility(View.VISIBLE);
+            next.setVisibility(View.VISIBLE);
+        }
+
+        //imageView set image "quick_"
+//        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), quickStart.get(popUpKeyNumber));
+//        imageView.setImageDrawable(drawable);
+
+        next.setOnClickListener(v -> {
+            Timber.d("Next pop up...");
+            //TODO: start showing quick guade pop ups
+            showQuickStartGuade(popUpKeyNumber + 1);
+            dialog.dismiss();
+        });
+
+        previouse.setOnClickListener(v -> {
+            Timber.d("Previouse pop up...");
+            //TODO: start showing quick guade pop ups
+            showQuickStartGuade(popUpKeyNumber - 1);
+            dialog.dismiss();
+        });
+
+        closeButton.setOnClickListener(v -> {
+            Timber.d("Closing quick start guade pops up...");
             startMainActivity();
             dialog.dismiss();
         });
+
         dialog.show();
     }
+
 
     /**
      * This method is called when the activity is resumed.

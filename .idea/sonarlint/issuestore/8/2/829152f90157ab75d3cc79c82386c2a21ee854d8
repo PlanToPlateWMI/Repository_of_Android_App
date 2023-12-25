@@ -1,0 +1,10 @@
+
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ñ©ã«8ü£’åÈ1
+]	java:S1251"<This block of commented-out lines of code should be removed.(ƒï¾öùÿÿÿÿ8œ¤’åÈ1
+P
+java:S1128	".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8œ¤’åÈ1
+M
+java:S1128
+"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8œ¤’åÈ1
+n
+java:S1128"LRemove this unused import 'pl.plantoplate.data.remote.models.recipe.Recipe'.(Ðè‚Žÿÿÿÿÿ8œ¤’åÈ1

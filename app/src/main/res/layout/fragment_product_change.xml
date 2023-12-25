@@ -66,22 +66,6 @@
         app:layout_constraintVertical_bias="0.095" />
 
     <TextView
-        android:id="@+id/kategoria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/quicksand_regular"
-        android:gravity="center"
-        android:text="@string/kategoria"
-        android:textColor="?attr/colorSecondaryVariant"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.196"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_name"
-        app:layout_constraintVertical_bias="0.029" />
-
-    <TextView
         android:id="@+id/kategoria_napis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,12 +74,12 @@
         android:text="Kategoria"
         android:textColor="?attr/colorSecondaryVariant"
         android:textSize="20dp"
+        android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.808"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_name"
-        app:layout_constraintVertical_bias="0.029" />
+        app:layout_constraintVertical_bias="0.028" />
 
     <Button
         android:id="@+id/zmien_kategorie"
@@ -131,10 +115,12 @@
 
     <RadioGroup
         android:id="@+id/toggle_group"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -144,8 +130,8 @@
 
         <RadioButton
             android:id="@+id/button_szt"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:layout_margin="11dp"
             android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
@@ -165,8 +151,8 @@
 
         <RadioButton
             android:id="@+id/button_l"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:layout_margin="11dp"
             android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
@@ -187,8 +173,8 @@
 
         <RadioButton
             android:id="@+id/button_ml"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:layout_margin="11dp"
             android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
@@ -208,8 +194,8 @@
 
         <RadioButton
             android:id="@+id/button_kg"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:layout_margin="11dp"
             android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
@@ -230,8 +216,8 @@
 
         <RadioButton
             android:id="@+id/button_gr"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
             android:layout_margin="11dp"
             android:background="@drawable/state_list_button_baza_produktow"
             android:button="@null"
@@ -335,7 +321,6 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
 
         android:clickable="true"
-        android:drawableLeft="@drawable/done_24_50"
 
         android:fontFamily="@font/quicksand_medium"
         android:text="@string/zatwierdz"
@@ -368,7 +353,6 @@
         android:backgroundTint="?attr/colorPrimaryVariant"
 
         android:clickable="true"
-        android:drawableLeft="@drawable/delete_forever_24_50"
 
         android:fontFamily="@font/quicksand_medium"
         android:text="@string/usun"

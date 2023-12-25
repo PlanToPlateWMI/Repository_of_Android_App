@@ -52,7 +52,6 @@ public class RecipeInfoFragment extends Fragment {
     private ArrayList<Integer> ingredientsIds;
     private String sourceLink = "http://google.com";
     private SharedPreferences prefs;
-
     private FloatingActionButton button_ingredience;
     private FloatingActionButton button_cook;
 
@@ -101,10 +100,13 @@ public class RecipeInfoFragment extends Fragment {
         radioGridGroup = fragmentItemRecipeInsideBinding.radioGroupRecipeInside;
         //recipeMenu = fragmentItemRecipeInsideBinding.menuButton;
         //fakeRecipeMenu = fragmentItemRecipeInsideBinding.menuButtonTest;
+
         questionImageView = fragmentItemRecipeInsideBinding.question;
         questionImageViewFake = fragmentItemRecipeInsideBinding.questionFake;
+
         infoImageView = fragmentItemRecipeInsideBinding.info;
         infoImageViewFake = fragmentItemRecipeInsideBinding.infoFake;
+
         button_ingredience = fragmentItemRecipeInsideBinding.plusIng;
         button_cook = fragmentItemRecipeInsideBinding.plusPrzepis;
 
@@ -143,8 +145,6 @@ public class RecipeInfoFragment extends Fragment {
 
         });
     }
-
-
 
     public void setupPopUpMenu(View view) {
         popupMenu = new PopupMenu(requireContext(), view, Gravity.END);
@@ -202,12 +202,21 @@ public class RecipeInfoFragment extends Fragment {
 
         RecipeInfoViewModel recipeInfoViewModel = new ViewModelProvider(this).get(RecipeInfoViewModel.class);
         recipeInfoViewModel.getRecipeInfo().observe(getViewLifecycleOwner(), recipeInfo -> {
-            Picasso.get().load(recipeInfo.getImage()).into(recipeImage);
+            String imageUrl = recipeInfo.getImage();
+            if (imageUrl != null) {
+                Picasso.get().load(imageUrl).into(recipeImage);
+            } else {
+                Picasso.get().load(R.drawable.noimage).into(recipeImage);
+            }
             recipeTitle.setText(recipeInfo.getTitle());
             recipeTime.setText(recipeInfo.getTime() + " min.");
             recipePortions.setText(recipeInfo.getPortions() + " os.");
             recipeLevel.setText(recipeLevelMapping.get(recipeInfo.getLevel().name()));
             sourceLink = recipeInfo.getSource();
+            if (sourceLink == null){
+                infoImageView.setEnabled(false);
+                infoImageView.setVisibility(View.INVISIBLE);
+            }
         });
         recipeInfoViewModel.getResponseMessage().observe(getViewLifecycleOwner(),
                 responseMessage -> Toast.makeText(getContext(), responseMessage, Toast.LENGTH_SHORT).show());
@@ -250,8 +259,8 @@ public class RecipeInfoFragment extends Fragment {
                 } else if (position == 1 && role.equals("ROLE_ADMIN")) {
                     questionImageView.setVisibility(View.INVISIBLE);
                     questionImageViewFake.setVisibility(View.INVISIBLE);
-                    infoImageView.setVisibility(View.VISIBLE);
-                    infoImageViewFake.setVisibility(View.VISIBLE);
+                    infoImageView.setVisibility(sourceLink == null ? View.INVISIBLE : View.VISIBLE);
+                    infoImageViewFake.setVisibility(sourceLink == null ? View.INVISIBLE : View.VISIBLE);
                     button_ingredience.setVisibility(View.INVISIBLE);
                     button_cook.setVisibility(View.VISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);

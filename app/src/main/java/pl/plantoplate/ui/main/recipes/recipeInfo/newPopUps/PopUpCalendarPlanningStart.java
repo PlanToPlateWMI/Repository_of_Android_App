@@ -104,7 +104,7 @@ public class PopUpCalendarPlanningStart extends DialogFragment {
             addMealProducts.setMealType(MealType.fromString(radioGridGroup.getCheckedRadioButton().getText().toString()));
             addMealProducts.setPortions(Integer.parseInt(Objects.requireNonNull(numberOfPortions.getText()).toString()));
             if(checkBox.isChecked()){
-                addMealProducts.setProductsAdd(true);
+                addMealProducts.setIsProductsAdd(true);
                 PopUpCalendarPlanningEnd popUpCalendarPlanningEnd = new PopUpCalendarPlanningEnd(addMealProducts);
                 popUpCalendarPlanningEnd.show(getParentFragmentManager(), "PopUpCalendarPlanningEnd");
                 dismiss();

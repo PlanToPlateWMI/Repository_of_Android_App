@@ -29,7 +29,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeNewBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 import pl.plantoplate.ui.main.recipes.allRecipes.AllRecipesFragment;
-import pl.plantoplate.ui.main.recipes.selectedRecipes.SelectedRecipesFragment;
+import pl.plantoplate.ui.main.recipes.ownRecipes.OwnRecipesFragment;
 
 /**
  * This fragment is responsible for displaying the recipe view.
@@ -108,7 +108,7 @@ public class RecipesFragment extends Fragment {
         });
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         adapter.addFragment(new AllRecipesFragment());
-        adapter.addFragment(new SelectedRecipesFragment());
+        adapter.addFragment(new OwnRecipesFragment());
         viewPager.setAdapter(adapter);
     }
 

@@ -52,14 +52,13 @@ Aby dodać nowy produkt, kliknij znak plus.
 Uwaga!
 Użytkownik z rolą "dziecko" nie może dodać nowego produktu.</string>
 
-    <string name="wprowadzenie_przepisy_ulubione">Aby dodać przepis do kategorii ulubionych,
+    <string name="wprowadzenie_przepisy_ulubione">Aby dodać przepis do kategorii własnych,
 kliknij na plus. Przeniesie Cię na stronę internetową, na której będziesz musiał się zalogować i
 wybrać przepisy, które pojawią się później w tej kategorii.
 Uwaga!
-Użytkownik z rolą "dziecko" nie może dodać ulubionego przepisu.</string>
+Użytkownik z rolą "dziecko" nie może dodać własnego przepisu.</string>
 
-    <string name="wprowadzenie_kalendarz">Aby zaplanować przepis, przejdź do kategorii przepisy za
-pomocą przyciku plus.</string>
+    <string name="wprowadzenie_kalendarz">Aby zaplanować przepis, przejdź do kategorii przepisy.</string>
 
 
     <string name="zmien_kategorie">Zmień kategorie</string>
@@ -197,6 +196,7 @@ teraz są produkty.</string>
     <string name="Zmiana_danych">Zarządzanie kontem</string>
     <string name="Zarządzanie_użytkownikami">Zarządzanie użytkownikami w grupie</string>
     <string name="About_us">Napisz do nas</string>
+    <string name="Pomoc">Pomoc</string>
     <string name="Wyłoguj">Wyłoguj</string>
 
 

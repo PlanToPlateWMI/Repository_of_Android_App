@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import java.util.ArrayList;
@@ -28,9 +29,11 @@ import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeBaseBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.recipes.allRecipes.viewModels.AllRecipesViewModel;
 
 public class AllRecipesFragment extends Fragment {
 
+    private AllRecipesViewModel allRecipesViewModel;
     private ViewPager2 viewPager2;
     private RadioGridGroup radioGridGroup;
 
@@ -48,6 +51,7 @@ public class AllRecipesFragment extends Fragment {
         initViews(fragmentRecipeBaseBinding);
         setupViewPager(viewPager2);
         setupNavigation();
+        setupViewModel();
         return fragmentRecipeBaseBinding.getRoot();
     }
 
@@ -113,6 +117,10 @@ public class AllRecipesFragment extends Fragment {
         adapter.addFragment(new ConcreteCategoryAllFragment("Napoje"));
         viewPager.setAdapter(adapter);
         viewPager.setUserInputEnabled(false);
+    }
+
+    private void setupViewModel() {
+        allRecipesViewModel = new ViewModelProvider(this).get(AllRecipesViewModel.class);
     }
 
     /**

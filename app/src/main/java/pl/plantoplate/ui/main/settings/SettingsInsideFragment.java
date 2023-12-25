@@ -37,6 +37,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
+import pl.plantoplate.ui.main.settings.helpManager.HelpManager;
 import pl.plantoplate.utils.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
@@ -58,6 +59,7 @@ public class SettingsInsideFragment extends Fragment {
     private Button manageUsersButton;
     private Button changeDataButton;
     private Button aboutUsButton;
+    private Button helpButton;
     private SwitchCompat themeSwitch;
     private SharedPreferences prefs;
 
@@ -103,10 +105,13 @@ public class SettingsInsideFragment extends Fragment {
     private void initViews(FragmentSettingsInsideBinding settingsView) {
         Timber.d("Initializing views...");
         generateGroupCodeButton = settingsView.buttonWygenerowanieKodu;
+
         exitAccountButton = settingsView.buttonWyloguj;
         manageUsersButton = settingsView.buttonZarzadyanieUyztkownikamu;
         changeDataButton = settingsView.buttonZmianaDanych;
         aboutUsButton = settingsView.buttonAboutUs;
+        helpButton = settingsView.buttonHelp;
+
         usernameTextView = settingsView.imie;
         themeSwitch = settingsView.switchButtonChangeColorTheme;
 
@@ -122,6 +127,7 @@ public class SettingsInsideFragment extends Fragment {
         exitAccountButton.setOnClickListener(this::exitAccount);
         changeDataButton.setOnClickListener(v -> replaceFragment(new ChangeTheData()));
         aboutUsButton.setOnClickListener(v -> replaceFragment(new MailDevelops()));
+        helpButton.setOnClickListener(v -> replaceFragment(new HelpManager()));
     }
 
     /**

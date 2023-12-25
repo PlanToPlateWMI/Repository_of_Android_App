@@ -37,6 +37,7 @@ public class RetrofitClient {
 
     //private static final String BASE_URL = "https://plantoplate.lm.r.appspot.com/";
     //private static final String BASE_URL = "http://192.168.0.121:8080";
+    //private static final String BASE_URL = "http://192.168.11.136:8080";
     private static final String BASE_URL = "https://plantoplatetest.lm.r.appspot.com/";
 
     private static RetrofitClient instance = null;

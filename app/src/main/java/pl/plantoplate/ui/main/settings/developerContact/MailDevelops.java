@@ -42,7 +42,8 @@ public class MailDevelops extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentDeveloperBinding fragmentDeveloperBinding = FragmentDeveloperBinding.inflate(inflater, container, false);
+        FragmentDeveloperBinding fragmentDeveloperBinding = FragmentDeveloperBinding.inflate(inflater,
+                container, false);
 
         initViews(fragmentDeveloperBinding);
         setClickListeners();

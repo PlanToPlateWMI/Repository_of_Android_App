@@ -29,8 +29,9 @@ import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.data.remote.repository.UserRepository;
+import pl.plantoplate.ui.main.shoppingList.events.ProductBoughtEvent;
+import pl.plantoplate.ui.main.shoppingList.events.ProductsListChangedEvent;
 import pl.plantoplate.utils.CategorySorter;
-
 
 /**
  * This class is used to notify the view that the list of products has changed.
@@ -40,7 +41,6 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
     private final CompositeDisposable compositeDisposable;
     private final SharedPreferences prefs;
     private final ShoppingListRepository shoppingListRepository;
-
     private final MutableLiveData<String> responseMessage;
     private final MutableLiveData<ArrayList<ProductCategory>> toBuyProducts;
     private final MutableLiveData<UserInfo> userInfo;
@@ -78,7 +78,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
      * Fetches the list of products to buy from the server.
      */
     public void fetchToBuyProducts() {
-        String token = "Bearer " + prefs.getString("token", "");
+        String token = String.format("Bearer %s", prefs.getString("token", ""));
 
         Disposable disposable = shoppingListRepository.getToBuyShoppingList(token)
                 .subscribe(response -> toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(response)),
@@ -109,7 +109,6 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
     }
 
-
     /**
      * Moves the product to the bought list.
      *
@@ -121,6 +120,7 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         Disposable disposable = shoppingListRepository.changeProductStateInShopList(token, product.getId())
                 .subscribe(shoppingList -> {
                     EventBus.getDefault().post(new ProductsListChangedEvent(shoppingList.getBought(), ListType.BOUGHT));
+                    EventBus.getDefault().post(new ProductBoughtEvent(shoppingList.getBought().size()));
                     toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(shoppingList.getToBuy()));
                 }, throwable -> responseMessage.setValue(throwable.getMessage()));
 
