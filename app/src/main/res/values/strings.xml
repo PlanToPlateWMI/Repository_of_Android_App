@@ -58,8 +58,7 @@ wybrać przepisy, które pojawią się później w tej kategorii.
 Uwaga!
 Użytkownik z rolą "dziecko" nie może dodać własnego przepisu.</string>
 
-    <string name="wprowadzenie_kalendarz">Aby zaplanować przepis, przejdź do kategorii przepisy za
-pomocą przyciku plus.</string>
+    <string name="wprowadzenie_kalendarz">Aby zaplanować przepis, przejdź do kategorii przepisy.</string>
 
 
     <string name="zmien_kategorie">Zmień kategorie</string>
