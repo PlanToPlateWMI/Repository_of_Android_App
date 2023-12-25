@@ -47,7 +47,8 @@ public class GeneratedGroupCodeActivity extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FragmentGeneratedCodeBinding fragmentGeneratedCodeBinding = FragmentGeneratedCodeBinding.inflate(inflater, container, false);
+        FragmentGeneratedCodeBinding fragmentGeneratedCodeBinding = FragmentGeneratedCodeBinding.inflate(inflater,
+                container, false);
 
         initViews(fragmentGeneratedCodeBinding);
         setClickListeners();
@@ -89,9 +90,11 @@ public class GeneratedGroupCodeActivity extends Fragment {
     public void shareInviteCode(View view) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_TEXT, "Możesz dołączyć do mojej grupy w aplikacji PlanToPlate. Kod zaproszeniowy do grupy: "
+        intent.putExtra(Intent.EXTRA_TEXT, "Możesz dołączyć do mojej grupy w aplikacji PlanToPlate. " +
+                "Kod zaproszeniowy do grupy: "
                 + Objects.requireNonNull(groupCodeEditText.getText()) + ".\n\n"
-                + "Pobierz aplikację Plantoplate: tu_musi_byc_link_do_aplikacji");
+                + "Pobierz aplikację Plantoplate: " +
+                "https://play.google.com/store/apps/details?id=pl.plantoplate&pcampaignid=web_share");
         intent.setType("message/rfc822");
         startActivity(Intent.createChooser(intent, ""));
     }
