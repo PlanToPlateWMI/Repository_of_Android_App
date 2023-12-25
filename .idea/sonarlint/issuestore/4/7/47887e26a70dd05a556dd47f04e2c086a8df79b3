@@ -1,0 +1,32 @@
+
+d
+java:S1192i"GDefine a constant instead of duplicating this literal "mealId" 4 times.(”íÆ¿8ÎöàæÉ1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(è¹ê¼8ÒöàæÉ1
+~	java:S116;"]Rename this field "button_ingredience" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æ¿ö–úÿÿÿÿ8Š÷àæÉ1
+r	java:S116<"VRename this field "button_cook" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æ‰Èƒ8Š÷àæÉ1
+i
+java:S16594"GDeclare "recipeInfo" and all following declarations on a separate line.(©èğ™ÿÿÿÿÿ8÷àæÉ1
+d
+java:S16595"GDeclare "recipeTime" and all following declarations on a separate line.(÷÷Ó±8÷àæÉ1
+t
+java:S14506"XRemove the "popupMenu" field and declare it as a local variable in the relevant methods.(”¤&8÷àæÉ1
+Z
+java:S1854\"8Remove this useless assignment to local variable "role".(‘æ Ìıÿÿÿÿ8™÷àæÉ1
+K
+java:S1481\")Remove this unused "role" local variable.(‘æ Ìıÿÿÿÿ8›÷àæÉ1
+I
+java:S1602k",Remove useless curly braces around statement(ù‰8¨÷àæÉ1
+O
+java:S1602š",Remove useless curly braces around statement(öµÜùıÿÿÿÿ8¸÷àæÉ1
+O
+java:S1602°",Remove useless curly braces around statement(›¬ˆÚşÿÿÿÿ8¼÷àæÉ1
+[
+java:S1854Ô"8Remove this useless assignment to local variable "role".(‘æ Ìıÿÿÿÿ8½÷àæÉ1
+O
+java:S3599¸",Use another way to initialize this instance.(ÌÛîÿÿÿÿÿ8½÷àæÉ1
+|
+java:S1171¸"YMove the contents of this initializer to a standard constructor or to field initializers.(ÌÛîÿÿÿÿÿ8¾÷àæÉ1
+L
+java:S1481Ô")Remove this unused "role" local variable.(‘æ Ìıÿÿÿÿ8ñ÷àæÉ1
+p
+java:S3776â"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Éµ÷–8ò÷àæÉ1

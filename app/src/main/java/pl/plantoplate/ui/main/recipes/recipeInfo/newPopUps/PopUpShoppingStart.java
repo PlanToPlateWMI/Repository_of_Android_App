@@ -19,7 +19,6 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.models.meal.MealPlanNew;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.NewTryPopUpShoppingStartBinding;
-import timber.log.Timber;
 
 public class PopUpShoppingStart extends DialogFragment {
 
@@ -77,9 +76,9 @@ public class PopUpShoppingStart extends DialogFragment {
     public void setClicklisteners(){
         acceptButton.setOnClickListener(v -> {
             addMealProducts.setPortions(Integer.parseInt(Objects.requireNonNull(numberOfPortions.getText()).toString()));
-            addMealProducts.setProductsAdd(true);
+            addMealProducts.setIsProductsAdd(true);
             if (checkBoxSynch.isChecked()){
-                addMealProducts.setSynchronize(true);
+                addMealProducts.setIsSynchronize(true);
             }
             if (checkBoxPlanning.isChecked()){
                 PopUpShoppingEnd calendarPlanningPopUp = new PopUpShoppingEnd(addMealProducts);
