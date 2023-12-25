@@ -1,32 +1,35 @@
 package pl.plantoplate.data.remote.models.meal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class  MealPlanNew {
-
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class MealPlanNew {
     private int recipeId;
     private int portions;
     @JsonProperty("ingredients")
     private List<Integer> ingredientsIds;
     private MealType mealType;
     private String date;
-    private boolean productsAdd;
-    private boolean synchronize;
+    @JsonProperty("isProductsAdd")
+    private boolean isProductsAdd;
+    @JsonProperty("isSynchronize")
+    private boolean isSynchronize;
 
     public MealPlanNew(){
     }
 
-    public MealPlanNew(int recipeId, int portions, List<Integer> ingredientsIds, MealType mealType, String date, boolean productsAdd, boolean synchronize) {
+    public MealPlanNew(int recipeId, int portions, List<Integer> ingredientsIds, MealType mealType, String date, boolean isProductsAdd, boolean isSynchronize) {
         this.recipeId = recipeId;
         this.portions = portions;
         this.ingredientsIds = ingredientsIds;
         this.mealType = mealType;
         this.date = date;
-        this.productsAdd = productsAdd;
-        this.synchronize = synchronize;
+        this.isProductsAdd = isProductsAdd;
+        this.isSynchronize = isSynchronize;
     }
 
     public int getRecipeId() {
@@ -69,19 +72,19 @@ public class  MealPlanNew {
         this.date = date;
     }
 
-    public boolean isProductsAdd() {
-        return productsAdd;
+    public boolean getIsProductsAdd() {
+        return isProductsAdd;
     }
 
-    public void setProductsAdd(boolean productsAdd) {
-        this.productsAdd = productsAdd;
+    public void setIsProductsAdd(boolean isProductsAdd) {
+        this.isProductsAdd = isProductsAdd;
     }
 
-    public boolean isSynchronize() {
-        return synchronize;
+    public boolean getIsSynchronize() {
+        return isSynchronize;
     }
 
-    public void setSynchronize(boolean synchronize) {
-        this.synchronize = synchronize;
+    public void setIsSynchronize(boolean isSynchronize) {
+        this.isSynchronize = isSynchronize;
     }
 }

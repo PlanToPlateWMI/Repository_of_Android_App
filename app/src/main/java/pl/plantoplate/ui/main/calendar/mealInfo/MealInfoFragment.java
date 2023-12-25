@@ -189,12 +189,21 @@ public class MealInfoFragment extends Fragment{
 
         mealInfoViewModel = new ViewModelProvider(this).get(MealInfoViewModel.class);
         mealInfoViewModel.getMealInfo().observe(getViewLifecycleOwner(), mealInfo -> {
-            Picasso.get().load(mealInfo.getImage()).into(recipeImage);
+            String imageUrl = mealInfo.getImage();
+            if (imageUrl != null) {
+                Picasso.get().load(imageUrl).into(recipeImage);
+            } else {
+                Picasso.get().load(R.drawable.noimage).into(recipeImage);
+            }
             recipeTitle.setText(mealInfo.getTitle());
             recipeTime.setText(mealInfo.getTime() + " min.");
             recipePortions.setText(mealInfo.getPortions() + " os.");
             recipeLevel.setText(recipeLevelMapping.get(mealInfo.getLevel().name()));
             sourceLink = mealInfo.getSource();
+            if (sourceLink == null){
+                recipeInfo.setEnabled(false);
+                recipeInfo.setVisibility(View.INVISIBLE);
+            }
         });
         mealInfoViewModel.getResponseMessage().observe(getViewLifecycleOwner(),
                 responseMessage -> Toast.makeText(getContext(), responseMessage, Toast.LENGTH_SHORT).show());
@@ -227,8 +236,8 @@ public class MealInfoFragment extends Fragment{
                     button_cook.setVisibility(View.INVISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.skladniki_button);
                 } else if (position == 1 && role.equals("ROLE_ADMIN")) {
-                    recipeInfo.setVisibility(View.VISIBLE);
-                    recipeInfoFake.setVisibility(View.VISIBLE);
+                    recipeInfo.setVisibility(sourceLink == null ? View.INVISIBLE : View.VISIBLE);
+                    recipeInfoFake.setVisibility(sourceLink == null ? View.INVISIBLE : View.VISIBLE);
                     button_ingredience.setVisibility(View.INVISIBLE);
                     button_cook.setVisibility(View.VISIBLE);
                     radioGridGroup.setCheckedRadioButtonById(R.id.przepis_button);
