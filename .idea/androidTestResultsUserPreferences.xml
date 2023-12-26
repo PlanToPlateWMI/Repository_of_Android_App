@@ -172,6 +172,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1220105498">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1150896071">
           <value>
             <AndroidTestResultsTableState>
@@ -746,6 +759,19 @@
           </value>
         </entry>
         <entry key="1217769336">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="vivo V2050" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1229342275">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">

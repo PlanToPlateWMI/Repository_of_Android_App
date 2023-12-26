@@ -30,10 +30,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.junit.Assert.assertEquals;
 
+import android.content.Context;
+import android.net.Uri;
+
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
@@ -47,6 +51,8 @@ import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
+import pl.plantoplate.service.push_notification.PushNotificationService;
+import pl.plantoplate.tools.TestHelper;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.login.remindPassword.ChangePasswordActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
@@ -69,6 +75,10 @@ public class ChangePasswordActivityTest {
         // server
         server = new MockWebServer();
         server.start(8080);
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -78,6 +88,10 @@ public class ChangePasswordActivityTest {
 
         // Shutdown server
         server.shutdown();
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.enableService(appContext, PushNotificationService.class);
     }
 
     //remind password 3
@@ -139,57 +153,60 @@ public class ChangePasswordActivityTest {
 
     }
 
-//    @Test
-//    public void testSuccecfulPasswordChange() throws InterruptedException {
-//
-//        String password = "password";
-//        String baseUrl = "/api/auth/password/reset";
-//
-////        MockResponse response = new MockResponse()
-////                .setResponseCode(200)
-////                .setBody("{" +
-////                        "\"message\": \"API update password\"" +
-////                        "}");
-////        server.enqueue(response);
-//
-//        onView(withId(R.id.nowe_haslo)).perform(typeText(password), closeSoftKeyboard());
-//        onView(withId(R.id.nowe_haslo2)).perform(typeText(password), closeSoftKeyboard());
-//        onView(withId(R.id.button_zatwierdzenie)).perform(click());
-//
-////        RecordedRequest recordedRequest = server.takeRequest();
-////        assertEquals(baseUrl, recordedRequest.getPath());
-//
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        onView(withId(com.google.android.material.R.id.snackbar_text))
-//                .check(matches(withText("Pomyślnie zmieniono hasło!")));
-//
-//    }
-
-
-    //19.12.2023 - ok
     @Test
-    public void testNotSuccecfulPasswordChange() throws InterruptedException {
+    public void testSuccecfulPasswordChange() throws InterruptedException {
 
         String password = "password";
+        String emailApiPath = "api/auth/password/reset";
+
+
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"message\": \"API update password\"}");
+        server.enqueue(responseCode);
 
         onView(withId(R.id.nowe_haslo)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.nowe_haslo2)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie)).perform(click());
 
+        RecordedRequest recordedRequest = server.takeRequest();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Użytkownik o podanym adresie email nie istnieje.")));
+                .check(matches(withText("Pomyślnie zmieniono hasło!")));
+
+    }
+
+    //26.12.2023 - ok
+    @Test
+    public void testNotSuccecfulPasswordChange() throws InterruptedException {
+
+        String password = "password";
+        String emailApiPath = "api/auth/password/reset";
+
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(400)
+                .setBody("{\"message\": \"Account with this email doesn't exist\"}");
+        server.enqueue(responseCode);
+
+        onView(withId(R.id.nowe_haslo)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.nowe_haslo2)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.button_zatwierdzenie)).perform(click());
+
+        RecordedRequest recordedRequest = server.takeRequest();
+
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
 
     }
 }

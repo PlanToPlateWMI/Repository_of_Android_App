@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="GroupSelectActivityTest">
-        <State />
-      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -21,16 +18,19 @@
           <timeTargetWasSelectedWithDropDown value="2023-12-21T22:23:23.387195600Z" />
         </State>
       </entry>
-      <entry key="testGroupCode()">
+      <entry key="testEnterCodeButton()">
         <State />
       </entry>
-      <entry key="testGroupCodeFail()">
+      <entry key="testNoSuchUser()">
         <State />
       </entry>
-      <entry key="testSignInButton()">
+      <entry key="testNoUserWithSuchMail()">
         <State />
       </entry>
-      <entry key="testUserIsAlreadyExist()">
+      <entry key="testNotSuccecfulPasswordChange()">
+        <State />
+      </entry>
+      <entry key="testSuccecfulPasswordChange()">
         <State />
       </entry>
     </value>
