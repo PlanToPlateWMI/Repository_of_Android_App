@@ -2,13 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ChangeEmailStep1FragmentTest">
-        <State />
-      </entry>
-      <entry key="ChangeEmailStep2FragmentTest">
-        <State />
-      </entry>
-      <entry key="PasswordChangeOldPasswordTest">
+      <entry key="GroupSelectActivityTest">
         <State />
       </entry>
       <entry key="app">
@@ -27,10 +21,16 @@
           <timeTargetWasSelectedWithDropDown value="2023-12-21T22:23:23.387195600Z" />
         </State>
       </entry>
-      <entry key="testNoEmailDisplayed()">
+      <entry key="testGroupCode()">
         <State />
       </entry>
-      <entry key="testOldPasswordViewDisplayed()">
+      <entry key="testGroupCodeFail()">
+        <State />
+      </entry>
+      <entry key="testSignInButton()">
+        <State />
+      </entry>
+      <entry key="testUserIsAlreadyExist()">
         <State />
       </entry>
     </value>

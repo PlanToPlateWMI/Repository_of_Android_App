@@ -29,12 +29,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.junit.Assert.assertEquals;
 
+import android.content.Context;
 import android.net.Uri;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
@@ -48,6 +50,8 @@ import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
+import pl.plantoplate.service.push_notification.PushNotificationService;
+import pl.plantoplate.tools.TestHelper;
 import pl.plantoplate.ui.login.remindPassword.EnterCodeActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 
@@ -69,6 +73,10 @@ public class EmailConfirmActivityTest {
         // server
         server = new MockWebServer();
         server.start(8080);
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -78,6 +86,10 @@ public class EmailConfirmActivityTest {
 
         // Shutdown server
         server.shutdown();
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.enableService(appContext, PushNotificationService.class);
     }
 
     //19/01/2023 - ok
@@ -91,40 +103,64 @@ public class EmailConfirmActivityTest {
 
     }
 
-    //19/01/2023 - ok
+
+
+    //???
     @Test
-    public void testSignInButton() throws InterruptedException {
+    public void testSignInButtonFail() throws InterruptedException {
 
         String code = "1111";
-        String baseUrl = "/api/mail/code";
+        String emailApiPath = "api/mail/code";
         String email = "testmailmailmail@test.com";
 
-//        MockResponse response = new MockResponse()
-//                .setResponseCode(200)
-//                .setBody("{" +
-//                        "\"message\": \"API send back code that it sends to user's email\"" + "}");
-//        server.enqueue(response);
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(400)
+                .setBody("{\"message\": \"Account with this email doesn't exist or type of email is invalid\"}");
+        server.enqueue(responseCode);
+
 
         onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
 
-//        RecordedRequest recordedRequest = server.takeRequest();
-//        String url = Uri.parse(baseUrl)
-//                .buildUpon()
-//                .appendQueryParameter("email", email)
-//                .build()
-//                .toString();
-//
-//        assertEquals(url, recordedRequest.getPath());
+        RecordedRequest recordedRequest = server.takeRequest();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Wprowadzony kod jest niepoprawny")));
+
+    }
+
+    //?
+    @Test
+    public void testSignInButton() throws InterruptedException {
+
+        String code = "1111";
+        String emailApiPath = "api/mail/code";
+        String email = "testmailmailmail@test.com";
+
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"message\": \"API send back code that it sends to user's email\"}");
+        server.enqueue(responseCode);
+
+
+        onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
+        onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
+
+        RecordedRequest recordedRequest = server.takeRequest();
+
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
 
     }
 
