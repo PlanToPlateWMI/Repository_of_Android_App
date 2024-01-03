@@ -11,3 +11,15 @@ Ksrc/androidTest/java/pl/plantoplate/main/calendar/CalendarFragmentTest.java,a\
 -java/pl/plantoplate/ui/main/ActivityMain.java,4\b\4bf106ae9a66d3b75756964115c318d6e9dc1b90
 
 ]src/androidTest/java/pl/plantoplate/login/remindPasswordTests/ChangePasswordActivityTest.java,6\a\6ad98ec69f17e77ed36373f173e86b97d276f1fa
+C
+AndroidManifest.xml,1\7\17cbdb4db1263196ffb1948cb14cc72183579351
+{
+Ksrc/androidTest/java/pl/plantoplate/main/shoppingList/ShoppingListTest.java,b\3\b36283cccef2b78385d7a7ea64efec0be93480ab
+a
+1java/pl/plantoplate/data/remote/ErrorHandler.java,2\e\2ed42a3cbecc1f0511b04751ef0daf8e94252a4c
+]
+-java/pl/plantoplate/utils/EmailValidator.java,4\9\499707bd05c964ffc7bf080548a08dd2126e570c
+a
+1java/pl/plantoplate/utils/EmailValidatorTest.java,b\4\b4d915a257dd55825cec70dff05e5697d84ecb82
+n
+>java/pl/plantoplate/data/remote/repository/AuthRepository.java,a\e\ae2856bb9588d7b9fec876d710ffbf5bb0701485

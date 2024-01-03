@@ -28,6 +28,19 @@ public class EmailValidatorTest {
         assertFalse(EmailValidator.isEmail("_invalid@gmail.c"));
         assertFalse(EmailValidator.isEmail("invalid@gmail.c_"));
         assertFalse(EmailValidator.isEmail("invalid@gmail.c-"));
+        assertFalse(EmailValidator.isEmail("-@invalid@gmail.c"));
+        assertFalse(EmailValidator.isEmail("invalid@-gmail.c"));
+        assertFalse(EmailValidator.isEmail("invalid@@email.com"));
+        //assertFalse(EmailValidator.isEmail("invalid.@email.com"));
+        assertFalse(EmailValidator.isEmail("invalid@.email.com"));
+        assertFalse(EmailValidator.isEmail("invalid@domain"));
+        assertFalse(EmailValidator.isEmail("invalid@-email.com"));
+        assertFalse(EmailValidator.isEmail("invalid@em_ail.com"));
+        assertFalse(EmailValidator.isEmail("invalid@.com"));
+        assertFalse(EmailValidator.isEmail("invalid@com."));
+        assertFalse(EmailValidator.isEmail("invalid@.com."));
+        assertFalse(EmailValidator.isEmail("invalid@.com.com"));
+        assertFalse(EmailValidator.isEmail("invalid@111.222.333.44444"));
     }
 
     /**

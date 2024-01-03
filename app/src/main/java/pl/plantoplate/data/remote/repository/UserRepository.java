@@ -91,10 +91,10 @@ public class UserRepository {
 
     public Single<Message> validatePasswordMatch(String token, String password) {
         String userDoesNotExist = "Użytkownik nie istnieje!";
-        String passwordIsInvalid = "Hasło jest nieprawidłowe.";
+        String invalidCredentials = "Hasło jest nieprawidłowe.";
         HashMap<Integer, String> errorMap = new HashMap<>();
         errorMap.put(400, userDoesNotExist);
-        errorMap.put(409, passwordIsInvalid);
+        errorMap.put(409, invalidCredentials);
 
         return userService.validatePasswordMatch(token, password)
                 .onErrorResumeNext(throwable -> new ErrorHandler<Message>().

@@ -24,7 +24,9 @@ import java.util.regex.Pattern;
 public class EmailValidator {
 
     private EmailValidator() {}
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9_]+([-._][a-zA-Z0-9]+)*@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\\.[a-zA-Z]{2,})+$";
+    private static final String EMAIL_REGEX = "^[\\w.%+-]+@[a-zA-Z0-9]+(?:\\.[a-zA-Z]{2,})++$";
+
+
 
     /**
      * This method checks if a given string is a valid email address.

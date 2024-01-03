@@ -69,10 +69,10 @@ public class AuthRepository {
 
     public Single<JwtResponse> signIn(SignInData info) {
         String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
-        String incorrectPassword = "Nieprawidłowe hasło!";
+        String incorrectCredentials = "Niepoprawne hasło!";
         HashMap<Integer, String> errorMap = new HashMap<>();
         errorMap.put(400, userDoesNotExist);
-        errorMap.put(403, incorrectPassword);
+        errorMap.put(403, incorrectCredentials);
 
         return authService.signinUser(info)
                 .onErrorResumeNext(throwable -> new ErrorHandler<JwtResponse>().

@@ -41,7 +41,6 @@ public class ErrorHandler<T> {
                 errorMessage = "Wystąpił nieznany błąd serwera.";
             }
         } else {
-            throwable.printStackTrace();
             errorMessage = "Wystąpił nieznany błąd.";
         }
         return Single.error(new Exception(errorMessage, throwable));
