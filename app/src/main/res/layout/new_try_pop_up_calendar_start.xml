@@ -19,14 +19,17 @@
 
         <TextView
             android:id="@+id/text_head"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:fontFamily="@font/quicksand_medium"
             android:gravity="left"
+            android:maxLines="2"
 
             android:text="Proces planowania posiłków."
 
@@ -35,9 +38,10 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.067" />
+            app:layout_constraintVertical_bias="0.039" />
 
         <TextView
             android:id="@+id/q"
@@ -160,7 +164,7 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.66"
+            app:layout_constraintHorizontal_bias="0.652"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -193,7 +197,7 @@
 
         <TextView
             android:id="@+id/text_kalendarz"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -201,6 +205,9 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_medium"
             android:gravity="center"
+            android:maxLines="2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 
             android:text="Wybież datę, do zaplanowania przepisu"
 
@@ -219,11 +226,12 @@
             android:layout_height="85dp"
 
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="104dp"
+            android:layout_marginTop="116dp"
 
             android:layout_marginRight="10dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_head">
 
@@ -243,7 +251,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp">
 
-                <pl.plantoplate.ui.customViews.RadioGridGroup
+                <pl.plantoplate.ui.custom_views.RadioGridGroup
                     android:id="@+id/radio_group_baza"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -325,7 +333,7 @@
                         app:rippleColor="?attr/colorOnPrimaryFixed" />
 
 
-                </pl.plantoplate.ui.customViews.RadioGridGroup>
+                </pl.plantoplate.ui.custom_views.RadioGridGroup>
 
             </HorizontalScrollView>
 
@@ -354,7 +362,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_head"
-            app:layout_constraintVertical_bias="0.786" />
+            app:layout_constraintVertical_bias="0.808" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

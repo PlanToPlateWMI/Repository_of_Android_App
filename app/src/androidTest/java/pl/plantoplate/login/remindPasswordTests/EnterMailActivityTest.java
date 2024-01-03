@@ -27,12 +27,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.junit.Assert.assertEquals;
 
+import android.content.Context;
 import android.net.Uri;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
@@ -46,6 +48,8 @@ import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
+import pl.plantoplate.service.push_notification.PushNotificationService;
+import pl.plantoplate.tools.TestHelper;
 import pl.plantoplate.ui.login.remindPassword.EnterEmailActivity;
 
 @RunWith(AndroidJUnit4.class)
@@ -66,6 +70,10 @@ public class EnterMailActivityTest {
         // server
         server = new MockWebServer();
         server.start(8080);
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -75,6 +83,10 @@ public class EnterMailActivityTest {
 
         // Shutdown server
         server.shutdown();
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.enableService(appContext, PushNotificationService.class);
     }
 
 
@@ -99,31 +111,31 @@ public class EnterMailActivityTest {
 
     }
 
+
+    //26.12.2023 - ok
     @Test
     public void testNoUserWithSuchMail() throws InterruptedException {
 
-        String baseUrl = "/api/users/emails";
+        String emailApiPath = "api/users/emails";
         String email = "testtestmailmailmail@test.com";
 
-//        MockResponse response = new MockResponse()
-//                .setResponseCode(200)
-//                .setBody("{" +
-//                        "\"message\": \"Doesn't exist active user with email\"" + "}");
-//        server.enqueue(response);
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"message\": \"Doesn't exist active user with email\"}");
+        server.enqueue(responseCode);
 
         onView(withId(R.id.enter_the_name)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdz)).perform(click());
 
-//        RecordedRequest recordedRequest = server.takeRequest();
-//        String url = Uri.parse(baseUrl)
-//                .buildUpon()
-//                .appendQueryParameter("email", email)
-//                .build()
-//                .toString();
-//
-//        assertEquals(url, recordedRequest.getPath());
+        RecordedRequest recordedRequest = server.takeRequest();
 
-        Thread.sleep(1000);
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .appendQueryParameter("email", email)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
@@ -133,29 +145,26 @@ public class EnterMailActivityTest {
     @Test
     public void testUserIsWithSuchMail() throws InterruptedException {
 
-        String baseUrl = "/api/users/emails";
-        String email = "testmailmailmail";
+        String emailApiPath = "api/users/emails";
+        String email = "plantoplate@test.com";
 
-//        MockResponse response = new MockResponse()
-//                .setResponseCode(409)
-//                .setBody("{" +
-//                        "\"message\": \"Exists active user with email\"" + "}");
-//        server.enqueue(response);
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(409)
+                .setBody("{\"message\": \"Exists active user with emaill\"}");
+        server.enqueue(responseCode);
 
         onView(withId(R.id.enter_the_name)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdz)).perform(click());
 
-        onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
+        RecordedRequest recordedRequest = server.takeRequest();
 
-//        RecordedRequest recordedRequest = server.takeRequest();
-//        String url = Uri.parse(baseUrl)
-//                .buildUpon()
-//                .appendQueryParameter("email", email)
-//                .build()
-//                .toString();
-//
-//        assertEquals(url, recordedRequest.getPath());
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .appendQueryParameter("email", email)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
 
     }
 }

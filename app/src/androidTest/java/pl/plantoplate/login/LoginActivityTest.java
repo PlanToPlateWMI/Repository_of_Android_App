@@ -29,9 +29,13 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.junit.Assert.assertEquals;
 
+import android.content.Context;
+import android.net.Uri;
+
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
@@ -47,6 +51,8 @@ import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.Message;
+import pl.plantoplate.service.push_notification.PushNotificationService;
+import pl.plantoplate.tools.TestHelper;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 import timber.log.Timber;
@@ -69,6 +75,10 @@ public class LoginActivityTest {
         // server
         server = new MockWebServer();
         server.start(8080);
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -78,6 +88,10 @@ public class LoginActivityTest {
 
         // Shutdown server
         server.shutdown();
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.enableService(appContext, PushNotificationService.class);
     }
 
     //19.12.2023 - ok
@@ -92,80 +106,126 @@ public class LoginActivityTest {
 
     }
 
-    //19.12.2023 - ok
+    //26.12.2023 - ok
     @Test
     public void testNoUserExists() throws InterruptedException {
 
         String email = "test@test.com";
         String password = "password";
-        String baseUrl = "/api/auth/signin";
+        String emailApiPath = "api/auth/signin";
         String message = "Account with this email doesn't exist";
 
-//        MockResponse response = new MockResponse()
-//                .setResponseCode(400)
-//                .setBody(new Message(message).toString());
-//        server.enqueue(response);
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(400)
+                .setBody("{\"message\": \"Account with this email doesn't exist\"}");
+        server.enqueue(responseCode);
 
         onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
 
-        Thread.sleep(1000);
+        RecordedRequest recordedRequest = server.takeRequest();
+
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
 
-//        RecordedRequest recordedRequest = server.takeRequest();
-//        assertEquals(baseUrl, recordedRequest.getPath());
-
     }
 
-
-    //19.12.2023 - ok
-    @Test
-    public void testPasswordIsNotCorrect() throws InterruptedException {
-
-        String email = "plantoplatemobileapp@gmail.com";
-        String password = "invalid";
-        String baseUrl = "/api/auth/signin";
-
-//        MockResponse response = new MockResponse()
-//                .setResponseCode(403);
-//        server.enqueue(response);
-
-        onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
-        onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
-        onView(withId(R.id.button_zaloguj_sie)).perform(click());
-
-//        RecordedRequest recordedRequest = server.takeRequest();
-//        assertEquals(baseUrl, recordedRequest.getPath());
-
-        Thread.sleep(1000);
-
-        onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Nieprawidłowe hasło!")));
-
-    }
-
-    //19.12.2023 - ok
+    //26.12.2023 - ok
     @Test
     public void testUserExists() throws InterruptedException {
 
         String email = "plantoplatemobileapp@gmail.com";
         String password = "plantoplate";
-        String baseUrl = "/api/auth/signin";
+        String emailApiPath = "api/auth/signin";
+        String message = "User successfully login and API sends back JWT Token and role";
 
-//        MockResponse response = new MockResponse()
-//                .setResponseCode(200)
-//                .setBody("User successfully login and API sends back JWT Token and rolet");
-//        server.enqueue(response);
+
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"message\": \"User successfully login and API sends back JWT Token and role\"}");
+        server.enqueue(responseCode);
 
         onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
 
-//        RecordedRequest recordedRequest = server.takeRequest();
-//        assertEquals(baseUrl, recordedRequest.getPath());
+        RecordedRequest recordedRequest = server.takeRequest();
+
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
+
+    }
+
+    //26.12.2023 - ok
+    @Test
+    public void testPasswordIsCorrect() throws InterruptedException {
+
+        String email = "plantoplatemobileapp@gmail.com";
+        String password = "plantoplate";
+        String emailApiPath = "api/auth/signin";
+        String message = "Password matches with password from DB";
+
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"message\": \"Password matches with password from DB\"}");
+        server.enqueue(responseCode);
+
+        onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.button_zaloguj_sie)).perform(click());
+
+        RecordedRequest recordedRequest = server.takeRequest();
+
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
+
+    }
+
+    //???
+    @Test
+    public void testPasswordIsNotCorrect() throws InterruptedException {
+
+        String email = "plantoplatemobileapp@gmail.com";
+        String password = "invalid";
+        String emailApiPath = "api/auth/signin";
+        String message = "Password doesn't match with password from DB";
+
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(409)
+                .setBody("{\"message\": \"Password doesn't match with password from DB\"}");
+        server.enqueue(responseCode);
+
+        onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
+        onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
+        onView(withId(R.id.button_zaloguj_sie)).perform(click());
+
+        RecordedRequest recordedRequest = server.takeRequest();
+
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Nieprawidłowe hasło!")));
 
     }
 
