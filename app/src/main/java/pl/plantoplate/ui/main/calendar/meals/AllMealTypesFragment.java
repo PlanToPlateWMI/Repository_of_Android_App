@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,19 +29,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.List;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.FragmentCalendarInsideAllBinding;
-import pl.plantoplate.databinding.FragmentRecipeInsideAllBinding;
-import pl.plantoplate.ui.main.calendar.mealInfo.MealInfoFragment;
-import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.MealTypesAdapter;
-import pl.plantoplate.ui.main.calendar.recyclerViews.listeners.SetupMealItem;
-import pl.plantoplate.ui.main.calendar.recyclerViews.models.MealTypes;
-import pl.plantoplate.ui.main.recipes.recipeInfo.RecipeInfoFragment;
-import pl.plantoplate.ui.main.recipes.recyclerViews.adapters.RecipeCategoryAdapter;
-import pl.plantoplate.ui.main.recipes.recyclerViews.listeners.SetupRecipeButtons;
+import pl.plantoplate.ui.main.calendar.meal_info.MealInfoFragment;
+import pl.plantoplate.ui.main.calendar.recycler_views.adapters.MealTypesAdapter;
+import pl.plantoplate.ui.main.calendar.recycler_views.models.MealTypes;
 import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
 import timber.log.Timber;
@@ -99,7 +93,7 @@ public class AllMealTypesFragment extends Fragment {
         RecyclerView mealTypesRecyclerView = fragmentCalendarInsideBldBinding.productsOwnRecyclerView;
         mealTypesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mealTypesAdapter = new MealTypesAdapter();
-        mealTypesAdapter.setUpMealItem((mealId) -> {
+        mealTypesAdapter.setUpMealItem(mealId -> {
             MealInfoFragment mealInfoFragment = new MealInfoFragment();
             Bundle bundle = new Bundle();
             bundle.putInt("mealId", mealId);
@@ -114,7 +108,7 @@ public class AllMealTypesFragment extends Fragment {
         compositeDisposable.add(
                 mealRepository.getMealsByDate("Bearer " + prefs.getString("token", ""), date)
                         .subscribe(meals -> {
-                                    ArrayList<MealTypes> mealsList = CategorySorter.groupMealsByType(meals);
+                                    List<MealTypes> mealsList = CategorySorter.groupMealsByType(meals);
                                     welcomeText.setText(mealsList.isEmpty() ?
                                             getString(R.string.wprowadzenie_kalendarz) : "");
                                     mealTypesAdapter.setMealTypes(CategorySorter.groupMealsByType(meals));

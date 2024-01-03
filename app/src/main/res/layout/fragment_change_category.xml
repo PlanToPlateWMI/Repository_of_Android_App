@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorOnTertiary"
-    tools:context=".ui.main.productsDatabase.ChangeCategoryOfProductFragment">
+    tools:context=".ui.main.products_database.ChangeCategoryOfProductFragment">
 
     <TextView
         android:id="@+id/baza_produktow"
@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/baza_produktow"
         app:layout_constraintVertical_bias="0.259" />
 
-    <pl.plantoplate.ui.customViews.RadioGridGroup
+    <pl.plantoplate.ui.custom_views.RadioGridGroup
         android:id="@+id/radio_group_nowa_kategoria"
         android:layout_width="363dp"
         android:layout_height="430dp"
@@ -310,7 +310,7 @@
             android:textSize="13dp"
             app:rippleColor="?attr/colorPrimaryVariant" />
 
-    </pl.plantoplate.ui.customViews.RadioGridGroup>
+    </pl.plantoplate.ui.custom_views.RadioGridGroup>
 
     <Button
         android:id="@+id/button_zatwierdz"

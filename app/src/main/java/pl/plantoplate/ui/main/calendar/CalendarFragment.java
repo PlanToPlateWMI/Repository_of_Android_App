@@ -15,39 +15,30 @@
  */
 package pl.plantoplate.ui.main.calendar;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.databinding.FragmentCalendarBinding;
-import pl.plantoplate.ui.customViews.calendar.CalendarStyle;
-import pl.plantoplate.ui.customViews.calendar.ShortCalendar;
+import pl.plantoplate.ui.custom_views.calendar.CalendarStyle;
+import pl.plantoplate.ui.custom_views.calendar.ShortCalendar;
 import pl.plantoplate.ui.main.calendar.meals.AllMealTypesFragment;
 import pl.plantoplate.ui.main.calendar.meals.ConcreteMealTypeFragment;
 import pl.plantoplate.utils.DateUtils;
-import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.custom_views.RadioGridGroup;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
-import pl.plantoplate.ui.main.recipes.RecipesFragment;
-import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
+import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 import timber.log.Timber;
 
 /**
@@ -55,13 +46,10 @@ import timber.log.Timber;
  */
 public class CalendarFragment extends Fragment {
 
-    private FragmentCalendarBinding fragmentCalendarBinding;
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
-    //private FloatingActionButton addToCalendarButton;
     private TextView dateTextView;
     private ShortCalendar shortCalendar;
-    private SharedPreferences prefs;
 
     /**
      * Called to create the view hierarchy of the fragment.
@@ -74,9 +62,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        fragmentCalendarBinding = FragmentCalendarBinding.inflate(inflater, container, false);
-        prefs = requireActivity().getSharedPreferences("prefs", 0);
+        FragmentCalendarBinding fragmentCalendarBinding = FragmentCalendarBinding.inflate(inflater, container, false);
 
         initViews(fragmentCalendarBinding);
         setClickListeners();
@@ -88,7 +74,6 @@ public class CalendarFragment extends Fragment {
     }
 
     public void initViews(FragmentCalendarBinding fragmentCalendarBinding) {
-        //addToCalendarButton = fragmentCalendarBinding.plusInKalendarz;
         viewPager = fragmentCalendarBinding.kalPrzep;
         dateTextView = fragmentCalendarBinding.miesiacdzienrok;
         radioGridGroup = fragmentCalendarBinding.radioGroupBaza;
@@ -148,9 +133,6 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
-                    case 0:
-                        radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie);
-                        break;
                     case 1:
                         radioGridGroup.setCheckedRadioButtonById(R.id.sniadanie);
                         break;
@@ -160,22 +142,12 @@ public class CalendarFragment extends Fragment {
                     case 3:
                         radioGridGroup.setCheckedRadioButtonById(R.id.kolacja);
                         break;
+                    default:
+                        radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie);
+                        break;
                 }
             }
         });
-
-        String role = prefs.getString("role", "");
-
-//        if(role.equals("ROLE_ADMIN")) {
-//            addToCalendarButton.setVisibility(View.VISIBLE);
-//            addToCalendarButton.setOnClickListener(v -> {
-//                ((BottomNavigationView) requireActivity()
-//                        .findViewById(R.id.bottomNavigationView)).setSelectedItemId(R.id.receipt_long);
-//                replaceFragment(new RecipesFragment());
-//            });
-//        }else {
-//            addToCalendarButton.setVisibility(View.INVISIBLE);
-//        }
 
         // Set up adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
@@ -207,12 +179,5 @@ public class CalendarFragment extends Fragment {
         public void addFragment(Fragment fragment) {
             fragmentList.add(fragment);
         }
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, fragment);
-        transaction.addToBackStack("calendarFragment");
-        transaction.commit();
     }
 }

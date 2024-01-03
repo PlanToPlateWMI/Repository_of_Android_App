@@ -15,7 +15,7 @@
  */
 package pl.plantoplate.data.remote.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.product.Product;
 import retrofit2.http.Body;
@@ -30,17 +30,17 @@ public interface StorageService {
 
 
     @GET("api/pantry/")
-    Single<ArrayList<Product>> getStorage(@Header("Authorization") String token);
+    Single<List<Product>> getStorage(@Header("Authorization") String token);
 
     @POST("api/pantry/")
-    Single<ArrayList<Product>> addProductToStorage(@Header("Authorization") String token, @Body Product product);
+    Single<List<Product>> addProductToStorage(@Header("Authorization") String token, @Body Product product);
 
     @DELETE("api/pantry/{id}")
-    Single<ArrayList<Product>> deleteProductStorage(@Header("Authorization") String token, @Path("id") int productId);
+    Single<List<Product>> deleteProductStorage(@Header("Authorization") String token, @Path("id") int productId);
 
     @POST("api/pantry/transfer")
-    Single<ArrayList<Product>> transferBoughtProductsToStorage(@Header("Authorization") String token, @Body ArrayList<Integer> productIds);
+    Single<List<Product>> transferBoughtProductsToStorage(@Header("Authorization") String token, @Body List<Integer> productIds);
 
     @PATCH("api/pantry/{id}")
-    Single<ArrayList<Product>> changeProductAmountInStorage(@Header("Authorization") String token, @Path("id") int productId, @Body Product product);
+    Single<List<Product>> changeProductAmountInStorage(@Header("Authorization") String token, @Path("id") int productId, @Body Product product);
 }

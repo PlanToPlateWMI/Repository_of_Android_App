@@ -33,6 +33,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -40,11 +41,11 @@ import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.databinding.FragmentStorageInsideBinding;
-import pl.plantoplate.ui.main.popUps.DeleteProductPopUp;
-import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
-import pl.plantoplate.ui.main.recyclerViews.adapters.CategoryAdapter;
-import pl.plantoplate.ui.main.productsDatabase.ProductsDbaseFragment;
-import pl.plantoplate.ui.main.popUps.ModifyProductPopUp;
+import pl.plantoplate.ui.main.popups.DeleteProductPopUp;
+import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
+import pl.plantoplate.ui.main.recycler_views.adapters.CategoryAdapter;
+import pl.plantoplate.ui.main.products_database.ProductsDbaseFragment;
+import pl.plantoplate.ui.main.popups.ModifyProductPopUp;
 
 /**
  * This fragment is responsible for displaying the storage.
@@ -61,8 +62,6 @@ public class StorageMainFragment extends Fragment {
 
     /**
      * Initializes the views.
-     *
-     * @param fragmentStorageInsideBinding The binding object for the fragment's view.
      */
     @Override
     public void onResume() {
@@ -140,19 +139,19 @@ public class StorageMainFragment extends Fragment {
      *
      * @param productsIds The list of product IDs to add.
      */
-    public void showaddFromPopUp(ArrayList<Integer> productsIds) {
-        Dialog dialog = new Dialog(getContext());
+    public void showaddFromPopUp(List<Integer> productsIds) {
+        Dialog dialog = new Dialog(requireContext());
         dialog.setContentView(R.layout.new_pop_up_add_products_from_storage_to_storage);
 
-        TextView add_from_shopping_list = dialog.findViewById(R.id.button_yes);
-        TextView go_to_products_database = dialog.findViewById(R.id.button_no);
+        TextView addFromShoppingList = dialog.findViewById(R.id.button_yes);
+        TextView goToProductsDatabase = dialog.findViewById(R.id.button_no);
 
-        add_from_shopping_list.setOnClickListener(v -> {
+        addFromShoppingList.setOnClickListener(v -> {
             storageViewModel.moveProductsToStorage(productsIds);
             dialog.dismiss();
         });
 
-        go_to_products_database.setOnClickListener(v -> {
+        goToProductsDatabase.setOnClickListener(v -> {
             goToProductsDatabase();
             dialog.dismiss();
         });
@@ -178,7 +177,7 @@ public class StorageMainFragment extends Fragment {
      */
     public void showModifyProductPopup(Product product) {
         ModifyProductPopUp modifyProductPopUp = new ModifyProductPopUp(requireContext(), product);
-        modifyProductPopUp.acceptButton.setOnClickListener(v -> {
+        modifyProductPopUp.setOnAcceptButtonClickListener(v -> {
             String quantityValue = Objects.requireNonNull(modifyProductPopUp.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {
                 modifyProductPopUp.quantity.setError("Podaj ilość");

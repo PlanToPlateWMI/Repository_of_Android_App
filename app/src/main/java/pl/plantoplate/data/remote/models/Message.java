@@ -16,18 +16,25 @@
 
 package pl.plantoplate.data.remote.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Message {
 
-    private String message;
+    @SerializedName("message")
+    private String msg;
 
     public Message() {
     }
 
     public Message(String message) {
-        this.message = message;
+        this.msg = message;
     }
 
     public String getMessage() {
-        return this.message;
+        return this.msg;
+    }
+
+    public void setMessage(String message) {
+        this.msg = message;
     }
 }

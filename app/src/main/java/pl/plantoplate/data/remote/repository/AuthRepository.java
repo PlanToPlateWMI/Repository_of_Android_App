@@ -41,12 +41,13 @@ public class AuthRepository {
     }
 
     public Single<CodeResponse> sendUserRegisterData(UserRegisterData info) {
+        String userAlreadyExists = "Użytkownik o podanym adresie email już istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(409, userAlreadyExists);
+
         return authService.sendUserRegisterData(info)
-                .onErrorResumeNext(throwable -> new ErrorHandler<CodeResponse>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(409, "Użytkownik o podanym adresie email już istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<CodeResponse>()
+                        .handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io());
     }
@@ -54,49 +55,53 @@ public class AuthRepository {
     private final PublishSubject<Object> cancelSubject = PublishSubject.create();
 
     public Single<CodeResponse> getEmailConfirmCode(String email, String type) {
+        String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return authService.getEmailConfirmCode(email, type)
                 .onErrorResumeNext(throwable -> new ErrorHandler<CodeResponse>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik o podanym adresie email nie istnieje!");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .takeUntil(cancelSubject.toFlowable(BackpressureStrategy.BUFFER));
     }
 
     public Single<JwtResponse> signIn(SignInData info) {
+        String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
+        String incorrectPassword = "Nieprawidłowe hasło!";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+        errorMap.put(403, incorrectPassword);
+
         return authService.signinUser(info)
                 .onErrorResumeNext(throwable -> new ErrorHandler<JwtResponse>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik o podanym adresie email nie istnieje!");
-                            put(403, "Nieprawidłowe hasło!");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<Message> resetPassword(SignInData info) {
+        String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return authService.resetPassword(info)
                 .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik o podanym adresie email nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<Message> userExists(String email) {
+        String userAlreadyExists = "Użytkownik o podanym adresie email już istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(409, userAlreadyExists);
+
         return authService.userExists(email)
                 .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(409, "Użytkownik o podanym adresie email już istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }
-

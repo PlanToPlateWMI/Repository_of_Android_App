@@ -25,6 +25,8 @@ import java.util.Base64;
  */
 public class SCryptStretcher {
 
+    private SCryptStretcher() {}
+
     /**
      Stretch the given password using the SCrypt algorithm with the given salt.
      @param password The password to stretch
@@ -32,6 +34,9 @@ public class SCryptStretcher {
      @return The stretched password as a string
      */
     public static String stretch(String password, String salt) {
+        if (password == null || salt == null || password.isEmpty() || salt.isEmpty()) {
+            return "";
+        }
         byte[] saltBytes = salt.getBytes();
         byte[] passwordBytes = password.getBytes();
         byte[] hashedPassword = SCrypt.generate(passwordBytes, saltBytes, 16, 16, 16, 128);

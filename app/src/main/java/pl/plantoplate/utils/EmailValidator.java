@@ -23,11 +23,8 @@ import java.util.regex.Pattern;
  */
 public class EmailValidator {
 
-    // Define the email regex pattern
-    private static final String emailRegex = "^[a-zA-Z0-9_]+([-._][a-zA-Z0-9]+)*@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\\.[a-zA-Z]{2,})+$";
-
-
-
+    private EmailValidator() {}
+    private static final String EMAIL_REGEX = "^[a-zA-Z0-9_]+([-._][a-zA-Z0-9]+)*@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\\.[a-zA-Z]{2,})+$";
 
     /**
      * This method checks if a given string is a valid email address.
@@ -43,7 +40,7 @@ public class EmailValidator {
         }
 
         // Compile the regex pattern into a Pattern object
-        Pattern pattern = Pattern.compile(emailRegex);
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
 
         // Match the email string against the regex pattern using a Matcher object
         Matcher matcher = pattern.matcher(str);

@@ -37,34 +37,37 @@ public class GroupRepository {
     }
 
     public Single<JwtResponse> createGroup(UserCredentials userCredentials){
+        String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return groupService.createGroup(userCredentials)
                 .onErrorResumeNext(throwable -> new ErrorHandler<JwtResponse>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
-                            put(400, "Użytkownik o podanym adresie email nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<JwtResponse> joinGroupByCode(UserJoinGroupData userJoinGroupRequest) {
+        String incorrectCode = "Niepoprawny kod grupy.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, incorrectCode);
+
         return groupService.joinGroupByCode(userJoinGroupRequest)
                 .onErrorResumeNext(throwable -> new ErrorHandler<JwtResponse>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
-                            put(400, "Niepoprawny kod grupy.");
-                            put(500, "Wystąpił nieznany błąd.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<CodeResponse> generateGroupCode(String token, String role){
+        String incorrectRole = "Niepoprawna rola dla użytkownika lub użytkownik nie należy do żadnej grupy.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, incorrectRole);
+
         return groupService.generateGroupCode(token, role)
                 .onErrorResumeNext(throwable -> new ErrorHandler<CodeResponse>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
-                            put(400, "Niepoprawna rola dla użytkownika lub użytkownik nie należy do żadnej grupy.");
-                            put(500, "Wystąpił nieznany błąd.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

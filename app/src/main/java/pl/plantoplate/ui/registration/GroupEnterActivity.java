@@ -27,6 +27,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -148,7 +149,6 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
                             } else {
                                 //quick start option
                                 showQuickStartGuadeQuestion();
-                                //startMainActivity();
                             }
                         },
                         error -> showSnackbar(view, error.getMessage())
@@ -182,7 +182,6 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         acceptButton.setOnClickListener(v -> {
             Timber.d("Accepting role child about info pop up...");
             showQuickStartGuadeQuestion();
-            //startMainActivity();
             dialog.dismiss();
         });
 
@@ -203,7 +202,6 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
 
         acceptButton.setOnClickListener(v -> {
             Timber.d("Start showing quick guade pop ups...");
-            //TODO: start showing quick guade pop ups
             showQuickStartGuade(0);
             dialog.dismiss();
         });
@@ -227,7 +225,6 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(quickStart.get(popUpKeyNumber));
 
-        ImageView imageView = dialog.findViewById(R.id.imageView);
         ImageView next = dialog.findViewById(R.id.next);
         ImageView previouse = dialog.findViewById(R.id.previouse);
         ImageView closeButton = dialog.findViewById(R.id.close);
@@ -241,20 +238,14 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
             next.setVisibility(View.VISIBLE);
         }
 
-        //imageView set image "quick_"
-//        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), quickStart.get(popUpKeyNumber));
-//        imageView.setImageDrawable(drawable);
-
         next.setOnClickListener(v -> {
             Timber.d("Next pop up...");
-            //TODO: start showing quick guade pop ups
             showQuickStartGuade(popUpKeyNumber + 1);
             dialog.dismiss();
         });
 
         previouse.setOnClickListener(v -> {
             Timber.d("Previouse pop up...");
-            //TODO: start showing quick guade pop ups
             showQuickStartGuade(popUpKeyNumber - 1);
             dialog.dismiss();
         });
@@ -286,7 +277,7 @@ public class GroupEnterActivity extends AppCompatActivity implements Application
      * @param message The message to be shown
      */
     private void showSnackbar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, message, BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
     /**

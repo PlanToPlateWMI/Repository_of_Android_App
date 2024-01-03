@@ -17,13 +17,13 @@ package pl.plantoplate.data.remote;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.HashMap;
+import java.util.Map;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.HttpException;
 
 public class ErrorHandler<T> {
 
-    public Single<T> handleHttpError(Throwable throwable, HashMap<Integer, String> errorMessages) {
+    public Single<T> handleHttpError(Throwable throwable, Map<Integer, String> errorMessages) {
         String errorMessage = "";
 
         if (throwable instanceof UnknownHostException) {
@@ -37,7 +37,11 @@ public class ErrorHandler<T> {
             if (errorMessage == null) {
                 errorMessage = "Nieznany błąd HTTP (" + ((HttpException) throwable).code() + ")";
             }
+            if (((HttpException) throwable).code() == 500) {
+                errorMessage = "Wystąpił nieznany błąd serwera.";
+            }
         } else {
+            throwable.printStackTrace();
             errorMessage = "Wystąpił nieznany błąd.";
         }
         return Single.error(new Exception(errorMessage, throwable));

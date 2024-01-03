@@ -19,7 +19,6 @@ package pl.plantoplate.utils;
  * ApplicationState is an enum class that represents the current state of the application.
  */
 public enum ApplicationState {
-    FIRST_,
     LOGIN,
     REGISTER,
     CONFIRM_MAIL,

@@ -24,8 +24,7 @@ import java.io.IOException;
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.accountManagement.changePassword.PasswordChangeOldPassword;
-import pl.plantoplate.ui.main.settings.accountManagement.deleteAccount.DeleteAccountFragment;
+import pl.plantoplate.ui.main.settings.account_management.change_password.PasswordChangeOldPassword;
 
 
 @RunWith(AndroidJUnit4.class)

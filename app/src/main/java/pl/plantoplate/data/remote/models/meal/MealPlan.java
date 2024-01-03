@@ -3,9 +3,8 @@ package pl.plantoplate.data.remote.models.meal;
 import androidx.annotation.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
 
-import pl.plantoplate.data.remote.models.shoppingList.MealShopPlan;
+import java.util.List;
 
 public class MealPlan {
 
@@ -14,12 +13,12 @@ public class MealPlan {
     private String date;
     private int recipeId;
     @JsonProperty("ingredientsId")
-    private ArrayList<Integer> ingredientsIds;
+    private List<Integer> ingredientsIds;
 
     public MealPlan(){
     }
 
-    public MealPlan(MealType mealType, int portions, String date, int recipeId, ArrayList<Integer> ingredientsIds) {
+    public MealPlan(MealType mealType, int portions, String date, int recipeId, List<Integer> ingredientsIds) {
         this.mealType = mealType;
         this.portions = portions;
         this.date = date;
@@ -59,11 +58,11 @@ public class MealPlan {
         this.recipeId = recipeId;
     }
 
-    public ArrayList<Integer> getIngredientsIds() {
+    public List<Integer> getIngredientsIds() {
         return ingredientsIds;
     }
 
-    public void setIngredientsIds(ArrayList<Integer> ingredientsIds) {
+    public void setIngredientsIds(List<Integer> ingredientsIds) {
         this.ingredientsIds = ingredientsIds;
     }
 

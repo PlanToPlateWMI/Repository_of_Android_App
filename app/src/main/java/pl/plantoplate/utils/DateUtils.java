@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -26,6 +27,8 @@ import java.util.Map;
  * DateUtils is a class that provides a method for formatting a LocalDate object to a polish date string.
  */
 public class DateUtils {
+
+    private DateUtils() {}
 
     /**
      * This method formats a LocalDate object to a polish date string.
@@ -68,7 +71,7 @@ public class DateUtils {
      * @param includePast If true, the list will also include the last 3 days.
      * @return A list of dates for the next 7 days.
      */
-    public static ArrayList<LocalDate> generateDates(boolean includePast) {
+    public static List<LocalDate> generateDates(boolean includePast) {
         LocalDate today = LocalDate.now();
         ArrayList<LocalDate> dateList = new ArrayList<>();
 

@@ -17,7 +17,7 @@ package pl.plantoplate.data.remote.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -37,35 +37,39 @@ public class UserRepository {
     }
 
     public Single<UserInfo> changeUsername(String token, String username) {
+        String userDoesNotExist = "Użytkownik nie istnieje!";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return userService.changeUsername(token, new UserInfo(username))
                 .onErrorResumeNext(throwable -> new ErrorHandler<UserInfo>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik nie istnieje!");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<UserInfo> getUserInfo(String token) {
+        String userDoesNotExist = "Użytkownik nie istnieje lub nie jest w grupie.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return userService.getUserInfo(token)
                 .onErrorResumeNext(throwable -> new ErrorHandler<UserInfo>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik nie istnieje lub nie jest w grupie.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<JwtResponse> changeEmail(String token, UserInfo userInfo) {
+        String userDoesNotExist = "Użytkownik nie istnieje!";
+        String emailAlreadyExists = "Użytkownik o podanym adresie email już istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+        errorMap.put(409, emailAlreadyExists);
+
         return userService.changeEmail(token, userInfo)
                 .onErrorResumeNext(throwable -> new ErrorHandler<JwtResponse>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik nie istnieje!");
-                            put(409, "Użytkownik o podanym adresie email już istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -74,50 +78,56 @@ public class UserRepository {
         UserInfo userInfo = new UserInfo();
         userInfo.setPassword(password);
 
+        String userDoesNotExist = "Użytkownik nie istnieje!";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return userService.changePassword(token, userInfo)
                 .onErrorResumeNext(throwable -> new ErrorHandler<UserInfo>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik nie istnieje!");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<Message> validatePasswordMatch(String token, String password) {
+        String userDoesNotExist = "Użytkownik nie istnieje!";
+        String passwordIsInvalid = "Hasło jest nieprawidłowe.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+        errorMap.put(409, passwordIsInvalid);
+
         return userService.validatePasswordMatch(token, password)
                 .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik nie istnieje!");
-                            put(409, "Hasło jest nieprawidłowe.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<UserInfo>> getUsersInfo(String token) {
+    public Single<List<UserInfo>> getUsersInfo(String token) {
+        String userDoesNotExist = "Użytkownik nie istnieje lub nie jest w grupie.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return userService.getUsersInfo(token)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<UserInfo>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik nie istnieje lub nie jest w grupie.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<UserInfo>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<UserInfo>> changePermissions(String token, UserInfo userInfo) {
+    public Single<List<UserInfo>> changePermissions(String token, UserInfo userInfo) {
         ArrayList<UserInfo> userInfos = new ArrayList<>();
         userInfos.add(userInfo);
 
+        String userNotFromGroup = "Użytkownik nie jest z tej grupy lub rola jest nieprawidłowa.";
+        String conflict = "Co najmniej jeden z użytkowników nie jest z tej grupy.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userNotFromGroup);
+        errorMap.put(409, conflict);
+
         return userService.changePermissions(token, userInfos)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<UserInfo>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik nie jest z tej grupy lub rola jest nieprawidłowa.");
-                            put(409, "Co najmniej jeden z użytkowników nie jest z tej grupy.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<UserInfo>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

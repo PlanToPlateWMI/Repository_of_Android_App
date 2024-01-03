@@ -24,8 +24,7 @@ import java.io.IOException;
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.accountManagement.changeEmail.ChangeEmailStep1Fragment;
-import pl.plantoplate.ui.main.settings.accountManagement.changePassword.PasswordChangeNewPasswords;
+import pl.plantoplate.ui.main.settings.account_management.change_email.ChangeEmailStep1Fragment;
 
 @RunWith(AndroidJUnit4.class)
 public class ChangeEmailStep1FragmentTest {

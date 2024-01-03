@@ -1,6 +1,6 @@
 package pl.plantoplate.data.remote.models.recipe;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeInfo {
 
@@ -11,25 +11,14 @@ public class RecipeInfo {
     private String time;
     private Level level;
     private int portions;
-    private ArrayList<String> steps;
-    private ArrayList<Ingredient> ingredients;
+    private List<String> steps;
+    private List<Ingredient> ingredients;
     private boolean vege;
     private int recipeId;
 
-    public RecipeInfo() {
-    }
+    public RecipeInfo() {}
 
-    public RecipeInfo(int id,
-                      String title,
-                      String image,
-                      String source,
-                      String time,
-                      Level level,
-                      int portions,
-                      ArrayList<String> steps,
-                      ArrayList<Ingredient> ingredients,
-                      boolean vege,
-                      int recipeId) {
+    public RecipeInfo(int id, String title, String image, String source, String time, Level level, int portions, List<String> steps, List<Ingredient> ingredients, boolean vege, int recipeId) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -99,19 +88,19 @@ public class RecipeInfo {
         this.portions = portions;
     }
 
-    public ArrayList<String> getSteps() {
+    public List<String> getSteps() {
         return steps;
     }
 
-    public void setSteps(ArrayList<String> steps) {
+    public void setSteps(List<String> steps) {
         this.steps = steps;
     }
 
-    public ArrayList<Ingredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 

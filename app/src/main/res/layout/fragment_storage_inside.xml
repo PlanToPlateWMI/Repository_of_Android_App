@@ -5,7 +5,7 @@
     android:id="@+id/storage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.shoppingList.BuyProductsFragment">
+    tools:context=".ui.main.shopping_list.BuyProductsFragment">
 
     <TextView
         android:id="@+id/textView4"

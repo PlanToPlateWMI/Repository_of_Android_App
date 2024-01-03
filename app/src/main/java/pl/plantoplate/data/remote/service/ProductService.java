@@ -15,7 +15,7 @@
  */
 package pl.plantoplate.data.remote.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.product.Product;
 import retrofit2.http.Body;
@@ -30,14 +30,14 @@ import retrofit2.http.Query;
 public interface ProductService {
 
     @GET("api/products")
-    Single<ArrayList<Product>> getProducts(@Header("Authorization") String token, @Query("type") String type);
+    Single<List<Product>> getProducts(@Header("Authorization") String token, @Query("type") String type);
 
     @POST("api/products")
-    Single<ArrayList<Product>> addProduct(@Header("Authorization") String token, @Body Product product);
+    Single<List<Product>> addProduct(@Header("Authorization") String token, @Body Product product);
 
     @PATCH("api/products/{id}")
-    Single<ArrayList<Product>> changeProduct(@Header("Authorization") String token, @Path("id") int productId, @Body Product product);
+    Single<List<Product>> changeProduct(@Header("Authorization") String token, @Path("id") int productId, @Body Product product);
 
     @DELETE("api/products/{id}")
-    Single<ArrayList<Product>> deleteProduct(@Header("Authorization") String token, @Path("id") int productId);
+    Single<List<Product>> deleteProduct(@Header("Authorization") String token, @Path("id") int productId);
 }

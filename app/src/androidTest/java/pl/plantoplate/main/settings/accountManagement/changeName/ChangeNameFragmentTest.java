@@ -24,8 +24,7 @@ import java.io.IOException;
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.accountManagement.changeName.ChangeNameFragment;
-import pl.plantoplate.ui.main.settings.accountManagement.changePassword.PasswordChangeNewPasswords;
+import pl.plantoplate.ui.main.settings.account_management.change_name.ChangeNameFragment;
 
 @RunWith(AndroidJUnit4.class)
 public class ChangeNameFragmentTest {

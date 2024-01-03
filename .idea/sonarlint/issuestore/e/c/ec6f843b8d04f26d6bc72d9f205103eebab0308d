@@ -1,7 +1,0 @@
-
-n
-java:S1301"KReplace this "switch" statement by "if" statements to increase readability.(¼œóÛüÿÿÿÿ8ÌıŒ»È1
-y
-java:S1104."\Make quantityTextView a static final constant or non-public and provide accessors if needed.(¡µ8ÍıŒ»È1
-v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(½ ë¦8ÎıŒ»È1
-D	java:S131""Add a default case to this switch.(¼œóÛüÿÿÿÿ8ˆşŒ»È1

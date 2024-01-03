@@ -21,11 +21,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import java.util.Objects;
@@ -34,13 +37,13 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import pl.plantoplate.databinding.LoginPageBinding;
 import pl.plantoplate.data.remote.models.auth.SignInData;
 import pl.plantoplate.data.remote.repository.AuthRepository;
+import pl.plantoplate.databinding.LoginPageBinding;
 import pl.plantoplate.utils.ApplicationState;
 import pl.plantoplate.utils.ApplicationStateController;
 import pl.plantoplate.utils.SCryptStretcher;
-import pl.plantoplate.ui.login.remindPassword.EnterEmailActivity;
+import pl.plantoplate.ui.login.remind_password.EnterEmailActivity;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.registration.RegisterActivity;
 import timber.log.Timber;
@@ -93,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
     private void initDontHaveAccountTextView() {
         Timber.d("Initializing has account text view...");
         Spannable spans = new SpannableString("Nie masz konta?    ZAŁÓŻ KONTO");
-        spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 15, 30, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 15, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         dontHaveAccountTextView.setText(spans);
     }
 
@@ -162,7 +165,6 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
         editor.putString("token", token);
         editor.putString("role", role);
         editor.putString("password", signInData.getPassword());
-        //editor.putBoolean("logged", true);
         editor.apply();
     }
 
@@ -180,7 +182,7 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
      * A method that allows the user to log in to their account.
      */
     public void showSnackbar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, message, BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
     /**
@@ -219,6 +221,6 @@ public class LoginActivity extends AppCompatActivity implements ApplicationState
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        compositeDisposable.dispose();
+        compositeDisposable.clear();
     }
 }

@@ -30,14 +30,16 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.meal.Meal;
 import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.FragmentCalendarInsideBldBinding;
-import pl.plantoplate.ui.main.calendar.mealInfo.MealInfoFragment;
-import pl.plantoplate.ui.main.calendar.recyclerViews.adapters.ConcreteMealAdapter;
+import pl.plantoplate.ui.main.calendar.meal_info.MealInfoFragment;
+import pl.plantoplate.ui.main.calendar.recycler_views.adapters.ConcreteMealAdapter;
 import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
 import timber.log.Timber;
@@ -101,7 +103,7 @@ public class ConcreteMealTypeFragment extends Fragment {
         RecyclerView mealsRecyclerView = fragmentCalendarInsideBldBinding.productsOwnRecyclerView;
         mealsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         concreteMealAdapter = new ConcreteMealAdapter();
-        concreteMealAdapter.setUpMealItem((mealId) -> {
+        concreteMealAdapter.setUpMealItem(mealId -> {
             MealInfoFragment mealInfoFragment = new MealInfoFragment();
             Bundle bundle = new Bundle();
             bundle.putInt("mealId", mealId);
@@ -116,7 +118,7 @@ public class ConcreteMealTypeFragment extends Fragment {
         compositeDisposable.add(
                 mealRepository.getMealsByDate("Bearer " + prefs.getString("token", ""), date)
                         .subscribe(meals -> {
-                                    ArrayList<Meal> mealsList = CategorySorter.getSortedMealTypeList(meals, mealType);
+                                    List<Meal> mealsList = CategorySorter.getSortedMealTypeList(meals, mealType);
                                     welcomeText.setText(mealsList.isEmpty() ?
                                             getString(R.string.wprowadzenie_kalendarz) : "");
                                     concreteMealAdapter.setMeals(CategorySorter.getSortedMealTypeList(meals, mealType));

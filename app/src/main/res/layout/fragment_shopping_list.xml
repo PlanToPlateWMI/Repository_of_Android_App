@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorOnTertiary"
-    tools:context="pl.plantoplate.ui.main.shoppingList.ShoppingListFragment">
+    tools:context="pl.plantoplate.ui.main.shopping_list.ShoppingListFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/shopping"
         app:queryHint="@string/search_hint" />
 
-    <pl.plantoplate.ui.customViews.RadioGridGroup
+    <pl.plantoplate.ui.custom_views.RadioGridGroup
         android:id="@+id/radio_group"
         android:layout_width="363dp"
         android:layout_height="50dp"
@@ -110,7 +110,7 @@
             android:textSize="16dp"
             app:rippleColor="?attr/colorOnPrimaryFixed" />
 
-    </pl.plantoplate.ui.customViews.RadioGridGroup>
+    </pl.plantoplate.ui.custom_views.RadioGridGroup>
 
     <TextView
         android:id="@+id/quantity"
