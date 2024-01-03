@@ -79,3 +79,13 @@ y
 Iapp/src/main/java/pl/plantoplate/data/remote/models/meal/MealPlanNew.java,c\3\c3072ca15e5155af89a67a058af00247d7186476
 r
 Bapp/src/main/java/pl/plantoplate/data/remote/models/meal/Meal.java,7\b\7b8fabc8232cfa217f05a60d20504f9342ff6eac
+€
+Pjava/pl/plantoplate/ui/main/recipes/recipeInfo/newPopUps/PopUpShoppingStart.java,a\8\a89be3587e6c7a6ef195e385cc7b47b630a01f7a
+s
+Cjava/pl/plantoplate/ui/main/calendar/mealInfo/MealInfoFragment.java,0\b\0be2d171b742062fd19a7cc506ace41c61b49c49
+v
+Fjava/pl/plantoplate/ui/main/recipes/recipeInfo/RecipeInfoFragment.java,6\4\646ce30b42811fbc33a0107f4f6442d56a371b01
+l
+<java/pl/plantoplate/data/remote/models/meal/MealPlanNew.java,e\b\eb730e23923139681ee7aef9790ce76ab4aead3c
+c
+3java/pl/plantoplate/data/remote/RetrofitClient.java,2\a\2a767ba7228306497348c27352f2f3a346299d20
