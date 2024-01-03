@@ -54,7 +54,7 @@ import pl.plantoplate.R;
 import pl.plantoplate.service.push_notification.PushNotificationService;
 import pl.plantoplate.tools.TestHelper;
 import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.ui.login.remindPassword.ChangePasswordActivity;
+import pl.plantoplate.ui.login.remindPasswordm .ChangePasswordActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 
 @RunWith(AndroidJUnit4.class)

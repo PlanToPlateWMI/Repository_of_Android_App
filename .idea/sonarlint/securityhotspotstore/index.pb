@@ -9,3 +9,5 @@ i
 Ksrc/androidTest/java/pl/plantoplate/main/calendar/CalendarFragmentTest.java,a\8\a84dd8dd2049b83177025e67b4ef9a63b60251b5
 ]
 -java/pl/plantoplate/ui/main/ActivityMain.java,4\b\4bf106ae9a66d3b75756964115c318d6e9dc1b90
+ç
+]src/androidTest/java/pl/plantoplate/login/remindPasswordTests/ChangePasswordActivityTest.java,6\a\6ad98ec69f17e77ed36373f173e86b97d276f1fa
