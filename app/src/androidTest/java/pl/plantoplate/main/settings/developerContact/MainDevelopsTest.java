@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
+import pl.plantoplate.ui.main.settings.developer_contact.MailDevelops;
 import pl.plantoplate.R;
 
 import static androidx.test.espresso.Espresso.onView;

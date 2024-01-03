@@ -16,83 +16,109 @@
 
 package pl.plantoplate.main.recepies;
 
-
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.intent.Intents;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import org.junit.runners.Parameterized;
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.recipes.RecipesFragment;
 import pl.plantoplate.R;
-
+import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static pl.plantoplate.main.recepies.MockHelper.enqueueResponse;
+import static pl.plantoplate.main.recepies.TestDataJsonGenerator.generateProducts;
+import static pl.plantoplate.main.recepies.TestDataJsonGenerator.generateRecipes;
+import static pl.plantoplate.main.recepies.TestDataJsonGenerator.generateUserInfo;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(Parameterized.class)
 public class RecepiesFragmentTest {
 
-    @Rule
-    public ActivityScenarioRule<ActivityMain> fragmentRule =
-            new ActivityScenarioRule<>(ActivityMain.class);
-
-    //serwer
     private MockWebServer server;
+
+    private final String category;
+    private final List<String> recipeNames;
+    private final boolean performSwiping;
+
+    public RecepiesFragmentTest(String category, List<String> recipeNames, boolean performSwiping) {
+        this.category = category;
+        this.recipeNames = recipeNames;
+        this.performSwiping = performSwiping;
+    }
 
     @Before
     public void setUp() throws IOException {
-        // Initialize Intents
         Intents.init();
-
-        // Navigate to the RecepiesFragment
-        navigateToRecepiesFragment();
-
-        // server
         server = new MockWebServer();
         server.start(8080);
+        enqueueStartResponses();
+
+        ActivityScenario.launch(ActivityMain.class);
     }
 
     @After
     public void tearDown() throws IOException {
-        // Release Intents
-        Intents.release();
-
-        // Shutdown server
         server.shutdown();
+        Intents.release();
     }
 
-    @Test
-    public void navigateToRecepiesFragment() {
+    private void enqueueStartResponses() {
+        enqueueResponse(server, 200, generateUserInfo());
+        enqueueResponse(server, 200, generateProducts());
+    }
 
-        fragmentRule.getScenario().onActivity(activity -> {
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, RecipesFragment.class, null)
-                    .commit();
+    @Parameterized.Parameters(name = "{index}: Test-{0}")
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                {"Main dishes", List.of("recipe11", "recipe12"), false},
+                {"Soups", List.of("recipe2"), false},
+                {"Desserts", List.of("recipe3"), true},
+                {"Snacks", List.of("recipe4"), true},
+                {"Drinks", List.of("recipe5"), true}
         });
     }
 
-//    public void navigateToRecepiesFragment() {
-//
-//        fragmentRule.getScenario().onActivity(activity -> {
-//            activity.getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.frame_layout, RecipeFragment.class, null)
-//                    .commit();
-//        });
-//    }
-//
-//    @Test
-//    public void testRecepiesDisplayed() {
-//        onView(withId(R.id.recipie)).check(matches(isDisplayed()));
-//    }
-}
+    private int getViewIdByCategory(String category) {
+        switch (category) {
+            case "Main dishes":
+                return R.id.dania_glowne;
+            case "Soups":
+                return R.id.zupy;
+            case "Desserts":
+                return R.id.desery;
+            case "Snacks":
+                return R.id.przekaski;
+            case "Drinks":
+                return R.id.napoje;
+            default:
+                return -1;
+        }
+    }
 
+    @Test
+    public void testRecepiesDisplayed() {
+        enqueueResponse(server, 200, generateRecipes());
+
+        onView(withId(R.id.receipt_long)).perform(click());
+
+        if (performSwiping) {
+            onView(withId(R.id.hscroll)).perform(swipeLeft());
+        }
+
+        onView(withId(getViewIdByCategory(category))).perform(click());
+        for (String recipeName : recipeNames) {
+            onView(withText(recipeName)).check(matches(isDisplayed()));
+        }
+    }
+}

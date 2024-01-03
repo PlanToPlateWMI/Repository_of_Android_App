@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
+import pl.plantoplate.ui.main.settings.account_management.ChangeTheData;
 import pl.plantoplate.R;
 
 import static androidx.test.espresso.Espresso.onView;

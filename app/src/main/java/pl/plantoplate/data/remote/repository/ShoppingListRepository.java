@@ -17,14 +17,15 @@ package pl.plantoplate.data.remote.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.RetrofitClient;
 import pl.plantoplate.data.remote.models.product.Product;
-import pl.plantoplate.data.remote.models.shoppingList.MealShopPlan;
-import pl.plantoplate.data.remote.models.shoppingList.ShoppingList;
+import pl.plantoplate.data.remote.models.shopping_list.MealShopPlan;
+import pl.plantoplate.data.remote.models.shopping_list.ShoppingList;
 import pl.plantoplate.data.remote.service.ShoppingListService;
 
 public class ShoppingListRepository {
@@ -36,29 +37,31 @@ public class ShoppingListRepository {
         shoppingListService = retrofitClient.getClient().create(ShoppingListService.class);
     }
 
-    public Single<ArrayList<Product>> getToBuyShoppingList(String token) {
+    public Single<List<Product>> getToBuyShoppingList(String token) {
+        String accountDoesNotExist = "Konto z takim emailem nie istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, accountDoesNotExist);
+
         return shoppingListService.getShoppingList(token, false)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Konto z takim emailem nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Product>> getBoughtShoppingList(String token) {
+    public Single<List<Product>> getBoughtShoppingList(String token) {
+        String accountDoesNotExist = "Konto z takim emailem nie istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, accountDoesNotExist);
+
         return shoppingListService.getShoppingList(token, true)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Konto z takim emailem nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Integer>> getBoughtProductsIds(String token) {
+    public Single<List<Integer>> getBoughtProductsIds(String token) {
         return getBoughtShoppingList(token)
                 .flatMap(response -> {
                     ArrayList<Integer> productIds = new ArrayList<>();
@@ -69,24 +72,26 @@ public class ShoppingListRepository {
                 });
     }
 
-    public Single<ArrayList<Product>> addProductToShoppingList(String token, Product product) {
+    public Single<List<Product>> addProductToShoppingList(String token, Product product) {
+        String userDoesNotHaveAccessToGroup = "Użytkownik chcę dodać produkt nie z jego grupy lub liczba produktów jest <=0.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotHaveAccessToGroup);
+
         return shoppingListService.addProductToShopList(token, product)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkownik chcę dodać produkt nie z jego grupy lub liczba produktów jest <=0");
-                            put(500, "Wystąpił nieznany błąd.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Product>> deleteProductFromShoppingList(String token, int productId) {
+    public Single<List<Product>> deleteProductFromShoppingList(String token, int productId) {
+        String productDoesNotExist = "Produkt nie istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(404, productDoesNotExist);
+
         return shoppingListService.deleteProductFromShopList(token, productId)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(404, "Nie znaleziono produktu.");
-                            put(500, "Wystąpił nieznany błąd.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -97,27 +102,31 @@ public class ShoppingListRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Product>> changeProductAmountInShopList(String token, int productId, Product product) {
+    public Single<List<Product>> changeProductAmountInShopList(String token, int productId, Product product) {
+        String incorrectAmount = "Niepoprawna ilość produktu.";
+        String productDoesNotExist = "Nie znaleziono produktu.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, incorrectAmount);
+        errorMap.put(404, productDoesNotExist);
+
         return shoppingListService.changeProductAmountInShopList(token, productId, product)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Niepoprawna ilość produktu.");
-                            put(404, "Nie znaleziono produktu.");
-                            put(500, "Wystąpił nieznany błąd.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Product>> synchronizeMealProducts(String token,
+    public Single<List<Product>> synchronizeMealProducts(String token,
                                                                    MealShopPlan mealShopPlan,
                                                                    boolean synchronize) {
+
+        String recipeDoesNotExist = "Przepis nie istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, recipeDoesNotExist);
+
         return shoppingListService.synchronizeMealProducts(token, mealShopPlan, synchronize)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Przepis nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

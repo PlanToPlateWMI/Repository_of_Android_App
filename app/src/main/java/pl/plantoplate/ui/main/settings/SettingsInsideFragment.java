@@ -37,14 +37,14 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
-import pl.plantoplate.ui.main.settings.helpManager.HelpManager;
+import pl.plantoplate.ui.main.settings.help_manager.HelpManager;
 import pl.plantoplate.utils.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
-import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
-import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
-import pl.plantoplate.ui.main.settings.viewModels.SettingsViewModel;
+import pl.plantoplate.ui.main.settings.change_permissions.ChangePermissionsFragment;
+import pl.plantoplate.ui.main.settings.developer_contact.MailDevelops;
+import pl.plantoplate.ui.main.settings.account_management.ChangeTheData;
+import pl.plantoplate.ui.main.settings.group_code_generation.GroupCodeTypeActivity;
+import pl.plantoplate.ui.main.settings.view_models.SettingsViewModel;
 import timber.log.Timber;
 
 /**
@@ -63,14 +63,7 @@ public class SettingsInsideFragment extends Fragment {
     private SwitchCompat themeSwitch;
     private SharedPreferences prefs;
 
-    /**
-     * Creates the view for the fragment.
-     *
-     * @param inflater the layout inflater for the fragment
-     * @param container the view group container for the fragment
-     * @param savedInstanceState the saved instance state for the fragment
-     * @return the view for the fragment as a View object.
-     */
+
     @Override
     public void onResume() {
         super.onResume();
@@ -80,8 +73,12 @@ public class SettingsInsideFragment extends Fragment {
     }
 
     /**
-     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
-     * @param role The role of the user.
+     * Creates the view for the fragment.
+     *
+     * @param inflater the layout inflater for the fragment
+     * @param container the view group container for the fragment
+     * @param savedInstanceState the saved instance state for the fragment
+     * @return the view for the fragment as a View object.
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -98,10 +95,6 @@ public class SettingsInsideFragment extends Fragment {
         return settingsView.getRoot();
     }
 
-    /**
-     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
-     * @param role The role of the user.
-     */
     private void initViews(FragmentSettingsInsideBinding settingsView) {
         Timber.d("Initializing views...");
         generateGroupCodeButton = settingsView.buttonWygenerowanieKodu;
@@ -118,10 +111,6 @@ public class SettingsInsideFragment extends Fragment {
         usernameTextView.setVisibility(View.GONE);
     }
 
-    /**
-     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
-     * @param role The role of the user.
-     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         exitAccountButton.setOnClickListener(this::exitAccount);
@@ -130,10 +119,6 @@ public class SettingsInsideFragment extends Fragment {
         helpButton.setOnClickListener(v -> replaceFragment(new HelpManager()));
     }
 
-    /**
-     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
-     * @param role The role of the user.
-     */
     private void setupTheme() {
         SharedPreferences.Editor editor = prefs.edit();
         themeSwitch.setChecked("dark".equals(prefs.getString("theme", "")));
@@ -217,7 +202,6 @@ public class SettingsInsideFragment extends Fragment {
         editor.remove("password");
         editor.remove("role");
         editor.remove("token");
-        //editor.remove("logged");
         editor.apply();
 
         // delete fcm token

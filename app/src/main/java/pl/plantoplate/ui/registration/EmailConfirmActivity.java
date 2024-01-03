@@ -23,6 +23,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -51,11 +53,11 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EmailConfirmationBinding email_confirm_view = EmailConfirmationBinding.inflate(getLayoutInflater(), null, false);
-        setContentView(email_confirm_view.getRoot());
+        EmailConfirmationBinding binding = EmailConfirmationBinding.inflate(getLayoutInflater(), null, false);
+        setContentView(binding.getRoot());
         prefs = getSharedPreferences("prefs", 0);
 
-        initViews(email_confirm_view);
+        initViews(binding);
         setEmailInfoText();
         setClickListeners();
         compositeDisposable = new CompositeDisposable();
@@ -65,12 +67,12 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
     /**
      * This method is called when the activity is resumed.
      */
-    private void initViews(EmailConfirmationBinding email_confirm_view) {
+    private void initViews(EmailConfirmationBinding binding) {
         Timber.d("Initializing views...");
-        emailInfoTextView = email_confirm_view.skorzystajZLinku;
-        enterCodeEditText = email_confirm_view.wprowadzKod.getEditText();
-        confirmButton = email_confirm_view.buttonZatwierdzenieLink;
-        resendCodeButton = email_confirm_view.wyLijPono;
+        emailInfoTextView = binding.skorzystajZLinku;
+        enterCodeEditText = binding.wprowadzKod.getEditText();
+        confirmButton = binding.buttonZatwierdzenieLink;
+        resendCodeButton = binding.wyLijPono;
     }
 
     /**
@@ -99,11 +101,11 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
      */
     public void checkCode(View view) {
         Timber.d("Checking email confirm code...");
-        String entered_code = enterCodeEditText.getText().toString().trim();
-        Timber.e("Entered code: %s", entered_code);
-        String correct_code = prefs.getString("code", "").trim();
-        Timber.e("Correct code: %s", correct_code);
-        if (correct_code.equals(entered_code)) {
+        String enteredCode = enterCodeEditText.getText().toString().trim();
+        Timber.e("Entered code: %s", enteredCode);
+        String correctCode = prefs.getString("code", "").trim();
+        Timber.e("Correct code: %s", correctCode);
+        if (correctCode.equals(enteredCode)) {
             prefs.edit().remove("code").apply();
             startGroupSelectActivity();
         } else {
@@ -151,7 +153,7 @@ public class EmailConfirmActivity extends AppCompatActivity implements Applicati
      * @param message The message to be shown in the snackbar.
      */
     private void showSnackbar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, message, BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
     /**

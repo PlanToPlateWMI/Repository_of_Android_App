@@ -1,7 +1,5 @@
 
 e
-java:S1192b"HDefine a constant instead of duplicating this literal "Bearer " 5 times.(øü¬ 8Ş¿€ÿÌ1
+java:S1192c"HDefine a constant instead of duplicating this literal "Bearer " 5 times.(øü¬ 8ì¶ÿÌ1
 c
-java:S1192b"FDefine a constant instead of duplicating this literal "token" 5 times.(øü¬ 8Ş¿€ÿÌ1
-‰
-java:S1319°"kThe type of "productsIds" should be an interface such as "List" rather than the implementation "ArrayList".(Äé¼8î¿€ÿÌ1
+java:S1192c"FDefine a constant instead of duplicating this literal "token" 5 times.(øü¬ 8ì¶ÿÌ1

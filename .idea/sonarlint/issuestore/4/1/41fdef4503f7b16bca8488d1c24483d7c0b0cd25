@@ -1,9 +1,0 @@
-
-ƒ
-java:S1319"nThe type of "ingredientsIds" should be an interface such as "List" rather than the implementation "ArrayList".(ˆ×­+
-‹
-java:S1319>"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Šº÷ªýÿÿÿÿ
-‰
-java:S1319B"nThe type of "ingredientsIds" should be an interface such as "List" rather than the implementation "ArrayList".(ãþ°òüÿÿÿÿ
-s
-java:S1128"XRemove this unused import 'pl.plantoplate.data.remote.models.shoppingList.MealShopPlan'.(’É¤Ÿøÿÿÿÿ

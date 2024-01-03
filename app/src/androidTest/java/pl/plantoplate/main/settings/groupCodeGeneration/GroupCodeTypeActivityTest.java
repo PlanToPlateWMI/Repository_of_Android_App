@@ -22,8 +22,8 @@ import java.io.IOException;
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GeneratedGroupCodeActivity;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
+import pl.plantoplate.ui.main.settings.group_code_generation.GeneratedGroupCodeActivity;
+import pl.plantoplate.ui.main.settings.group_code_generation.GroupCodeTypeActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class GroupCodeTypeActivityTest {

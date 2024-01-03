@@ -27,11 +27,13 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.junit.Assert.assertEquals;
 
+import android.content.Context;
 import android.net.Uri;
 
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
@@ -45,6 +47,8 @@ import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
+import pl.plantoplate.service.push_notification.PushNotificationService;
+import pl.plantoplate.tools.TestHelper;
 import pl.plantoplate.ui.registration.GroupEnterActivity;
 
 @RunWith(AndroidJUnit4.class)
@@ -65,6 +69,10 @@ public class GroupEnterActivityTest {
         // server
         server = new MockWebServer();
         server.start(8080);
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -74,6 +82,10 @@ public class GroupEnterActivityTest {
 
         // Shutdown server
         server.shutdown();
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.enableService(appContext, PushNotificationService.class);
     }
 
     //19.12.2023 - ok
@@ -85,31 +97,65 @@ public class GroupEnterActivityTest {
 
     }
 
+    //26.12.2023 - ok
     @Test
     public void testGroupCode() throws InterruptedException {
 
         String code = "111111";
-        String baseUrl = "/api/mail/code";
+        String email = "marinamarinatestmarinatesttest@gmail.com";
+        String emailApiPath = "api/invite-codes";
+        String password = "password";
 
-//        MockResponse response = new MockResponse()
-//                .setResponseCode(200)
-//                .setBody("API send back code that it sends to user's email");
-//        server.enqueue(response);
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"message\": \"API sends back JWT Token and role\"}");
+        server.enqueue(responseCode);
 
         onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdz)).perform(click());
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        RecordedRequest recordedRequest = server.takeRequest();
+
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
+
+    }
+
+
+    //26.12.2023 - ok
+    @Test
+    public void testGroupCodeFail() throws InterruptedException {
+
+        String code = "111111";
+        String email = "marinamarinatestmarinatesttest@gmail.com";
+        String emailApiPath = "api/invite-codes";
+        String password = "password";
+
+
+        MockResponse responseCode = new MockResponse()
+                .setResponseCode(400)
+                .setBody("{\"message\": \"Account with this email doesn't exist or type of email is invalid\"}");
+        server.enqueue(responseCode);
+
+
+        onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
+        onView(withId(R.id.button_zatwierdz)).perform(click());
+
+        RecordedRequest recordedRequest = server.takeRequest();
+
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Niepoprawny kod grupy.")));
-
-//        RecordedRequest recordedRequest = server.takeRequest();
-//        assertEquals(baseUrl, recordedRequest.getPath());
 
     }
 }

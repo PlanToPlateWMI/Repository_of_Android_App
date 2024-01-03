@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorOnTertiary"
-    tools:context="pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity">
+    tools:context="pl.plantoplate.ui.main.settings.group_code_generation.GroupCodeTypeActivity">
 
     <TextView
         android:id="@+id/code_generation"

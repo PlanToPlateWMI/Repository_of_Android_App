@@ -15,17 +15,17 @@
  */
 package pl.plantoplate.data.remote.models.product;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ProductCategory {
     private int id;
     private String name;
-    private ArrayList<Product> products;
+    private List<Product> products;
 
     public ProductCategory() {
     }
 
-    public ProductCategory(int id, String name, ArrayList<Product> products) {
+    public ProductCategory(int id, String name, List<Product> products) {
         this.id = id;
         this.name = name;
         this.products = products;
@@ -39,7 +39,7 @@ public class ProductCategory {
         return name;
     }
 
-    public ArrayList<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
@@ -51,7 +51,7 @@ public class ProductCategory {
         this.name = name;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 }

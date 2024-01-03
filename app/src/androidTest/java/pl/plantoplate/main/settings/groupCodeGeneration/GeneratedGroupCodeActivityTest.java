@@ -13,9 +13,7 @@ import org.junit.runner.RunWith;
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.R;
-import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GeneratedGroupCodeActivity;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
+import pl.plantoplate.ui.main.settings.group_code_generation.GeneratedGroupCodeActivity;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;

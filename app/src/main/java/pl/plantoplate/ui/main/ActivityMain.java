@@ -24,7 +24,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Optional;
@@ -38,7 +37,7 @@ import pl.plantoplate.databinding.ActivityMainForFragmentsBinding;
 import pl.plantoplate.ui.main.calendar.CalendarFragment;
 import pl.plantoplate.ui.main.recipes.RecipesFragment;
 import pl.plantoplate.ui.main.settings.SettingsFragment;
-import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
+import pl.plantoplate.ui.main.shopping_list.ShoppingListFragment;
 import pl.plantoplate.ui.main.storage.StorageFragment;
 import timber.log.Timber;
 
@@ -90,28 +89,20 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
         Timber.d("Selected navigation item: %s", item.getTitle());
         if(item.getItemId() == MENU_CALENDAR){
             replaceFragment(new CalendarFragment(), "CALENDAR");
-            return true;
         }else if(item.getItemId() == MENU_COTTAGE){
             replaceFragment(new StorageFragment(), "STORAGE");
-            return true;
         }else if(item.getItemId() == MENU_SHOPPING_CART){
             replaceFragment(new ShoppingListFragment(), "SHOPPING_LIST");
-            return true;
         }else if(item.getItemId() == MENU_RECEIPT){
             replaceFragment(new RecipesFragment(), "RECIPE");
-            return true;
         }else if(item.getItemId() == MENU_SETTINGS){
             replaceFragment(new SettingsFragment(), "SETTINGS");
-            return true;
         }
-        return false;
+        return true;
     }
 
     /**
      * Replaces the current fragment with the given one.
-     *
-     * @param fragment The fragment to be displayed.
-     * @param tag      The tag of the fragment.
      */
     public void checkActions(Bundle bundle){
         if(bundle != null){
@@ -137,9 +128,6 @@ public class ActivityMain extends AppCompatActivity implements NavigationBarView
 
     /**
      * Replaces the current fragment with the given one.
-     *
-     * @param fragment The fragment to be displayed.
-     * @param tag      The tag of the fragment.
      */
     public void updateFcmToken(FCMToken fcmToken){
         SharedPreferences sharedPreferences = getSharedPreferences("prefs", MODE_PRIVATE);

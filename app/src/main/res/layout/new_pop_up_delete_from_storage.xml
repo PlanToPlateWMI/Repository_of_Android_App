@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/text_head"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -28,6 +28,9 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_medium"
             android:gravity="left"
+            android:maxLines="2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 
             android:text="@string/delete_storage_title"
 
@@ -42,15 +45,16 @@
 
         <TextView
             android:id="@+id/text_add"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_regular"
-
             android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 
             android:text="@string/delete_storage_body"
             android:textAppearance="@style/logowanie"

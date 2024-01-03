@@ -15,15 +15,14 @@
  */
 package pl.plantoplate.data.remote.repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.RetrofitClient;
 import pl.plantoplate.data.remote.models.recipe.Recipe;
-import pl.plantoplate.data.remote.models.recipe.RecipeCategory;
 import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.data.remote.service.RecipeService;
 
@@ -37,45 +36,38 @@ public class RecipeRepository {
         recipeService = retrofitClient.getClient().create(RecipeService.class);
     }
 
-    public Single<ArrayList<Recipe>> getAllRecipes(String category) {
+    public Single<List<Recipe>> getAllRecipes(String category) {
+        String recipeCategoryDoesNotExist = "Katagoria przepisu nie istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, recipeCategoryDoesNotExist);
+
         return recipeService.getAllRecipes(category)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Recipe>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Katagoria nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Recipe>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Recipe>> getOwnRecipes(String category, String token) {
+    public Single<List<Recipe>> getOwnRecipes(String category, String token) {
+        String recipeCategoryDoesNotExist = "Katagoria przepisu nie istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, recipeCategoryDoesNotExist);
+
         return recipeService.getOwnRecipes(category, token)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Recipe>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Katagoria nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Recipe>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<RecipeInfo> getRecipe(int recipeId) {
+        String recipeDoesNotExist = "Przepis nie istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, recipeDoesNotExist);
+
         return recipeService.getRecipe(recipeId)
                 .onErrorResumeNext(throwable -> new ErrorHandler<RecipeInfo>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Przepis nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    public Single<ArrayList<RecipeCategory>> getRecipeCategories() {
-        return recipeService.getRecipeCategories()
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<RecipeCategory>>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

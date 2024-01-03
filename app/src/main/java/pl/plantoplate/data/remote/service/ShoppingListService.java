@@ -15,11 +15,11 @@
  */
 package pl.plantoplate.data.remote.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.product.Product;
-import pl.plantoplate.data.remote.models.shoppingList.MealShopPlan;
-import pl.plantoplate.data.remote.models.shoppingList.ShoppingList;
+import pl.plantoplate.data.remote.models.shopping_list.MealShopPlan;
+import pl.plantoplate.data.remote.models.shopping_list.ShoppingList;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -33,22 +33,22 @@ import retrofit2.http.Query;
 public interface ShoppingListService {
 
     @GET("api/shopping")
-    Single<ArrayList<Product>> getShoppingList(@Header("Authorization") String token, @Query("bought") boolean bought);
+    Single<List<Product>> getShoppingList(@Header("Authorization") String token, @Query("bought") boolean bought);
 
     @POST("api/shopping")
-    Single<ArrayList<Product>> addProductToShopList(@Header("Authorization") String token, @Body Product product);
+    Single<List<Product>> addProductToShopList(@Header("Authorization") String token, @Body Product product);
 
     @DELETE("api/shopping/{id}")
-    Single<ArrayList<Product>> deleteProductFromShopList(@Header("Authorization") String token, @Path("id") int productId);
+    Single<List<Product>> deleteProductFromShopList(@Header("Authorization") String token, @Path("id") int productId);
 
     @PUT("api/shopping/{id}")
     Single<ShoppingList> changeProductStateInShopList(@Header("Authorization") String token, @Path("id") int productId);
 
     @PATCH("api/shopping/{id}")
-    Single<ArrayList<Product>> changeProductAmountInShopList(@Header("Authorization") String token, @Path("id") int productId, @Body Product product);
+    Single<List<Product>> changeProductAmountInShopList(@Header("Authorization") String token, @Path("id") int productId, @Body Product product);
 
     @POST("api/shopping/recipe")
-    Single<ArrayList<Product>> synchronizeMealProducts(@Header("Authorization") String token,
+    Single<List<Product>> synchronizeMealProducts(@Header("Authorization") String token,
                                                        @Body MealShopPlan mealShopPlan,
                                                        @Query("synchronize") boolean synchronize);
 }

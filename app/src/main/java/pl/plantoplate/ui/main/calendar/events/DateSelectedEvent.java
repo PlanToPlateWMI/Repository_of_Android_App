@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class DateSelectedEvent {
 
-    private LocalDate date;
+    private final LocalDate date;
 
     public DateSelectedEvent(LocalDate date) {
         this.date = date;

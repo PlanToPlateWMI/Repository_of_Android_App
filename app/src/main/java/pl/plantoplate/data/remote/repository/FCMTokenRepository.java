@@ -11,7 +11,7 @@ import pl.plantoplate.data.remote.service.FCMTokenService;
 import timber.log.Timber;
 
 public class FCMTokenRepository {
-    private final FCMTokenService fcmtokenService;
+    private FCMTokenService fcmtokenService;
 
     public FCMTokenRepository() {
         RetrofitClient retrofitClient = RetrofitClient.getInstance();
@@ -20,14 +20,18 @@ public class FCMTokenRepository {
     }
 
     public Single<UserInfo> updateFcmToken(String token, FCMToken fcmToken) {
-        Timber.e("updateFcmToken request: %s", fcmToken);
+        String userDoesNotExist = "Użytkownik nie istnieje!";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return fcmtokenService.updateFCMToken(token, fcmToken)
                 .onErrorResumeNext(throwable -> new ErrorHandler<UserInfo>().
-                        handleHttpError(throwable, new HashMap<>() {{
-                            put(400, "Użytkonik nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io());
+    }
+
+    public void setFcmtokenService(FCMTokenService mockTokenService) {
+        this.fcmtokenService = mockTokenService;
     }
 }

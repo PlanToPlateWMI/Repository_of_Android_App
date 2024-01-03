@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recipie"
         app:queryHint="@string/search_hint" />
 
-    <pl.plantoplate.ui.customViews.RadioGridGroup
+    <pl.plantoplate.ui.custom_views.RadioGridGroup
         android:id="@+id/radio_group_baza"
         android:layout_width="363dp"
         android:layout_height="50dp"
@@ -106,7 +106,7 @@
             app:rippleColor="?attr/colorOnPrimaryFixed"
             tools:ignore="TouchTargetSizeCheck" />
 
-    </pl.plantoplate.ui.customViews.RadioGridGroup>
+    </pl.plantoplate.ui.custom_views.RadioGridGroup>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/baza_def"

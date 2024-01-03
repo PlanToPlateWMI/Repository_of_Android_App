@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
@@ -53,7 +54,9 @@ import timber.log.Timber;
 public class RegisterActivity extends AppCompatActivity implements ApplicationStateController {
 
     private CompositeDisposable compositeDisposable;
-    private EditText enterNameEditText, enterEmailEditText, enterPasswordEditText;
+    private EditText enterNameEditText;
+    private EditText enterEmailEditText;
+    private EditText enterPasswordEditText;
     private CheckBox applyPolicyCheckBox;
     private CheckBox applyAgeCheckBox;
     private Button registerButton;
@@ -104,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     private void initHasAccountTextView() {
         Timber.d("Initializing has account text view...");
         Spannable spans = new SpannableString("Masz konto?    ZAŁOGUJ SIĘ");
-        spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 11, 26, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spans.setSpan(new ForegroundColorSpan(Color.parseColor("#6692EA")), 11, 26, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         hasAccountTextView.setText(spans);
     }
 
@@ -145,7 +148,6 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      */
     public void validateUserInfo(View view, UserRegisterData info) {
         Timber.d("Validating user info...");
-        //UserRegisterData info = getUserInfo();
         if (info.getUsername().isEmpty()) {
             Timber.d("Username is empty");
             showSnackbar(view, "Wprowadź imię użytkownika!");
@@ -190,7 +192,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
                             sendUserData(userData, view);
                         },
                         throwable ->
-                                Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), Snackbar.LENGTH_LONG).show()
+                                Snackbar.make(view, Objects.requireNonNull(throwable.getMessage()), BaseTransientBottomBar.LENGTH_LONG).show()
                 );
 
         compositeDisposable.add(disposable);
@@ -235,7 +237,7 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
     }
 
     private void showSnackbar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, message, BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
     /**

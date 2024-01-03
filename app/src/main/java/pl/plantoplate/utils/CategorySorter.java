@@ -17,6 +17,7 @@ package pl.plantoplate.utils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,15 +26,15 @@ import pl.plantoplate.data.remote.models.meal.MealType;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.models.product.ProductCategory;
 import pl.plantoplate.data.remote.models.recipe.Recipe;
-import pl.plantoplate.ui.main.calendar.recyclerViews.models.MealTypes;
-import pl.plantoplate.ui.main.recipes.recyclerViews.RecipeCategory;
+import pl.plantoplate.ui.main.calendar.recycler_views.models.MealTypes;
+import pl.plantoplate.ui.main.recipes.recycler_views.RecipeCategory;
 
 /**
  * CategorySorter is a class that sorts categories and products.
  */
 public class CategorySorter {
 
-    // products sorting
+    private CategorySorter() {}
 
     /**
      * Sorts a list of products by category name and product name.
@@ -41,7 +42,7 @@ public class CategorySorter {
      * @param products The list of products to sort.
      * @return The sorted list of products.
      */
-    public static ArrayList<ProductCategory> sortCategoriesByProduct(ArrayList<Product> products) {
+    public static List<ProductCategory> sortCategoriesByProduct(List<Product> products) {
         // Create a map of category names to lists of products
         Map<String, ArrayList<Product>> categoryMap = new HashMap<>();
         for (Product product : products) {
@@ -73,7 +74,7 @@ public class CategorySorter {
      * @param products The list of products to sort.
      * @return The sorted list of products.
      */
-    public static ArrayList<Product> sortProductsByName(ArrayList<Product> products) {
+    public static List<Product> sortProductsByName(List<Product> products) {
         products.sort(Comparator.comparing(Product::getName));
         return products;
     }
@@ -84,7 +85,7 @@ public class CategorySorter {
      * @param query The query to filter by.
      * @return The filtered list of categories.
      */
-    public static ArrayList<Product> filterCategoriesBySearch(ArrayList<ProductCategory> products, String query) {
+    public static List<Product> filterCategoriesBySearch(List<ProductCategory> products, String query) {
         ArrayList<Product> filteredProducts = new ArrayList<>();
         for (ProductCategory category : products) {
             for (Product product : category.getProducts()) {
@@ -102,7 +103,7 @@ public class CategorySorter {
      * @param query The query to filter by.
      * @return The filtered list of products.
      */
-    public static ArrayList<Product> filterProductsBySearch(ArrayList<Product> products, String query) {
+    public static List<Product> filterProductsBySearch(List<Product> products, String query) {
         ArrayList<Product> filteredProducts= new ArrayList<>();
         for (Product product : products) {
             if (product.getName().toLowerCase().contains(query.toLowerCase())) {
@@ -120,7 +121,7 @@ public class CategorySorter {
      * @param recipes The list of recipes to sort.
      * @return The sorted list of recipes.
      */
-    public static ArrayList<RecipeCategory> sortCategoriesByRecipe(ArrayList<Recipe> recipes) {
+    public static List<RecipeCategory> sortCategoriesByRecipe(List<Recipe> recipes) {
         // Create a map of category names to lists of products
         Map<String, ArrayList<Recipe>> categoryMap = new HashMap<>();
         for (Recipe recipe : recipes) {
@@ -151,7 +152,7 @@ public class CategorySorter {
      * @param recipes The list of products to sort.
      * @return The sorted list of products.
      */
-    public static ArrayList<Recipe> sortRecipesByName(ArrayList<Recipe> recipes) {
+    public static List<Recipe> sortRecipesByName(List<Recipe> recipes) {
         recipes.sort(Comparator.comparing(Recipe::getTitle));
         return recipes;
     }
@@ -163,7 +164,7 @@ public class CategorySorter {
      * @param query The query to filter by.
      * @return The filtered list of categories.
      */
-    public static ArrayList<Recipe> filterRecipesCategoriesBySearch(ArrayList<RecipeCategory> recipes, String query) {
+    public static List<Recipe> filterRecipesCategoriesBySearch(List<RecipeCategory> recipes, String query) {
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
         for (RecipeCategory category : recipes) {
             for (Recipe recipe : category.getRecipes()) {
@@ -181,7 +182,7 @@ public class CategorySorter {
      * @param query The query to filter by.
      * @return The filtered list of products.
      */
-    public static ArrayList<Recipe> filterRecipesBySearch(ArrayList<Recipe> recipes, String query) {
+    public static List<Recipe> filterRecipesBySearch(List<Recipe> recipes, String query) {
         ArrayList<Recipe> filteredRecipes = new ArrayList<>();
         for (Recipe recipe : recipes) {
             if (recipe.getTitle().toLowerCase().contains(query.toLowerCase())) {
@@ -197,8 +198,8 @@ public class CategorySorter {
      * @param meals The list of meals to group.
      * @return The grouped list of meals.
      */
-    public static ArrayList<MealTypes> groupMealsByType(ArrayList<Meal> meals) {
-        Map<MealType, ArrayList<Meal>> mealsByType = new HashMap<>();
+    public static List<MealTypes> groupMealsByType(List<Meal> meals) {
+        Map<MealType, ArrayList<Meal>> mealsByType = new EnumMap<>(MealType.class);
 
         // Group meals by MealType
         for (Meal meal : meals) {
@@ -219,22 +220,12 @@ public class CategorySorter {
     }
 
     /**
-     * Sorts a list of recipes by category name and recipe name.
-     *
-     * @param meals The list of recipes to sort.
-     * @return The sorted list of recipes.
-     */
-    private static MealTypes createMealType(MealType mealType, Map<MealType, ArrayList<Meal>> mealsByType) {
-        return new MealTypes(mealType, mealsByType.getOrDefault(mealType, new ArrayList<>()));
-    }
-
-    /**
      * Sorts a list of products by product name.
      *
      * @param meals The list of products to sort.
      * @return The sorted list of products.
      */
-    public static ArrayList<Meal> getSortedMealTypeList(ArrayList<Meal> meals, MealType mealType) {
+    public static List<Meal> getSortedMealTypeList(List<Meal> meals, MealType mealType) {
         meals.sort(Comparator.comparing(Meal::getMealType));
 
         ArrayList<Meal> sortedMeals = new ArrayList<>();

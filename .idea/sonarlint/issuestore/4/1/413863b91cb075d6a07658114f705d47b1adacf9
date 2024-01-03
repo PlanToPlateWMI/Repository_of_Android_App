@@ -1,8 +1,0 @@
-
-€
-java:S1319"jThe type of "categories" should be an interface such as "List" rather than the implementation "ArrayList".(¬‚™‘
-€
-java:S1319"jThe type of "filterlist" should be an interface such as "List" rather than the implementation "ArrayList".(ß±â¹
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(µÔÔã
-_
-java:S25839"DChange this condition so that it does not always evaluate to "false"(²ÃÎøÿÿÿÿ

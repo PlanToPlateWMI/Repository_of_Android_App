@@ -20,6 +20,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -58,7 +60,8 @@ public class SplashActivity extends AppCompatActivity {
         setAppTheme(prefs.getString("theme", "light"));
         getFcmToken();
 
-        new Handler().postDelayed(() -> {
+        View decorView = getWindow().getDecorView();
+        decorView.postDelayed(() -> {
             initApplication();
             finish();
         }, SPLASH_TIME_OUT);
@@ -71,13 +74,11 @@ public class SplashActivity extends AppCompatActivity {
      */
     private void setAppTheme(String theme) {
         Timber.e("Theme: %s", theme);
-        switch (theme) {
-            case "dark":
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                break;
-            case "light":
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                break;
+        if(theme.equals("dark")){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 

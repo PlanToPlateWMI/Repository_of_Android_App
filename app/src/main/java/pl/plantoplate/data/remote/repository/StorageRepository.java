@@ -15,8 +15,8 @@
  */
 package pl.plantoplate.data.remote.repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -33,57 +33,62 @@ public class StorageRepository {
         storageService = retrofitClient.getClient().create(StorageService.class);
     }
 
-    public Single<ArrayList<Product>> getStorage(String token){
+    public Single<List<Product>> getStorage(String token){
+        String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return storageService.getStorage(token)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
-                            put(400, "Użytkownik o podanym adresie email nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Product>> addProductToStorage(String token, Product product){
+    public Single<List<Product>> addProductToStorage(String token, Product product){
+        String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, userDoesNotExist);
+
         return storageService.addProductToStorage(token, product)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
-                            put(400, "Użytkownik o podanym adresie email nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Product>> deleteProductFromStorage(String token, int productId){
+    public Single<List<Product>> deleteProductFromStorage(String token, int productId){
+        String productDoesNotExist = "Produkt o podanym id nie istnieje.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, productDoesNotExist);
+
         return storageService.deleteProductStorage(token, productId)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
-                            put(400, "Produkt o podanym id nie istnieje.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Product>> transferBoughtProductsToStorage(String token, ArrayList<Integer> productsIds){
+    public Single<List<Product>> transferBoughtProductsToStorage(String token, List<Integer> productsIds){
+        String productsDoNotExist = "Produkty o podanych id nie istnieją.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, productsDoNotExist);
+
         return storageService.transferBoughtProductsToStorage(token, productsIds)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
-                            put(400, "Produkty nie istnieją.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ArrayList<Product>> changeProductAmountInStorage(String token, int productId, Product product){
+    public Single<List<Product>> changeProductAmountInStorage(String token, int productId, Product product){
+        String incorrectAmount = "Niepoprawna ilość produktu.";
+        HashMap<Integer, String> errorMap = new HashMap<>();
+        errorMap.put(400, incorrectAmount);
+
         return storageService.changeProductAmountInStorage(token, productId, product)
-                .onErrorResumeNext(throwable -> new ErrorHandler<ArrayList<Product>>().
-                        handleHttpError(throwable, new HashMap<Integer, String>() {{
-                            put(400, "Niepoprawna ilość produktu.");
-                            put(500, "Wystąpił nieznany błąd serwera.");
-                        }}))
+                .onErrorResumeNext(throwable -> new ErrorHandler<List<Product>>().
+                        handleHttpError(throwable, errorMap))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

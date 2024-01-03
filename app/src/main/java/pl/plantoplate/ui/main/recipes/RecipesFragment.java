@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeNewBinding;
-import pl.plantoplate.ui.customViews.RadioGridGroup;
-import pl.plantoplate.ui.main.recipes.allRecipes.AllRecipesFragment;
-import pl.plantoplate.ui.main.recipes.ownRecipes.OwnRecipesFragment;
+import pl.plantoplate.ui.custom_views.RadioGridGroup;
+import pl.plantoplate.ui.main.recipes.all_recipes.AllRecipesFragment;
+import pl.plantoplate.ui.main.recipes.own_recipes.OwnRecipesFragment;
 
 /**
  * This fragment is responsible for displaying the recipe view.
@@ -96,14 +96,10 @@ public class RecipesFragment extends Fragment {
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
-                        break;
-                    case 1:
-                        radioGridGroup.setCheckedRadioButtonById(R.id.ulubione_button);
-                        break;
-                }
+                if(position == 0)
+                    radioGridGroup.setCheckedRadioButtonById(R.id.wszystkie_button);
+                else if(position == 1)
+                    radioGridGroup.setCheckedRadioButtonById(R.id.ulubione_button);
             }
         });
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);

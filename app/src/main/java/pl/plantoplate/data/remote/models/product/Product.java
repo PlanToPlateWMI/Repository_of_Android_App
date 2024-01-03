@@ -17,25 +17,19 @@ package pl.plantoplate.data.remote.models.product;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 /**
  * Class representing a product returned from the API server.
  */
-@Entity(tableName = "products")
 public class Product implements Parcelable, Serializable {
 
-    @PrimaryKey
     private int id;
     private String name;
     private String category;
     private float amount;
     private String unit;
-
-    public Product() {
-    }
+    public Product() {}
 
     public Product(int id, String name, String category, int amount, String unit) {
         this.id = id;

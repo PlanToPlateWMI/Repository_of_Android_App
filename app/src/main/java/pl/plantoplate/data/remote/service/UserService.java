@@ -15,7 +15,7 @@
  */
 package pl.plantoplate.data.remote.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.models.Message;
@@ -44,8 +44,8 @@ public interface UserService {
     Single<Message> validatePasswordMatch(@Header("Authorization") String token, @Query("password") String password);
 
     @GET("api/users/infos")
-    Single<ArrayList<UserInfo>> getUsersInfo(@Header("Authorization") String token);
+    Single<List<UserInfo>> getUsersInfo(@Header("Authorization") String token);
 
     @PATCH("api/users/roles")
-    Single<ArrayList<UserInfo>> changePermissions(@Header("Authorization") String token, @Body ArrayList<UserInfo> usersInfo);
+    Single<List<UserInfo>> changePermissions(@Header("Authorization") String token, @Body List<UserInfo> usersInfo);
 }

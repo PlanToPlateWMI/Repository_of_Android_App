@@ -28,6 +28,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
@@ -67,10 +68,10 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GroupChooseBinding group_select_view = GroupChooseBinding.inflate(getLayoutInflater());
-        setContentView(group_select_view.getRoot());
+        GroupChooseBinding binding = GroupChooseBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        initViews(group_select_view);
+        initViews(binding);
         setClickListeners();
         prefs = getSharedPreferences("prefs", 0);
 
@@ -89,12 +90,12 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
     /**
      * This method initializes the views.
      *
-     * @param group_select_view The view binding object
+     * @param binding The view binding object
      */
-    private void initViews(GroupChooseBinding group_select_view) {
+    private void initViews(GroupChooseBinding binding) {
         Timber.d("Initializing views...");
-        enterGroupButton = group_select_view.buttonMamZaproszenie;
-        createGroupButton = group_select_view.buttonSwojaGrupa;
+        enterGroupButton = binding.buttonMamZaproszenie;
+        createGroupButton = binding.buttonSwojaGrupa;
     }
 
 
@@ -253,7 +254,7 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
      * @param message The message to show
      */
     private void showSnackbar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, message, BaseTransientBottomBar.LENGTH_LONG).show();
     }
 
     /**

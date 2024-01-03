@@ -20,7 +20,8 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.models.product.ProductCategory;
@@ -41,7 +42,7 @@ public class StorageViewModel extends AndroidViewModel {
     private final SharedPreferences prefs;
     private final StorageRepository storageRepository;
     private final MutableLiveData<String> responseMessage;
-    private final MutableLiveData<ArrayList<ProductCategory>> storageProducts;
+    private final MutableLiveData<List<ProductCategory>> storageProducts;
     private final MutableLiveData<UserInfo> userInfo;
 
     /**
@@ -75,7 +76,7 @@ public class StorageViewModel extends AndroidViewModel {
      *
      * @return The MutableLiveData object for the list of storage products.
      */
-    public MutableLiveData<ArrayList<ProductCategory>> getStorageProducts() {
+    public MutableLiveData<List<ProductCategory>> getStorageProducts() {
         return storageProducts;
     }
 
@@ -173,7 +174,7 @@ public class StorageViewModel extends AndroidViewModel {
      *
      * @param productsIds The list of product IDs to be moved to the storage.
      */
-    public void moveProductsToStorage(ArrayList<Integer> productsIds){
+    public void moveProductsToStorage(List<Integer> productsIds){
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = storageRepository.transferBoughtProductsToStorage(token, productsIds)

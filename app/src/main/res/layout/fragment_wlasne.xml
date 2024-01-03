@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.shoppingList.BuyProductsFragment">
+    tools:context=".ui.main.shopping_list.BuyProductsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

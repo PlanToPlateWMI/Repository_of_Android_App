@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/text_head"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -27,6 +27,9 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/quicksand_medium"
             android:gravity="left"
+            android:maxLines="2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
 
             android:text="Wybież datę, na którą chcesz zaplanować przepis"
 
@@ -72,7 +75,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp">
 
-                <pl.plantoplate.ui.customViews.RadioGridGroup
+                <pl.plantoplate.ui.custom_views.RadioGridGroup
                     android:id="@+id/radio_group_baza"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -154,7 +157,7 @@
                         app:rippleColor="?attr/colorOnPrimaryFixed" />
 
 
-                </pl.plantoplate.ui.customViews.RadioGridGroup>
+                </pl.plantoplate.ui.custom_views.RadioGridGroup>
 
             </HorizontalScrollView>
 
