@@ -9,24 +9,6 @@
     android:background="?attr/colorOnTertiary"
     tools:context="pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity">
 
-<!--    <TextView-->
-<!--        android:layout_marginTop="70dp"-->
-<!--        android:id="@+id/plantoplate"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:fontFamily="@font/quicksand_semibold"-->
-<!--        android:gravity="top"-->
-<!--        android:text="@string/plantoplate"-->
-<!--        android:textAppearance="@style/plantoplate"-->
-<!--        android:textColor="?attr/colorSecondaryVariant"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.023" />-->
-
     <TextView
         android:id="@+id/code_generation"
         android:layout_width="wrap_content"
@@ -70,7 +52,7 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/code_generation"
         app:layout_constraintVertical_bias="0.0" />

@@ -29,12 +29,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.databinding.FragmentKupioneBinding;
-import pl.plantoplate.ui.main.productsDatabase.AddYourOwnProductFragment;
 import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.recyclerViews.adapters.ProductAdapter;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
@@ -53,6 +53,7 @@ public class BoughtProductsFragment extends Fragment {
     private TextView titleTextView;
     private SharedPreferences prefs;
     private ProductAdapter productListAdapter;
+    private TextView productsCountTextView;
 
     /**
      * Called to create the view hierarchy associated with the fragment.
@@ -85,15 +86,20 @@ public class BoughtProductsFragment extends Fragment {
         moveToStorageButton = fragmentKupioneBinding.floatingActionButton;
         productsRecyclerView = fragmentKupioneBinding.categoryRecyclerView;
         titleTextView = fragmentKupioneBinding.textViewKupione;
+        productsCountTextView = requireActivity().findViewById(R.id.quantity);
     }
 
-    /*
+    /**
         * This method is called when the move to storage button is clicked. It creates a pop up dialog
      */
     private void setClickListeners() {
         moveToStorageButton.setOnClickListener(v -> showMoveProductToStoragePopUp());
     }
 
+    /**
+     * This method creates a pop up dialog for moving products to storage. It inflates the layout
+     * for the dialog, sets up the dialog buttons, and displays the dialog.
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -130,6 +136,12 @@ public class BoughtProductsFragment extends Fragment {
                 titleTextView.setText("");
             }
             productListAdapter.setProductsList(CategorySorter.sortProductsByName(boughtProducts));
+            if (boughtProducts.isEmpty()) {
+                productsCountTextView.setVisibility(View.INVISIBLE);
+            } else {
+                productsCountTextView.setVisibility(View.VISIBLE);
+                productsCountTextView.setText(String.valueOf(boughtProducts.size()));
+            }
         });
         boughtProductsListViewModel.getResponseMessage().observe(getViewLifecycleOwner(), responseMessage ->
                 Toast.makeText(requireActivity(), responseMessage, Toast.LENGTH_SHORT).show());
@@ -177,7 +189,7 @@ public class BoughtProductsFragment extends Fragment {
      * If there are no products in the bought list, a toast message is displayed.
      */
     public void showMoveProductToStoragePopUp(){
-        Dialog dialog = new Dialog(getContext());
+        Dialog dialog = new Dialog(requireContext());
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.new_pop_up_add_to_storage);
 
@@ -186,6 +198,9 @@ public class BoughtProductsFragment extends Fragment {
 
         acceptButton.setOnClickListener(v -> {
             boughtProductsListViewModel.moveProductsToStorage();
+
+            ((BottomNavigationView) requireActivity()
+                    .findViewById(R.id.bottomNavigationView)).setSelectedItemId(R.id.cottage);
 
             replaceFragment(new StorageFragment());
             dialog.dismiss();

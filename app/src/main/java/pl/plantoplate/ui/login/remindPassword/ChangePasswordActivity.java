@@ -61,6 +61,9 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
         setClickListeners();
     }
 
+    /**
+     * A method that is called when the activity is resumed.
+     */
     public void initViews(RemindPassword3Binding remindPassword3Binding){
         newPasswordEditText = remindPassword3Binding.wprowadzNoweHaslo.getEditText();
         repeatNewPasswordEditText = remindPassword3Binding.wprowadzNoweHaslo2.getEditText();
@@ -113,6 +116,11 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * A method that shows a snackbar with a message.
+     * @param view The view that was clicked.
+     * @param message The message that will be shown.
+     */
     private void showSnackbar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
@@ -128,6 +136,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements Applica
         editor.apply();
     }
 
+    /**
+     * A method that gets the application state.
+     * @return The application state.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

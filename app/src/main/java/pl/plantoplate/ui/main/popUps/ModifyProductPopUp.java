@@ -36,21 +36,28 @@ import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
 
+/**
+ * Class responsible for displaying pop up window for modifying product
+ */
 public class ModifyProductPopUp extends Dialog {
 
-    private TextView productName;
-    private ImageView plusButton;
-    private ImageView minusButton;
-    private TextView closeButton;
+    private final TextView productName;
+    private final ImageView plusButton;
+    private final ImageView minusButton;
+    private final TextView closeButton;
     public TextInputEditText quantity;
-    private TextView productUnitTextView;
+    private final TextView productUnitTextView;
     public TextView acceptButton;
-    private RadioGroup radioGroup;
-    private Button radioButton_min;
-    private Button radioButton_middle;
-    private Button radioButton_max;
-    private HashMap<String,List<Float>> map = new HashMap<>();
+    private final RadioGroup radioGroup;
+    private final Button radioButton_min;
+    private final Button radioButton_middle;
+    private final Button radioButton_max;
+    private final HashMap<String,List<Float>> map = new HashMap<>();
 
+    /**
+     * @param context - context of the activity
+     * @param product - product to be modified
+     */
     @SuppressLint("SetTextI18n")
     public ModifyProductPopUp(@NonNull Context context, Product product) {
         super(context);
@@ -81,13 +88,12 @@ public class ModifyProductPopUp extends Dialog {
         String unitTitle = productUnitTextView.getText().toString() + " " + product.getUnit().toLowerCase();
         productUnitTextView.setText(unitTitle);
 
-        System.out.println(product.getUnit().toLowerCase());
-        radioButton_min.setText("+" + String.valueOf(Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(0)));
-        radioButton_middle.setText("+" + String.valueOf(Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(1)));
-        radioButton_max.setText("+" + String.valueOf(Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(2)));
+        radioButton_min.setText("+" + Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(0));
+        radioButton_middle.setText("+" + Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(1));
+        radioButton_max.setText("+" + Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(2));
 
         if(product.getAmount() == 0.0){
-            quantity.setText("");
+            quantity.setText("1.0");
         }
         else{
             quantity.setText(String.valueOf(product.getAmount()));
@@ -106,11 +112,6 @@ public class ModifyProductPopUp extends Dialog {
             if (quantityValue.isEmpty()) {
                 quantityValue = "0.0";
             }
-            if (quantityValue.endsWith(".")) {
-                // add 0
-                quantityValue += "0";
-                this.quantity.setText(quantityValue);
-            }
             float quantity = Float.parseFloat(quantityValue);
             quantity++;
             this.quantity.setText(String.valueOf(quantity));
@@ -119,11 +120,6 @@ public class ModifyProductPopUp extends Dialog {
             String quantityValue = Objects.requireNonNull(this.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {
                 quantityValue = "0.0";
-            }
-            if (quantityValue.endsWith(".")) {
-                // add 0
-                quantityValue += "0";
-                this.quantity.setText(quantityValue);
             }
             float quantity = Float.parseFloat(quantityValue);
             if (quantity > 1) {
@@ -136,11 +132,6 @@ public class ModifyProductPopUp extends Dialog {
             if (quantityValue.isEmpty()) {
                 quantityValue = "0.0";
             }
-            if (quantityValue.endsWith(".")) {
-                // add 0
-                quantityValue += "0";
-                this.quantity.setText(quantityValue);
-            }
             float quantity = Float.parseFloat(quantityValue);
             quantity += Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(0);
             this.quantity.setText(String.valueOf(quantity));
@@ -150,11 +141,6 @@ public class ModifyProductPopUp extends Dialog {
             if (quantityValue.isEmpty()) {
                 quantityValue = "0.0";
             }
-            if (quantityValue.endsWith(".")) {
-                // add 0
-                quantityValue += "0";
-                this.quantity.setText(quantityValue);
-            }
             float quantity = Float.parseFloat(quantityValue);
             quantity += Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(1);
             this.quantity.setText(String.valueOf(quantity));
@@ -163,11 +149,6 @@ public class ModifyProductPopUp extends Dialog {
             String quantityValue = Objects.requireNonNull(this.quantity.getText()).toString();
             if (quantityValue.isEmpty()) {
                 quantityValue = "0.0";
-            }
-            if (quantityValue.endsWith(".")) {
-                // add 0
-                quantityValue += "0";
-                this.quantity.setText(quantityValue);
             }
             float quantity = Float.parseFloat(quantityValue);
             quantity += Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(2);
@@ -183,10 +164,11 @@ public class ModifyProductPopUp extends Dialog {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
         });
-
-
     }
 
+    /**
+     * Set up input type for quantity EditText
+     */
     public void setOnlyFloatInput() {
         quantity.addTextChangedListener(new TextWatcher() {
             @SuppressLint("SetTextI18n")
@@ -195,13 +177,9 @@ public class ModifyProductPopUp extends Dialog {
                 String input = s.toString();
                 try {
                     float inputFloat = Float.parseFloat(input);
-                    if (inputFloat > 9999.99) {
-                        input = "9999.99";
-                    }
+                    input = inputFloat < 9999.99 ? input : "9999.99";
                 } catch (NumberFormatException e) {
-                    if (input.equals(".") || input.isEmpty()) {
-                        input = "1.0";
-                    } else {
+                    if (!input.equals("")){
                         input = quantity.getTag() != null ? quantity.getTag().toString() : "";
                     }
                 }

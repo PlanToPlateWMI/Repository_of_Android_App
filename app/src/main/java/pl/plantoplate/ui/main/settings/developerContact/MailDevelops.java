@@ -42,17 +42,25 @@ public class MailDevelops extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        FragmentDeveloperBinding fragmentDeveloperBinding = FragmentDeveloperBinding.inflate(inflater, container, false);
+        FragmentDeveloperBinding fragmentDeveloperBinding = FragmentDeveloperBinding.inflate(inflater,
+                container, false);
 
         initViews(fragmentDeveloperBinding);
         setClickListeners();
         return fragmentDeveloperBinding.getRoot();
     }
 
+    /**
+     * Initialize the views
+     * @param fragmentDeveloperBinding The binding object
+     */
     public void initViews(FragmentDeveloperBinding fragmentDeveloperBinding) {
         acceptButton = fragmentDeveloperBinding.buttonZatwierdz;
     }
 
+    /**
+     * Set the click listeners
+     */
     public void setClickListeners() {
         acceptButton.setOnClickListener(v -> sendMail());
     }

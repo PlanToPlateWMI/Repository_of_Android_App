@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "530561736245",
+    "project_id": "plantoplate-393a4",
+    "storage_bucket": "plantoplate-393a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530561736245:android:ee0b409ad31e4af8df9b7c",
+        "android_client_info": {
+          "package_name": "pl.plantoplate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqcbgFX-YKh2kNJs-V-o_HwbzHEVLShXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

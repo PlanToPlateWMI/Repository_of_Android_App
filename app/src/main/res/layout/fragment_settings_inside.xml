@@ -151,7 +151,7 @@
         android:layout_height="84dp"
         android:backgroundTint="?attr/colorPrimaryVariant"
         android:clickable="true"
-        android:drawableLeft="@drawable/question_mark_24_50"
+        android:drawableLeft="@drawable/outline_contact_page_24_50"
         android:fontFamily="@font/quicksand_medium"
         android:gravity="left|center_vertical"
         android:text="@string/About_us"
@@ -166,6 +166,32 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_zarzadyanie_uyztkownikamu"
+        app:layout_constraintVertical_bias="0.0"
+        app:rippleColor="?attr/colorPrimaryVariant"
+        app:strokeColor="?attr/colorPrimaryVariant"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/button_help"
+        android:layout_width="0dp"
+        android:layout_height="84dp"
+        android:backgroundTint="?attr/colorPrimaryVariant"
+        android:clickable="true"
+        android:drawableLeft="@drawable/question_mark_24_50"
+        android:fontFamily="@font/quicksand_medium"
+        android:gravity="left|center_vertical"
+        android:text="@string/Pomoc"
+        android:textAllCaps="false"
+        android:textColor="?attr/colorSecondaryVariant"
+        app:iconPadding="12dp"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_about_us"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="?attr/colorPrimaryVariant"
         app:strokeColor="?attr/colorPrimaryVariant"
@@ -190,7 +216,7 @@
 
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_about_us"
+        app:layout_constraintTop_toBottomOf="@+id/button_help"
         app:layout_constraintVertical_bias="0.0"
         app:rippleColor="?attr/colorPrimaryVariant"
         app:strokeColor="?attr/colorPrimaryVariant"

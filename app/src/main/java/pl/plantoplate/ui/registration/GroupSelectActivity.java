@@ -15,15 +15,26 @@
  */
 package pl.plantoplate.ui.registration;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.HashMap;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.auth.UserCredentials;
 import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.repository.GroupRepository;
@@ -45,6 +56,8 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
     private Button createGroupButton;
     private SharedPreferences prefs;
 
+    private static HashMap<Integer, Integer> quickStart = new HashMap<>();
+
     /**
      * This method is called when the activity is created.
      * It inflates the layout and sets the onClickListeners for the buttons.
@@ -60,16 +73,34 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         initViews(group_select_view);
         setClickListeners();
         prefs = getSharedPreferences("prefs", 0);
+
+        quickStart.put(0, R.layout.quick_start_1);
+        quickStart.put(1, R.layout.quick_start_2);
+        quickStart.put(2, R.layout.quick_start_3);
+        quickStart.put(3, R.layout.quick_start_4);
+        quickStart.put(4, R.layout.quick_start_5);
+        quickStart.put(5, R.layout.quick_start_6);
+
         compositeDisposable = new CompositeDisposable();
         Timber.d("Activity created");
     }
 
+
+    /**
+     * This method initializes the views.
+     *
+     * @param group_select_view The view binding object
+     */
     private void initViews(GroupChooseBinding group_select_view) {
         Timber.d("Initializing views...");
         enterGroupButton = group_select_view.buttonMamZaproszenie;
         createGroupButton = group_select_view.buttonSwojaGrupa;
     }
 
+
+    /**
+     * This method sets the onClickListeners for the buttons.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         enterGroupButton.setOnClickListener(v ->
@@ -104,8 +135,7 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
                 .subscribe(
                         jwt -> {
                             saveUserData(jwt);
-                            startMainActivity();
-                            saveAppState(ApplicationState.MAIN_ACTIVITY);
+                            showQuickStartGuadeQuestionSelect();
                         },
                         error -> showSnackbar(view, error.getMessage())
                 );
@@ -113,6 +143,89 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * This method is called when the showQuickStartGuadeQuestion() method is called.
+     */
+    public void showQuickStartGuadeQuestionSelect() {
+        Timber.d("Showing quick start guade question pop up...");
+        Dialog dialog = new Dialog(this);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.new_pop_up_question_quick_start);
+
+        TextView closeButton = dialog.findViewById(R.id.button_no);
+        TextView acceptButton = dialog.findViewById(R.id.button_yes);
+
+        acceptButton.setOnClickListener(v -> {
+            Timber.d("Start showing quick guade pop ups...");
+            //TODO: start showing quick guade pop ups
+            showQuickStartGuadeSelect(0);
+            dialog.dismiss();
+        });
+
+        closeButton.setOnClickListener(v -> {
+            Timber.d("Closing quick start guade question pop up...");
+            startMainActivity();
+            saveAppState(ApplicationState.MAIN_ACTIVITY);
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+
+    /**
+     * This method is called when the showQuickStartGuadeQuestion() method is called.
+     */
+    public void showQuickStartGuadeSelect(Integer popUpKeyNumber) {
+        Timber.d("Showing quick start guade pop ups...");
+        Dialog dialog = new Dialog(this);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(quickStart.get(popUpKeyNumber));
+
+        ImageView imageView = dialog.findViewById(R.id.imageView);
+        ImageView next = dialog.findViewById(R.id.next);
+        ImageView previouse = dialog.findViewById(R.id.previouse);
+        ImageView closeButton = dialog.findViewById(R.id.close);
+
+        if (popUpKeyNumber == 0) {
+            previouse.setVisibility(View.INVISIBLE);
+        } else if (popUpKeyNumber == 5){
+            next.setVisibility(View.INVISIBLE);
+        } else {
+            previouse.setVisibility(View.VISIBLE);
+            next.setVisibility(View.VISIBLE);
+        }
+
+        next.setOnClickListener(v -> {
+            Timber.d("Next pop up...");
+            //TODO: start showing quick guade pop ups
+            showQuickStartGuadeSelect(popUpKeyNumber + 1);
+            dialog.dismiss();
+        });
+
+        previouse.setOnClickListener(v -> {
+            Timber.d("Previouse pop up...");
+            //TODO: start showing quick guade pop ups
+            showQuickStartGuadeSelect(popUpKeyNumber - 1);
+            dialog.dismiss();
+        });
+
+        closeButton.setOnClickListener(v -> {
+            Timber.d("Closing quick start guade pops up...");
+            startMainActivity();
+            saveAppState(ApplicationState.MAIN_ACTIVITY);
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+
+    /**
+     * This method saves the user's token and role in shared preferences.
+     *
+     * @param jwt The JWT response
+     */
     private void saveUserData(JwtResponse jwt) {
         Timber.d("Saving user data...");
         SharedPreferences.Editor editor = prefs.edit();
@@ -121,6 +234,10 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         editor.apply();
     }
 
+
+    /**
+     * This method starts the main activity.
+     */
     private void startMainActivity() {
         Timber.d("Starting main activity...");
         Intent intent = new Intent(this, ActivityMain.class);
@@ -128,6 +245,13 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         startActivity(intent);
     }
 
+
+    /**
+     * This method shows a snackbar with the given message.
+     *
+     * @param view    The view to show the snackbar on
+     * @param message The message to show
+     */
     private void showSnackbar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
@@ -145,6 +269,11 @@ public class GroupSelectActivity extends AppCompatActivity implements Applicatio
         editor.apply();
     }
 
+
+    /**
+     * This method is called when the activity is destroyed.
+     * It disposes the composite disposable.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

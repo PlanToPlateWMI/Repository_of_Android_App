@@ -63,6 +63,15 @@ public class BuyProductsFragment extends Fragment {
         toBuyProductsListViewModel.fetchToBuyProducts();
     }
 
+    /**
+     * Method called on fragment view creation.
+     * Method initialize fragment view and setup swipe pager and bottom navigation.
+     *
+     * @param inflater layout inflater that can be used to inflate any views in the fragment.
+     * @param container view group container that will contain the fragment.
+     * @param savedInstanceState saved instance state of fragment.
+     * @return root view of fragment.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,12 +85,19 @@ public class BuyProductsFragment extends Fragment {
         return fragmentTrzebaKupicBinding.getRoot();
     }
 
+    /**
+     * Replaces the current fragment with the given one.
+     */
     private void initViews(FragmentTrzebaKupicBinding fragmentTrzebaKupicBinding) {
         addToCartButton = fragmentTrzebaKupicBinding.plusInTrzebaKupic;
         categoryRecyclerView = fragmentTrzebaKupicBinding.productsOwnRecyclerView;
         titleTextView = fragmentTrzebaKupicBinding.textViewTrzebaKupic;
     }
 
+    /**
+     * Sets up the ViewModel for this fragment.
+     * Observes the LiveData for the shopping list and the user info.
+     */
     private void setClickListeners() {
         addToCartButton.setOnClickListener(v -> {
             Bundle args = new Bundle();
@@ -137,7 +153,6 @@ public class BuyProductsFragment extends Fragment {
                             view1 -> toBuyProductsListViewModel.deleteProductFromList(product)).show());
                 }
                 else{
-                    //set visibility none
                     v.setVisibility(View.INVISIBLE);
                 }
             }
@@ -157,7 +172,6 @@ public class BuyProductsFragment extends Fragment {
 
     /**
      * Set up the ViewModel observers for the shopping list.
-     *
      * This method observes the changes in the ViewModel and updates the UI accordingly.
      */
     public void setUpViewModel() {

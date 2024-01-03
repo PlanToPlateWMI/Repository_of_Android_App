@@ -88,7 +88,7 @@ public class AddYourOwnProductFragment extends Fragment {
         productNameEditText = add_own_product_view.enterTheName;
         changeProductCategoryButton = add_own_product_view.zmienKategorie;
 
-        productCategoryTextView.setText(product.getCategory());
+        productCategoryTextView.setText("Kategoria: " + product.getCategory());
     }
 
     private void setClickListeners() {
@@ -113,7 +113,7 @@ public class AddYourOwnProductFragment extends Fragment {
     @Subscribe
     public void onCategoryChosen(ChangeCategoryEvent event) {
         product.setCategory(event.getCategory());
-        productCategoryTextView.setText(event.getCategory());
+        productCategoryTextView.setText("Kategoria: " + event.getCategory());
         Timber.e("Category changed to: %s", event.getCategory());
     }
 

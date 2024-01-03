@@ -15,6 +15,7 @@ import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
 import pl.plantoplate.ui.main.settings.groupCodeGeneration.GeneratedGroupCodeActivity;
+import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -44,7 +45,7 @@ public class GeneratedGroupCodeActivityTest {
         Intents.init();
 
         // Navigate to the SettingsFragment
-        // navigateTo();
+        navigateToGroupCodeActivityFragment();
 
         // server
         server = new MockWebServer();
@@ -60,13 +61,24 @@ public class GeneratedGroupCodeActivityTest {
         server.shutdown();
     }
 
-    public void navigateTo() {
+    public void navigateToGroupCodeActivityFragment() {
 
         fragmentRule.getScenario().onActivity(activity -> {
             activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, SettingsInsideFragment.class, null)
+                    .replace(R.id.frame_layout, GeneratedGroupCodeActivity.class, null)
                     .commit();
         });
+    }
+
+    //??
+    @Test
+    public void ifDisplay() {
+
+        onView(withId(R.id.code_generation)).check(matches(isDisplayed()));
+        onView(withId(R.id.forward_the_code)).check(matches(isDisplayed()));
+        onView(withId(R.id.uwagaKod)).check(matches(isDisplayed()));
+        onView(withId(R.id.apply_button)).check(matches(isDisplayed()));
+
     }
 
     @Test
@@ -94,7 +106,6 @@ public class GeneratedGroupCodeActivityTest {
         // Check if the MainActivity is displayed
         //onView(withId(R.layout.activity_main_for_fragments)).check(matches(isDisplayed()));
         // intended(hasComponent(ActivityMain.class.getName()));
-        navigateTo();
 
     }
 }

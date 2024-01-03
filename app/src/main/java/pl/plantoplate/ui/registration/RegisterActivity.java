@@ -28,7 +28,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.Objects;
 import java.util.Optional;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -78,6 +82,9 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         Timber.d("Activity created");
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     private void initViews(RegisterActivityBinding binding) {
         Timber.d("Initializing views...");
         enterNameEditText = binding.enterName;
@@ -91,6 +98,9 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         initHasAccountTextView();
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     private void initHasAccountTextView() {
         Timber.d("Initializing has account text view...");
         Spannable spans = new SpannableString("Masz konto?    ZAŁOGUJ SIĘ");
@@ -98,23 +108,34 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         hasAccountTextView.setText(spans);
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
-        registerButton.setOnClickListener(this::validateUserInfo);
+        registerButton.setOnClickListener(this::getUserInfo);
         hasAccountTextView.setOnClickListener(v -> signInAccount());
     }
 
     /**
      * Get the user's information from the input fields.
-     *
-     * @return A UserInfo object containing the user's information.
      */
-    public UserRegisterData getUserInfo() {
+    public void getUserInfo(View v) {
         Timber.d("Getting user info...");
         String name = Optional.of(enterNameEditText.getText().toString()).orElse("").trim();
         String email = Optional.of(enterEmailEditText.getText().toString()).orElse("").trim();
         String password = Optional.of(enterPasswordEditText.getText().toString()).orElse("").trim();
-        return new UserRegisterData(name, email, password);
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Snackbar.make(findViewById(android.R.id.content), "Fetching FCM registration token failed",
+                        BaseTransientBottomBar.LENGTH_SHORT).show();
+            }else{
+                String fcmToken = task.getResult();
+                Timber.d("FCM token: %s", fcmToken);
+                UserRegisterData info = new UserRegisterData(name, email, password, fcmToken);
+                validateUserInfo(v, info);
+            }
+        });
     }
 
     /**
@@ -122,9 +143,9 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
      *
      * @param view The view that was clicked.
      */
-    public void validateUserInfo(View view) {
+    public void validateUserInfo(View view, UserRegisterData info) {
         Timber.d("Validating user info...");
-        UserRegisterData info = getUserInfo();
+        //UserRegisterData info = getUserInfo();
         if (info.getUsername().isEmpty()) {
             Timber.d("Username is empty");
             showSnackbar(view, "Wprowadź imię użytkownika!");
@@ -200,6 +221,11 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         compositeDisposable.add(disposable);
     }
 
+
+    /**
+     * Saves the user's data to shared preferences.
+     * @param userData The user's data to save.
+     */
     private void saveUserData(UserRegisterData userData) {
         Timber.d("Saving user data to shared preferences");
         SharedPreferences.Editor editor = prefs.edit();
@@ -234,6 +260,10 @@ public class RegisterActivity extends AppCompatActivity implements ApplicationSt
         editor.apply();
     }
 
+
+    /**
+     * Clears the composite disposable when the activity is destroyed.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

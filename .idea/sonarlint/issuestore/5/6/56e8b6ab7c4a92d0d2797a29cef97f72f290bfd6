@@ -1,0 +1,7 @@
+
+p
+java:S1192c"NDefine a constant instead of duplicating this literal "Cache-Control" 4 times.(´ÆÌÉÿÿÿÿÿ8¨ú‰èÉ1
+c
+java:S2184-"FCast one of the operands of this multiplication operation to a "long".(–©ô›8«ú‰èÉ1
+v	java:S115-"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(–©ô›8„ü‰èÉ1
+X	java:S125&"<This block of commented-out lines of code should be removed.(§ÆÀò8”ü‰èÉ1

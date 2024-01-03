@@ -1,15 +1,18 @@
 buildscript {
     repositories {
         mavenCentral()
+        google()
     }
     dependencies {
-        // other dependencies...
         classpath 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
+        classpath 'com.android.tools.build:gradle:8.1.4'
+        classpath 'com.google.gms:google-services:4.4.0'
     }
 }
 
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -32,8 +35,14 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            signingConfig signingConfigs.debug
+            //Enable proguard rules
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
         }
     }
     compileOptions {
@@ -46,6 +55,13 @@ android {
             res.srcDirs =
                     [
                             '/src/main/res'
+                    ]
+        }
+
+        debug{
+            res.srcDirs =
+                    [
+                            '/src/debug/res'
                     ]
         }
     }
@@ -97,6 +113,15 @@ dependencies {
 
     //splash screen
     implementation "androidx.core:core-splashscreen:1.0.1"
+
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:32.4.0')
+
+    //firebase messaging
+    implementation 'com.google.firebase:firebase-messaging:23.3.0'
+
+    //firebase analytics
+    implementation 'com.google.firebase:firebase-analytics'
 
     //tests
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

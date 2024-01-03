@@ -29,18 +29,26 @@ import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.data.remote.repository.UserRepository;
+import pl.plantoplate.ui.main.shoppingList.events.ProductBoughtEvent;
+import pl.plantoplate.ui.main.shoppingList.events.ProductsListChangedEvent;
 import pl.plantoplate.utils.CategorySorter;
 
+/**
+ * This class is used to notify the view that the list of products has changed.
+ */
 public class ToBuyProductsListViewModel extends AndroidViewModel {
 
     private final CompositeDisposable compositeDisposable;
     private final SharedPreferences prefs;
     private final ShoppingListRepository shoppingListRepository;
-
     private final MutableLiveData<String> responseMessage;
     private final MutableLiveData<ArrayList<ProductCategory>> toBuyProducts;
     private final MutableLiveData<UserInfo> userInfo;
 
+
+    /**
+     * @param application the application
+     */
     public ToBuyProductsListViewModel(@NonNull Application application) {
         super(application);
 
@@ -65,8 +73,12 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         return userInfo;
     }
 
+
+    /**
+     * Fetches the list of products to buy from the server.
+     */
     public void fetchToBuyProducts() {
-        String token = "Bearer " + prefs.getString("token", "");
+        String token = String.format("Bearer %s", prefs.getString("token", ""));
 
         Disposable disposable = shoppingListRepository.getToBuyShoppingList(token)
                 .subscribe(response -> toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(response)),
@@ -75,6 +87,10 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
     }
 
+
+    /**
+     * Fetches the user info from the server.
+     */
     public void fetchUserInfo() {
         UserRepository userRepository = new UserRepository();
         String token = "Bearer " + prefs.getString("token", "");
@@ -93,18 +109,30 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * Moves the product to the bought list.
+     *
+     * @param product the product to move
+     */
     public void moveProductToBought(Product product) {
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = shoppingListRepository.changeProductStateInShopList(token, product.getId())
                 .subscribe(shoppingList -> {
                     EventBus.getDefault().post(new ProductsListChangedEvent(shoppingList.getBought(), ListType.BOUGHT));
+                    EventBus.getDefault().post(new ProductBoughtEvent(shoppingList.getBought().size()));
                     toBuyProducts.setValue(CategorySorter.sortCategoriesByProduct(shoppingList.getToBuy()));
                 }, throwable -> responseMessage.setValue(throwable.getMessage()));
 
         compositeDisposable.add(disposable);
     }
 
+
+    /**
+     * Deletes the product from the list.
+     *
+     * @param product the product to delete
+     */
     public void deleteProductFromList(Product product) {
         String token = "Bearer " + prefs.getString("token", "");
 
@@ -118,6 +146,12 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
     }
 
+
+    /**
+     * Changes the amount of the product.
+     *
+     * @param product the product to change
+     */
     public void changeProductAmount(Product product) {
         String token = "Bearer " + prefs.getString("token", "");
 
@@ -130,6 +164,10 @@ public class ToBuyProductsListViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
     }
 
+
+    /**
+     * Clears the list of products.
+     */
     @Override
     protected void onCleared() {
         super.onCleared();

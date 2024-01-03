@@ -2,6 +2,7 @@
 
 ![PlanToPlate Logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png)
 
+
 PlanToPlate is a comprehensive Android application designed to simplify your meal planning and grocery shopping process. 
 With its user-friendly interface and feature-rich modules, it's your all-in-one solution for managing your meals 
 and kitchen supplies efficiently.

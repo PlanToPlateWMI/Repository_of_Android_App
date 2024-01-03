@@ -109,7 +109,7 @@ public class AllProductsFragment extends Fragment implements SearchView.OnQueryT
     @Override
     public boolean onQueryTextChange(String query) {
         Optional<ArrayList<ProductCategory>> products = Optional.ofNullable(allProductsViewModel.getAllProducts().getValue());
-        ArrayList<Product> filteredProducts = CategorySorter.filterCategoriesBySearch(products.orElse(new ArrayList<>()), query);
+        ArrayList<Product> filteredProducts = CategorySorter.filterCategoriesBySearch(products.orElse(new ArrayList<>()), query.trim());
         ArrayList<ProductCategory> filteredList = CategorySorter.sortCategoriesByProduct(filteredProducts);
         categoryAdapter.setCategoriesList(filteredList);
         return false;

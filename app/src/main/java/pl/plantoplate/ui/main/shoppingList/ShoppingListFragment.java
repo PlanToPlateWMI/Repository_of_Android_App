@@ -20,15 +20,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentShoppingListBinding;
 import pl.plantoplate.ui.customViews.RadioGridGroup;
+import pl.plantoplate.ui.main.shoppingList.events.ProductBoughtEvent;
+import timber.log.Timber;
 
 /**
  * Fragment for shopping list.
@@ -37,6 +43,31 @@ public class ShoppingListFragment extends Fragment {
 
     private ViewPager2 viewPager;
     private RadioGridGroup radioGridGroup;
+    public TextView quantityTextView;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onProductBought(ProductBoughtEvent productBoughtEvent) {
+        Timber.e("Product bought event received");
+        Integer quantity = productBoughtEvent.productsCount;
+        if (quantity > 0) {
+            quantityTextView.setVisibility(View.VISIBLE);
+            quantityTextView.setText(String.valueOf(quantity));
+        } else {
+            quantityTextView.setVisibility(View.INVISIBLE);
+        }
+    }
 
     /**
      * Method called on fragment view creation.
@@ -59,9 +90,14 @@ public class ShoppingListFragment extends Fragment {
         return fragmentShoppingListBinding.getRoot();
     }
 
+    /**
+     * Method called on fragment view creation that initialize fragment views.
+     * @param fragmentShoppingListBinding binding of fragment view.
+     */
     private void initViews(FragmentShoppingListBinding fragmentShoppingListBinding) {
         viewPager = fragmentShoppingListBinding.viewPager;
         radioGridGroup = fragmentShoppingListBinding.radioGroup;
+        quantityTextView = fragmentShoppingListBinding.quantity;
 
         radioGridGroup.setCheckedRadioButtonById(R.id.trzeba_kupic_button);
         viewPager.setCurrentItem(0);

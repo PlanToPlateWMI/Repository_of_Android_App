@@ -31,9 +31,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.databinding.FragmentSettingsInsideBinding;
+import pl.plantoplate.ui.main.settings.helpManager.HelpManager;
 import pl.plantoplate.utils.ApplicationState;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
@@ -55,9 +59,18 @@ public class SettingsInsideFragment extends Fragment {
     private Button manageUsersButton;
     private Button changeDataButton;
     private Button aboutUsButton;
+    private Button helpButton;
     private SwitchCompat themeSwitch;
     private SharedPreferences prefs;
 
+    /**
+     * Creates the view for the fragment.
+     *
+     * @param inflater the layout inflater for the fragment
+     * @param container the view group container for the fragment
+     * @param savedInstanceState the saved instance state for the fragment
+     * @return the view for the fragment as a View object.
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -66,6 +79,10 @@ public class SettingsInsideFragment extends Fragment {
         checkUsers(prefs.getString("role", ""));
     }
 
+    /**
+     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
+     * @param role The role of the user.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,26 +98,42 @@ public class SettingsInsideFragment extends Fragment {
         return settingsView.getRoot();
     }
 
+    /**
+     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
+     * @param role The role of the user.
+     */
     private void initViews(FragmentSettingsInsideBinding settingsView) {
         Timber.d("Initializing views...");
         generateGroupCodeButton = settingsView.buttonWygenerowanieKodu;
+
         exitAccountButton = settingsView.buttonWyloguj;
         manageUsersButton = settingsView.buttonZarzadyanieUyztkownikamu;
         changeDataButton = settingsView.buttonZmianaDanych;
         aboutUsButton = settingsView.buttonAboutUs;
+        helpButton = settingsView.buttonHelp;
+
         usernameTextView = settingsView.imie;
         themeSwitch = settingsView.switchButtonChangeColorTheme;
 
         usernameTextView.setVisibility(View.GONE);
     }
 
+    /**
+     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
+     * @param role The role of the user.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         exitAccountButton.setOnClickListener(this::exitAccount);
         changeDataButton.setOnClickListener(v -> replaceFragment(new ChangeTheData()));
         aboutUsButton.setOnClickListener(v -> replaceFragment(new MailDevelops()));
+        helpButton.setOnClickListener(v -> replaceFragment(new HelpManager()));
     }
 
+    /**
+     * Checks if the user is an admin and if so, sets the button to clickable and changes the color.
+     * @param role The role of the user.
+     */
     private void setupTheme() {
         SharedPreferences.Editor editor = prefs.edit();
         themeSwitch.setChecked("dark".equals(prefs.getString("theme", "")));
@@ -116,6 +149,7 @@ public class SettingsInsideFragment extends Fragment {
             editor.apply();
         });
     }
+
 
     private void setUpViewModel() {
         settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
@@ -183,7 +217,11 @@ public class SettingsInsideFragment extends Fragment {
         editor.remove("password");
         editor.remove("role");
         editor.remove("token");
+        //editor.remove("logged");
         editor.apply();
+
+        // delete fcm token
+        FirebaseMessaging.getInstance().deleteToken();
 
         Intent intent = new Intent(requireContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

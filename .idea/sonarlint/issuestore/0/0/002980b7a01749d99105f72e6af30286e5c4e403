@@ -1,0 +1,10 @@
+
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¨–áê8ğ¼®åÈ1
+
+java:S1186*"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÜåÙ8½®åÈ1
+…
+java:S1450&"cRemove the "floatingActionButton" field and declare it as a local variable in the relevant methods.(¨”†úÿÿÿÿ8½®åÈ1
+}
+java:S1450("[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(¿á© ıÿÿÿÿ8½®åÈ1
+]	java:S125a"<This block of commented-out lines of code should be removed.(àÛÅûÿÿÿÿ8Ÿ½®åÈ1
+X	java:S125r"<This block of commented-out lines of code should be removed.(ùäÃ»8Ÿ½®åÈ1

@@ -30,8 +30,8 @@ public interface RecipeService {
     @GET("api/recipes")
     Single<ArrayList<Recipe>> getAllRecipes(@Query("category") String type);
 
-    @GET("api/recipes/selected")
-    Single<ArrayList<Recipe>> getSelectedRecipes(@Query("category") String type, @Header("Authorization") String token);
+    @GET("api/recipes/owned")
+    Single<ArrayList<Recipe>> getOwnRecipes(@Query("category") String type, @Header("Authorization") String token);
 
     @GET("api/recipe-categories")
     Single<ArrayList<RecipeCategory>> getRecipeCategories();

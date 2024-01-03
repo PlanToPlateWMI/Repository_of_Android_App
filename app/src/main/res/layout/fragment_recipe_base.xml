@@ -10,18 +10,18 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search"
         android:layout_width="350dp"
-        android:layout_height="1dp"
+        android:layout_height="50dp"
         android:layout_margin="2dp"
-        android:visibility="invisible"
-
         android:background="@drawable/search_view_selector"
+
         android:foregroundTint="?attr/colorSecondaryVariant"
         android:outlineAmbientShadowColor="?attr/colorSecondaryVariant"
         android:outlineSpotShadowColor="?attr/colorSecondaryVariant"
-
         android:textAppearance="@style/wy_lij_pono"
 
         android:textColor="?attr/colorSecondaryVariant"
+
+        android:visibility="visible"
         app:iconifiedByDefault="false"
 
         app:itemIconTint="?attr/colorSecondaryVariant"

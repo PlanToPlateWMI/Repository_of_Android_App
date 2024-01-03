@@ -82,9 +82,13 @@ public class MainDevelopsTest {
         });
     }
 
+
+    //19/12/2023 - ok
     @Test
     public void testSettingsFragmentInsideViewDisplayed() {
 
+        onView(withId(R.id.dev_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.dev_adres)).check(matches(isDisplayed()));
         onView(withId(R.id.button_zatwierdz)).check(matches(isDisplayed()));
 
     }

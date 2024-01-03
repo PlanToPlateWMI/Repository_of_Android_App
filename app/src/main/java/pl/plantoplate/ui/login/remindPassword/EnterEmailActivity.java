@@ -60,6 +60,10 @@ public class EnterEmailActivity extends AppCompatActivity {
         setClickListeners();
     }
 
+    /**
+     * A method that is responsible for initializing the views.
+     * @param remindPassword1Binding The binding object.
+     */
     private void initViews(RemindPassword1Binding remindPassword1Binding) {
         Timber.d("Initializing views...");
         emailTextInput = remindPassword1Binding.enterTheName;
@@ -69,6 +73,9 @@ public class EnterEmailActivity extends AppCompatActivity {
         emailTextInput.setText(email);
     }
 
+    /**
+     * A method that is responsible for setting the click listeners.
+     */
     private void setClickListeners() {
         applyButton.setOnClickListener(this::checkUserExists);
     }
@@ -114,6 +121,9 @@ public class EnterEmailActivity extends AppCompatActivity {
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * A method that is called when the activity is destroyed.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

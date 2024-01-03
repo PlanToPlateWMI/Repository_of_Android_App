@@ -28,6 +28,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.repository.UserRepository;
@@ -71,6 +73,9 @@ public class PasswordChangeNewPasswords extends Fragment {
         return fragmentPasswordChange2Binding.getRoot();
     }
 
+    /**
+     * This method is used to validate the passwords and send them to the server.
+     */
     public void initViews(FragmentPasswordChange2Binding fragmentPasswordChange2Binding){
         acceptButton = fragmentPasswordChange2Binding.buttonZatwierdz;
         enterNewPasswordInputLayout = fragmentPasswordChange2Binding.wprowadzNoweHaslo;
@@ -79,10 +84,16 @@ public class PasswordChangeNewPasswords extends Fragment {
         repeatNewPasswordEditText = repeatNewPasswordInputLayout.getEditText();
     }
 
+    /**
+     * This method is used to set the click listeners.
+     */
     private void setClickListeners() {
         acceptButton.setOnClickListener(v -> validatePasswords());
     }
 
+    /**
+     * This method is used to validate the passwords and send them to the server.
+     */
     public void validatePasswords(){
         String password = newPasswordEditText.getText().toString().trim();
         String password2 = repeatNewPasswordEditText.getText().toString().trim();
@@ -106,6 +117,10 @@ public class PasswordChangeNewPasswords extends Fragment {
         }
     }
 
+    /**
+     * This method is used to send the new password to the server.
+     * @param password The new password
+     */
     private void changePassword(String password) {
         String token = "Bearer " + prefs.getString("token", "");
         Disposable disposable = userRepository.changePassword(token, password)
@@ -128,7 +143,11 @@ public class PasswordChangeNewPasswords extends Fragment {
         editor.remove("password");
         editor.remove("role");
         editor.remove("token");
+        //editor.remove("logged");
         editor.apply();
+
+        // delete fcm token
+        FirebaseMessaging.getInstance().deleteToken();
 
         Intent intent = new Intent(this.getContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -146,6 +165,9 @@ public class PasswordChangeNewPasswords extends Fragment {
         editor.apply();
     }
 
+    /**
+     * Disposes the composite disposable.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

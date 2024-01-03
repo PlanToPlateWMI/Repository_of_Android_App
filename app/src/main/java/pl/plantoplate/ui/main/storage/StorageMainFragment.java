@@ -34,7 +34,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Objects;
-
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.R;
@@ -42,7 +41,6 @@ import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.databinding.FragmentStorageInsideBinding;
 import pl.plantoplate.ui.main.popUps.DeleteProductPopUp;
-import pl.plantoplate.ui.main.productsDatabase.AddYourOwnProductFragment;
 import pl.plantoplate.ui.main.recyclerViews.listeners.SetupItemButtons;
 import pl.plantoplate.ui.main.recyclerViews.adapters.CategoryAdapter;
 import pl.plantoplate.ui.main.productsDatabase.ProductsDbaseFragment;
@@ -61,6 +59,11 @@ public class StorageMainFragment extends Fragment {
     private CategoryAdapter categoryAdapter;
     private SharedPreferences prefs;
 
+    /**
+     * Initializes the views.
+     *
+     * @param fragmentStorageInsideBinding The binding object for the fragment's view.
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -90,12 +93,18 @@ public class StorageMainFragment extends Fragment {
         return fragmentStorageInsideBinding.getRoot();
     }
 
+    /**
+     * Called when the fragment is no longer in use.
+     */
     public void initViews(FragmentStorageInsideBinding fragmentStorageInsideBinding){
         addProductButton = fragmentStorageInsideBinding.plusInStorage;
         recyclerView = fragmentStorageInsideBinding.productsStorage;
         storageTitleTextView = fragmentStorageInsideBinding.textView4;
     }
 
+    /**
+     * Sets up the view model.
+     */
     private void setClickListeners() {
         addProductButton.setOnClickListener(this::addProductsToStorage);
     }
@@ -151,6 +160,9 @@ public class StorageMainFragment extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Sets up the recycler view.
+     */
     private void goToProductsDatabase() {
         Bundle args = new Bundle();
         args.putString("comesFrom", "storage");
@@ -251,6 +263,9 @@ public class StorageMainFragment extends Fragment {
         transaction.commit();
     }
 
+    /**
+     * Called when the fragment is no longer in use.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

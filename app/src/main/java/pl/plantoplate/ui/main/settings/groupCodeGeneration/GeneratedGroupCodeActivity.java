@@ -47,13 +47,18 @@ public class GeneratedGroupCodeActivity extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FragmentGeneratedCodeBinding fragmentGeneratedCodeBinding = FragmentGeneratedCodeBinding.inflate(inflater, container, false);
+        FragmentGeneratedCodeBinding fragmentGeneratedCodeBinding = FragmentGeneratedCodeBinding.inflate(inflater,
+                container, false);
 
         initViews(fragmentGeneratedCodeBinding);
         setClickListeners();
         return fragmentGeneratedCodeBinding.getRoot();
     }
 
+    /**
+     * Initializes the views for the activity.
+     * @param fragmentGeneratedCodeBinding The binding for the fragment
+     */
     public void initViews(FragmentGeneratedCodeBinding fragmentGeneratedCodeBinding){
         Timber.d("Initializing views...");
         groupCodeEditText = fragmentGeneratedCodeBinding.kod;
@@ -70,6 +75,9 @@ public class GeneratedGroupCodeActivity extends Fragment {
         groupCodeEditText.setText(groupCode);
     }
 
+    /**
+     * Sets the click listeners for the buttons.
+     */
     private void setClickListeners() {
         Timber.d("Setting click listeners...");
         applyButton.setOnClickListener(this::shareInviteCode);
@@ -82,9 +90,11 @@ public class GeneratedGroupCodeActivity extends Fragment {
     public void shareInviteCode(View view) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_TEXT, "Możesz dołączyć do mojej grupy w aplikacji PlanToPlate. Kod zaproszeniowy do grupy: "
+        intent.putExtra(Intent.EXTRA_TEXT, "Możesz dołączyć do mojej grupy w aplikacji PlanToPlate. " +
+                "Kod zaproszeniowy do grupy: "
                 + Objects.requireNonNull(groupCodeEditText.getText()) + ".\n\n"
-                + "Pobierz aplikację Plantoplate: tu_musi_byc_link_do_aplikacji");
+                + "Pobierz aplikację Plantoplate: " +
+                "https://play.google.com/store/apps/details?id=pl.plantoplate&pcampaignid=web_share");
         intent.setType("message/rfc822");
         startActivity(Intent.createChooser(intent, ""));
     }

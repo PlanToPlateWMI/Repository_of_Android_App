@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import pl.plantoplate.data.remote.ErrorHandler;
 import pl.plantoplate.data.remote.RetrofitClient;
 import pl.plantoplate.data.remote.models.Message;
+import pl.plantoplate.data.remote.models.meal.MealPlanNew;
 import pl.plantoplate.data.remote.models.meal.Meal;
 import pl.plantoplate.data.remote.models.meal.MealPlan;
 import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
@@ -46,6 +47,8 @@ public class MealRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+
+
     public Single<RecipeInfo> getMealDetailsById(String token, int mealId) {
         return mealService.getMealDetailsById(token, mealId)
                 .onErrorResumeNext(throwable -> new ErrorHandler<RecipeInfo>().
@@ -59,6 +62,39 @@ public class MealRepository {
 
     public Single<Message> deleteMealById(String token, int mealId) {
         return mealService.deleteMealById(token, mealId)
+                .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Posiłek o podanym id nie należy do tej grupy lub nie istnieje.");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Message> planMealV1(String token, MealPlanNew addMealProducts) {
+        return mealService.planMealV1(token, addMealProducts)
+                .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Niepoprawne dane.");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Message> planMealV2(String token, MealPlanNew addMealProducts) {
+        return mealService.planMealV2(token, addMealProducts)
+                .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
+                        handleHttpError(throwable, new HashMap<>() {{
+                            put(400, "Niepoprawne dane.");
+                            put(500, "Wystąpił nieznany błąd.");
+                        }}))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<Message> prepareMeal(String token, int mealId) {
+        return mealService.prepareMeal(token, mealId)
                 .onErrorResumeNext(throwable -> new ErrorHandler<Message>().
                         handleHttpError(throwable, new HashMap<>() {{
                             put(400, "Posiłek o podanym id nie należy do tej grupy lub nie istnieje.");

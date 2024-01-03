@@ -34,8 +34,10 @@ import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.UserRepository;
 import pl.plantoplate.databinding.FragmentEmailChange2Binding;
+import pl.plantoplate.utils.EmailValidator;
 import pl.plantoplate.utils.SCryptStretcher;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
+import timber.log.Timber;
 
 
 /**
@@ -73,6 +75,10 @@ public class ChangeEmailStep2Fragment extends Fragment {
         return fragmentEmailChange2Binding.getRoot();
     }
 
+    /**
+     * Initialize the views
+     * @param fragmentEmailChange2Binding The binding of the fragment
+     */
     public void initViews(FragmentEmailChange2Binding fragmentEmailChange2Binding){
         acceptButton = fragmentEmailChange2Binding.buttonZatwierdz;
         enterNewEmailInputLayout = fragmentEmailChange2Binding.wprowadzNowyEmail;
@@ -81,10 +87,19 @@ public class ChangeEmailStep2Fragment extends Fragment {
         repeatNewEmailEditText = repeatNewEmailInputLayout.getEditText();
     }
 
+    /**
+     * Replace the fragment
+     * The fragment to replace
+     */
     public void setClickListeners(){
         acceptButton.setOnClickListener(v -> validateEmail());
     }
 
+
+    /**
+     * Replace the fragment
+     * The fragment to replace
+     */
     public void validateEmail(){
         String newEmail = enterNewEmailEditText.getText().toString().trim();
         String newEmailAgain = repeatNewEmailEditText.getText().toString().trim();
@@ -97,11 +112,11 @@ public class ChangeEmailStep2Fragment extends Fragment {
             Toast.makeText(requireActivity(), "Adresy email nie są takie same", Toast.LENGTH_SHORT).show();
             repeatNewEmailInputLayout.setError("Adresy email nie są takie same");
             repeatNewEmailInputLayout.requestFocus();
-        } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
+        } else if(!EmailValidator.isEmail(newEmail)){
             Toast.makeText(requireActivity(), "Wprowadź poprawny adres email", Toast.LENGTH_SHORT).show();
             enterNewEmailInputLayout.setError("Wprowadź poprawny adres email");
             enterNewEmailInputLayout.requestFocus();
-        } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmailAgain).matches()){
+        } else if(!EmailValidator.isEmail(newEmailAgain)){
             Toast.makeText(requireActivity(), "Wprowadź poprawny adres email", Toast.LENGTH_SHORT).show();
             repeatNewEmailInputLayout.setError("Wprowadź poprawny adres email");
             repeatNewEmailInputLayout.requestFocus();
@@ -110,6 +125,11 @@ public class ChangeEmailStep2Fragment extends Fragment {
         }
     }
 
+
+    /**
+     * Replace the fragment
+     * The fragment to replace
+     */
     public void setNewPassword(String newEmail) {
         String token = "Bearer " + prefs.getString("token", "");
         String newPassword = SCryptStretcher.stretch(requireArguments().getString("password"), newEmail);
@@ -127,6 +147,10 @@ public class ChangeEmailStep2Fragment extends Fragment {
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * Replace the fragment
+     * The fragment to replace
+     */
     public void setNewEmail(String token, UserInfo userInfo){
 
         Disposable disposable = userRepository.changeEmail(token, userInfo)
@@ -140,6 +164,11 @@ public class ChangeEmailStep2Fragment extends Fragment {
         compositeDisposable.add(disposable);
     }
 
+
+    /**
+     * Replace the fragment
+     * The fragment to replace
+     */
     public void saveNewUserData(JwtResponse jwt, UserInfo userInfo){
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("email", userInfo.getEmail());
@@ -159,6 +188,9 @@ public class ChangeEmailStep2Fragment extends Fragment {
         transaction.commit();
     }
 
+    /**
+     * Disposes the composite disposable.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();

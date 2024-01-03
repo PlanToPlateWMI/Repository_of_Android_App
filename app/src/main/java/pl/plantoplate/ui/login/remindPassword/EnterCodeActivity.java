@@ -62,6 +62,9 @@ public class EnterCodeActivity extends AppCompatActivity {
         setListeners();
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     private void initViews(RemindPassword2Binding remindPassword2Binding) {
         titleTextView = remindPassword2Binding.skorzystajZKodu;
         enterCodeTextInput = remindPassword2Binding.wprowadzKod;
@@ -71,12 +74,18 @@ public class EnterCodeActivity extends AppCompatActivity {
         initTitleTextView();
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     private void initTitleTextView(){
         String email = prefs.getString("email", "");
         String text = titleTextView.getText().toString() + "\n" + email;
         titleTextView.setText(text);
     }
 
+    /**
+     * This method is called when the activity is resumed.
+     */
     private void setListeners(){
         confirmButton.setOnClickListener(this::validateConfirmCode);
         resendCodeButton.setOnClickListener(this::resendCode);
@@ -120,6 +129,9 @@ public class EnterCodeActivity extends AppCompatActivity {
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * This method is called when the activity is destroyed.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
