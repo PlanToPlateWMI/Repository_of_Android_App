@@ -19,6 +19,7 @@ package pl.plantoplate.main.settings;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -29,6 +30,9 @@ import org.junit.runner.RunWith;
 
 import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
+import mockwebserver3.RecordedRequest;
+import pl.plantoplate.service.push_notification.PushNotificationService;
+import pl.plantoplate.tools.TestHelper;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
 import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
@@ -46,8 +50,11 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+import static org.junit.Assert.assertEquals;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 import java.io.IOException;
 
@@ -72,6 +79,10 @@ public class SettingsInsideFragmentTest {
         // server
         server = new MockWebServer();
         server.start(8080);
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -81,6 +92,10 @@ public class SettingsInsideFragmentTest {
 
         // Shutdown server
         server.shutdown();
+
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        TestHelper.enableService(appContext, PushNotificationService.class);
     }
 
     public void navigateToSettingsFragment() {
@@ -144,12 +159,13 @@ public class SettingsInsideFragmentTest {
         });
     }
 
-    //19.12.2023 - ok
+    //???
     @Test
-    public void generateGroupCodeButtonNavigatesToGroupCodeTypeActivity() {
+    public void generateListOfInfo() throws InterruptedException{
 
-        String name = "";
-        String email = "";
+        String emailApiPath = "api/users/info";
+        String email = "plantoplatemobileapp@gmail.com";
+        String name = "Plantest";
         String role = "ROLE_ADMIN";
 
 //        MockResponse response = new MockResponse()
@@ -161,11 +177,31 @@ public class SettingsInsideFragmentTest {
 //                        + "}");
 //        server.enqueue(response);
 
+        MockResponse response = new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"message\": \"List of user's info\"}");
+        server.enqueue(response);
+
+        RecordedRequest recordedRequest = server.takeRequest();
+
+        String url = Uri.parse("")
+                .buildUpon()
+                .appendEncodedPath(emailApiPath)
+                .appendQueryParameter("username", name)
+                .appendQueryParameter("email", email)
+                .appendQueryParameter("role", role)
+                .build()
+                .toString();
+        assertEquals(url, recordedRequest.getPath());
+
+        onView(withId(R.id.imie)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void generateGroupCodeButtonNavigatesToGroupCodeTypeActivity() throws InterruptedException{
         // Perform a click on the generate group code button
         onView(withId(R.id.button_zarzadyanie_uyztkownikamu)).perform(click());
 
-        // Check if the GroupCodeTypeActivity is launched
-        //navigateGroupCodeTypeActivity();
     }
 
     public void navigateChangePermissionsFragment() {
