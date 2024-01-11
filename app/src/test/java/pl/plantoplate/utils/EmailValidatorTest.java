@@ -31,7 +31,6 @@ public class EmailValidatorTest {
         assertFalse(EmailValidator.isEmail("-@invalid@gmail.c"));
         assertFalse(EmailValidator.isEmail("invalid@-gmail.c"));
         assertFalse(EmailValidator.isEmail("invalid@@email.com"));
-        //assertFalse(EmailValidator.isEmail("invalid.@email.com"));
         assertFalse(EmailValidator.isEmail("invalid@.email.com"));
         assertFalse(EmailValidator.isEmail("invalid@domain"));
         assertFalse(EmailValidator.isEmail("invalid@-email.com"));

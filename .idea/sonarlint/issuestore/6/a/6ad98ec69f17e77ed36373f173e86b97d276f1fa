@@ -1,7 +1,0 @@
-
-g	java:S112y"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ïÏ’ÿÌ1
-g
-java:S1192„"IDefine a constant instead of duplicating this literal "password" 4 times.(ÓúóÈ8ïÏ’ÿÌ1
-{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ú³¹şûÿÿÿÿ8µÒ²ıÌ1
-{
-java:S2142x"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€8ÿÏ’ÿÌ1

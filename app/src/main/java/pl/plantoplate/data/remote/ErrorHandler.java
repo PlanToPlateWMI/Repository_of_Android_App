@@ -23,7 +23,7 @@ import retrofit2.HttpException;
 
 public class ErrorHandler<T> {
 
-    public Single<T> handleHttpError(Throwable throwable, Map<Integer, String> errorMessages) {
+    public Single<T>  handleHttpError(Throwable throwable, Map<Integer, String> errorMessages) {
         String errorMessage = "";
 
         if (throwable instanceof UnknownHostException) {

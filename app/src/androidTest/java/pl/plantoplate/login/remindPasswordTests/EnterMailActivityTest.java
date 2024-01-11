@@ -31,7 +31,6 @@ import android.content.Context;
 import android.net.Uri;
 
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -49,8 +48,8 @@ import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
 import pl.plantoplate.service.push_notification.PushNotificationService;
-import pl.plantoplate.tools.TestHelper;
-import pl.plantoplate.ui.login.remindPassword.EnterEmailActivity;
+import pl.plantoplate.tools.ServiceHelper;
+import pl.plantoplate.ui.login.remind_password.EnterEmailActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class EnterMailActivityTest {
@@ -73,7 +72,7 @@ public class EnterMailActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.disableService(appContext, PushNotificationService.class);
+        ServiceHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -86,7 +85,7 @@ public class EnterMailActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.enableService(appContext, PushNotificationService.class);
+        ServiceHelper.enableService(appContext, PushNotificationService.class);
     }
 
 
@@ -127,6 +126,9 @@ public class EnterMailActivityTest {
         onView(withId(R.id.enter_the_name)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdz)).perform(click());
 
+        onView(withText("Użytkownik o podanym adresie email nie istnieje!"))
+                .check(matches(isDisplayed()));
+
         RecordedRequest recordedRequest = server.takeRequest();
 
         String url = Uri.parse("")
@@ -137,8 +139,8 @@ public class EnterMailActivityTest {
                 .toString();
         assertEquals(url, recordedRequest.getPath());
 
-        onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
+//        onView(withId(com.google.android.material.R.id.snackbar_text))
+//                .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
 
     }
 

@@ -7,9 +7,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static org.hamcrest.CoreMatchers.not;
+
+import android.content.Context;
+
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +38,8 @@ import pl.plantoplate.data.remote.models.recipe.Recipe;
 import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.data.remote.models.user.Role;
 import pl.plantoplate.data.remote.models.user.UserInfo;
+import pl.plantoplate.service.push_notification.PushNotificationService;
+import pl.plantoplate.tools.ServiceHelper;
 import pl.plantoplate.ui.main.ActivityMain;
 
 @RunWith(AndroidJUnit4.class)
@@ -50,6 +57,9 @@ public class RecipesInfoFragmentTest {
         enqueueRecipeInfoResponse();
 
         ActivityScenario.launch(ActivityMain.class);
+
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        ServiceHelper.disableService(appContext, PushNotificationService.class);
 
         onView(withId(R.id.receipt_long)).perform(click());
         onView(withText("recipe11")).perform(click());
@@ -89,13 +99,11 @@ public class RecipesInfoFragmentTest {
         steps.add("1. Krok 1");
         steps.add("2. Krok 2");
         steps.add("3. Krok 3");
-        steps.add("4. Krok 4");
 
         List<Ingredient> ingredients = new ArrayList<>();
         ingredients.add(new Ingredient(1, 0.2f, "ingredient1", "kg"));
         ingredients.add(new Ingredient(2, 0.5f, "ingredient2", "kg"));
         ingredients.add(new Ingredient(3, 0.7f, "ingredient3", "kg"));
-        ingredients.add(new Ingredient(4, 1f, "ingredient4", "kg"));
 
 
         return new RecipeInfo(11, "recipe11", null, null,
@@ -164,7 +172,8 @@ public class RecipesInfoFragmentTest {
         onView(withId(R.id.textNazwaPrzepisu)).check(matches(withText("recipe11")));
         onView(withId(R.id.timeText)).check(matches(withText("10 min.")));
         onView(withId(R.id.levelText)).check(matches(withText("Łatwy")));
-        onView(withId(R.id.question)).perform(click()).check(matches(withText("Odznacz polę, jeśli nie chcesz produktu")));
+        onView(withId(R.id.question)).perform(click());
+        onView(withText("Odznacz polę, jeśli nie chcesz produktu")).check(matches(isDisplayed())).perform(click());
 
         for (Ingredient ingredient : generateRecipeInfo().getIngredients()) {
             onView(withText(ingredient.getIngredientName())).check(matches(isDisplayed()));
@@ -175,5 +184,7 @@ public class RecipesInfoFragmentTest {
         for (String step : generateRecipeInfo().getSteps()) {
             onView(withText(step)).check(matches(isDisplayed()));
         }
+
+        onView(withId(R.id.info)).check(matches(not(isDisplayed())));
     }
 }

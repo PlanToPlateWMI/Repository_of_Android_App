@@ -30,10 +30,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -45,22 +45,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-
-import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
 import pl.plantoplate.service.push_notification.PushNotificationService;
-import pl.plantoplate.tools.TestHelper;
-import pl.plantoplate.ui.login.remindPassword.EnterCodeActivity;
-import pl.plantoplate.ui.registration.RegisterActivity;
+import pl.plantoplate.tools.MockHelper;
+import pl.plantoplate.tools.ServiceHelper;
+import pl.plantoplate.tools.SharedPreferencesHelper;
+import pl.plantoplate.tools.TestDataJsonGenerator;
+import pl.plantoplate.ui.registration.EmailConfirmActivity;
+import pl.plantoplate.ui.registration.GroupSelectActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class EmailConfirmActivityTest {
 
     @Rule
-    public ActivityScenarioRule<EnterCodeActivity> activityScenarioRule
-            = new ActivityScenarioRule<>(EnterCodeActivity.class);
+    public ActivityScenarioRule<EmailConfirmActivity> activityScenarioRule
+            = new ActivityScenarioRule<>(EmailConfirmActivity.class);
 
     //serwer
     private MockWebServer server;
@@ -76,7 +77,7 @@ public class EmailConfirmActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.disableService(appContext, PushNotificationService.class);
+        ServiceHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -89,11 +90,9 @@ public class EmailConfirmActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.enableService(appContext, PushNotificationService.class);
+        ServiceHelper.enableService(appContext, PushNotificationService.class);
     }
 
-    //19/01/2023 - ok
-    //remind password 2
     @Test
     public void testChangePasswordViewDisplayed() {
 
@@ -103,74 +102,66 @@ public class EmailConfirmActivityTest {
 
     }
 
-
-
-    //???
     @Test
-    public void testSignInButtonFail() throws InterruptedException {
+    public void testConfirmWithIncorrectCode() {
+
+        SharedPreferences prefs = SharedPreferencesHelper
+                .getSharedPreferencesFromActivityScenario(activityScenarioRule.getScenario());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("code", "1234");
+        editor.apply();
 
         String code = "1111";
-        String emailApiPath = "api/mail/code";
-        String email = "testmailmailmail@test.com";
-
-        MockResponse responseCode = new MockResponse()
-                .setResponseCode(400)
-                .setBody("{\"message\": \"Account with this email doesn't exist or type of email is invalid\"}");
-        server.enqueue(responseCode);
 
 
-        onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
+        onView(withId(R.id.edit_text)).perform(typeText(code), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
-
-        RecordedRequest recordedRequest = server.takeRequest();
-
-        String url = Uri.parse("")
-                .buildUpon()
-                .appendEncodedPath(emailApiPath)
-                .build()
-                .toString();
-        assertEquals(url, recordedRequest.getPath());
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Wprowadzony kod jest niepoprawny")));
 
     }
 
-    //?
     @Test
-    public void testSignInButton() throws InterruptedException {
+    public void testConfirmWithCorrectCode() {
+
+        SharedPreferences prefs = SharedPreferencesHelper
+                .getSharedPreferencesFromActivityScenario(activityScenarioRule.getScenario());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("code", "1111");
+        editor.apply();
 
         String code = "1111";
-        String emailApiPath = "api/mail/code";
-        String email = "testmailmailmail@test.com";
 
-        MockResponse responseCode = new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"message\": \"API send back code that it sends to user's email\"}");
-        server.enqueue(responseCode);
-
-
-        onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
+        onView(withId(R.id.edit_text)).perform(typeText(code), closeSoftKeyboard());
         onView(withId(R.id.button_zatwierdzenie_link)).perform(click());
 
-        RecordedRequest recordedRequest = server.takeRequest();
-
-        String url = Uri.parse("")
-                .buildUpon()
-                .appendEncodedPath(emailApiPath)
-                .build()
-                .toString();
-        assertEquals(url, recordedRequest.getPath());
-
+        intended(hasComponent(GroupSelectActivity.class.getName()));
     }
 
-
-    //19/01/2023 - ok
     @Test
-    public void testCreateAccountButton() {
+    public void testGetNewConfirmCode() throws InterruptedException {
+
+        SharedPreferences prefs = SharedPreferencesHelper
+                .getSharedPreferencesFromActivityScenario(activityScenarioRule.getScenario());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("email", "example@email.com").apply();
+
+        MockHelper.enqueueResponse(server, 200, TestDataJsonGenerator.generateResponseCode(1234));
 
         onView(withId(R.id.wy_lij_pono)).perform(click());
 
+        // check snack bar
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+                .check(matches(withText("Wysłano nowy kod")));
+
+        Uri.Builder builder = Uri.parse("/api/mail/code").buildUpon();
+        builder.appendQueryParameter("email", "example@email.com");
+        builder.appendQueryParameter("type", "registration");
+        String url = builder.build().toString();
+
+        RecordedRequest request = server.takeRequest();
+        assertEquals(url, request.getPath());
+        assertEquals(prefs.getString("code", ""), "1234");
     }
 }
-

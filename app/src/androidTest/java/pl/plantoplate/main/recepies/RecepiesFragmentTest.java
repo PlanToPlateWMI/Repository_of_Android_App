@@ -27,16 +27,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import mockwebserver3.MockWebServer;
+import pl.plantoplate.data.remote.models.user.Role;
 import pl.plantoplate.ui.main.ActivityMain;
 import pl.plantoplate.R;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static pl.plantoplate.main.recepies.MockHelper.enqueueResponse;
-import static pl.plantoplate.main.recepies.TestDataJsonGenerator.generateProducts;
-import static pl.plantoplate.main.recepies.TestDataJsonGenerator.generateRecipes;
-import static pl.plantoplate.main.recepies.TestDataJsonGenerator.generateUserInfo;
+import static pl.plantoplate.tools.MockHelper.enqueueResponse;
+import static pl.plantoplate.tools.TestDataJsonGenerator.generateProducts;
+import static pl.plantoplate.tools.TestDataJsonGenerator.generateRecipes;
+import static pl.plantoplate.tools.TestDataJsonGenerator.generateUserInfo;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -65,6 +66,7 @@ public class RecepiesFragmentTest {
         enqueueStartResponses();
 
         ActivityScenario.launch(ActivityMain.class);
+
     }
 
     @After
@@ -74,7 +76,7 @@ public class RecepiesFragmentTest {
     }
 
     private void enqueueStartResponses() {
-        enqueueResponse(server, 200, generateUserInfo());
+        enqueueResponse(server, 200, generateUserInfo(Role.ROLE_ADMIN));
         enqueueResponse(server, 200, generateProducts());
     }
 

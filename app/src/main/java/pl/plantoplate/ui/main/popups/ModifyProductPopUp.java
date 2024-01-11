@@ -89,12 +89,12 @@ public class ModifyProductPopUp extends Dialog {
         radioButtonMiddle.setText("+" + Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(1));
         radioButtonMax.setText("+" + Objects.requireNonNull(map.get(product.getUnit().toLowerCase())).get(2));
 
-//        if(product.getAmount() == 0.0){
-//            quantity.setText("1.0");
-//        }
-//        else{
-//            quantity.setText(String.valueOf(product.getAmount()));
-//        }
+        if(product.getAmount() == 0.0){
+            quantity.setText("");
+        }
+        else{
+            quantity.setText(String.valueOf(product.getAmount()));
+        }
 
         quantity.requestFocus();
         quantity.setTag(product.getAmount());

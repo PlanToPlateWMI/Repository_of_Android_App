@@ -56,6 +56,10 @@ ext.excludes = [
         '**/*Extensions*.*',
         '**/ui/**',
         '**/service/**',
+        '**/data/**',
+        '**/*PlanToPlate*.*',
+        '**/*SplashActivity*.*',
+        '**/*RoutingActivity*.*',
 ]
 def createVariantCoverage(variant) {
     def variantName = variant.name

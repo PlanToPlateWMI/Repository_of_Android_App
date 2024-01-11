@@ -144,5 +144,5 @@ dependencies {
 
     //tests report
     androidTestImplementation 'org.jacoco:org.jacoco.agent:0.8.8'
-    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'junit:junit:4.13.2'
 }

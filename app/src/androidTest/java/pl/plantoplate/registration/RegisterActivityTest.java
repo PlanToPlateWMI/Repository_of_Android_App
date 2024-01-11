@@ -33,7 +33,6 @@ import android.content.Context;
 import android.net.Uri;
 
 import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -51,9 +50,8 @@ import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
 import pl.plantoplate.service.push_notification.PushNotificationService;
-import pl.plantoplate.tools.TestHelper;
+import pl.plantoplate.tools.ServiceHelper;
 import pl.plantoplate.ui.login.LoginActivity;
-import pl.plantoplate.ui.registration.EmailConfirmActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
 
 @RunWith(AndroidJUnit4.class)
@@ -77,7 +75,7 @@ public class RegisterActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.disableService(appContext, PushNotificationService.class);
+        ServiceHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -90,7 +88,7 @@ public class RegisterActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.enableService(appContext, PushNotificationService.class);
+        ServiceHelper.enableService(appContext, PushNotificationService.class);
     }
 
 

@@ -44,18 +44,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-import java.util.Timer;
 
 import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
-import pl.plantoplate.data.remote.models.Message;
 import pl.plantoplate.service.push_notification.PushNotificationService;
-import pl.plantoplate.tools.TestHelper;
+import pl.plantoplate.tools.MockHelper;
+import pl.plantoplate.tools.ServiceHelper;
+import pl.plantoplate.tools.TestDataJsonGenerator;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.ui.registration.RegisterActivity;
-import timber.log.Timber;
 
 @RunWith(AndroidJUnit4.class)
 public class LoginActivityTest {
@@ -78,7 +77,7 @@ public class LoginActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.disableService(appContext, PushNotificationService.class);
+        ServiceHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -91,7 +90,7 @@ public class LoginActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.enableService(appContext, PushNotificationService.class);
+        ServiceHelper.enableService(appContext, PushNotificationService.class);
     }
 
     //19.12.2023 - ok
@@ -113,7 +112,6 @@ public class LoginActivityTest {
         String email = "test@test.com";
         String password = "password";
         String emailApiPath = "api/auth/signin";
-        String message = "Account with this email doesn't exist";
 
         MockResponse responseCode = new MockResponse()
                 .setResponseCode(400)
@@ -124,6 +122,9 @@ public class LoginActivityTest {
         onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
 
+        onView(withText("Użytkownik o podanym adresie email nie istnieje!"))
+                .check(matches(isDisplayed()));
+
         RecordedRequest recordedRequest = server.takeRequest();
 
         String url = Uri.parse("")
@@ -132,9 +133,6 @@ public class LoginActivityTest {
                 .build()
                 .toString();
         assertEquals(url, recordedRequest.getPath());
-
-        onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Użytkownik o podanym adresie email nie istnieje!")));
 
     }
 
@@ -177,10 +175,7 @@ public class LoginActivityTest {
         String emailApiPath = "api/auth/signin";
         String message = "Password matches with password from DB";
 
-        MockResponse responseCode = new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"message\": \"Password matches with password from DB\"}");
-        server.enqueue(responseCode);
+        MockHelper.enqueueResponse(server, 200, TestDataJsonGenerator.generateMessage(message));
 
         onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
@@ -203,30 +198,25 @@ public class LoginActivityTest {
 
         String email = "plantoplatemobileapp@gmail.com";
         String password = "invalid";
-        String emailApiPath = "api/auth/signin";
+        String emailApiPath = "/api/auth/signin";
         String message = "Password doesn't match with password from DB";
 
-        MockResponse responseCode = new MockResponse()
-                .setResponseCode(409)
-                .setBody("{\"message\": \"Password doesn't match with password from DB\"}");
-        server.enqueue(responseCode);
+        MockHelper.enqueueResponse(server, 403, TestDataJsonGenerator.generateMessage(message));
 
         onView(withId(R.id.enter_mail)).perform(typeText(email), closeSoftKeyboard());
         onView(withId(R.id.enter_pass)).perform(typeText(password), closeSoftKeyboard());
         onView(withId(R.id.button_zaloguj_sie)).perform(click());
 
-        RecordedRequest recordedRequest = server.takeRequest();
+        // wait for snackbar
+        onView(withText("Niepoprawne hasło!"))
+                .check(matches(isDisplayed()));
 
-        String url = Uri.parse("")
+        RecordedRequest recordedRequest = server.takeRequest();
+        String url = Uri.parse(emailApiPath)
                 .buildUpon()
-                .appendEncodedPath(emailApiPath)
                 .build()
                 .toString();
         assertEquals(url, recordedRequest.getPath());
-
-        onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText("Nieprawidłowe hasło!")));
-
     }
 
 
@@ -268,7 +258,6 @@ public class LoginActivityTest {
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Wprowadź hasło")));
-
     }
 }
 

@@ -16,29 +16,24 @@
 
 package pl.plantoplate.main.settings;
 
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.intent.Intents;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
-import mockwebserver3.RecordedRequest;
+import pl.plantoplate.data.remote.models.user.Role;
 import pl.plantoplate.service.push_notification.PushNotificationService;
-import pl.plantoplate.tools.TestHelper;
+import pl.plantoplate.tools.MockHelper;
+import pl.plantoplate.tools.ServiceHelper;
+import pl.plantoplate.tools.TestDataJsonGenerator;
 import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.settings.SettingsInsideFragment;
-import pl.plantoplate.ui.main.settings.accountManagement.ChangeTheData;
-import pl.plantoplate.ui.main.settings.changePermissions.ChangePermissionsFragment;
-import pl.plantoplate.ui.main.settings.developerContact.MailDevelops;
-import pl.plantoplate.ui.main.settings.groupCodeGeneration.GroupCodeTypeActivity;
 import pl.plantoplate.ui.login.LoginActivity;
 import pl.plantoplate.R;
 
@@ -52,20 +47,18 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import static org.junit.Assert.assertEquals;
 
+import static pl.plantoplate.tools.SharedPreferencesHelper.getSharedPreferencesFromActivityScenario;
+import static pl.plantoplate.tools.SharedPreferencesHelper.setUpSharedPreferences;
+
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 
 import java.io.IOException;
 
 @RunWith(AndroidJUnit4.class)
 public class SettingsInsideFragmentTest {
 
-    @Rule
-    public ActivityScenarioRule<ActivityMain> fragmentRule =
-            new ActivityScenarioRule<>(ActivityMain.class);
-
-    //serwer
+    private ActivityScenario<ActivityMain> activityScenario;
     private MockWebServer server;
 
     @Before
@@ -73,235 +66,62 @@ public class SettingsInsideFragmentTest {
         // Initialize Intents before each test
         Intents.init();
 
-        // Navigate to the SettingsFragment
-        navigateToSettingsFragment();
-
         // server
         server = new MockWebServer();
         server.start(8080);
 
-        // test Helper
+        MockHelper.enqueueResponse(server,  200, TestDataJsonGenerator.generateUserInfo(Role.ROLE_ADMIN));
+        MockHelper.enqueueResponse(server,  200, TestDataJsonGenerator.generateProducts());
+        MockHelper.enqueueResponse(server,  200, TestDataJsonGenerator.generateUserInfos());
+        MockHelper.enqueueResponse(server,  200, TestDataJsonGenerator.generateUserInfo(Role.ROLE_ADMIN));
+
+        // start activity
+        activityScenario = ActivityScenario.launch(ActivityMain.class);
+
+        // disable firebase service
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.disableService(appContext, PushNotificationService.class);
+        ServiceHelper.disableService(appContext, PushNotificationService.class);
+
+        setUpSharedPreferences(getSharedPreferencesFromActivityScenario(activityScenario));
+
+        // Navigate to the SettingsFragment
+        onView(withId(R.id.settings)).perform(click());
     }
 
     @After
-    public void cleanup() throws IOException{
+    public void cleanup() throws IOException {
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        ServiceHelper.enableService(appContext, PushNotificationService.class);
+
         // Release Intents after each test
         Intents.release();
 
         // Shutdown server
         server.shutdown();
-
-        // test Helper
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.enableService(appContext, PushNotificationService.class);
     }
 
-    public void navigateToSettingsFragment() {
+    @Test
+    public void testSwitchAppTheme() {
 
-        fragmentRule.getScenario().onActivity(activity -> {
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, SettingsInsideFragment.class, null)
-                    .commit();
-        });
+        SharedPreferences sharedPreferences = getSharedPreferencesFromActivityScenario(activityScenario);
+
+        String theme = sharedPreferences.getString("theme", "");
+        assertEquals("light", theme);
+
+        onView(withId(R.id.sun)).check(matches(isDisplayed()));
+        onView(withId(R.id.moon)).check(matches(isDisplayed()));
+        onView(withId(R.id.switchButtonChangeColorTheme)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.switchButtonChangeColorTheme)).perform(click());
+        theme = sharedPreferences.getString("theme", "");
+        assertEquals("dark", theme);
     }
 
-    public SharedPreferences getSharedPreferences() {
-        final SharedPreferences[] sharedPreferences = {null};
-
+    @Test
+    public void testExitAccountCorrectly() {
         // Get the SharedPreferences instance
-        fragmentRule.getScenario().onActivity(activity -> sharedPreferences[0] = activity.getSharedPreferences("prefs", Context.MODE_PRIVATE));
-
-        return sharedPreferences[0];
-    }
-
-    public void setSharedPreferences() {
-        // Get the SharedPreferences instance
-        SharedPreferences prefs = getSharedPreferences();
-
-        String name = "test_name";
-        String email = "test_email";
-        String password = "test_password";
-        String role = "test_role";
-        String token = "test_token";
-
-        prefs.edit().putString("name", name).apply();
-        prefs.edit().putString("email", email).apply();
-        prefs.edit().putString("password", password).apply();
-        prefs.edit().putString("role", role).apply();
-        prefs.edit().putString("token", token).apply();
-    }
-
-//    //19.12.2023 - ok
-//    @Test
-//    public void testSettingsFragmentInsideViewDisplayed() {
-//
-//        onView(withId(R.id.sun)).check(matches(isDisplayed()));
-//        onView(withId(R.id.switchButtonChangeColorTheme)).check(matches(isDisplayed()));
-//        onView(withId(R.id.moon)).check(matches(isDisplayed()));
-//
-//        onView(withId(R.id.imie)).check(matches(isDisplayed()));
-//        onView(withId(R.id.button_wygenerowanie_kodu)).check(matches(isDisplayed()));
-//        onView(withId(R.id.button_zmiana_danych)).check(matches(isDisplayed()));
-//        onView(withId(R.id.button_zarzadyanie_uyztkownikamu)).check(matches(isDisplayed()));
-//        onView(withId(R.id.button_about_us)).check(matches(isDisplayed()));
-//        onView(withId(R.id.button_wyloguj)).check(matches(isDisplayed()));
-//
-//    }
-
-    public void navigateGroupCodeTypeActivity() {
-
-        fragmentRule.getScenario().onActivity(activity -> {
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, GroupCodeTypeActivity.class, null)
-                    .commit();
-        });
-    }
-
-    //???
-    @Test
-    public void generateListOfInfo() throws InterruptedException{
-
-        String emailApiPath = "api/users/info";
-        String email = "plantoplatemobileapp@gmail.com";
-        String name = "Plantest";
-        String role = "ROLE_ADMIN";
-
-//        MockResponse response = new MockResponse()
-//                .setResponseCode(200)
-//                .setBody("{" +
-//                        "\"username\": \"name\"" + "," +
-//                        "\"email\": \"email\"" + "," +
-//                        "\"role\": \"ROLE_ADMIN\""
-//                        + "}");
-//        server.enqueue(response);
-
-        MockResponse response = new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"message\": \"List of user's info\"}");
-        server.enqueue(response);
-
-        RecordedRequest recordedRequest = server.takeRequest();
-
-        String url = Uri.parse("")
-                .buildUpon()
-                .appendEncodedPath(emailApiPath)
-                .appendQueryParameter("username", name)
-                .appendQueryParameter("email", email)
-                .appendQueryParameter("role", role)
-                .build()
-                .toString();
-        assertEquals(url, recordedRequest.getPath());
-
-        onView(withId(R.id.imie)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void generateGroupCodeButtonNavigatesToGroupCodeTypeActivity() throws InterruptedException{
-        // Perform a click on the generate group code button
-        onView(withId(R.id.button_zarzadyanie_uyztkownikamu)).perform(click());
-
-    }
-
-    public void navigateChangePermissionsFragment() {
-
-        fragmentRule.getScenario().onActivity(activity -> {
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, ChangePermissionsFragment.class, null)
-                    .commit();
-        });
-    }
-
-
-    //19.12.2023 - ok
-    @Test
-    public void generateChangeUsersSettings() {
-
-        String name = "";
-        String email = "";
-        String role = "";
-
-//        MockResponse response = new MockResponse()
-//                .setResponseCode(200)
-//                .setBody("{" +
-//                        "\"username\": \"name\"" + "," +
-//                        "\"email\": \"email\"" + "," +
-//                        "\"role\": \"ROLE_ADMIN\""
-//                        + "}");
-//        server.enqueue(response);
-
-        // Perform a click on the generate group code button
-        onView(withId(R.id.button_wygenerowanie_kodu)).perform(click());
-
-        // Check if the GroupCodeTypeActivity is launched
-        // navigateChangePermissionsFragment();
-    }
-
-    public void navigateChangeTheData() {
-
-        fragmentRule.getScenario().onActivity(activity -> {
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, ChangeTheData.class, null)
-                    .commit();
-        });
-    }
-
-//
-//    //19.12.2023 - ok
-//    @Test
-//    public void changeTheData() {
-//
-//        // Perform a click on the generate group code button
-//        onView(withId(R.id.button_zmiana_danych)).perform(click());
-//
-//        // Check if the GroupCodeTypeActivity is launched
-//        // navigateChangeTheData();
-//        // intended(hasComponent(ChangeTheData.class.getName()));
-//    }
-
-    public void navigateToWriteToUs() {
-
-        fragmentRule.getScenario().onActivity(activity -> {
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_layout, MailDevelops.class, null)
-                    .commit();
-        });
-    }
-
-
-//    //19.12.2023 - ok
-//    @Test
-//    public void writeToUs() {
-//
-//        // Perform a click on the generate group code button
-//        onView(withId(R.id.button_about_us)).perform(click());
-//
-//        // Check if the GroupCodeTypeActivity is launched
-//        //navigateToWriteToUs();
-//        // intended(hasComponent(ChangeTheData.class.getName()));
-//    }
-
-
-    //19.12.2023 - ok
-    @Test
-    public void exitAccountButtonNavigatesToLoginActivity() {
-        // Perform a click on the exit account button
-        onView(withId(R.id.button_wyloguj)).perform(click());
-
-        // Check if the LoginActivity is launched
-        //intended(hasComponent(LoginActivity.class.getName()));
-    }
-
-
-    //19.12.2023 - ok
-    @Test
-    public void exitAccountButtonClearsSharedPreferences() {
-
-        setSharedPreferences();
-
-        // Get the SharedPreferences instance
-        SharedPreferences prefs = getSharedPreferences();
+        SharedPreferences prefs = getSharedPreferencesFromActivityScenario(activityScenario);
 
         // Perform a click on the exit account button
         onView(withId(R.id.button_wyloguj)).perform(click());
@@ -318,5 +138,7 @@ public class SettingsInsideFragmentTest {
         Assert.assertFalse(prefs.contains(password));
         Assert.assertFalse(prefs.contains(role));
         Assert.assertFalse(prefs.contains(token));
+
+        intended(hasComponent(LoginActivity.class.getName()));
     }
 }

@@ -48,7 +48,9 @@ import mockwebserver3.MockWebServer;
 import mockwebserver3.RecordedRequest;
 import pl.plantoplate.R;
 import pl.plantoplate.service.push_notification.PushNotificationService;
-import pl.plantoplate.tools.TestHelper;
+import pl.plantoplate.tools.MockHelper;
+import pl.plantoplate.tools.ServiceHelper;
+import pl.plantoplate.tools.TestDataJsonGenerator;
 import pl.plantoplate.ui.registration.GroupEnterActivity;
 
 @RunWith(AndroidJUnit4.class)
@@ -72,20 +74,20 @@ public class GroupEnterActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.disableService(appContext, PushNotificationService.class);
+        ServiceHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
     public void tearDown() throws IOException {
+        // test Helper
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        ServiceHelper.enableService(appContext, PushNotificationService.class);
+
         // Release Intents
         Intents.release();
 
         // Shutdown server
         server.shutdown();
-
-        // test Helper
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.enableService(appContext, PushNotificationService.class);
     }
 
     //19.12.2023 - ok
@@ -99,7 +101,7 @@ public class GroupEnterActivityTest {
 
     //26.12.2023 - ok
     @Test
-    public void testGroupCode() throws InterruptedException {
+    public void testCorrectJoinGroup() throws InterruptedException {
 
         String code = "111111";
         String email = "marinamarinatestmarinatesttest@gmail.com";
@@ -128,18 +130,15 @@ public class GroupEnterActivityTest {
 
     //26.12.2023 - ok
     @Test
-    public void testGroupCodeFail() throws InterruptedException {
+    public void testInorrectJoinGroup() throws InterruptedException {
 
         String code = "111111";
-        String email = "marinamarinatestmarinatesttest@gmail.com";
-        String emailApiPath = "api/invite-codes";
+        String email = "example@gmail.com";
         String password = "password";
+        String emailApiPath = "api/invite-codes";
+        String message = "Invite code is wrong or user with this email doesn't exist";
 
-
-        MockResponse responseCode = new MockResponse()
-                .setResponseCode(400)
-                .setBody("{\"message\": \"Account with this email doesn't exist or type of email is invalid\"}");
-        server.enqueue(responseCode);
+        MockHelper.enqueueResponse(server, 400, TestDataJsonGenerator.generateMessage(message));
 
 
         onView(withId(R.id.wprowadz_kod)).perform(typeText(code), closeSoftKeyboard());
@@ -156,8 +155,5 @@ public class GroupEnterActivityTest {
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
                 .check(matches(withText("Niepoprawny kod grupy.")));
-
     }
 }
-
-

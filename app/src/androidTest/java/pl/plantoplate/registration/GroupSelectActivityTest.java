@@ -42,11 +42,7 @@ import java.io.IOException;
 import mockwebserver3.MockWebServer;
 import pl.plantoplate.R;
 import pl.plantoplate.service.push_notification.PushNotificationService;
-import pl.plantoplate.tools.TestHelper;
-import pl.plantoplate.ui.main.ActivityMain;
-import pl.plantoplate.ui.main.calendar.CalendarFragment;
-import pl.plantoplate.ui.main.shoppingList.BuyProductsFragment;
-import pl.plantoplate.ui.main.shoppingList.ShoppingListFragment;
+import pl.plantoplate.tools.ServiceHelper;
 import pl.plantoplate.ui.registration.GroupEnterActivity;
 import pl.plantoplate.ui.registration.GroupSelectActivity;
 
@@ -71,7 +67,7 @@ public class GroupSelectActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.disableService(appContext, PushNotificationService.class);
+        ServiceHelper.disableService(appContext, PushNotificationService.class);
     }
 
     @After
@@ -84,7 +80,7 @@ public class GroupSelectActivityTest {
 
         // test Helper
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        TestHelper.enableService(appContext, PushNotificationService.class);
+        ServiceHelper.enableService(appContext, PushNotificationService.class);
     }
 
     //19.12.2023 - ok

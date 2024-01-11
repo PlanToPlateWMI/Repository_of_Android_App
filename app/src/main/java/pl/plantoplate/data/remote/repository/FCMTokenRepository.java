@@ -30,8 +30,4 @@ public class FCMTokenRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io());
     }
-
-    public void setFcmtokenService(FCMTokenService mockTokenService) {
-        this.fcmtokenService = mockTokenService;
-    }
 }

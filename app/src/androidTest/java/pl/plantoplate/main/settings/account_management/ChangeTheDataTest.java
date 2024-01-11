@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-package pl.plantoplate.main.calendar;
-
+package pl.plantoplate.main.settings.account_management;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.intent.Intents;
@@ -30,13 +29,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import mockwebserver3.MockWebServer;
-import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.user.Role;
 import pl.plantoplate.service.push_notification.PushNotificationService;
 import pl.plantoplate.tools.MockHelper;
 import pl.plantoplate.tools.ServiceHelper;
 import pl.plantoplate.tools.TestDataJsonGenerator;
 import pl.plantoplate.ui.main.ActivityMain;
+import pl.plantoplate.ui.main.settings.account_management.ChangeTheData;
+import pl.plantoplate.R;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -54,7 +54,7 @@ import android.content.Context;
 import java.io.IOException;
 
 @RunWith(AndroidJUnit4.class)
-public class CalendarFragmentTest {
+public class ChangeTheDataTest {
 
     private ActivityScenario<ActivityMain> activityScenario;
     private MockWebServer server;
@@ -70,6 +70,8 @@ public class CalendarFragmentTest {
 
         MockHelper.enqueueResponse(server,  200, TestDataJsonGenerator.generateUserInfo(Role.ROLE_ADMIN));
         MockHelper.enqueueResponse(server,  200, TestDataJsonGenerator.generateProducts());
+        MockHelper.enqueueResponse(server,  200, TestDataJsonGenerator.generateUserInfos());
+        MockHelper.enqueueResponse(server,  200, TestDataJsonGenerator.generateUserInfo(Role.ROLE_ADMIN));
 
         // start activity
         activityScenario = ActivityScenario.launch(ActivityMain.class);
@@ -80,8 +82,8 @@ public class CalendarFragmentTest {
 
         setUpSharedPreferences(getSharedPreferencesFromActivityScenario(activityScenario));
 
-        // Navigate to the SettingsFragment
-        onView(withId(R.id.calendar)).perform(click());
+        // Navigate to the ChangeTheData
+        navigateToChangeTheData();
     }
 
     @After
@@ -96,11 +98,48 @@ public class CalendarFragmentTest {
         // Shutdown server
         server.shutdown();
     }
-    @Test
-    public void testCalendarDisplayed() {
 
-        onView(withId(R.id.calendarTextView)).check(matches(isDisplayed()));
+    public void navigateToChangeTheData() {
+
+        onView(withId(R.id.settings)).perform(click());
+        onView(withId(R.id.button_zmiana_danych)).perform(click());
+    }
+
+    @Test
+    public void testSettingsFragmentInsideViewDisplayed() {
+
+        onView(withId(R.id.zmiana_imienia)).check(matches(isDisplayed()));
+        onView(withId(R.id.zmiana_email)).check(matches(isDisplayed()));
+        onView(withId(R.id.zmiana_hasla)).check(matches(isDisplayed()));
+        onView(withId(R.id.usuwanie_konta)).check(matches(isDisplayed()));
 
     }
 
+    @Test
+    public void testChangeName() {
+
+        onView(withId(R.id.zmiana_imienia)).perform(click());
+
+    }
+
+    @Test
+    public void testChangeEmail() {
+
+        onView(withId(R.id.zmiana_email)).perform(click());
+
+    }
+
+
+    @Test
+    public void testChangePassword() {
+
+        onView(withId(R.id.zmiana_hasla)).perform(click());
+    }
+
+    @Test
+    public void testDeleteAccount() {
+
+        onView(withId(R.id.usuwanie_konta)).perform(click());
+
+    }
 }

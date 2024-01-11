@@ -38,13 +38,13 @@ public class PushNotificationService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-//        FCMToken fcmToken = new FCMToken(token);
-//        FCMTokenRepository fcmTokenRepository = new FCMTokenRepository();
-//        Disposable disposable = fcmTokenRepository.updateFcmToken(token, fcmToken)
-//                .subscribe(msg -> Timber.e("onNewToken: %s", msg),
-//                        throwable -> Timber.e("onNewToken: %s", throwable.getMessage()));
-//
-//        compositeDisposable.add(disposable);
+        FCMToken fcmToken = new FCMToken(token);
+        FCMTokenRepository fcmTokenRepository = new FCMTokenRepository();
+        Disposable disposable = fcmTokenRepository.updateFcmToken(token, fcmToken)
+                .subscribe(msg -> Timber.e("onNewToken: %s", msg),
+                        throwable -> Timber.e("onNewToken: %s", throwable.getMessage()));
+
+        compositeDisposable.add(disposable);
     }
 
     /**
@@ -119,7 +119,7 @@ public class PushNotificationService extends FirebaseMessagingService {
      * Generate unique notification ID.
      */
     private int generateUniqueNotificationId() {
-        // Генерируем уникальный ID для каждого уведомления, например, на основе временной метки или случайного числа.
+        // Generate unique notification ID
         return (int) System.currentTimeMillis();
     }
 
