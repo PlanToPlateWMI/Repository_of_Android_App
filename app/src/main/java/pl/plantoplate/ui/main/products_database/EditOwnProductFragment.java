@@ -34,6 +34,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -101,9 +102,22 @@ public class EditOwnProductFragment extends Fragment {
 
     private void setClickListeners() {
         productUnitRadioGroup.setOnCheckedChangeListener((group, checkedId) -> setProductUnit(checkedId));
-        applyChangesButton.setOnClickListener(v -> applyProductChange());
+        applyChangesButton.setOnClickListener(v -> validateProduct());
         changeCategoryButton.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
         deleteProductButton.setOnClickListener(v -> showConfirmDeleteProductPopUp());
+    }
+
+    public void validateProduct(){
+        String productName = Optional.ofNullable(productNameEditText.getText()).map(CharSequence::toString)
+                .orElse("");
+        product.setName(productName.trim());
+        if(product.getName().trim().isEmpty()){
+            Toast.makeText(requireActivity(), "Wpisz nazwę produktu!", Toast.LENGTH_SHORT).show();
+        }else if(product.getUnit() == null || product.getUnit().isEmpty()){
+            Toast.makeText(requireActivity(), "Wybierz jednostkę!", Toast.LENGTH_SHORT).show();
+        }else{
+            saveProduct();
+        }
     }
 
     public void setupProductUnit() {
@@ -132,15 +146,8 @@ public class EditOwnProductFragment extends Fragment {
         }
     }
 
-    public void applyProductChange() {
-        String productName = Optional.ofNullable(productNameEditText.getText()).map(CharSequence::toString)
-                .orElse("");
-        product.setName(productName);
-        saveProduct();
-    }
-
     public void showConfirmDeleteProductPopUp() {
-        Dialog dialog = new Dialog(getContext());
+        Dialog dialog = new Dialog(requireContext());
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.new_pop_up_delete_product_from_database);
         TextView acceptButton = dialog.findViewById(R.id.button_yes);

@@ -93,8 +93,20 @@ public class AddYourOwnProductFragment extends Fragment {
 
     private void setClickListeners() {
         chooseProductUnitRadioGroup.setOnCheckedChangeListener((group, checkedId) -> setProductUnit(checkedId));
-        addProductButton.setOnClickListener(v -> addProduct());
+        addProductButton.setOnClickListener(v -> validateProduct());
         changeProductCategoryButton.setOnClickListener(v -> replaceFragment(new ChangeCategoryOfProductFragment()));
+    }
+
+    public void validateProduct(){
+        String productName = Optional.ofNullable(productNameEditText.getText()).map(Objects::toString).orElse("");
+        product.setName(productName.trim());
+        if(product.getName().trim().isEmpty()){
+            Toast.makeText(requireActivity(), "Wpisz nazwę produktu!", Toast.LENGTH_SHORT).show();
+        }else if(product.getUnit() == null || product.getUnit().isEmpty()){
+            Toast.makeText(requireActivity(), "Wybierz jednostkę!", Toast.LENGTH_SHORT).show();
+        }else{
+            addProduct();
+        }
     }
 
     public void setProductUnit(int checkedId) {
@@ -119,7 +131,7 @@ public class AddYourOwnProductFragment extends Fragment {
 
     public void addProduct() {
         String productName = Optional.ofNullable(productNameEditText.getText()).map(Objects::toString).orElse("");
-        product.setName(productName);
+        product.setName(productName.trim());
         String token = "Bearer " + prefs.getString("token", "");
 
         Disposable disposable = productRepository.addProduct(token, product)
