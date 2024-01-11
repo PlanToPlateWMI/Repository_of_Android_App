@@ -32,6 +32,9 @@ import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.data.remote.repository.StorageRepository;
 import pl.plantoplate.utils.CategorySorter;
 
+/**
+ * This class is responsible for handling the data for the AllProductsFragment.
+ */
 public class AllProductsViewModel extends AndroidViewModel {
 
     private final CompositeDisposable compositeDisposable;

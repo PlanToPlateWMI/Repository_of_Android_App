@@ -29,6 +29,9 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeBaseBinding;
 import pl.plantoplate.ui.custom_views.RadioGridGroup;
 
+/**
+ * Fragment class for displaying own recipes.
+ */
 public class OwnRecipesFragment extends Fragment {
 
     private ViewPager2 viewPager2;

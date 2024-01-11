@@ -14,6 +14,9 @@ import pl.plantoplate.databinding.FragmentItemRecipeInsidePrzepisItemsBinding;
 import pl.plantoplate.ui.main.calendar.meal_info.recycler_views.adapters.MealStepsAdapter;
 import pl.plantoplate.ui.main.calendar.meal_info.view_models.MealInfoViewModel;
 
+/**
+ * This class is responsible for setting up the steps in the recycler view.
+ */
 public class MealStepsFragment extends Fragment {
 
     private MealStepsAdapter mealStepsAdapter;

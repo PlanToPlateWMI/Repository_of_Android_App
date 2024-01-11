@@ -5,6 +5,9 @@ import java.util.Optional;
 import pl.plantoplate.data.remote.models.meal.Meal;
 import pl.plantoplate.data.remote.models.meal.MealType;
 
+/**
+ * This class is responsible for holding a list of meals of a specific type.
+ */
 public class MealTypes {
 
     private MealType mealType;

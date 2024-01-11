@@ -21,7 +21,8 @@ public class ShoppingListViewModel extends AndroidViewModel {
     }
 
     /**
-     * @return the list of products
+     * Sets the bougth products count.
+     * @param count the list type
      */
     public void setBougthProductsCount(int count) {
         bougthProductsCount.setValue(count);

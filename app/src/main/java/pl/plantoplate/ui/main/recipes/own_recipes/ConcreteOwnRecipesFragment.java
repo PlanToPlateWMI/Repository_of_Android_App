@@ -35,6 +35,9 @@ import pl.plantoplate.ui.main.recipes.recipe_info.RecipeInfoFragment;
 import pl.plantoplate.ui.main.recipes.recycler_views.adapters.RecipeAdapter;
 import pl.plantoplate.ui.main.recipes.recycler_views.listeners.SetupRecipeButtons;
 
+/**
+ * Fragment class for displaying concrete own recipes with search functionality.
+ */
 public class ConcreteOwnRecipesFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     private CompositeDisposable compositeDisposable;

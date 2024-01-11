@@ -29,6 +29,9 @@ import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 import pl.plantoplate.ui.main.recycler_views.view_holders.CategoryViewHolder;
 import timber.log.Timber;
 
+/**
+ * This class is responsible for setting up the categories.
+ */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
     private final int productItemType;

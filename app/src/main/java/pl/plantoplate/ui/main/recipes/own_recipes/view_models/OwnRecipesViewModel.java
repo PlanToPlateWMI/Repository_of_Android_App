@@ -14,6 +14,9 @@ import pl.plantoplate.data.remote.repository.RecipeRepository;
 import pl.plantoplate.ui.main.recipes.recycler_views.RecipeCategory;
 import pl.plantoplate.utils.CategorySorter;
 
+/**
+ * ViewModel class for managing own recipes in an Android app.
+ */
 public class OwnRecipesViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<RecipeCategory>> ownRecipes;

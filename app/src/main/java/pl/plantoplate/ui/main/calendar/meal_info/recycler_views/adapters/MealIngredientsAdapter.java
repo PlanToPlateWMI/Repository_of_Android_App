@@ -16,6 +16,9 @@ import pl.plantoplate.ui.main.calendar.meal_info.recycler_views.view_holders.Mea
 import pl.plantoplate.ui.main.recipes.recipe_info.events.IngredientsChangeEvent;
 import timber.log.Timber;
 
+/**
+ * This class is responsible for setting up the ingredients in RecyclerView.
+ */
 public class MealIngredientsAdapter extends RecyclerView.Adapter<MealIngredientsViewHolder>{
 
     private List<Ingredient> ingredients;

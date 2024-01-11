@@ -9,6 +9,9 @@ import java.time.LocalDate;
 
 import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 
+/**
+ * Abstract class for the view holders used in the calendar plan RecyclerView.
+ */
 public abstract class CalendarViewHolder extends RecyclerView.ViewHolder{
 
     protected CalendarViewHolder(@NonNull View itemView) {

@@ -25,6 +25,9 @@ import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.data.remote.RetrofitClient;
 import pl.plantoplate.data.remote.service.StorageService;
 
+/**
+ * A repository class responsible for retrieving storage-related data from the remote API.
+ */
 public class StorageRepository {
     private final StorageService storageService;
 
@@ -33,6 +36,16 @@ public class StorageRepository {
         storageService = retrofitClient.getClient().create(StorageService.class);
     }
 
+    /**
+     * Retrieves a list of products from the user's storage associated with the provided token.
+     *
+     * @param token The token used to authenticate the request.
+     * @return A {@link Single} emitting a {@link List} of {@link Product} objects representing the products
+     *         stored by the user.
+     * @throws NullPointerException if {@code token} is {@code null}.
+     *
+     * @see Product
+     */
     public Single<List<Product>> getStorage(String token){
         String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
         HashMap<Integer, String> errorMap = new HashMap<>();
@@ -45,6 +58,17 @@ public class StorageRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Adds a product to the user's storage associated with the provided token.
+     *
+     * @param token   The token used to authenticate the request.
+     * @param product The product to be added to the user's storage.
+     * @return A {@link Single} emitting a {@link List} of {@link Product} objects representing the updated storage
+     *         after adding the product.
+     * @throws NullPointerException if {@code token} or {@code product} is {@code null}.
+     *
+     * @see Product
+     */
     public Single<List<Product>> addProductToStorage(String token, Product product){
         String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
         HashMap<Integer, String> errorMap = new HashMap<>();
@@ -57,6 +81,17 @@ public class StorageRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Deletes a product from the user's storage by its ID associated with the provided token.
+     *
+     * @param token      The token used to authenticate the request.
+     * @param productId  The ID of the product to be deleted from the user's storage.
+     * @return A {@link Single} emitting a {@link List} of {@link Product} objects representing the updated storage
+     *         after deleting the product.
+     * @throws NullPointerException if {@code token} is {@code null}.
+     *
+     * @see Product
+     */
     public Single<List<Product>> deleteProductFromStorage(String token, int productId){
         String productDoesNotExist = "Produkt o podanym id nie istnieje.";
         HashMap<Integer, String> errorMap = new HashMap<>();
@@ -69,6 +104,17 @@ public class StorageRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Transfers bought products to the user's storage based on the provided token and product IDs.
+     *
+     * @param token       The token used to authenticate the request.
+     * @param productsIds The list of IDs of products to be transferred to the user's storage.
+     * @return A {@link Single} emitting a {@link List} of {@link Product} objects representing the updated storage
+     *         after transferring the products.
+     * @throws NullPointerException if {@code token} or {@code productsIds} is {@code null}.
+     *
+     * @see Product
+     */
     public Single<List<Product>> transferBoughtProductsToStorage(String token, List<Integer> productsIds){
         String productsDoNotExist = "Produkty o podanych id nie istnieją.";
         HashMap<Integer, String> errorMap = new HashMap<>();
@@ -81,6 +127,18 @@ public class StorageRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Changes the amount of a product in the user's storage associated with the provided token.
+     *
+     * @param token      The token used to authenticate the request.
+     * @param productId  The ID of the product for which the amount will be changed in the storage.
+     * @param product    The updated product data, including the new amount.
+     * @return A {@link Single} emitting a {@link List} of {@link Product} objects representing the updated storage
+     *         after changing the amount of the specified product.
+     * @throws NullPointerException if {@code token} or {@code product} is {@code null}.
+     *
+     * @see Product
+     */
     public Single<List<Product>> changeProductAmountInStorage(String token, int productId, Product product){
         String incorrectAmount = "Niepoprawna ilość produktu.";
         HashMap<Integer, String> errorMap = new HashMap<>();

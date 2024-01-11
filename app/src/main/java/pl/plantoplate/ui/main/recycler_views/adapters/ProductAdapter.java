@@ -33,6 +33,9 @@ import pl.plantoplate.ui.main.recycler_views.view_holders.BuyProductsViewHolder;
 import pl.plantoplate.ui.main.recycler_views.view_holders.OwnProductsViewHolder;
 import pl.plantoplate.ui.main.recycler_views.view_holders.PantryProductsViewHolder;
 
+/**
+ * This class is responsible for setting up the products in the recycler view.
+ */
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Product> products;
     private final int itemType;

@@ -25,6 +25,9 @@ import java.util.List;
 
 import pl.plantoplate.data.remote.models.user.UserInfo;
 
+/**
+ * This class is responsible for setting up the user permissions.
+ */
 public class UsersInfoAdapter extends RecyclerView.Adapter<UsersInfoViewHolder>{
 
     private final int itemType;

@@ -24,6 +24,9 @@ import pl.plantoplate.data.remote.models.product.ProductCategory;
 import pl.plantoplate.ui.main.recycler_views.adapters.ProductAdapter;
 import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 
+/**
+ * This class is responsible for setting up the categories.
+ */
 public class CategoryViewHolder extends RecyclerView.ViewHolder {
     private final int itemType;
     private final TextView categoryOfProduct;

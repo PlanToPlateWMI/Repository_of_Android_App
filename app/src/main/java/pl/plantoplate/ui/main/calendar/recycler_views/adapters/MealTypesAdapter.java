@@ -13,6 +13,9 @@ import pl.plantoplate.ui.main.calendar.recycler_views.listeners.SetupMealItem;
 import pl.plantoplate.ui.main.calendar.recycler_views.models.MealTypes;
 import pl.plantoplate.ui.main.calendar.recycler_views.view_holders.MealTypeViewHolder;
 
+/**
+ * Adapter class for displaying meal types in a RecyclerView.
+ */
 public class MealTypesAdapter extends RecyclerView.Adapter<MealTypeViewHolder>{
 
     private List<MealTypes> mealTypes;

@@ -21,8 +21,20 @@ import java.util.Map;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.HttpException;
 
+/**
+ * Generic class for handling HTTP errors and providing appropriate error messages.
+ *
+ * @param <T> The type of the Single result.
+ */
 public class ErrorHandler<T> {
 
+    /**
+     * Handles HTTP errors and provides corresponding error messages.
+     *
+     * @param throwable      The throwable representing the error.
+     * @param errorMessages  A map containing HTTP error codes and their corresponding error messages.
+     * @return A Single emitting an error with the appropriate error message.
+     */
     public Single<T>  handleHttpError(Throwable throwable, Map<Integer, String> errorMessages) {
         String errorMessage = "";
 

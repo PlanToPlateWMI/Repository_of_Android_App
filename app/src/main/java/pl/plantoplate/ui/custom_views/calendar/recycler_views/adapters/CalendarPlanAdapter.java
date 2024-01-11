@@ -32,6 +32,9 @@ import pl.plantoplate.ui.custom_views.calendar.recycler_views.view_holders.Calen
 import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 import timber.log.Timber;
 
+/**
+ * Adapter for the RecyclerView displaying a calendar plan.
+ */
 public class CalendarPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private SetupItemButtons listener;
     private List<LocalDate> dates;

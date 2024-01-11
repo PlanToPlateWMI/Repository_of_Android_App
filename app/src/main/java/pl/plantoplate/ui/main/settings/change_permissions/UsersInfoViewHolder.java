@@ -23,6 +23,9 @@ import java.util.Map;
 import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 
+/**
+ * This class is responsible for setting up the user permissions.
+ */
 public class UsersInfoViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView userNameTextView;

@@ -10,6 +10,9 @@ import pl.plantoplate.ui.main.calendar.recycler_views.adapters.ConcreteMealAdapt
 import pl.plantoplate.ui.main.calendar.recycler_views.listeners.SetupMealItem;
 import pl.plantoplate.ui.main.calendar.recycler_views.models.MealTypes;
 
+/**
+ * ViewHolder class for displaying meal types in a RecyclerView.
+ */
 public class MealTypeViewHolder extends RecyclerView.ViewHolder{
 
     private final TextView mealTypeTextView;

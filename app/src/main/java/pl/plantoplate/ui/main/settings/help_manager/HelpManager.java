@@ -15,6 +15,9 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentHelpBinding;
 import timber.log.Timber;
 
+/**
+ * Class responsible for displaying the help manager
+ */
 public class HelpManager extends Fragment {
 
     private Button shoppinglist;
@@ -25,6 +28,13 @@ public class HelpManager extends Fragment {
     private Button calendarRecipe;
 
 
+    /**
+     * Creates the view for the activity.
+     * @param inflater The layout inflater
+     * @param container The container for the fragment
+     * @param savedInstanceState The saved instance state
+     * @return The view for this fragment
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -101,6 +111,9 @@ public class HelpManager extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Show the storage list
+     */
     public void showStorageList() {
         Timber.d("Showing pop up...");
         Dialog dialog = new Dialog(requireContext());
@@ -121,6 +134,9 @@ public class HelpManager extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Show the recipe one
+     */
     public void showRecipeOne() {
         Timber.d("Showing pop up...");
         Dialog dialog = new Dialog(requireContext());
@@ -141,6 +157,9 @@ public class HelpManager extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Show the recipe all
+     */
     public void showRecipeAll() {
         Timber.d("Showing pop up...");
         Dialog dialog = new Dialog(requireContext());
@@ -161,6 +180,9 @@ public class HelpManager extends Fragment {
         dialog.show();
     }
 
+    /**
+     * Show the calendar recipe
+     */
     public void showCalendarRecipe() {
         Timber.d("Showing pop up...");
         Dialog dialog = new Dialog(requireContext());

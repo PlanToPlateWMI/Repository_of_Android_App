@@ -39,6 +39,9 @@ import pl.plantoplate.ui.main.calendar.meal_info.popups.QuestionDeleteRecipe;
 import pl.plantoplate.ui.main.calendar.meal_info.view_models.MealInfoViewModel;
 import timber.log.Timber;
 
+/**
+ * Fragment class for displaying meal information.
+ */
 public class MealInfoFragment extends Fragment{
 
     private MealInfoViewModel mealInfoViewModel;
@@ -69,6 +72,9 @@ public class MealInfoFragment extends Fragment{
         return fragmentItemRecipeInsideForCalendarBinding.getRoot();
     }
 
+    /**
+     * Sets up the views and their listeners.
+     */
     public void initViews(FragmentItemRecipeInsideForCalendarBinding fragmentItemRecipeInsideForCalendarBinding){
         recipeImage = fragmentItemRecipeInsideForCalendarBinding.recipeImage;
         recipeTitle = fragmentItemRecipeInsideForCalendarBinding.textNazwaPrzepisu;
@@ -115,6 +121,9 @@ public class MealInfoFragment extends Fragment{
         });
     }
 
+    /**
+     * Sets up Pop Up Menu for deleting recipe from calendar.
+     */
     public void setupPopUpMenuInfo(View view) {
         popupMenuInfo = new PopupMenu(requireContext(), view, Gravity.END);
         popupMenuInfo.getMenuInflater().inflate(R.menu.info_menu, popupMenuInfo.getMenu());
@@ -158,6 +167,7 @@ public class MealInfoFragment extends Fragment{
         });
     }
 
+
     public void showPopUpDeleteRecipe(MealPlan mealPlan){
         QuestionDeleteRecipe questionDeleteRecipe =
                 new QuestionDeleteRecipe();
@@ -171,6 +181,9 @@ public class MealInfoFragment extends Fragment{
         questionDeleteRecipe.show(getChildFragmentManager(), "QuestionDeleteRecipe");
     }
 
+    /**
+     * Sets up the view model and its observers.
+     */
     public void setupViewModel(){
         HashMap<String, String> recipeLevelMapping = new HashMap<>();
         recipeLevelMapping.put("HARD", "Trudny");
@@ -200,6 +213,9 @@ public class MealInfoFragment extends Fragment{
         mealInfoViewModel.fetchMealInfo(requireArguments().getInt("mealId"));
     }
 
+    /**
+     * Sets up navigation between IngredientsFragment and CookFragment.
+     */
     private void setupNavigation() {
         radioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.skladniki_button) {
@@ -210,6 +226,9 @@ public class MealInfoFragment extends Fragment{
         });
     }
 
+    /**
+     * Sets up ViewPager2 with two fragments: IngredientsFragment and CookFragment.
+     */
     private void setupViewPager(ViewPager2 viewPager) {
         String role = prefs.getString("role", "");
 

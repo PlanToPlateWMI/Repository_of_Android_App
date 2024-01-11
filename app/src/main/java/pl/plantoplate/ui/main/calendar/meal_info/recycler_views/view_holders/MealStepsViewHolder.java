@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.plantoplate.databinding.ItemKrokBinding;
 
+/**
+ * This class is responsible for setting up the steps in the recycler view.
+ */
 public class MealStepsViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView stepTextView;

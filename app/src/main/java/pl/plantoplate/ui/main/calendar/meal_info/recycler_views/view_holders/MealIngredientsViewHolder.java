@@ -9,6 +9,9 @@ import java.math.RoundingMode;
 import pl.plantoplate.data.remote.models.recipe.Ingredient;
 import pl.plantoplate.databinding.ItemSkladnikForCalendarBinding;
 
+/**
+ * This class is responsible for setting up the ingredients in RecyclerView.
+ */
 public class MealIngredientsViewHolder extends RecyclerView.ViewHolder {
     private final TextView ingredientName;
     private final TextView ingredientAmount;

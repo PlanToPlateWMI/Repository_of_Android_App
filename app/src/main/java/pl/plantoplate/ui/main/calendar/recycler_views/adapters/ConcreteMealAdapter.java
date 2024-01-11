@@ -14,6 +14,9 @@ import pl.plantoplate.data.remote.models.meal.Meal;
 import pl.plantoplate.ui.main.calendar.recycler_views.listeners.SetupMealItem;
 import pl.plantoplate.ui.main.calendar.recycler_views.view_holders.ConcreteMealViewHolder;
 
+/**
+ * Adapter class for displaying concrete meals in a RecyclerView.
+ */
 public class ConcreteMealAdapter extends RecyclerView.Adapter<ConcreteMealViewHolder>{
 
     private List<Meal> meals;

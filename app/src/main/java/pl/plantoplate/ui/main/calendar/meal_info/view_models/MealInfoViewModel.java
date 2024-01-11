@@ -12,6 +12,9 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.data.remote.repository.MealRepository;
 
+/**
+ * This class is responsible for fetching the meal info from the server.
+ */
 public class MealInfoViewModel extends AndroidViewModel {
 
     private final CompositeDisposable compositeDisposable;
@@ -36,6 +39,10 @@ public class MealInfoViewModel extends AndroidViewModel {
         return responseMessage;
     }
 
+    /**
+     * This method fetches the meal info from the server.
+     * @param mealId the id of the meal
+     */
     public void fetchMealInfo(int mealId){
         MealRepository mealRepository = new MealRepository();
         String token = "Bearer " + prefs.getString("token", "");

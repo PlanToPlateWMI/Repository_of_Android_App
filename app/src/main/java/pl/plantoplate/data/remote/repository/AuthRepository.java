@@ -30,6 +30,9 @@ import pl.plantoplate.data.remote.models.user.UserRegisterData;
 import pl.plantoplate.data.remote.models.auth.JwtResponse;
 import pl.plantoplate.data.remote.models.auth.SignInData;
 
+/**
+ * Class that handles authentication w/ login credentials and retrieves user information.
+ */
 public class AuthRepository {
 
     private final AuthService authService;
@@ -40,6 +43,11 @@ public class AuthRepository {
         authService = retrofitClient.getClient().create(AuthService.class);
     }
 
+    /**
+     * Sends user register data to the server.
+     * @param info User register data.
+     * @return Single with code response.
+     */
     public Single<CodeResponse> sendUserRegisterData(UserRegisterData info) {
         String userAlreadyExists = "Użytkownik o podanym adresie email już istnieje.";
         HashMap<Integer, String> errorMap = new HashMap<>();
@@ -54,6 +62,12 @@ public class AuthRepository {
 
     private final PublishSubject<Object> cancelSubject = PublishSubject.create();
 
+    /**
+     * Sends email to the server to get confirmation code.
+     * @param email User email.
+     * @param type Type of confirmation code.
+     * @return Single with code response.
+     */
     public Single<CodeResponse> getEmailConfirmCode(String email, String type) {
         String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
         HashMap<Integer, String> errorMap = new HashMap<>();
@@ -67,6 +81,11 @@ public class AuthRepository {
                 .takeUntil(cancelSubject.toFlowable(BackpressureStrategy.BUFFER));
     }
 
+    /**
+     * Cancels sending email to the server to get confirmation code.
+     * @param info SignInData object.
+     * @return Single with jwt response.
+     */
     public Single<JwtResponse> signIn(SignInData info) {
         String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
         String incorrectCredentials = "Niepoprawne hasło!";
@@ -81,6 +100,17 @@ public class AuthRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Resets the password for a user based on the provided {@link SignInData}.
+     *
+     * @param info The {@link SignInData} containing user information for password reset.
+     * @return A {@link Single} emitting a {@link Message} indicating the result of the password reset.
+     *         The message can be success or an error message if the user does not exist.
+     * @throws NullPointerException if {@code info} is {@code null}.
+     *
+     * @see SignInData
+     * @see Message
+     */
     public Single<Message> resetPassword(SignInData info) {
         String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
         HashMap<Integer, String> errorMap = new HashMap<>();
@@ -93,6 +123,16 @@ public class AuthRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Checks if a user with the given email address already exists.
+     *
+     * @param email The email address to check for existing user.
+     * @return A {@link Single} emitting a {@link Message} indicating the result of the existence check.
+     *         The message can be success or an error message if the user already exists.
+     * @throws NullPointerException if {@code email} is {@code null}.
+     *
+     * @see Message
+     */
     public Single<Message> userExists(String email) {
         String userAlreadyExists = "Użytkownik o podanym adresie email już istnieje.";
         HashMap<Integer, String> errorMap = new HashMap<>();

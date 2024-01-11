@@ -9,6 +9,9 @@ import pl.plantoplate.ui.custom_views.calendar.recycler_views.adapters.CalendarP
 import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 import pl.plantoplate.utils.DateUtils;
 
+/**
+ * Class for the calendar.
+ */
 public class ShortCalendar{
 
     private final CalendarStyle calendarStyle;

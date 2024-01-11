@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
 import pl.plantoplate.ui.main.ActivityMain;
 
+/**
+ * This class is responsible for displaying the splash screen and initializing the application.
+ * It is also responsible for redirecting the user to the appropriate activity.
+ */
 public class RoutingActivity extends AppCompatActivity {
 
     /**

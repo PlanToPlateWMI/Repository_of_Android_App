@@ -44,6 +44,9 @@ import pl.plantoplate.utils.CategorySorter;
 import pl.plantoplate.ui.main.calendar.events.DateSelectedEvent;
 import timber.log.Timber;
 
+/**
+ * This class is responsible for setting up the RecyclerView with all the meals.
+ */
 public class ConcreteMealTypeFragment extends Fragment {
 
     private MealType mealType;
@@ -77,6 +80,11 @@ public class ConcreteMealTypeFragment extends Fragment {
         getMealsList(date);
     }
 
+    /**
+     * Handles the event when a date is selected.
+     *
+     * @param event The DateSelectedEvent containing the selected date.
+     */
     @Subscribe
     public void onDateSelected(DateSelectedEvent event){
         concreteMealAdapter.setMeals(new ArrayList<>());
@@ -99,6 +107,11 @@ public class ConcreteMealTypeFragment extends Fragment {
         return fragmentCalendarInsideBldBinding.getRoot();
     }
 
+    /**
+     * Sets up the RecyclerView with all the meals.
+     *
+     * @param fragmentCalendarInsideBldBinding The binding of the fragment.
+     */
     public void setupRecyclerView(FragmentCalendarInsideBldBinding fragmentCalendarInsideBldBinding) {
         RecyclerView mealsRecyclerView = fragmentCalendarInsideBldBinding.productsOwnRecyclerView;
         mealsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -113,6 +126,11 @@ public class ConcreteMealTypeFragment extends Fragment {
         mealsRecyclerView.setAdapter(concreteMealAdapter);
     }
 
+    /**
+     * Gets the list of meals from the server.
+     *
+     * @param date The date of the meals.
+     */
     private void getMealsList(LocalDate date) {
         MealRepository mealRepository = new MealRepository();
         compositeDisposable.add(

@@ -53,6 +53,11 @@ public class QuestionDeleteRecipe extends DialogFragment {
         });
     }
 
+    /**
+     * Deletes meal from planned meals
+     * @param v view
+     * @param mealId id of meal to delete
+     */
     public void deleteMealFromPlanned(View v, int mealId) {
         String token = "Bearer " + requireContext().getSharedPreferences("prefs", Context.MODE_PRIVATE).getString("token", "");
         MealRepository mealRepository = new MealRepository();

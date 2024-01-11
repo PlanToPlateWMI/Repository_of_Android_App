@@ -15,6 +15,9 @@ import pl.plantoplate.data.remote.models.meal.MealPlanNew;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.NewPopUpQuestionSynhronizationOnBinding;
 
+/**
+ * Class for displaying pop up window with question about synchronization.
+ */
 public class PopUpCalendarPlanningEnd extends DialogFragment {
 
     private CompositeDisposable compositeDisposable;

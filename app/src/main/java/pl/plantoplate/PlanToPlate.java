@@ -24,6 +24,10 @@ import com.google.firebase.FirebaseApp;
 
 import timber.log.Timber;
 
+/**
+ * PlanToPlate is a custom Application class that extends Application.
+ * It is used in the application to initialize Firebase and Timber.
+ */
 public class PlanToPlate extends Application {
 
     private static PlanToPlate instance;

@@ -14,6 +14,9 @@ import pl.plantoplate.databinding.FragmentItemRecipeInsideSkladnikiBinding;
 import pl.plantoplate.ui.main.calendar.meal_info.recycler_views.adapters.MealIngredientsAdapter;
 import pl.plantoplate.ui.main.calendar.meal_info.view_models.MealInfoViewModel;
 
+/**
+ * This class is responsible for setting up the ingredients in the recycler view.
+ */
 public class MealIngredientsFragment extends Fragment {
 
 

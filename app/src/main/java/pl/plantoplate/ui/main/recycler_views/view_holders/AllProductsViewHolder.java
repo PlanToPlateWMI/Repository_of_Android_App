@@ -24,6 +24,9 @@ import pl.plantoplate.R;
 import pl.plantoplate.data.remote.models.product.Product;
 import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 
+/**
+ * This class is responsible for setting up the products in the recycler view.
+ */
 public class AllProductsViewHolder extends RecyclerView.ViewHolder {
     private final TextView name;
     private final TextView unit;

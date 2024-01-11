@@ -25,6 +25,9 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.models.user.UserInfo;
 import pl.plantoplate.data.remote.repository.UserRepository;
 
+/**
+ * This class is responsible for changing the permissions of the user.
+ */
 public class SettingsViewModel extends AndroidViewModel {
 
     private final CompositeDisposable compositeDisposable;
@@ -57,6 +60,9 @@ public class SettingsViewModel extends AndroidViewModel {
         return userCount;
     }
 
+    /**
+     * Fetches the number of users in group.
+     */
     public void fetchUserCount() {
         String token = "Bearer " + prefs.getString("token", "");
         Disposable disposable = userRepository.getUsersInfo(token)
@@ -66,6 +72,9 @@ public class SettingsViewModel extends AndroidViewModel {
         compositeDisposable.add(disposable);
     }
 
+    /**
+     * Fetches current user info.
+     */
     public void fetchUserInfo() {
         String token = "Bearer " + prefs.getString("token", "");
         Disposable disposable = userRepository.getUserInfo(token)

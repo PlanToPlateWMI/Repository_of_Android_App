@@ -8,6 +8,9 @@ import java.time.LocalDate;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 
+/**
+ * View holder for the future dates in the calendar plan RecyclerView.
+ */
 public class CalendarViewHolderToday extends CalendarViewHolder{
 
     private final TextView dateDayName;

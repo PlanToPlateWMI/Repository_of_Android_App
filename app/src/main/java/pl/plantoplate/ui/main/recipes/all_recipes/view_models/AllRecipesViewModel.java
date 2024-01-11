@@ -12,6 +12,9 @@ import pl.plantoplate.data.remote.repository.RecipeRepository;
 import pl.plantoplate.ui.main.recipes.recycler_views.RecipeCategory;
 import pl.plantoplate.utils.CategorySorter;
 
+/**
+ * This class is responsible for setting up the categories.
+ */
 public class AllRecipesViewModel extends AndroidViewModel {
 
     private final MutableLiveData<List<RecipeCategory>> allRecipes;
@@ -27,6 +30,9 @@ public class AllRecipesViewModel extends AndroidViewModel {
         return allRecipes;
     }
 
+    /**
+     * This method fetches all recipes from the server.
+     */
     public void fetchAllRecipes(){
         RecipeRepository recipeRepository = new RecipeRepository();
 

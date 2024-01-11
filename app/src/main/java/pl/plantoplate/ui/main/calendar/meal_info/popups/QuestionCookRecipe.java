@@ -15,6 +15,9 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import pl.plantoplate.data.remote.repository.MealRepository;
 import pl.plantoplate.databinding.NewPopUpQuestionCookRecipeBinding;
 
+/**
+ * A dialog fragment that asks the user if he wants to cook the recipe.
+ */
 public class QuestionCookRecipe extends DialogFragment {
 
     private TextView acceptButton;
@@ -57,6 +60,9 @@ public class QuestionCookRecipe extends DialogFragment {
         });
     }
 
+    /**
+     * Prepares a meal.
+     */
     public void prepareMeal(){
         String token = "Bearer " + prefs.getString("token", "");
         MealRepository mealRepository = new MealRepository();

@@ -12,6 +12,9 @@ import java.util.List;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.calendar.meal_info.recycler_views.view_holders.MealStepsViewHolder;
 
+/**
+ * This class is responsible for setting up the steps in the recycler view.
+ */
 public class MealStepsAdapter extends RecyclerView.Adapter<MealStepsViewHolder> {
 
     private List<String> steps;

@@ -29,6 +29,9 @@ import pl.plantoplate.R;
 import pl.plantoplate.databinding.FragmentRecipeBaseBinding;
 import pl.plantoplate.ui.custom_views.RadioGridGroup;
 
+/**
+ * Fragment class for displaying all recipes.
+ */
 public class AllRecipesFragment extends Fragment {
     private ViewPager2 viewPager2;
     private RadioGridGroup radioGridGroup;
@@ -50,6 +53,11 @@ public class AllRecipesFragment extends Fragment {
         return fragmentRecipeBaseBinding.getRoot();
     }
 
+    /**
+     * Initializes the views.
+     *
+     * @param fragmentRecipeBaseBinding The binding object of the fragment.
+     */
     public void initViews(FragmentRecipeBaseBinding fragmentRecipeBaseBinding){
         viewPager2 = fragmentRecipeBaseBinding.viewPagerBase;
         radioGridGroup = fragmentRecipeBaseBinding.radioGroupRecipe;
@@ -59,6 +67,9 @@ public class AllRecipesFragment extends Fragment {
         viewPager2.setUserInputEnabled(false);
     }
 
+    /**
+     * Sets up the navigation.
+     */
     private void setupNavigation() {
         radioGridGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.dania_glowne){
@@ -77,6 +88,10 @@ public class AllRecipesFragment extends Fragment {
         });
     }
 
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
     private void setupViewPager(ViewPager2 viewPager) {
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override

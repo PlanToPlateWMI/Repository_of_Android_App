@@ -9,6 +9,9 @@ import java.time.LocalDate;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 
+/**
+ * View holder for the past dates in the calendar plan RecyclerView.
+ */
 public class CalendarViewHolderPast extends CalendarViewHolder{
 
     private final TextView dateDayName;

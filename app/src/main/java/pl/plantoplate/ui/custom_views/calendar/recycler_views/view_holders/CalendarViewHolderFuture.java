@@ -23,6 +23,9 @@ import java.time.LocalDate;
 import pl.plantoplate.R;
 import pl.plantoplate.ui.main.recycler_views.listeners.SetupItemButtons;
 
+/**
+ * ViewHolder for the RecyclerView displaying a calendar plan.
+ */
 public class CalendarViewHolderFuture extends CalendarViewHolder{
 
     private final TextView dateDayName;

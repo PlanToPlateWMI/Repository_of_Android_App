@@ -26,6 +26,9 @@ import pl.plantoplate.data.remote.models.recipe.Recipe;
 import pl.plantoplate.data.remote.models.recipe.RecipeInfo;
 import pl.plantoplate.data.remote.service.RecipeService;
 
+/**
+ * A repository class responsible for retrieving recipe-related data from the remote API.
+ */
 public class RecipeRepository {
 
     private final RecipeService recipeService;
@@ -35,6 +38,17 @@ public class RecipeRepository {
 
         recipeService = retrofitClient.getClient().create(RecipeService.class);
     }
+
+    /**
+     * Retrieves a list of all recipes based on the provided category.
+     *
+     * @param category The category of recipes to retrieve.
+     * @return A {@link Single} emitting a {@link List} of {@link Recipe} objects representing all recipes
+     *         within the specified category.
+     * @throws NullPointerException if {@code category} is {@code null}.
+     *
+     * @see Recipe
+     */
 
     public Single<List<Recipe>> getAllRecipes(String category) {
         String recipeCategoryDoesNotExist = "Katagoria przepisu nie istnieje.";
@@ -48,6 +62,18 @@ public class RecipeRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Retrieves a list of own recipes based on the provided category and token.
+     *
+     * @param category The category of recipes to retrieve.
+     * @param token    The token used to authenticate the request.
+     * @return A {@link Single} emitting a {@link List} of {@link Recipe} objects representing the user's own recipes
+     *         within the specified category.
+     * @throws NullPointerException if {@code category} or {@code token} is {@code null}.
+     *
+     * @see Recipe
+     */
+
     public Single<List<Recipe>> getOwnRecipes(String category, String token) {
         String recipeCategoryDoesNotExist = "Katagoria przepisu nie istnieje.";
         HashMap<Integer, String> errorMap = new HashMap<>();
@@ -59,6 +85,16 @@ public class RecipeRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    /**
+     * Retrieves details of a recipe by its ID.
+     *
+     * @param recipeId The ID of the recipe to retrieve.
+     * @return A {@link Single} emitting a {@link RecipeInfo} object representing the details of the specified recipe.
+     * @throws NullPointerException if {@code recipeId} is {@code null}.
+     *
+     * @see RecipeInfo
+     */
 
     public Single<RecipeInfo> getRecipe(int recipeId) {
         String recipeDoesNotExist = "Przepis nie istnieje.";

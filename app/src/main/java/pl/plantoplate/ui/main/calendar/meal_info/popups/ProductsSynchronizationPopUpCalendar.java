@@ -20,6 +20,9 @@ import pl.plantoplate.data.remote.repository.ShoppingListRepository;
 import pl.plantoplate.databinding.NewPopUpQuestionSynhronizationOnBinding;
 import timber.log.Timber;
 
+/**
+ * A dialog fragment that asks the user if he wants to synchronize the products with the shopping list.
+ */
 public class ProductsSynchronizationPopUpCalendar extends DialogFragment {
 
     private CompositeDisposable compositeDisposable;
@@ -52,11 +55,20 @@ public class ProductsSynchronizationPopUpCalendar extends DialogFragment {
         return dialog;
     }
 
+    /**
+     * Sets up views for the NewPopUpQuestionSynhronizationOnBinding.
+     *
+     * @param binding The binding object containing the views.
+     */
     public void setupViews(NewPopUpQuestionSynhronizationOnBinding binding){
         checkBox = binding.checkBox;
         acceptButton = binding.buttonYes;
         cancelButton = binding.buttonNo;
     }
+
+    /**
+     * Sets click listeners for the buttons.
+     */
     public void setClickListeners(){
         cancelButton.setOnClickListener(v -> {
             Timber.e(mealPlan.toString());
@@ -75,6 +87,12 @@ public class ProductsSynchronizationPopUpCalendar extends DialogFragment {
         });
     }
 
+    /**
+     * Adds ingredients to the shopping list.
+     *
+     * @param v     The View triggering the action.
+     * @param sync  Boolean indicating whether to synchronize meal products.
+     */
     public void addIngredientsToShoppingList(View v, boolean sync) {
         Timber.e(mealPlan.toString());
         String token = "Bearer " + prefs.getString("token", "");

@@ -36,6 +36,17 @@ public class GroupRepository {
         groupService = retrofitClient.getClient().create(GroupService.class);
     }
 
+    /**
+     * Creates a new group using the provided user credentials.
+     *
+     * @param userCredentials The credentials of the user creating the group.
+     * @return A {@link Single} emitting a {@link JwtResponse} object representing the authentication response
+     *         after creating the group.
+     * @throws NullPointerException if {@code userCredentials} is {@code null}.
+     *
+     * @see JwtResponse
+     */
+
     public Single<JwtResponse> createGroup(UserCredentials userCredentials){
         String userDoesNotExist = "Użytkownik o podanym adresie email nie istnieje!";
         HashMap<Integer, String> errorMap = new HashMap<>();
@@ -47,6 +58,17 @@ public class GroupRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    /**
+     * Joins a group using the provided user join group request data.
+     *
+     * @param userJoinGroupRequest The data containing information required to join a group.
+     * @return A {@link Single} emitting a {@link JwtResponse} object representing the authentication response
+     *         after joining the group.
+     * @throws NullPointerException if {@code userJoinGroupRequest} is {@code null}.
+     *
+     * @see JwtResponse
+     */
 
     public Single<JwtResponse> joinGroupByCode(UserJoinGroupData userJoinGroupRequest) {
         String incorrectCode = "Niepoprawny kod grupy.";
@@ -60,6 +82,16 @@ public class GroupRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * Generates a group code for a user identified by the provided token and role.
+     *
+     * @param token The token used to identify the user.
+     * @param role  The role of the user requesting the group code.
+     * @return A {@link Single} emitting a {@link CodeResponse} object representing the generated group code.
+     * @throws NullPointerException if {@code token} or {@code role} is {@code null}.
+     *
+     * @see CodeResponse
+     */
     public Single<CodeResponse> generateGroupCode(String token, String role){
         String incorrectRole = "Niepoprawna rola dla użytkownika lub użytkownik nie należy do żadnej grupy.";
         HashMap<Integer, String> errorMap = new HashMap<>();

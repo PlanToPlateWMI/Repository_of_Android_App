@@ -2,6 +2,9 @@ package pl.plantoplate.ui.main.recipes.recipe_info.events;
 
 import java.util.List;
 
+/**
+ * This class is responsible for the event of changing the ingredients.
+ */
 public class IngredientsChangeEvent {
 
     private List<Integer> ingredientsIds;
