@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.ui.main.settings.account_management.change_password;
 
 import static android.content.Context.MODE_PRIVATE;

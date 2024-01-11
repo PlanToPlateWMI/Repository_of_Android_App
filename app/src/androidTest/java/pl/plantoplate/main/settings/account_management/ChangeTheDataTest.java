@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package pl.plantoplate.main.settings.account_management;
 
 import androidx.test.core.app.ActivityScenario;
